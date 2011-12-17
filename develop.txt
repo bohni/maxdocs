@@ -1,0 +1,96 @@
+===============================================================
+Schnittstellen für Plugins/Providers/etc:
+- Versionierung mit OSGi, damit Drittanbieter auf geänderte 
+  Schnittstellen reagieren können?
+
+===============================================================
+Storage
+- Alles immer als UTF-8 behandeln, unabhängig vom System.
+- Storage liefert Linksliste für alle Seiten (wer verlink auf mich)
+- Engine nutzt Linkliste für z.B. rename. Sie benutzt den Parser für
+  geänderte Links und den Storage rein zum Speichern der geänderten Seiten. 
+- Ursprungsversion beim Speichern prüfen, ob noch vorhanden oder bereits eine 
+  neuere Version gespeichert ist.
+===============================================================
+FileStorageProvider
+- alles unter einem User ist schlecht (Security)
+- chmod 777 ist keine Lösung (Security)
+- Problem 1: Entzippen als User, laufen als www -> Rechteprobleme
+- Lösungsansatz: Binaries als "root", daten als www
+                 Install anbieten -> Doku aus Jarfile lesen und 
+                 als www schreiben
+
+===============================================================
+Wo wird entwickelt?
+- GitHub?
+- Heimserver? HTTP? SSH? Gitolite? Gitblit?
+=> Entwicklung läuft vorerst auf Github bohni/maxdocs
+- Wie ist das bei Github mit evtl. User maxdocs?
+
+===============================================================
+Parser
+- Nur für Syntax, lässt Plugin Auszeichnung unverändert
+
+===============================================================
+Plugins
+- verarbeiten bereits geparsten Content
+
+===============================================================
+Engine
+- Lesen
+- Parsen
+- Ausliefern
+- Änderungen speichern
+- Suchindex updaten
+- Referenzen aktualisieren (siehe Storage)
+- Locking
+- etc.
+- zweimal Parser aufrufen:
+  erster Aufruf für Syntax
+  zweiter Aufruf für Plugins 
+
+===============================================================
+SearchProvider
+ - Lucene / Solr
+
+===============================================================
+Templates
+- Default mit Alles (Yaml)
+- University: Simple als Start für Template-Entwickler
+- Retro mit Bunt und Anim-Gif
+- Dreckstool: grün-schwarz
+
+===============================================================
+Gallery
+- Gallery nimmt als Attribut einen Pfad und bereitet daraus ein
+  Album auf. Ggf. mit Ordnern zum navigieren
+- Bilddarstellung mit Lightbox
+
+===============================================================
+Image
+- inline, wenn als Link auf Attachment
+  Aufgrund MimeType oder Endung?
+
+===============================================================
+Attachments
+- MimeType?
+- Endungen?
+
+===============================================================
+Sprache
+- Wer gibt Sprache vor? Browser? Wiki-Besitzer? Server?
+Browser: Ein Wiki mit rein deutschen Inhalten bekommt I18n-Wiki-Texte (Formulare, Buttons, etc)
+Wiki-Besitzer: Alle Ausländer werden "ausgeschlossen"
+Server: geht gar nicht, da normalerweise keinerlei Einfluss
+
+- Lösungsansätze:
+Browser: 
+Nicht unterstützte Sprachen -> Default Locale
+User kann Locale wählen (Dropdown), die dann im Cookie gespeichert wird.
+Wiki verwendet nur Cookie-Locale (ggf. beim ersten Aufruf aus Browser-Locale übernommen)
+Wiki-Besitzer könnte bei Installation die unterstützen Sprachen auswählen und nicht gewünschte weglassen
+
+Wiki-Besitzer:
+Wiki-Besitzer könnte bei Installation die unterstützen Sprachen auswählen und so auch mehrere unterstützen
+Config: default-Locale einstellen und Browser-Locale erlauben(ja/nein)
+

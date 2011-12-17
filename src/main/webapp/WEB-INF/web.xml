@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2010-2011, Team jspserver.net
+
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, are permitted provided
+    that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice, this list of conditions and the
+       following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
+       the following disclaimer in the documentation and/or other materials provided with the distribution.
+    3. The name of the author may not be used to endorse or promote products derived from this software
+       without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+    NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+    ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+
+	<display-name>MaxDocs</display-name>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<session-config>
+		<session-timeout>15</session-timeout>
+	</session-config>
+
+	<jsp-config>
+		<taglib>
+			<taglib-uri>http://www.maxdocs.org/taglib</taglib-uri>
+			<taglib-location>/WEB-INF/maxdocs.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+
+	<!-- Spring Security filter -->
+
+	<filter>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
+	<!-- prettyUrlFilter maps URLs to /content and /internal -->
+	
+	<filter>
+	    <filter-name>prettyUrlFilter</filter-name>
+	    <filter-class>org.maxdocs.servlet.MaxDocsFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+	    <filter-name>prettyUrlFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- main MVC controller, mapped on /content -->
+	
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.maxdocs.servlet.MaxDocsServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>		
+
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/content/*</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- Location of the XML file that defines the root application context -->
+	<!-- Applied by ContextLoaderListener. -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring-context.xml</param-value>
+	</context-param>
+
+	<!-- Loads the root application context of this web app at startup. -->
+	<!-- The application context is then available via -->
+	<!-- WebApplicationContextUtils.getWebApplicationContext(servletContext). -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>org.maxdocs.servlet.MaxDocsContextListener</listener-class>
+	</listener>
+</web-app>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2010-2011, Team jspserver.net
+
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, are permitted provided
+    that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice, this list of conditions and the
+       following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
+       the following disclaimer in the documentation and/or other materials provided with the distribution.
+    3. The name of the author may not be used to endorse or promote products derived from this software
+       without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+    NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+    ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+
+<taglib
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	version="2.1">
+
+	<description>MaxDocs Custom Tags</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>maxdocs</short-name>
+	<uri>http://www.jspserver.net/maxdocs/taglib</uri>
+
+	<tag>
+		<description>Displays the authors name</description>
+		<name>author</name>
+		<tag-class>org.maxdocs.taglib.AuthorTag</tag-class>
+		<tei-class>org.maxdocs.taglib.AuthorTagTEI</tei-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The styleClass attribute sets the CSS class to apply to this component when it is rendered. Default is maxdocsAuthor.</description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<name>plain</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The type attribut sets which authors name should be rendered. 'author' is for creation, 'editor' is for last change. Default is 'editor'</description>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>Displays the creation or last change date</description>
+		<name>date</name>
+		<tag-class>org.maxdocs.taglib.DateTag</tag-class>
+		<tei-class>org.maxdocs.taglib.DateTagTEI</tei-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The styleClass attribute sets the CSS class to apply to this component when it is rendered.</description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<name>plain</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The type attribut sets which date should be rendered. 'creation' and 'lastChange'. Default is 'lastChange'.</description>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The format attribute contains the pattern top format the date (see SimpleDateFormat).</description>
+			<name>format</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>Displays the content type</description>
+		<name>contentType</name>
+		<tag-class>org.maxdocs.taglib.ContentTypeTag</tag-class>
+		<tei-class>org.maxdocs.taglib.ContentTypeTagTEI</tei-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The styleClass attribute sets the CSS class to apply to this component when it is rendered.</description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<name>plain</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>Displays the page name</description>
+		<name>pageName</name>
+		<tag-class>org.maxdocs.taglib.PageNameTag</tag-class>
+		<tei-class>org.maxdocs.taglib.PageNameTagTEI</tei-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The styleClass attribute sets the CSS class to apply to this component when it is rendered.</description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<name>plain</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>Displays the page version</description>
+		<name>pageVersion</name>
+		<tag-class>org.maxdocs.taglib.PageVersionTag</tag-class>
+		<tei-class>org.maxdocs.taglib.PageVersionTagTEI</tei-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The styleClass attribute sets the CSS class to apply to this component when it is rendered.</description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<name>plain</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>Displays the content</description>
+		<name>pageContent</name>
+		<tag-class>org.maxdocs.taglib.ContentTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The styleClass attribute sets the CSS class to apply to this component when it is rendered.</description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>Inserts a page</description>
+		<name>insertPage</name>
+		<tag-class>org.maxdocs.taglib.InsertPageTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The styleClass attribute sets the CSS class to apply to this component when it is rendered.</description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The name of the page which content should to be rendered.</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>Inserts a tag cloud</description>
+		<name>tagCloud</name>
+		<tag-class>org.maxdocs.taglib.TagCloudTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The styleClass attribute sets the CSS class to apply to this component when it is rendered.</description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>
