@@ -85,7 +85,7 @@ public class PageContentTag extends TagSupport
 		}
 		catch (IOException e)
 		{
-			log.error("PageContentTag:" + e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}

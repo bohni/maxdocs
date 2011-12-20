@@ -123,7 +123,7 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 		}
 		catch (IOException e)
 		{
-			log.error("AuthorTag:" + e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}

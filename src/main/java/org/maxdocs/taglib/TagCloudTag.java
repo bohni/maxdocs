@@ -106,7 +106,7 @@ public class TagCloudTag extends TagSupport
 		}
 		catch (IOException e)
 		{
-			log.error("TagCloudTag:" + e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}
