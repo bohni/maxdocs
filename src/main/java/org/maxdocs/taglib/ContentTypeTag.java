@@ -86,7 +86,7 @@ public class ContentTypeTag extends AbstractMaxDocsTagSupport
 		}
 		catch (IOException e)
 		{
-			log.error("ContentTypeTag:" + e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}

@@ -40,9 +40,12 @@ import org.springframework.web.servlet.FrameworkServlet;
  */
 public class MaxDocsServlet extends FrameworkServlet
 {
+	private static final String ACTION_EDIT = "edit";
+	private static final String ACTION_SHOW = "show";
+	private static final String DEFAULT_ACTION = ACTION_SHOW;
 	private static final String DEFAULT_PAGE_NAME = "Main";
+	private static final String DEFAULT_TEMPLATE_NAME = "default";
 	private static final String PARAMETER_NAME_ACTION = "action";
-	private static final String DEFAULT_ACTION = "show";
 
 	private static Logger log = LoggerFactory.getLogger(MaxDocsServlet.class);
 
@@ -56,14 +59,14 @@ public class MaxDocsServlet extends FrameworkServlet
 		log.trace("doService({})", request.getRequestURL());
 
 		String contextPath = request.getContextPath();
-		String requestUri = request.getRequestURI();
-		String queryString = request.getQueryString();
-		String pathInfo = request.getPathInfo();
-		String servletPath = request.getServletPath();
 		log.debug("ContextPath={}", contextPath);
+		String requestUri = request.getRequestURI();
 		log.debug("RequestURI={}", requestUri);
+		String queryString = request.getQueryString();
 		log.debug("QueryString={}", queryString);
+		String servletPath = request.getServletPath();
 		log.debug("ServletPath={}", servletPath);
+		String pathInfo = request.getPathInfo();
 		log.debug("PathInfo={}", pathInfo);
 
 		String pagePath = pathInfo;
@@ -71,24 +74,28 @@ public class MaxDocsServlet extends FrameworkServlet
 		{
 			pagePath+=DEFAULT_PAGE_NAME;
 		}
+		log.debug("pagePath={}", pagePath);
 
 		String action = request.getParameter(PARAMETER_NAME_ACTION);
 		if(StringUtils.isBlank(action))
 		{
 			action=DEFAULT_ACTION;
 		}
-
-		log.info("hier Seiteninhalt \"{}\" Action \"{}\" ermitteln und weiterleiten an home.jsp", pagePath, action);
+		log.debug("action={}", action);
 
 		request.setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
 
-		String templateName = "default";
+		// TODO: Template ermitteln
+		String templateName = DEFAULT_TEMPLATE_NAME;
+		log.debug("templateName={}", templateName);
 
-		if(StringUtils.equalsIgnoreCase(action, "edit"))
+		if(StringUtils.equalsIgnoreCase(action, DEFAULT_ACTION))
+		{
+			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/show.jsp").forward(request, response);
+		}
+		else if(StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
 		{
 			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/edit.jsp").forward(request, response);
-
 		}
-		request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/show.jsp").forward(request, response);
 	}
 }

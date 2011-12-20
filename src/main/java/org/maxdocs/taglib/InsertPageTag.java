@@ -119,7 +119,7 @@ public class InsertPageTag extends TagSupport
 		}
 		catch (IOException e)
 		{
-			log.error("TitleTag:" + e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}

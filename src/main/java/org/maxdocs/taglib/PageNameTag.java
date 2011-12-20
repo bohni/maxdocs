@@ -86,7 +86,7 @@ public class PageNameTag extends AbstractMaxDocsTagSupport
 		}
 		catch (IOException e)
 		{
-			log.error("PageNameTag:" + e.getMessage(), e);
+			log.error( e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}

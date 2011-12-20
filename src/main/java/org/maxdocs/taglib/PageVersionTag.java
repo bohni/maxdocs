@@ -86,7 +86,7 @@ public class PageVersionTag extends AbstractMaxDocsTagSupport
 		}
 		catch (IOException e)
 		{
-			log.error("PageVersionTag:" + e.getMessage(), e);
+			log.error( e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}
