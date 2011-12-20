@@ -66,8 +66,16 @@ public interface Storage
 	 * Persists the MarkupPage object in the storage
 	 * 
 	 * @param page the MarkupPage object to persist.
-	 * @return <code>true</code>, if storing succeeded.
+	 * @return <code>true</code>, if saving succeeds.
 	 */
 	public boolean save(MarkupPage page);
 
+	
+	/**
+	 * delete:
+	 * Deletes the requested page.
+	 * @param pagePath the requested page
+	 * @return <code>true</code>, if deleting succeeds.
+	 */
+	public boolean delete(String pagePath);
 }
