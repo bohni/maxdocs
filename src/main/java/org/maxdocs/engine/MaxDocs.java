@@ -138,7 +138,7 @@ public class MaxDocs
 		MarkupPage markupPage = new MarkupPage();
 		markupPage.setAuthor("John Doe Senior");
 		markupPage.setEditor("John Doe");
-		markupPage.setContent("! Main\n\nThis is the Content...\n\n* List 1\n* List 2\n\n__Bold Text__");
+		markupPage.setContent("! " + pagePath.substring(1) + "\n\nThis is the Content...\n\n* List 1\n* List 2\n\n__Bold Text__");
 		markupPage.setContentType("text/textile");
 		Calendar date = GregorianCalendar.getInstance();
 		date.set(2011, 8, 16, 14, 27);
