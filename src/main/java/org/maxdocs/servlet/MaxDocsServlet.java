@@ -83,6 +83,12 @@ public class MaxDocsServlet extends FrameworkServlet
 		request.setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
 
 		String templateName = "default";
+
+		if(StringUtils.equalsIgnoreCase(action, "edit"))
+		{
+			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/edit.jsp").forward(request, response);
+
+		}
 		request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/show.jsp").forward(request, response);
 	}
 }

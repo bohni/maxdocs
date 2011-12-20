@@ -21,41 +21,60 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.maxdocs.data;
+package org.maxdocs.taglib;
 
+import java.io.IOException;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
+
+import org.maxdocs.MaxDocsConstants;
+import org.maxdocs.data.MarkupPage;
+import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * MarkupPage
- * An object containing the data of a page.
- * The content is in markup.
- * 
- * @author Stefan Bohn
+ * PageContentTag:
+ * Tag, that displays the content within a div container.
+ *
+ * @author Team jspserver.net
  *
  */
-public class MarkupPage extends AbstractPage
+public class PageSourceTag extends TagSupport
 {
-	private static Logger log = LoggerFactory.getLogger(MarkupPage.class);
+	private static Logger log = LoggerFactory.getLogger(PageSourceTag.class);
 
-	private String content;
-
-	/**
-	 * getContent: Returns the content.
+	/* (non-Javadoc)
 	 *
-	 * @return the content
+	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
 	 */
-	public String getContent()
+	@Override
+	public int doStartTag() throws JspException
 	{
-		return this.content;
+		log.trace("doStartTag()");
+		try
+		{
+			MaxDocs engine= (MaxDocs) this.pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			String pageName = (String) this.pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MarkupPage markupPage = engine.getMarkupPage(pageName);
+			this.pageContext.getOut().write(markupPage.getContent());
+		}
+		catch (IOException e)
+		{
+			log.error("PageContentTag:" + e.getMessage(), e);
+		}
+		return SKIP_BODY;
 	}
-	/**
-	 * setContent: Sets the content.
+
+	/* (non-Javadoc)
 	 *
-	 * @param content the content to set
+	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
 	 */
-	public void setContent(String content)
+	@Override
+	public int doEndTag() throws JspException
 	{
-		this.content = content;
+		log.trace("doEndTag()");
+		return EVAL_PAGE;
 	}
 }

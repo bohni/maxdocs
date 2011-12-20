@@ -156,7 +156,7 @@
 	<tag>
 		<description>Displays the content</description>
 		<name>pageContent</name>
-		<tag-class>org.maxdocs.taglib.ContentTag</tag-class>
+		<tag-class>org.maxdocs.taglib.PageContentTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description>The styleClass attribute sets the CSS class to apply to this component when it is rendered.</description>
@@ -164,6 +164,13 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+	</tag>
+
+	<tag>
+		<description>Displays the content</description>
+		<name>pageSource</name>
+		<tag-class>org.maxdocs.taglib.PageSourceTag</tag-class>
+		<body-content>empty</body-content>
 	</tag>
 
 	<tag>
