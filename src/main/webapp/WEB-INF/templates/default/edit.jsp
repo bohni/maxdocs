@@ -94,9 +94,12 @@
 				<!-- begin: #col3 static column -->
 				<div id="col3" role="main">
 					<div id="col3_content" class="clearfix">
-						<textarea rows="15" cols="60">
-<max:pageSource />
+						<h2>Seite <max:pageName plain="true" /> bearbeiten</h2>
+						<textarea rows="15" cols="58"><max:pageSource />
 						</textarea>
+						<input type="button" name="preview" value="Vorschau" />&nbsp;<input
+							type="button" name="cancel" value="Abbrechen" />&nbsp;<input
+							type="submit" name="save" value="Speichern" />
 					</div>
 					<!-- IE Column Clearing -->
 					<div id="ie_clearing">&nbsp;</div>
@@ -107,7 +110,6 @@
 
 			<!-- begin: #footer -->
 			<div id="footer" role="contentinfo">
-				This page (version <max:pageVersion />) was last changed on <max:date type="lastChange" /> by <max:author type="editor" /><br />
 				Layout based on <a href="http://www.yaml.de/">YAML</a>
 			</div>
 			<!-- end: #footer -->
