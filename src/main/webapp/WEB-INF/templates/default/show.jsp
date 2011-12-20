@@ -105,6 +105,6 @@
   </div>
 </div>
 <!-- full skiplink functionality in webkit browsers -->
-<script src=<%=request.getContextPath()%>/internal/yaml/core/js/yaml-focusfix.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/internal/yaml/core/js/yaml-focusfix.js" type="text/javascript"></script>
 </body>
 </html>
