@@ -23,7 +23,9 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.maxdocs</groupId>
@@ -78,7 +80,7 @@
 
 	<scm>
 		<url>https://github.com/bohni/maxdocs</url>
-		<connection>scm:https://github.com/bohni/maxdocs.git</connection>
+		<connection>scm:git:https://github.com/bohni/maxdocs.git</connection>
 	</scm>
 	<issueManagement>
 		<system>GitHub</system>
@@ -132,6 +134,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>3.0.6.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -392,6 +400,11 @@
 						<link>http://download.oracle.com/javase/6/docs/api/</link>
 					</links>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<version>2.2</version>
 			</plugin>
 		</plugins>
 	</reporting>
