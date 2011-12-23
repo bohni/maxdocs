@@ -23,7 +23,6 @@
  */
 package org.maxdocs.data;
 
-import java.util.Date;
 
 /**
  * HtmlPage:
@@ -32,148 +31,12 @@ import java.util.Date;
  *
  * @author Team jspserver.net
  */
-public class HtmlPage
+public class HtmlPage extends AbstractPage
 {
-	private int version;
-
-	private Date firstVersionCreationDate;
-
-	private Date currentVersionCreationDate;
-
-	private String author;
-
-	private String editor;
-
-	private String contentType;
-
 	private String content;
 
-	private String pageName;
-
-	private String pagePath;
-
 	/**
-	 * getVersion() returns the version
-	 *
-	 * @return the version
-	 */
-	public int getVersion()
-	{
-		return this.version;
-	}
-
-	/**
-	 * setVersion() sets the version
-	 *
-	 * @param version the version to set
-	 */
-	public void setVersion(int version)
-	{
-		this.version = version;
-	}
-
-	/**
-	 * getFirstVersionCreationDate() returns the firstVersionCreationDate
-	 *
-	 * @return the firstVersionCreationDate
-	 */
-	public Date getFirstVersionCreationDate()
-	{
-		return this.firstVersionCreationDate;
-	}
-
-	/**
-	 * setFirstVersionCreationDate() sets the firstVersionCreationDate
-	 *
-	 * @param firstVersionCreationDate the firstVersionCreationDate to set
-	 */
-	public void setFirstVersionCreationDate(Date firstVersionCreationDate)
-	{
-		this.firstVersionCreationDate = firstVersionCreationDate;
-	}
-
-	/**
-	 * getCurrentVersionCreationDate() returns the currentVersionCreationDate
-	 *
-	 * @return the currentVersionCreationDate
-	 */
-	public Date getCurrentVersionCreationDate()
-	{
-		return this.currentVersionCreationDate;
-	}
-
-	/**
-	 * setCurrentVersionCreationDate() sets the currentVersionCreationDate
-	 *
-	 * @param currentVersionCreationDate the currentVersionCreationDate to set
-	 */
-	public void setCurrentVersionCreationDate(Date currentVersionCreationDate)
-	{
-		this.currentVersionCreationDate = currentVersionCreationDate;
-	}
-
-	/**
-	 * getAuthor() returns the author
-	 *
-	 * @return the author
-	 */
-	public String getAuthor()
-	{
-		return this.author;
-	}
-
-	/**
-	 * setAuthor() sets the author
-	 *
-	 * @param author the author to set
-	 */
-	public void setAuthor(String author)
-	{
-		this.author = author;
-	}
-
-	/**
-	 * getEditor() returns the editor
-	 *
-	 * @return the editor
-	 */
-	public String getEditor()
-	{
-		return this.editor;
-	}
-
-	/**
-	 * setEditor() sets the editor
-	 *
-	 * @param editor the editor to set
-	 */
-	public void setEditor(String editor)
-	{
-		this.editor = editor;
-	}
-
-	/**
-	 * getContentType() returns the contentType
-	 *
-	 * @return the contentType
-	 */
-	public String getContentType()
-	{
-		return this.contentType;
-	}
-
-	/**
-	 * setContentType() sets the contentType
-	 *
-	 * @param contentType the contentType to set
-	 */
-	public void setContentType(String contentType)
-	{
-		this.contentType = contentType;
-	}
-
-	/**
-	 * getContent() returns the content
+	 * getContent: Returns the content.
 	 *
 	 * @return the content
 	 */
@@ -183,52 +46,12 @@ public class HtmlPage
 	}
 
 	/**
-	 * setContent() sets the content
+	 * setContent: Sets the content.
 	 *
 	 * @param content the content to set
 	 */
 	public void setContent(String content)
 	{
 		this.content = content;
-	}
-
-	/**
-	 * getPageName() returns the pageName
-	 *
-	 * @return the pageName
-	 */
-	public String getPageName()
-	{
-		return this.pageName;
-	}
-
-	/**
-	 * setPageName() sets the pageName
-	 *
-	 * @param pageName the pageName to set
-	 */
-	public void setPageName(String pageName)
-	{
-		this.pageName = pageName;
-	}
-
-	/**
-	 * getPagePath() returns the pagePath
-	 *
-	 * @return the pagePath
-	 */
-	public String getPagePath()
-	{
-		return this.pagePath;
-	}
-
-	/**
-	 * setPagePath() sets the pagePath
-	 *
-	 * @param pagePath the pagePath to set
-	 */
-	public void setPagePath(String pagePath)
-	{
-		this.pagePath = pagePath;
 	}
 }

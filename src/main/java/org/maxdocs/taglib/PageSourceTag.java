@@ -21,61 +21,60 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.maxdocs.storage;
+package org.maxdocs.taglib;
 
+import java.io.IOException;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
+
+import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.engine.MaxDocs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Storage:
- * Interface for storage providers of MaxDocs.
+ * PageContentTag:
+ * Tag, that displays the content within a div container.
  *
  * @author Team jspserver.net
+ *
  */
-public interface Storage
+public class PageSourceTag extends TagSupport
 {
-	/**
-	 * exists:
-	 * Checks if a page exists with the given pagePath.
-	 * 
-	 * @param pagePath the requested page
-	 * @return <code>true</code> if the pagePath exists
-	 */
-	public boolean exists(String pagePath);
+	private static Logger log = LoggerFactory.getLogger(PageSourceTag.class);
 
-	/**
-	 * load:
-	 * Creates a MarkupPage object of the given page.
-	 * 
-	 * @param pagePath the requested page
-	 * @return the MarkupPage object of the requested page
+	/* (non-Javadoc)
+	 *
+	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
 	 */
-	public MarkupPage load(String pagePath);
+	@Override
+	public int doStartTag() throws JspException
+	{
+		log.trace("doStartTag()");
+		try
+		{
+			MaxDocs engine= (MaxDocs) this.pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			String pageName = (String) this.pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MarkupPage markupPage = engine.getMarkupPage(pageName);
+			this.pageContext.getOut().write(markupPage.getContent());
+		}
+		catch (IOException e)
+		{
+			log.error(e.getMessage(), e);
+		}
+		return SKIP_BODY;
+	}
 
-	/**
-	 * load:
-	 * Creates a MarkupPage object of the given page.
-	 * 
-	 * @param pagePath the requested page
-	 * @param version the requested version
-	 * @return the MarkupPage object of the requested page
+	/* (non-Javadoc)
+	 *
+	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
 	 */
-	public MarkupPage load(String pagePath, int version);
-
-	/**
-	 * save:
-	 * Persists the MarkupPage object in the storage
-	 * 
-	 * @param page the MarkupPage object to persist.
-	 * @return <code>true</code>, if saving succeeds.
-	 */
-	public boolean save(MarkupPage page);
-
-	
-	/**
-	 * delete:
-	 * Deletes the requested page.
-	 * @param pagePath the requested page
-	 * @return <code>true</code>, if deleting succeeds.
-	 */
-	public boolean delete(String pagePath);
+	@Override
+	public int doEndTag() throws JspException
+	{
+		log.trace("doEndTag()");
+		return EVAL_PAGE;
+	}
 }

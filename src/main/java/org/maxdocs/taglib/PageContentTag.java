@@ -21,16 +21,13 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/**
- * 
- */
 package org.maxdocs.taglib;
 
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.engine.MaxDocs;
@@ -38,50 +35,38 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * AuthorTag:
- * Tag, that displays the author within a span container.
+ * PageContentTag:
+ * Tag, that displays the content within a div container.
  *
  * @author Team jspserver.net
  *
  */
-public class AuthorTag extends AbstractMaxDocsTagSupport
+public class PageContentTag extends TagSupport
 {
-	private static Logger log = LoggerFactory.getLogger(AuthorTag.class);
+	private static Logger log = LoggerFactory.getLogger(PageContentTag.class);
 
-	private String type = "author";
-
-	/**
-	 * Constructor.
-	 *
-	 */
-	public AuthorTag()
-	{
-		super();
-		setStyleClass("maxdocsAuthor");
-	}
-
+	private String styleClass = "maxdocsContent";
 
 	/**
-	 * getType() returns the type
-	 *
-	 * @return the type
+	 * getStyleClass: Returns the styleClass.
+	 * 
+	 * @return the styleClass
 	 */
-	public String getType()
+	public String getStyleClass()
 	{
-		return this.type;
+		return this.styleClass;
 	}
-
 
 	/**
-	 * setType() sets the type
-	 *
-	 * @param type the type to set
+	 * setStyleClass: Sets the styleClass.
+	 * 
+	 * @param styleClass
+	 *            the styleClass to set
 	 */
-	public void setType(String type)
+	public void setStyleClass(String styleClass)
 	{
-		this.type = type;
+		this.styleClass = styleClass;
 	}
-
 
 	/* (non-Javadoc)
 	 *
@@ -96,30 +81,7 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 			MaxDocs engine= (MaxDocs) this.pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			String pageName = (String) this.pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
-
-			String author;
-			if(StringUtils.equals(this.type, "author"))
-			{
-				author = htmlPage.getAuthor();
-			}
-			else
-			{
-				author = htmlPage.getEditor();
-			}
-
-			if (isPlain())
-			{
-				this.pageContext.getOut().write(author);
-			}
-			else
-			{
-				// TODO: if(engine.pageExists(author))
-				// {
-				author = "<a href=\"#\">" + author + "</a>";
-				// }
-				this.pageContext.getOut().write(
-						"<span class=\"" + getStyleClass() + "\">" + author + "</span>");
-			}
+			this.pageContext.getOut().write("<div class=\"" + this.styleClass + "\">" + htmlPage.getContent() + "</div>");
 		}
 		catch (IOException e)
 		{
@@ -128,7 +90,6 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 		return SKIP_BODY;
 	}
 
-
 	/* (non-Javadoc)
 	 *
 	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
@@ -136,8 +97,7 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 	@Override
 	public int doEndTag() throws JspException
 	{
-		log.trace("doEndTag");
+		log.trace("doEndTag()");
 		return EVAL_PAGE;
 	}
-
 }

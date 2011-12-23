@@ -31,6 +31,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.data.HtmlPage;
+import org.maxdocs.data.MarkupPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +56,7 @@ public class MaxDocs
 		log.trace("getHtmlPage({})", pagePath);
 		// // TODO 13.12.2011: pageData ermitteln
 		HtmlPage htmlPage = new HtmlPage();
+		htmlPage.setContent("");
 
 		if(StringUtils.equals(pagePath, "/LeftMenu"))
 		{
@@ -123,4 +125,28 @@ public class MaxDocs
 		return true;
 	}
 
+	/**
+	 * getHtmlPage() creates an object containing all data of the requested page.
+	 *
+	 * @param pagePath the complete path of the page
+	 * @return an object containing all data of the requested page
+	 */
+	public MarkupPage getMarkupPage(String pagePath)
+	{
+		log.trace("getMarkupPage({})", pagePath);
+
+		MarkupPage markupPage = new MarkupPage();
+		markupPage.setAuthor("John Doe Senior");
+		markupPage.setEditor("John Doe");
+		markupPage.setContent("! " + pagePath.substring(1) + "\n\nThis is the Content...\n\n* List 1\n* List 2\n\n__Bold Text__");
+		markupPage.setContentType("text/textile");
+		Calendar date = GregorianCalendar.getInstance();
+		date.set(2011, 8, 16, 14, 27);
+		markupPage.setFirstVersionCreationDate(date.getTime());
+		markupPage.setCurrentVersionCreationDate(new Date());
+		markupPage.setPagePath(pagePath);
+		markupPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
+		markupPage.setVersion(2);
+		return markupPage;
+	}
 }

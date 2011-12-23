@@ -151,7 +151,7 @@ public class DateTag extends AbstractMaxDocsTagSupport
 		}
 		catch (IOException e)
 		{
-			log.error("DateTag:" + e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}

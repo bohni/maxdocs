@@ -85,7 +85,7 @@ public class ContentTag extends TagSupport
 		}
 		catch (IOException e)
 		{
-			log.error("ContentTag:" + e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}

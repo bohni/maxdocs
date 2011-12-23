@@ -34,7 +34,28 @@ import org.slf4j.LoggerFactory;
  * @author Stefan Bohn
  *
  */
-public class MarkupPage
+public class MarkupPage extends AbstractPage
 {
 	private static Logger log = LoggerFactory.getLogger(MarkupPage.class);
+
+	private String content;
+
+	/**
+	 * getContent: Returns the content.
+	 *
+	 * @return the content
+	 */
+	public String getContent()
+	{
+		return this.content;
+	}
+	/**
+	 * setContent: Sets the content.
+	 *
+	 * @param content the content to set
+	 */
+	public void setContent(String content)
+	{
+		this.content = content;
+	}
 }

@@ -1,3 +1,16 @@
+TODO
+
+- Storage ist Fleißarbeit
+
+- Parser TextileJ muss analysiert werden: Verwenden? Selber machen?
+
+- Editieren, Showsource, Attachments, Web-Handling
+
+- Security konzeptionieren
+
+ 
+
+
 ===============================================================
 Schnittstellen für Plugins/Providers/etc:
 - Versionierung mit OSGi, damit Drittanbieter auf geänderte 
@@ -58,6 +71,11 @@ Engine
 - zweimal Parser aufrufen:
   erster Aufruf für Syntax
   zweiter Aufruf für Plugins 
+
+- Attachments:
+  Muessen von unserem Servlet verarbeitet werden wg. PrettyURL.
+  exists() darf nicht nur true, sondern muss auch den Mimetype liefern (oder 
+  zwei Methoden)
 
 ===============================================================
 SearchProvider
