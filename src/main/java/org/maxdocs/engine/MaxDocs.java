@@ -32,6 +32,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.storage.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +46,7 @@ public class MaxDocs
 {
 	private static Logger log = LoggerFactory.getLogger(MaxDocs.class);
 
+	private Storage storage;
 	/**
 	 * getHtmlPage() creates an object containing all data of the requested page.
 	 *
@@ -148,5 +150,25 @@ public class MaxDocs
 		markupPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 		markupPage.setVersion(2);
 		return markupPage;
+	}
+
+	/**
+	 * getStorage: Returns the storage.
+	 * 
+	 * @return the storage
+	 */
+	public Storage getStorage()
+	{
+		return storage;
+	}
+
+	/**
+	 * setStorage: Sets the storage.
+	 * 
+	 * @param storage the storage to set
+	 */
+	public void setStorage(Storage storage)
+	{
+		this.storage = storage;
 	}
 }

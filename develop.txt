@@ -1,15 +1,8 @@
 TODO
-
 - Storage ist Fleißarbeit
-
 - Parser TextileJ muss analysiert werden: Verwenden? Selber machen?
-
 - Editieren, Showsource, Attachments, Web-Handling
-
 - Security konzeptionieren
-
- 
-
 
 ===============================================================
 Schnittstellen für Plugins/Providers/etc:

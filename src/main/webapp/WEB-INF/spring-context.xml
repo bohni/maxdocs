@@ -47,6 +47,14 @@
 	<bean id="baz" class="java.lang.String">
 		<constructor-arg value="Hallo Spring!"/>
 	</bean>
+
+	<bean id="storageImpl" class="org.maxdocs.storage.FileStorage">
+		<constructor-arg value="/var/maxdocs/content/"/>
+	</bean>
+
+	<bean id="maxDocs" class="org.maxdocs.engine.MaxDocs">
+		<property name="storage" ref="storageImpl" />
+	</bean>
 	
 	<security:http auto-config="true">
 		<!-- the most specific matches at the top -->
