@@ -28,8 +28,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
+import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.FrameworkServlet;
 
 /**
@@ -98,4 +100,18 @@ public class MaxDocsServlet extends FrameworkServlet
 			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/edit.jsp").forward(request, response);
 		}
 	}
+
+
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.FrameworkServlet#initWebApplicationContext()
+	 */
+	@Override
+	protected WebApplicationContext initWebApplicationContext()
+	{
+		WebApplicationContext webApplicationContext = super.initWebApplicationContext();
+		webApplicationContext.getServletContext().setAttribute(MaxDocsConstants.MAXDOCS_ENGINE,webApplicationContext.getBean(MaxDocs.class));
+		return webApplicationContext;
+	}
+	
+	
 }

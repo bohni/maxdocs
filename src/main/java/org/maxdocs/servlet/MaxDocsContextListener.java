@@ -30,6 +30,7 @@ import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * MaxDocsContextListener:
@@ -50,7 +51,8 @@ public class MaxDocsContextListener implements ServletContextListener
 	public void contextInitialized(ServletContextEvent sce)
 	{
 		log.trace("contextInitialized");
-		sce.getServletContext().setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, new MaxDocs());
+//		MaxDocs maxDocs = WebApplicationContextUtils.getWebApplicationContext(sce.getServletContext()).getBean(MaxDocs.class);
+//		sce.getServletContext().setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, maxDocs);
 	}
 
 	/* (non-Javadoc)
