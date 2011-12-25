@@ -1,0 +1,24 @@
+package org.maxdocs.taglib;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+/**
+ * TaglibSuite:
+ * Test suit for running all taglib test classes.
+ *
+ * @author Team jspserver.net
+ *
+ */
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+	AuthorTagTest.class,
+	ContentTypeTagTest.class,
+	PageNameTagTest.class,
+	PageVersionTagTest.class,
+})
+public class TaglibSuite
+{
+	// the class remains completely empty,
+	// being used only as a holder for the above annotations
+}
