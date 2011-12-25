@@ -1,18 +1,18 @@
 /**
  * Copyright (c) 2010-2011, Team jspserver.net
- *
+ * 
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided
  * that the following conditions are met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the
- *    following disclaimer.
+ * following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
- *    the following disclaimer in the documentation and/or other materials provided with the distribution.
+ * the following disclaimer in the documentation and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
+ * without specific prior written permission.
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
  * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
  * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
@@ -39,20 +39,21 @@ import org.slf4j.LoggerFactory;
 /**
  * MaxDocs:
  * Main engine of MaxDocs.
- *
+ * 
  * @author Team jspserver.net
  */
-public class MaxDocs
+public class MaxDocs implements Engine
 {
 	private static Logger log = LoggerFactory.getLogger(MaxDocs.class);
 
 	private Storage storage;
-	/**
-	 * getHtmlPage() creates an object containing all data of the requested page.
-	 *
-	 * @param pagePath the complete path of the page
-	 * @return an object containing all data of the requested page
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.maxdocs.engine.Engine#getHtmlPage(java.lang.String)
 	 */
+	@Override
 	public HtmlPage getHtmlPage(String pagePath)
 	{
 		log.trace("getHtmlPage({})", pagePath);
@@ -60,7 +61,7 @@ public class MaxDocs
 		HtmlPage htmlPage = new HtmlPage();
 		htmlPage.setContent("");
 
-		if(StringUtils.equals(pagePath, "/LeftMenu"))
+		if (StringUtils.equals(pagePath, "/LeftMenu"))
 		{
 			htmlPage.setAuthor("John Doe Senior");
 			htmlPage.setEditor("John Doe");
@@ -92,14 +93,12 @@ public class MaxDocs
 		return htmlPage;
 	}
 
-	/**
-	 * getTagCloud:
-	 * Creates a map with the tags of the tag cloud.
-	 * Keys of the map are the tags
-	 * Value of the map is the weight of the tag as Integer
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return a map with the tag cloud.
+	 * @see org.maxdocs.engine.Engine#getTagCloud()
 	 */
+	@Override
 	public Map<String, Integer> getTagCloud()
 	{
 		Map<String, Integer> tagCloud = new HashMap<String, Integer>();
@@ -114,25 +113,24 @@ public class MaxDocs
 		return tagCloud;
 	}
 
-	/**
-	 * exists:
-	 * Checks if a page exists with the given pagePath.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param pagePath the requested page
-	 * @return <code>true</code> if the pagePath exists
+	 * @see org.maxdocs.engine.Engine#exists(java.lang.String)
 	 */
+	@Override
 	public boolean exists(String pagePath)
 	{
 		// TODO, 16.12.2011:
 		return true;
 	}
 
-	/**
-	 * getHtmlPage() creates an object containing all data of the requested page.
-	 *
-	 * @param pagePath the complete path of the page
-	 * @return an object containing all data of the requested page
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.maxdocs.engine.Engine#getMarkupPage(java.lang.String)
 	 */
+	@Override
 	public MarkupPage getMarkupPage(String pagePath)
 	{
 		log.trace("getMarkupPage({})", pagePath);
@@ -140,7 +138,8 @@ public class MaxDocs
 		MarkupPage markupPage = new MarkupPage();
 		markupPage.setAuthor("John Doe Senior");
 		markupPage.setEditor("John Doe");
-		markupPage.setContent("! " + pagePath.substring(1) + "\n\nThis is the Content...\n\n* List 1\n* List 2\n\n__Bold Text__");
+		markupPage.setContent("! " + pagePath.substring(1)
+				+ "\n\nThis is the Content...\n\n* List 1\n* List 2\n\n__Bold Text__");
 		markupPage.setContentType("text/textile");
 		Calendar date = GregorianCalendar.getInstance();
 		date.set(2011, 8, 16, 14, 27);
@@ -153,19 +152,10 @@ public class MaxDocs
 	}
 
 	/**
-	 * getStorage: Returns the storage.
-	 * 
-	 * @return the storage
-	 */
-	public Storage getStorage()
-	{
-		return storage;
-	}
-
-	/**
 	 * setStorage: Sets the storage.
 	 * 
-	 * @param storage the storage to set
+	 * @param storage
+	 *            the storage to set
 	 */
 	public void setStorage(Storage storage)
 	{

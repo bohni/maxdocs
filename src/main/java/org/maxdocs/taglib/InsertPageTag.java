@@ -34,7 +34,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
-import org.maxdocs.engine.MaxDocs;
+import org.maxdocs.engine.Engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +60,7 @@ public class InsertPageTag extends TagSupport
 	 */
 	public String getStyleClass()
 	{
-		return this.styleClass;
+		return styleClass;
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class InsertPageTag extends TagSupport
 	 */
 	public String getName()
 	{
-		return this.name;
+		return name;
 	}
 
 	/**
@@ -112,10 +112,10 @@ public class InsertPageTag extends TagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine= (MaxDocs) this.pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			HtmlPage htmlPage = engine.getHtmlPage(this.name);
+			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			HtmlPage htmlPage = engine.getHtmlPage(name);
 
-			this.pageContext.getOut().write("<div class=\"" + this.styleClass + "\">" + htmlPage.getContent() + "</div>");
+			pageContext.getOut().write("<div class=\"" + styleClass + "\">" + htmlPage.getContent() + "</div>");
 		}
 		catch (IOException e)
 		{

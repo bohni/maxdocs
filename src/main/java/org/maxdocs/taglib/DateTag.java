@@ -35,7 +35,7 @@ import javax.servlet.jsp.JspException;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
-import org.maxdocs.engine.MaxDocs;
+import org.maxdocs.engine.Engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,7 +72,7 @@ public class DateTag extends AbstractMaxDocsTagSupport
 	 */
 	public String getFormat()
 	{
-		return this.format;
+		return format;
 	}
 
 
@@ -94,7 +94,7 @@ public class DateTag extends AbstractMaxDocsTagSupport
 	 */
 	public String getType()
 	{
-		return this.type;
+		return type;
 	}
 
 
@@ -119,18 +119,18 @@ public class DateTag extends AbstractMaxDocsTagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine= (MaxDocs) this.pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pageName = (String) this.pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
-			if(StringUtils.isBlank(this.format))
+			if(StringUtils.isBlank(format))
 			{
-				this.format = ((SimpleDateFormat)DateFormat.getDateTimeInstance(
-						DateFormat.SHORT, DateFormat.SHORT, this.pageContext.getRequest().getLocale())).toPattern();
+				format = ((SimpleDateFormat)DateFormat.getDateTimeInstance(
+						DateFormat.SHORT, DateFormat.SHORT, pageContext.getRequest().getLocale())).toPattern();
 			}
-			SimpleDateFormat sdf = new SimpleDateFormat(this.format);
+			SimpleDateFormat sdf = new SimpleDateFormat(format);
 
 			String date;
-			if(StringUtils.equals(this.type, "creation"))
+			if(StringUtils.equals(type, "creation"))
 			{
 				date = sdf.format(htmlPage.getFirstVersionCreationDate());
 			}
@@ -141,11 +141,11 @@ public class DateTag extends AbstractMaxDocsTagSupport
 
 			if (isPlain())
 			{
-				this.pageContext.getOut().write(date);
+				pageContext.getOut().write(date);
 			}
 			else
 			{
-				this.pageContext.getOut().write(
+				pageContext.getOut().write(
 						"<span class=\"" + getStyleClass() + "\">" + date + "</span>");
 			}
 		}

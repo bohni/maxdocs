@@ -32,7 +32,7 @@ import javax.servlet.jsp.JspException;
 
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
-import org.maxdocs.engine.MaxDocs;
+import org.maxdocs.engine.Engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,18 +69,18 @@ public class PageVersionTag extends AbstractMaxDocsTagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine= (MaxDocs) this.pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pagePath = (String) this.pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			String pagePath = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
 			String pageVersion = "" + htmlPage.getVersion();
 
 			if (isPlain())
 			{
-				this.pageContext.getOut().write(pageVersion);
+				pageContext.getOut().write(pageVersion);
 			}
 			else
 			{
-				this.pageContext.getOut()
+				pageContext.getOut()
 				.write("<span class=\"" + getStyleClass() + "\">" + pageVersion + "</span>");
 			}
 		}

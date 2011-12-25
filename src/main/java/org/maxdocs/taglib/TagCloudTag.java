@@ -37,7 +37,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.maxdocs.MaxDocsConstants;
-import org.maxdocs.engine.MaxDocs;
+import org.maxdocs.engine.Engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +61,7 @@ public class TagCloudTag extends TagSupport
 	 */
 	public String getStyleClass()
 	{
-		return this.styleClass;
+		return styleClass;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class TagCloudTag extends TagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine = (MaxDocs) this.pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			Map<String, Integer> tagCloudMap = engine.getTagCloud();
 
 			StringBuffer tagCloud = new StringBuffer();
@@ -102,7 +102,7 @@ public class TagCloudTag extends TagSupport
 				tagCloud.append("</span> ");
 			}
 
-			this.pageContext.getOut().write("<div class=\"" + this.styleClass + "\">" + tagCloud + "</div>");
+			pageContext.getOut().write("<div class=\"" + styleClass + "\">" + tagCloud + "</div>");
 		}
 		catch (IOException e)
 		{

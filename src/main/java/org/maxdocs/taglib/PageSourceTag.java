@@ -30,7 +30,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.MarkupPage;
-import org.maxdocs.engine.MaxDocs;
+import org.maxdocs.engine.Engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,10 +55,10 @@ public class PageSourceTag extends TagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine= (MaxDocs) this.pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pageName = (String) this.pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			MarkupPage markupPage = engine.getMarkupPage(pageName);
-			this.pageContext.getOut().write(markupPage.getContent());
+			pageContext.getOut().write(markupPage.getContent());
 		}
 		catch (IOException e)
 		{

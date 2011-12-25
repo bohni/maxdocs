@@ -1,18 +1,18 @@
 /**
  * Copyright (c) 2010-2011, Team jspserver.net
- *
+ * 
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided
  * that the following conditions are met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the
- *    following disclaimer.
+ * following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
- *    the following disclaimer in the documentation and/or other materials provided with the distribution.
+ * the following disclaimer in the documentation and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
+ * without specific prior written permission.
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
  * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
  * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
@@ -33,7 +33,9 @@ import junit.framework.TestCase;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
+import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
+import org.maxdocs.engine.Engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -43,21 +45,29 @@ import org.springframework.web.context.WebApplicationContext;
 
 /**
  * AuthorTagTest:
- * TODO 12.12.2011: Dokumentation ergänzen
- *
+ * Unit test for AuthorTag.
+ * 
  * @author Team jspserver.net
  */
 public class AuthorTagTest extends TestCase
 {
 	private static Logger log = LoggerFactory.getLogger(AuthorTagTest.class);
 
+	private Engine mockEngine;
+
 	private HtmlPage htmlPage;
+
+	private final String pagePath = "/Main";
+
 	private AuthorTag authorTag;
+
 	private MockServletContext mockServletContext;
+
 	private MockPageContext mockPageContext;
+
 	private WebApplicationContext mockWebApplicationContext;
 
-
+	@Override
 	@Before
 	protected void setUp() throws Exception
 	{
@@ -70,57 +80,49 @@ public class AuthorTagTest extends TestCase
 		// Then add the Spring Context to the Servlet Context
 		mockWebApplicationContext = EasyMock.createMock(WebApplicationContext.class);
 		mockServletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,
-			mockWebApplicationContext);
+				mockWebApplicationContext);
 
 		// Create the MockPageContext passing in the mock servlet context created above
 		mockPageContext = new MockPageContext(mockServletContext);
 
 		// Test data
 		htmlPage = new HtmlPage();
-		htmlPage.setAuthor("Name");
-		mockPageContext.getRequest().setAttribute("PAGE_DATA", htmlPage);
+		htmlPage.setAuthor("Author Name");
+		htmlPage.setEditor("Editor Name");
 
+		// Create the mocked MaxDocs engine
+		mockEngine = EasyMock.createMock(Engine.class);
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
+
+		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
+		mockServletContext.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, mockEngine);
 		// Create an instance of the custom tag we want to test
 		// set it's PageContext to the MockPageContext we created above
 		authorTag = new AuthorTag();
 		authorTag.setPageContext(mockPageContext);
 
 		// Whenever you make a call to the doStartTag() method on the custom tag it calls getServletContext()
-		// on the WebApplicationContext.  So to avoid having to put this expect statement in every test
+		// on the WebApplicationContext. So to avoid having to put this expect statement in every test
 		// I've included it in the setUp()
 		EasyMock.expect(mockWebApplicationContext.getServletContext()).andReturn(mockServletContext)
-			.anyTimes();
+		.anyTimes();
 	}
 
-
+	/**
+	 * testDoStartTagAuthorDefault:
+	 * Check output for type set to 'author'.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
 	@Test
-	public void testDoStartTagWithStyle() throws JspException, UnsupportedEncodingException
-	{
-		String param = "style";
-		String expectedOutput = "<span class=\"" + param + "\"><a href=\"#\">" + htmlPage.getAuthor() + "</a></span>";
-
-		replayAllMocks();
-
-		authorTag.setStyleClass(param);
-		authorTag.setPlain(false);
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
-	}
-
-
-	@Test
-	public void testDoStartTagWithOutStyle() throws JspException, UnsupportedEncodingException
+	public void testDoStartTagAuthorDefault() throws JspException, UnsupportedEncodingException
 	{
 		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + htmlPage.getAuthor() + "</a></span>";
 
 		replayAllMocks();
 
-		authorTag.setPlain(false);
+		authorTag.setType("author");
 		int tagReturnValue = authorTag.doStartTag();
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
@@ -130,17 +132,49 @@ public class AuthorTagTest extends TestCase
 		verifyAllMocks();
 	}
 
-
+	/**
+	 * testDoStartTagAuthorWithStyle:
+	 * Check output for type set to 'author' and styleClass set to 'style'.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
 	@Test
-	public void testDoStartTagPlainWithStyle() throws JspException, UnsupportedEncodingException
+	public void testDoStartTagAuthorWithStyle() throws JspException, UnsupportedEncodingException
 	{
-		String param = "style";
+		String styleClass = "style";
+		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + htmlPage.getAuthor() + "</a></span>";
+
+		replayAllMocks();
+
+		authorTag.setType("author");
+		authorTag.setStyleClass(styleClass);
+		int tagReturnValue = authorTag.doStartTag();
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
+	/**
+	 * testDoStartTagAuthorWithStyle:
+	 * Check output for type set to 'author' and plain set to 'true'.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagAuthorWithPlain() throws JspException, UnsupportedEncodingException
+	{
+		boolean plain = true;
 		String expectedOutput = htmlPage.getAuthor();
 
 		replayAllMocks();
 
-		authorTag.setStyleClass(param);
-		authorTag.setPlain(true);
+		authorTag.setType("author");
+		authorTag.setPlain(plain);
 		int tagReturnValue = authorTag.doStartTag();
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
@@ -150,15 +184,25 @@ public class AuthorTagTest extends TestCase
 		verifyAllMocks();
 	}
 
-
+	/**
+	 * testDoStartTagAuthorWithStyle:
+	 * Check output for type set to 'author' and plain set to 'true'.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
 	@Test
-	public void testDoStartTagPlainWithOutStyle() throws JspException, UnsupportedEncodingException
+	public void testDoStartTagAuthorWithPlainAndStyle() throws JspException, UnsupportedEncodingException
 	{
+		boolean plain = true;
+		String styleClass = "style";
 		String expectedOutput = htmlPage.getAuthor();
 
 		replayAllMocks();
 
-		authorTag.setPlain(true);
+		authorTag.setType("author");
+		authorTag.setPlain(plain);
+		authorTag.setStyleClass(styleClass);
 		int tagReturnValue = authorTag.doStartTag();
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
@@ -168,15 +212,117 @@ public class AuthorTagTest extends TestCase
 		verifyAllMocks();
 	}
 
+	/**
+	 * testDoStartTagEditorDefault:
+	 * Check output for type set to 'editor'.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagEditorDefault() throws JspException, UnsupportedEncodingException
+	{
+		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + htmlPage.getEditor() + "</a></span>";
+
+		replayAllMocks();
+
+		authorTag.setType("editor");
+		int tagReturnValue = authorTag.doStartTag();
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
+	/**
+	 * testDoStartTagEditorWithStyle:
+	 * Check output for type set to 'author' and styleClass set to 'style'.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagEditorWithStyle() throws JspException, UnsupportedEncodingException
+	{
+		String styleClass = "style";
+		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + htmlPage.getEditor() + "</a></span>";
+
+		replayAllMocks();
+
+		authorTag.setType("editor");
+		authorTag.setStyleClass(styleClass);
+		int tagReturnValue = authorTag.doStartTag();
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
+	/**
+	 * testDoStartTagEditorWithStyle:
+	 * Check output for type set to 'author' and plain set to 'true'.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagEditorWithPlain() throws JspException, UnsupportedEncodingException
+	{
+		boolean plain = true;
+		String expectedOutput = htmlPage.getEditor();
+
+		replayAllMocks();
+
+		authorTag.setType("editor");
+		authorTag.setPlain(plain);
+		int tagReturnValue = authorTag.doStartTag();
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
+	/**
+	 * testDoStartTagEditorWithStyle:
+	 * Check output for type set to 'author' and plain set to 'true'.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagEditorWithPlainAndStyle() throws JspException, UnsupportedEncodingException
+	{
+		boolean plain = true;
+		String styleClass = "style";
+		String expectedOutput = htmlPage.getEditor();
+
+		replayAllMocks();
+
+		authorTag.setType("editor");
+		authorTag.setPlain(plain);
+		authorTag.setStyleClass(styleClass);
+		int tagReturnValue = authorTag.doStartTag();
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
+
+		verifyAllMocks();
+	}
 
 	private void replayAllMocks()
 	{
-		EasyMock.replay(mockWebApplicationContext);
+		EasyMock.replay(mockWebApplicationContext, mockEngine);
 	}
-
 
 	private void verifyAllMocks()
 	{
-		EasyMock.verify(mockWebApplicationContext);
+		EasyMock.verify(mockWebApplicationContext, mockEngine);
 	}
 }

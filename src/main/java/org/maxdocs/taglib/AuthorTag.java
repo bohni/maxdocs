@@ -33,7 +33,7 @@ import javax.servlet.jsp.JspException;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
-import org.maxdocs.engine.MaxDocs;
+import org.maxdocs.engine.Engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +68,7 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 	 */
 	public String getType()
 	{
-		return this.type;
+		return type;
 	}
 
 
@@ -93,12 +93,12 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine= (MaxDocs) this.pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pageName = (String) this.pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
 
 			String author;
-			if(StringUtils.equals(this.type, "author"))
+			if(StringUtils.equals(type, "author"))
 			{
 				author = htmlPage.getAuthor();
 			}
@@ -109,7 +109,7 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 
 			if (isPlain())
 			{
-				this.pageContext.getOut().write(author);
+				pageContext.getOut().write(author);
 			}
 			else
 			{
@@ -117,7 +117,7 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 				// {
 				author = "<a href=\"#\">" + author + "</a>";
 				// }
-				this.pageContext.getOut().write(
+				pageContext.getOut().write(
 						"<span class=\"" + getStyleClass() + "\">" + author + "</span>");
 			}
 		}
