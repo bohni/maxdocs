@@ -47,8 +47,11 @@ public class FileStorage implements Storage
 			this.storagePath = storagePath + "/";
 		}
 		File file = new File(this.storagePath);
+		log.debug("Using content dir {}", file.getAbsolutePath());
+
 		if(!file.exists())
 		{
+			log.info("Content dir does not exist. Creating {}", file.getAbsolutePath());
 			file.mkdirs();
 		}
 	}
