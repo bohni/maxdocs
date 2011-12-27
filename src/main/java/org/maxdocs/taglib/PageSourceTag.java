@@ -58,7 +58,11 @@ public class PageSourceTag extends TagSupport
 			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			MarkupPage markupPage = engine.getMarkupPage(pageName);
-			pageContext.getOut().write(markupPage.getContent());
+
+			if(markupPage != null)
+			{
+				pageContext.getOut().write(markupPage.getContent());
+			}
 		}
 		catch (IOException e)
 		{

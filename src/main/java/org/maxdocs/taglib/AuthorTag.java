@@ -97,32 +97,36 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
 
-			String author;
-			if(StringUtils.equals(type, "author"))
+			if(htmlPage != null)
 			{
-				author = htmlPage.getAuthor();
-			}
-			else if(StringUtils.equals(type, "editor"))
-			{
-				author = htmlPage.getEditor();
-			}
-			else
-			{
-				author = "unsupported type '" + type + "'";
-			}
-
-			if (isPlain())
-			{
-				pageContext.getOut().write(author);
-			}
-			else
-			{
-				// TODO: if(engine.pageExists(author))
-				// {
-				author = "<a href=\"#\">" + author + "</a>";
-				// }
-				pageContext.getOut().write(
-						"<span class=\"" + getStyleClass() + "\">" + author + "</span>");
+	
+				String author;
+				if(StringUtils.equals(type, "author"))
+				{
+					author = htmlPage.getAuthor();
+				}
+				else if(StringUtils.equals(type, "editor"))
+				{
+					author = htmlPage.getEditor();
+				}
+				else
+				{
+					author = "unsupported type '" + type + "'";
+				}
+	
+				if (isPlain())
+				{
+					pageContext.getOut().write(author);
+				}
+				else
+				{
+					// TODO: if(engine.pageExists(author))
+					// {
+					author = "<a href=\"#\">" + author + "</a>";
+					// }
+					pageContext.getOut().write(
+							"<span class=\"" + getStyleClass() + "\">" + author + "</span>");
+				}
 			}
 		}
 		catch (IOException e)

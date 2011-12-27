@@ -57,39 +57,41 @@ public class MaxDocs implements Engine
 	public HtmlPage getHtmlPage(String pagePath)
 	{
 		log.trace("getHtmlPage({})", pagePath);
-		// // TODO 13.12.2011: pageData ermitteln
-		HtmlPage htmlPage = new HtmlPage();
-		htmlPage.setContent("");
-
-		if (StringUtils.equals(pagePath, "/LeftMenu"))
+		// TODO 13.12.2011: pageData ermitteln
+		HtmlPage htmlPage = null;
+		if(exists(pagePath))
 		{
-			htmlPage.setAuthor("John Doe Senior");
-			htmlPage.setEditor("John Doe");
-			htmlPage.setContent("<a href=\"#\">Link 1</a><br/><a href=\"#\">Link 2</a><br/><a href=\"#\">Link 3</a><br/><a href=\"#\">Link 4</a>");
-			htmlPage.setContentType("text/textile");
-			Calendar date = GregorianCalendar.getInstance();
-			date.set(2011, 8, 16, 14, 27);
-			htmlPage.setFirstVersionCreationDate(date.getTime());
-			htmlPage.setCurrentVersionCreationDate(new Date());
-			htmlPage.setPagePath(pagePath);
-			htmlPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
-			htmlPage.setVersion(2);
+			htmlPage = new HtmlPage();
+			
+			if (StringUtils.equals(pagePath, "/LeftMenu"))
+			{
+				htmlPage.setAuthor("John Doe Senior");
+				htmlPage.setEditor("John Doe");
+				htmlPage.setContent("<a href=\"#\">Link 1</a><br/><a href=\"#\">Link 2</a><br/><a href=\"#\">Link 3</a><br/><a href=\"#\">Link 4</a>");
+				htmlPage.setContentType("text/textile");
+				Calendar date = GregorianCalendar.getInstance();
+				date.set(2011, 8, 16, 14, 27);
+				htmlPage.setFirstVersionCreationDate(date.getTime());
+				htmlPage.setCurrentVersionCreationDate(new Date());
+				htmlPage.setPagePath(pagePath);
+				htmlPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
+				htmlPage.setVersion(2);
+			}
+			else
+			{
+				htmlPage.setAuthor("John Doe Senior");
+				htmlPage.setEditor("John Doe");
+				htmlPage.setContent("<p>This is the Content...</p><ul><li>List 1</li><li>List 2</li></ul><p><strong>Bold Text</strong></p>");
+				htmlPage.setContentType("text/textile");
+				Calendar date = GregorianCalendar.getInstance();
+				date.set(2011, 8, 16, 14, 27);
+				htmlPage.setFirstVersionCreationDate(date.getTime());
+				htmlPage.setCurrentVersionCreationDate(new Date());
+				htmlPage.setPagePath(pagePath);
+				htmlPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
+				htmlPage.setVersion(2);
+			}
 		}
-		else
-		{
-			htmlPage.setAuthor("John Doe Senior");
-			htmlPage.setEditor("John Doe");
-			htmlPage.setContent("<p>This is the Content...</p><ul><li>List 1</li><li>List 2</li></ul><p><strong>Bold Text</strong></p>");
-			htmlPage.setContentType("text/textile");
-			Calendar date = GregorianCalendar.getInstance();
-			date.set(2011, 8, 16, 14, 27);
-			htmlPage.setFirstVersionCreationDate(date.getTime());
-			htmlPage.setCurrentVersionCreationDate(new Date());
-			htmlPage.setPagePath(pagePath);
-			htmlPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
-			htmlPage.setVersion(2);
-		}
-
 		return htmlPage;
 	}
 
@@ -121,8 +123,7 @@ public class MaxDocs implements Engine
 	@Override
 	public boolean exists(String pagePath)
 	{
-		// TODO, 16.12.2011:
-		return true;
+		return storage.exists(pagePath);
 	}
 
 	/*
@@ -135,19 +136,23 @@ public class MaxDocs implements Engine
 	{
 		log.trace("getMarkupPage({})", pagePath);
 
-		MarkupPage markupPage = new MarkupPage();
-		markupPage.setAuthor("John Doe Senior");
-		markupPage.setEditor("John Doe");
-		markupPage.setContent("! " + pagePath.substring(1)
-				+ "\n\nThis is the Content...\n\n* List 1\n* List 2\n\n__Bold Text__");
-		markupPage.setContentType("text/textile");
-		Calendar date = GregorianCalendar.getInstance();
-		date.set(2011, 8, 16, 14, 27);
-		markupPage.setFirstVersionCreationDate(date.getTime());
-		markupPage.setCurrentVersionCreationDate(new Date());
+		MarkupPage markupPage= new MarkupPage();
 		markupPage.setPagePath(pagePath);
 		markupPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
-		markupPage.setVersion(2);
+
+		if(exists(pagePath))
+		{
+			markupPage.setAuthor("John Doe Senior");
+			markupPage.setEditor("John Doe");
+			markupPage.setContent("! " + pagePath.substring(1)
+					+ "\n\nThis is the Content...\n\n* List 1\n* List 2\n\n__Bold Text__");
+			markupPage.setContentType("text/textile");
+			Calendar date = GregorianCalendar.getInstance();
+			date.set(2011, 8, 16, 14, 27);
+			markupPage.setFirstVersionCreationDate(date.getTime());
+			markupPage.setCurrentVersionCreationDate(new Date());
+			markupPage.setVersion(2);
+		}
 		return markupPage;
 	}
 

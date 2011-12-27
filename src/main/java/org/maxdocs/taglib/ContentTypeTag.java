@@ -72,16 +72,20 @@ public class ContentTypeTag extends AbstractMaxDocsTagSupport
 			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
-			String contentType = htmlPage.getContentType();
 
-			if (isPlain())
+			if(htmlPage != null)
 			{
-				pageContext.getOut().write(contentType);
-			}
-			else
-			{
-				pageContext.getOut().write(
-						"<span class=\"" + getStyleClass() + "\">" + contentType + "</span>");
+				String contentType = htmlPage.getContentType();
+	
+				if (isPlain())
+				{
+					pageContext.getOut().write(contentType);
+				}
+				else
+				{
+					pageContext.getOut().write(
+							"<span class=\"" + getStyleClass() + "\">" + contentType + "</span>");
+				}
 			}
 		}
 		catch (IOException e)

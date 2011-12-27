@@ -67,6 +67,7 @@ public class ContentTypeTagTest extends TestCase
 
 	private WebApplicationContext mockWebApplicationContext;
 
+
 	@Override
 	@Before
 	protected void setUp() throws Exception
@@ -80,7 +81,7 @@ public class ContentTypeTagTest extends TestCase
 		// Then add the Spring Context to the Servlet Context
 		mockWebApplicationContext = EasyMock.createMock(WebApplicationContext.class);
 		mockServletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,
-				mockWebApplicationContext);
+			mockWebApplicationContext);
 
 		// Create the MockPageContext passing in the mock servlet context created above
 		mockPageContext = new MockPageContext(mockServletContext);
@@ -91,7 +92,6 @@ public class ContentTypeTagTest extends TestCase
 
 		// Create the mocked MaxDocs engine
 		mockEngine = EasyMock.createMock(Engine.class);
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 
 		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
 		mockServletContext.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, mockEngine);
@@ -104,8 +104,9 @@ public class ContentTypeTagTest extends TestCase
 		// on the WebApplicationContext. So to avoid having to put this expect statement in every test
 		// I've included it in the setUp()
 		EasyMock.expect(mockWebApplicationContext.getServletContext()).andReturn(mockServletContext)
-		.anyTimes();
+			.anyTimes();
 	}
+
 
 	/**
 	 * testDoStartTagDefault:
@@ -119,6 +120,7 @@ public class ContentTypeTagTest extends TestCase
 	{
 		String expectedOutput = "<span class=\"maxdocsContentType\">" + htmlPage.getContentType() + "</span>";
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		int tagReturnValue = contentTypeTag.doStartTag();
@@ -129,6 +131,7 @@ public class ContentTypeTagTest extends TestCase
 
 		verifyAllMocks();
 	}
+
 
 	/**
 	 * testDoStartTagWithStyle:
@@ -141,9 +144,9 @@ public class ContentTypeTagTest extends TestCase
 	public void testDoStartTagWithStyle() throws JspException, UnsupportedEncodingException
 	{
 		String styleClass = "style";
-		String expectedOutput = "<span class=\"" + styleClass + "\">" + htmlPage.getContentType()
-				+ "</span>";
+		String expectedOutput = "<span class=\"" + styleClass + "\">" + htmlPage.getContentType() + "</span>";
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		contentTypeTag.setStyleClass(styleClass);
@@ -155,6 +158,7 @@ public class ContentTypeTagTest extends TestCase
 
 		verifyAllMocks();
 	}
+
 
 	/**
 	 * testDoStartTagWithPlain:
@@ -169,6 +173,7 @@ public class ContentTypeTagTest extends TestCase
 		boolean plain = true;
 		String expectedOutput = htmlPage.getContentType();
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		contentTypeTag.setPlain(plain);
@@ -180,6 +185,7 @@ public class ContentTypeTagTest extends TestCase
 
 		verifyAllMocks();
 	}
+
 
 	/**
 	 * testDoStartTagWithPlainAndStyle:
@@ -195,6 +201,7 @@ public class ContentTypeTagTest extends TestCase
 		String styleClass = "style";
 		String expectedOutput = htmlPage.getContentType();
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		contentTypeTag.setPlain(plain);
@@ -208,10 +215,38 @@ public class ContentTypeTagTest extends TestCase
 		verifyAllMocks();
 	}
 
+
+	/**
+	 * testDoStartTagPageNotExists:
+	 * Check output for non existing page.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagPageNotExists() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testDoStartTagPageNotExists");
+		String expectedOutput = "";
+
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
+		replayAllMocks();
+
+		int tagReturnValue = contentTypeTag.doStartTag();
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		assertEquals("Output should be empty", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
+
 	private void replayAllMocks()
 	{
 		EasyMock.replay(mockWebApplicationContext, mockEngine);
 	}
+
 
 	private void verifyAllMocks()
 	{

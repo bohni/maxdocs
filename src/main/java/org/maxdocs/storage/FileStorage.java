@@ -1,5 +1,8 @@
 package org.maxdocs.storage;
 
+import java.io.File;
+
+import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.data.MarkupPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +38,19 @@ public class FileStorage implements Storage
 	public FileStorage(String storagePath)
 	{
 		log.trace("FileStorage({})", storagePath);
-		this.storagePath = storagePath; 
+		if(StringUtils.endsWith(storagePath, "/"))
+		{
+			this.storagePath = storagePath; 
+		}
+		else
+		{
+			this.storagePath = storagePath + "/";
+		}
+		File file = new File(this.storagePath);
+		if(!file.exists())
+		{
+			file.mkdirs();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -44,7 +59,22 @@ public class FileStorage implements Storage
 	@Override
 	public boolean exists(String pagePath)
 	{
-		// TODO Auto-generated method stub
+		File file;
+		if(pagePath.startsWith("/"))
+		{
+			file = new File(storagePath + pagePath.substring(1) + ".txt");
+		}
+		else
+		{
+			file = new File(storagePath + pagePath + ".txt");
+		}
+		if(file.exists())
+		{
+			if(file.isFile())
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -90,26 +120,5 @@ public class FileStorage implements Storage
 	{
 		// TODO Auto-generated method stub
 		return false;
-	}
-	// private static Logger log = LoggerFactory.getLogger(FileStorage.class);
-
-	/**
-	 * getStoragePath: Returns the storagePath.
-	 * 
-	 * @return the storagePath
-	 */
-	public String getStoragePath()
-	{
-		return storagePath;
-	}
-
-	/**
-	 * setStoragePath: Sets the storagePath.
-	 * 
-	 * @param storagePath the storagePath to set
-	 */
-	public void setStoragePath(String storagePath)
-	{
-		this.storagePath = storagePath; 
 	}
 }

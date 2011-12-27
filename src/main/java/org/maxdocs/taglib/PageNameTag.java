@@ -72,16 +72,20 @@ public class PageNameTag extends AbstractMaxDocsTagSupport
 			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			String pagePath = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
-			String pageName = htmlPage.getPageName();
 
-			if (isPlain())
+			if(htmlPage != null)
 			{
-				pageContext.getOut().write(pageName);
-			}
-			else
-			{
-				pageContext.getOut()
-				.write("<h1 class=\"" + getStyleClass() + "\">" + pageName + "</h1>");
+				String pageName = htmlPage.getPageName();
+	
+				if (isPlain())
+				{
+					pageContext.getOut().write(pageName);
+				}
+				else
+				{
+					pageContext.getOut()
+					.write("<h1 class=\"" + getStyleClass() + "\">" + pageName + "</h1>");
+				}
 			}
 		}
 		catch (IOException e)

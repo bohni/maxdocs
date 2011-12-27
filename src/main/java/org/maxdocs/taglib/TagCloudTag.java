@@ -89,20 +89,23 @@ public class TagCloudTag extends TagSupport
 			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			Map<String, Integer> tagCloudMap = engine.getTagCloud();
 
-			StringBuffer tagCloud = new StringBuffer();
-			List<String> list = new ArrayList<String>();
-			list.addAll(tagCloudMap.keySet());
-			Collections.sort(list);
-
-			for (Iterator<String> iterator = list.iterator(); iterator.hasNext();)
+			if(tagCloudMap != null)
 			{
-				String tagName = iterator.next();
-				tagCloud.append("<span class=\"tagcloud" + tagCloudMap.get(tagName) + "\">");
-				tagCloud.append(tagName);
-				tagCloud.append("</span> ");
+				StringBuffer tagCloud = new StringBuffer();
+				List<String> list = new ArrayList<String>();
+				list.addAll(tagCloudMap.keySet());
+				Collections.sort(list);
+	
+				for (Iterator<String> iterator = list.iterator(); iterator.hasNext();)
+				{
+					String tagName = iterator.next();
+					tagCloud.append("<span class=\"tagcloud" + tagCloudMap.get(tagName) + "\">");
+					tagCloud.append(tagName);
+					tagCloud.append("</span> ");
+				}
+	
+				pageContext.getOut().write("<div class=\"" + styleClass + "\">" + tagCloud + "</div>");
 			}
-
-			pageContext.getOut().write("<div class=\"" + styleClass + "\">" + tagCloud + "</div>");
 		}
 		catch (IOException e)
 		{

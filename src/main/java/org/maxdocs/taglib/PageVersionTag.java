@@ -72,16 +72,20 @@ public class PageVersionTag extends AbstractMaxDocsTagSupport
 			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			String pagePath = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
-			String pageVersion = "" + htmlPage.getVersion();
 
-			if (isPlain())
+			if(htmlPage != null)
 			{
-				pageContext.getOut().write(pageVersion);
-			}
-			else
-			{
-				pageContext.getOut()
-				.write("<span class=\"" + getStyleClass() + "\">" + pageVersion + "</span>");
+				String pageVersion = "" + htmlPage.getVersion();
+	
+				if (isPlain())
+				{
+					pageContext.getOut().write(pageVersion);
+				}
+				else
+				{
+					pageContext.getOut()
+					.write("<span class=\"" + getStyleClass() + "\">" + pageVersion + "</span>");
+				}
 			}
 		}
 		catch (IOException e)

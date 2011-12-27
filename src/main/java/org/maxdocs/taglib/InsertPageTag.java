@@ -114,8 +114,11 @@ public class InsertPageTag extends TagSupport
 		{
 			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			HtmlPage htmlPage = engine.getHtmlPage(name);
-
-			pageContext.getOut().write("<div class=\"" + styleClass + "\">" + htmlPage.getContent() + "</div>");
+			
+			if(htmlPage != null)
+			{
+				pageContext.getOut().write("<div class=\"" + styleClass + "\">" + htmlPage.getContent() + "</div>");
+			}
 		}
 		catch (IOException e)
 		{

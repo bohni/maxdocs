@@ -92,7 +92,6 @@ public class AuthorTagTest extends TestCase
 
 		// Create the mocked MaxDocs engine
 		mockEngine = EasyMock.createMock(Engine.class);
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 
 		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
 		mockServletContext.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, mockEngine);
@@ -121,6 +120,7 @@ public class AuthorTagTest extends TestCase
 		log.trace("testDoStartTagAuthorDefault");
 		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + htmlPage.getAuthor() + "</a></span>";
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		authorTag.setType("author");
@@ -147,6 +147,7 @@ public class AuthorTagTest extends TestCase
 		String styleClass = "style";
 		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + htmlPage.getAuthor() + "</a></span>";
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		authorTag.setType("author");
@@ -174,6 +175,7 @@ public class AuthorTagTest extends TestCase
 		boolean plain = true;
 		String expectedOutput = htmlPage.getAuthor();
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		authorTag.setType("author");
@@ -202,6 +204,7 @@ public class AuthorTagTest extends TestCase
 		String styleClass = "style";
 		String expectedOutput = htmlPage.getAuthor();
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		authorTag.setType("author");
@@ -229,6 +232,7 @@ public class AuthorTagTest extends TestCase
 		log.trace("testDoStartTagEditorDefault");
 		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + htmlPage.getEditor() + "</a></span>";
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		authorTag.setType("editor");
@@ -255,6 +259,7 @@ public class AuthorTagTest extends TestCase
 		String styleClass = "style";
 		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + htmlPage.getEditor() + "</a></span>";
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		authorTag.setType("editor");
@@ -282,6 +287,7 @@ public class AuthorTagTest extends TestCase
 		boolean plain = true;
 		String expectedOutput = htmlPage.getEditor();
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		authorTag.setType("editor");
@@ -310,6 +316,7 @@ public class AuthorTagTest extends TestCase
 		String styleClass = "style";
 		String expectedOutput = htmlPage.getEditor();
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		authorTag.setType("editor");
@@ -338,6 +345,7 @@ public class AuthorTagTest extends TestCase
 		String type = "test";
 		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">unsupported type '"+ type +"'</a></span>";
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		authorTag.setType(type);
@@ -365,6 +373,7 @@ public class AuthorTagTest extends TestCase
 		boolean plain = true;
 		String expectedOutput = "unsupported type '"+ type +"'";
 
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
 		authorTag.setType(type);
@@ -377,6 +386,33 @@ public class AuthorTagTest extends TestCase
 
 		verifyAllMocks();
 	}
+
+
+	/**
+	 * testDoStartTagPageNotExists:
+	 * Check output for non existing page.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagPageNotExists() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testDoStartTagPageNotExists");
+		String expectedOutput = "";
+
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
+		replayAllMocks();
+
+		int tagReturnValue = authorTag.doStartTag();
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		assertEquals("Output should be empty", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
 
 	private void replayAllMocks()
 	{
