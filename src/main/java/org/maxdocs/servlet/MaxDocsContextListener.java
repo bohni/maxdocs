@@ -27,7 +27,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.maxdocs.MaxDocsConstants;
-import org.maxdocs.engine.MaxDocs;
+import org.maxdocs.engine.MaxDocsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;

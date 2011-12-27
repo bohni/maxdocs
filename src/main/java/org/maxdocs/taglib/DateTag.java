@@ -35,7 +35,7 @@ import javax.servlet.jsp.JspException;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
-import org.maxdocs.engine.Engine;
+import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,7 +119,7 @@ public class DateTag extends AbstractMaxDocsTagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			String pagePath = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
 

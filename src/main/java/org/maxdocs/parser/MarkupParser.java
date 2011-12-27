@@ -23,6 +23,9 @@
  */
 package org.maxdocs.parser;
 
+import org.maxdocs.data.HtmlPage;
+import org.maxdocs.data.MarkupPage;
+
 /**
  * MarkupParser:
  * Interface for markup parsers of MaxDocs.
@@ -31,5 +34,5 @@ package org.maxdocs.parser;
  */
 public interface MarkupParser
 {
-
+	public HtmlPage parseToHtml(MarkupPage markupPage);
 }

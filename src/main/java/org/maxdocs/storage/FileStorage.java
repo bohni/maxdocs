@@ -85,8 +85,10 @@ public class FileStorage implements Storage
 	@Override
 	public MarkupPage load(String pagePath)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		//TODO implement me
+		MarkupPage markupPage = new MarkupPage();
+		markupPage.setPagePath(pagePath);
+		return markupPage;
 	}
 
 

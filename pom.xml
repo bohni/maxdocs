@@ -66,7 +66,7 @@
 		<developer>
 			<id>mezger</id>
 			<name>Matthias Mezger</name>
-			<email>mezger@gmx.de</email>
+			<email>matthias@mezger.net</email>
 			<url>http://mezger.net</url>
 			<organization>${project.organization.name}</organization>
 			<organizationUrl>${project.organization.url}</organizationUrl>
@@ -168,6 +168,11 @@
 			<artifactId>spring-test</artifactId>
 			<version>3.0.6.RELEASE</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.java</groupId>
+			<artifactId>textile-j</artifactId>
+			<version>2.2</version>
 		</dependency>
 	</dependencies>
 
