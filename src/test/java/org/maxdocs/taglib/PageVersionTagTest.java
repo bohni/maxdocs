@@ -45,7 +45,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 /**
  * PageVersionTagTest:
- * Unit test for VersionTag.
+ * Unit test for {@link PageVersionTag}.
  * 
  * @author Team jspserver.net
  */
@@ -68,6 +68,9 @@ public class PageVersionTagTest extends TestCase
 	private WebApplicationContext mockWebApplicationContext;
 
 
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#setUp()
+	 */
 	@Override
 	@Before
 	protected void setUp() throws Exception

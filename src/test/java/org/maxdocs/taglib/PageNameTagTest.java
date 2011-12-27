@@ -45,7 +45,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 /**
  * PageNameTagTest:
- * Unit test forPageNameTag PageNameTag.
+ * Unit test for {@link PageNameTag}.
  * 
  * @author Team jspserver.net
  */
@@ -68,6 +68,9 @@ public class PageNameTagTest extends TestCase
 	private WebApplicationContext mockWebApplicationContext;
 
 
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#setUp()
+	 */
 	@Override
 	@Before
 	protected void setUp() throws Exception
