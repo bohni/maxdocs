@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
-import org.maxdocs.engine.MaxDocs;
+import org.maxdocs.engine.MaxDocsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
@@ -109,7 +109,7 @@ public class MaxDocsServlet extends FrameworkServlet
 	protected WebApplicationContext initWebApplicationContext()
 	{
 		WebApplicationContext webApplicationContext = super.initWebApplicationContext();
-		webApplicationContext.getServletContext().setAttribute(MaxDocsConstants.MAXDOCS_ENGINE,webApplicationContext.getBean(MaxDocs.class));
+		webApplicationContext.getServletContext().setAttribute(MaxDocsConstants.MAXDOCS_ENGINE,webApplicationContext.getBean(MaxDocsImpl.class));
 		return webApplicationContext;
 	}
 	

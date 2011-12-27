@@ -52,8 +52,12 @@
 		<constructor-arg value="/var/maxdocs/content/"/>
 	</bean>
 
-	<bean id="maxDocs" class="org.maxdocs.engine.MaxDocs">
+	<bean id="parserImpl" class="org.maxdocs.parser.MarkupParserImpl">
+	</bean>
+
+	<bean id="maxDocs" class="org.maxdocs.engine.MaxDocsImpl">
 		<property name="storage" ref="storageImpl" />
+		<property name="parser" ref="parserImpl" />
 	</bean>
 	
 	<security:http auto-config="true">

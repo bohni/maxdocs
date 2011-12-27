@@ -37,7 +37,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.maxdocs.MaxDocsConstants;
-import org.maxdocs.engine.Engine;
+import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,7 +86,7 @@ public class TagCloudTag extends TagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			Map<String, Integer> tagCloudMap = engine.getTagCloud();
 
 			StringBuffer tagCloud = new StringBuffer();

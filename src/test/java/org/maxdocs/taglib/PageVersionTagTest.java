@@ -35,7 +35,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
-import org.maxdocs.engine.Engine;
+import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -53,7 +53,7 @@ public class PageVersionTagTest extends TestCase
 {
 	private static Logger log = LoggerFactory.getLogger(PageVersionTagTest.class);
 
-	private Engine mockEngine;
+	private MaxDocs mockEngine;
 
 	private HtmlPage htmlPage;
 
@@ -90,7 +90,7 @@ public class PageVersionTagTest extends TestCase
 		htmlPage.setVersion(2);
 
 		// Create the mocked MaxDocs engine
-		mockEngine = EasyMock.createMock(Engine.class);
+		mockEngine = EasyMock.createMock(MaxDocs.class);
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 
 		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);

@@ -30,7 +30,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
-import org.maxdocs.engine.Engine;
+import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +78,7 @@ public class ContentTag extends TagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			Engine engine = (Engine) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
 			pageContext.getOut().write("<div class=\"" + styleClass + "\">" + htmlPage.getContent() + "</div>");
