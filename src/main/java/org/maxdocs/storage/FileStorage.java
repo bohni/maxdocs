@@ -111,13 +111,12 @@ public class FileStorage implements Storage
 			try
 			{
 				Scanner scanner = new Scanner(new FileInputStream(file), "UTF-8");
-				String nl = System.getProperty("line.separator");
 				String line;
 				StringBuilder content = new StringBuilder();
 				int count = 0;
 				while (scanner.hasNextLine())
 				{
-					line = scanner.nextLine() + nl;
+					line = scanner.nextLine();
 					if (StringUtils.startsWith(line, "author"))
 					{
 						markupPage.setAuthor(StringUtils.substringAfterLast(line, "="));
@@ -161,7 +160,7 @@ public class FileStorage implements Storage
 					}
 					else if (count > 0)
 					{
-						content.append(line);
+						content.append(line+System.getProperty("line.separator"));
 					}
 				}
 				markupPage.setContent(content.toString());
