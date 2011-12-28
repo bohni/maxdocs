@@ -112,23 +112,12 @@ public class MaxDocsImpl implements MaxDocs
 	{
 		log.trace("getMarkupPage({})", pagePath);
 
-		MarkupPage markupPage= new MarkupPage();
-		markupPage.setPagePath(pagePath);
-		markupPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
-
-		if(exists(pagePath))
+		if(!exists(pagePath))
 		{
-			markupPage.setAuthor("John Doe Senior");
-			markupPage.setEditor("John Doe");
-			markupPage.setContent("! " + pagePath.substring(1)
-					+ "\n\nThis is the Content...\n\n* List 1\n* List 2\n\n__Bold Text__");
-			markupPage.setContentType("text/textile");
-			Calendar date = GregorianCalendar.getInstance();
-			date.set(2011, 8, 16, 14, 27);
-			markupPage.setFirstVersionCreationDate(date.getTime());
-			markupPage.setCurrentVersionCreationDate(new Date());
-			markupPage.setVersion(2);
+			return null;
 		}
+
+		MarkupPage markupPage = storage.load(pagePath);
 		return markupPage;
 	}
 

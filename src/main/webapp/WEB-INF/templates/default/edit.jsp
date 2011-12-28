@@ -98,8 +98,7 @@
 						<textarea rows="15" cols="58"><max:pageSource />
 						</textarea>
 						<input type="button" name="preview" value="Vorschau" />&nbsp;<input
-							type="button" name="cancel" value="Abbrechen" />&nbsp;<input
-							type="submit" name="save" value="Speichern" />
+							type="submit" name="save" value="Speichern" />&nbsp;<a href="?action=show">Abbrechen</a>
 					</div>
 					<!-- IE Column Clearing -->
 					<div id="ie_clearing">&nbsp;</div>

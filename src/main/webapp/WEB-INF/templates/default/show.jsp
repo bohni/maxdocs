@@ -60,13 +60,16 @@
 		<div class="page">
 			<div id="header" role="banner">
 				<div id="topnav" role="contentinfo">
-					<span><a href="#">Login</a> | <a href="#">Contact</a> | <a
-						href="#">Imprint</a></span>
+					<span>
+						<a href="#">Login</a> |
+						<a href="#">Contact</a> | 
+						<a href="#">Imprint</a>
+					</span>
 				</div>
 				<h1>MaxDocs - The Multi Document Wiki Blog Engine</h1>
 			</div>
 			<!-- begin: main navigation #nav -->
-			<!--   <div id="nav" role="navigation">
+<!-- 			<div id="nav" role="navigation">
       <div class="hlist">
         <ul>
           <li><a href="../index.html">Table Of Contents</a></li>
@@ -74,7 +77,15 @@
           <li><a href="3col_1-2-3.html">Previous Example</a></li>
         </ul>
       </div>
-    </div>-->
+    </div> -->
+    
+    		<div id="action">
+				<span>
+					<a href="?action=edit">Edit</a> | 
+					<a href="?action=source">Source</a> | 
+					<a href="?action=info">Info</a>
+				</span>
+			</div>
 			<!-- end: main navigation -->
 
 			<!-- begin: main content area #main -->
