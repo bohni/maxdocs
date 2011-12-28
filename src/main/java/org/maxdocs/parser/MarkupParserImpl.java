@@ -32,7 +32,6 @@ public class MarkupParserImpl implements MarkupParser
 		{
 			net.java.textilej.parser.MarkupParser parser = new net.java.textilej.parser.MarkupParser();
 			MediaWikiDialect dialect = new MediaWikiDialect();
-			dialect.setInternalPageHrefPrefix("");
 			parser.setDialect(dialect);
 			StringWriter out = new StringWriter();
 			parser.setBuilder(new HtmlDocumentBuilder(out));
