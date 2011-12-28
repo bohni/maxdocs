@@ -106,6 +106,7 @@ public class FileStorage implements Storage
 		if (file.exists())
 		{
 			markupPage.setPagePath(pagePath);
+			markupPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 			try
 			{
 				Scanner scanner = new Scanner(new FileInputStream(file), "UTF-8");
