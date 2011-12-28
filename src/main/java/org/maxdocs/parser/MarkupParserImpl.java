@@ -1,17 +1,13 @@
 package org.maxdocs.parser;
 
 import java.io.StringWriter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import net.java.textilej.parser.builder.HtmlDocumentBuilder;
-import net.java.textilej.parser.markup.mediawiki.MediaWikiDialect;
 
-import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.parser.markup.mediawiki.MediaWikiDialect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +31,9 @@ public class MarkupParserImpl implements MarkupParser
 		if(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI.equals(markupPage.getContentType()))
 		{
 			net.java.textilej.parser.MarkupParser parser = new net.java.textilej.parser.MarkupParser();
-			parser.setDialect(new MediaWikiDialect());
+			MediaWikiDialect dialect = new MediaWikiDialect();
+			dialect.setInternalPageHrefPrefix("");
+			parser.setDialect(dialect);
 			StringWriter out = new StringWriter();
 			parser.setBuilder(new HtmlDocumentBuilder(out));
 			parser.parse(markupPage.getContent(), false);
