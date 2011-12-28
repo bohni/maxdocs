@@ -26,9 +26,9 @@ package org.maxdocs.servlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
-import org.maxdocs.engine.MaxDocsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
@@ -42,8 +42,10 @@ import org.springframework.web.servlet.FrameworkServlet;
  */
 public class MaxDocsServlet extends FrameworkServlet
 {
+	private static final String ACTION_DELETE = "delete";
 	private static final String ACTION_EDIT = "edit";
 	private static final String ACTION_SHOW = "show";
+	private static final String ACTION_SOURCE = "source";
 	private static final String DEFAULT_ACTION = ACTION_SHOW;
 	private static final String DEFAULT_PAGE_NAME = "Main";
 	private static final String DEFAULT_TEMPLATE_NAME = "default";
@@ -77,7 +79,18 @@ public class MaxDocsServlet extends FrameworkServlet
 			pagePath+=DEFAULT_PAGE_NAME;
 		}
 		log.debug("pagePath={}", pagePath);
+		
+		CircularFifoBuffer breadcrumbs = (CircularFifoBuffer) request.getSession().getAttribute(
+			MaxDocsConstants.MAXDOCS_BREADCRUMBS);
+		
+		if(breadcrumbs == null)
+		{
+			breadcrumbs = new CircularFifoBuffer(5); // TODO: Configurable?
+		}
 
+		breadcrumbs.add(pagePath);
+		request.getSession().setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
+		request.setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
 		String action = request.getParameter(PARAMETER_NAME_ACTION);
 		if(StringUtils.isBlank(action))
 		{

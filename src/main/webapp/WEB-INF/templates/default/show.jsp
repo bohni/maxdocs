@@ -79,6 +79,9 @@
       </div>
     </div> -->
     
+    		<div id="breadcrumbs">
+    			<max:breadcrumbs />
+			</div>
     		<div id="action">
 				<span>
 					<a href="?action=edit">Edit</a> | 
