@@ -58,7 +58,7 @@ public class MaxDocsImplTest extends TestCase
 
 	/**
 	 * testExists:
-	 * TODO, 27.12.2011: Documentation
+	 * Check exists().
 	 */
 	@Test
 	public void testExists()
@@ -74,7 +74,7 @@ public class MaxDocsImplTest extends TestCase
 
 	/**
 	 * testGetHtmlPage:
-	 * TODO, 27.12.2011: Documentation
+	 * Checks getHtmlPage().
 	 */
 	public void testGetHtmlPage()
 	{

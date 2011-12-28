@@ -27,7 +27,7 @@
  ------
  Team jspserver.net
  ------
- 2011-09-26
+ 2011-12-28
 
 
 MaxDocs Taglib
@@ -50,9 +50,14 @@ MaxDocs Taglib
 
    * pageContent
 
+   * pageSource
+
  * Sonstige
 
    * insertPage
 
-   * tagCloud
+   * noSuchPage
 
+   * pageExists
+
+   * tagCloud
