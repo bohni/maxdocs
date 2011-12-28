@@ -29,10 +29,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/WEB-INF/maxdocs.tld" prefix="max"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>MaxDocs: <max:pageName plain="true" /></title>
+<title>
+<fmt:message key="show.title">
+      <fmt:param>MaxDocs</fmt:param>
+      <fmt:param><max:pageName plain="true" /></fmt:param>
+    </fmt:message>
+</title>
 <!-- (en) Add your meta data here -->
 <!-- (de) Fuegen Sie hier ihre Meta-Daten ein -->
 <link href="<%=request.getContextPath()%>/internal/css/layout_1-3-2.css"
