@@ -45,6 +45,7 @@ unterstützte Markups:
 weitere Markups:
 * Confluence -> TextileJ
 * Trac -> TextileJ
+* Markdown [http://daringfireball.net/projects/markdown/]
 
 
 ===============================================================
