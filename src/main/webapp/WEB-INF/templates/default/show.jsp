@@ -83,7 +83,12 @@
 				<div id="col1" role="complementary">
 					<div id="col1_content" class="clearfix">
 						<h2>Navigation</h2>
+						<max:pageExists page="LeftMenu">
 						<max:insertPage name="LeftMenu" />
+						</max:pageExists>
+						<max:noSuchPage page="LeftMenu">
+						<p>Menu nicht vorhanden</p>
+						</max:noSuchPage>
 					</div>
 				</div>
 				<!-- end: #col1 -->
