@@ -45,7 +45,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 /**
  * ContentTypeTagTest:
- * Unit test for VersionTag.
+ * Unit test for {@link ContentTypeTag}.
  * 
  * @author Team jspserver.net
  */
@@ -68,6 +68,9 @@ public class ContentTypeTagTest extends TestCase
 	private WebApplicationContext mockWebApplicationContext;
 
 
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#setUp()
+	 */
 	@Override
 	@Before
 	protected void setUp() throws Exception

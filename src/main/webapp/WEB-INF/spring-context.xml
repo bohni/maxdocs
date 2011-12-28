@@ -44,12 +44,14 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 <!-- 	<mvc:annotation-driven /> -->
 
+	<context:property-placeholder location="classpath:maxdocs.properties"/>
+
 	<bean id="baz" class="java.lang.String">
 		<constructor-arg value="Hallo Spring!"/>
 	</bean>
 
 	<bean id="storageImpl" class="org.maxdocs.storage.FileStorage">
-		<constructor-arg value="/var/maxdocs/content/"/>
+		<constructor-arg value="${maxdocs.content-path}"/>
 	</bean>
 
 	<bean id="parserImpl" class="org.maxdocs.parser.MarkupParserImpl">

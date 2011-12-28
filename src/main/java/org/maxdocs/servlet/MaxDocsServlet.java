@@ -109,7 +109,8 @@ public class MaxDocsServlet extends FrameworkServlet
 	protected WebApplicationContext initWebApplicationContext()
 	{
 		WebApplicationContext webApplicationContext = super.initWebApplicationContext();
-		webApplicationContext.getServletContext().setAttribute(MaxDocsConstants.MAXDOCS_ENGINE,webApplicationContext.getBean(MaxDocsImpl.class));
+		webApplicationContext.getServletContext().setAttribute(
+			MaxDocsConstants.MAXDOCS_ENGINE,webApplicationContext.getBean("maxDocs"));
 		return webApplicationContext;
 	}
 	

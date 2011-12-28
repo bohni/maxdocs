@@ -39,6 +39,12 @@
 		<session-timeout>15</session-timeout>
 	</session-config>
 
+	<!-- Resource bundle default location -->
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>template.default</param-value>
+	</context-param>
+
 	<jsp-config>
 		<taglib>
 			<taglib-uri>http://www.maxdocs.org/taglib</taglib-uri>

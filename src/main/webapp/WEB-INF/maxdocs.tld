@@ -205,4 +205,30 @@
 		</attribute>
 	</tag>
 
+	<tag>
+		<description>Evaluates if a page exists</description>
+		<name>pageExists</name>
+		<tag-class>org.maxdocs.taglib.PageExistsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>The name of the page to be evaluated.</description>
+			<name>page</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>Evaluates if a page does not exist</description>
+		<name>noSuchPage</name>
+		<tag-class>org.maxdocs.taglib.NoSuchPageTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>The name of the page to be evaluated.</description>
+			<name>page</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
 </taglib>

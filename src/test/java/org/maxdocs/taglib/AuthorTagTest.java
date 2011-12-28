@@ -45,7 +45,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 /**
  * AuthorTagTest:
- * Unit test for AuthorTag.
+ * Unit test for @{link AuthorTag}.
  * 
  * @author Team jspserver.net
  */
@@ -67,6 +67,9 @@ public class AuthorTagTest extends TestCase
 
 	private WebApplicationContext mockWebApplicationContext;
 
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#setUp()
+	 */
 	@Override
 	@Before
 	protected void setUp() throws Exception

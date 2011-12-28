@@ -30,15 +30,7 @@ public class MarkupParserImpl implements MarkupParser
 	@Override
 	public HtmlPage parseToHtml(MarkupPage markupPage)
 	{
-		HtmlPage htmlPage = new HtmlPage();
-		htmlPage.setAuthor(markupPage.getAuthor());
-		htmlPage.setContentType(markupPage.getContentType());
-		htmlPage.setCurrentVersionCreationDate(markupPage.getCurrentVersionCreationDate());
-		htmlPage.setEditor(markupPage.getEditor());
-		htmlPage.setFirstVersionCreationDate(markupPage.getFirstVersionCreationDate());
-		htmlPage.setPageName(markupPage.getPageName());
-		htmlPage.setPagePath(markupPage.getPagePath());
-		htmlPage.setVersion(markupPage.getVersion());
+		HtmlPage htmlPage = new HtmlPage(markupPage);
 		
 		if(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI.equals(markupPage.getContentType()))
 		{

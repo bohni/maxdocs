@@ -23,7 +23,6 @@
  */
 package org.maxdocs.data;
 
-
 /**
  * HtmlPage:
  * An object containing the data of a page.
@@ -35,6 +34,35 @@ public class HtmlPage extends AbstractPage
 {
 	private String content;
 
+
+	/**
+	 * Default constructor.
+	 * Creates a HtmlPage object.
+	 */
+	public HtmlPage()
+	{
+
+	}
+
+
+	/**
+	 * Full constructor. Contains required and optional fields.
+	 * Creates a HtmlPage object with data from the given markup page.
+	 *
+	 * @param markupPage a markup page 
+	 */
+	public HtmlPage(MarkupPage markupPage)
+	{
+		setAuthor(markupPage.getAuthor());
+		setEditor(markupPage.getEditor());
+		setContentType(markupPage.getContentType());
+		setCurrentVersionCreationDate(markupPage.getCurrentVersionCreationDate());
+		setPageName(markupPage.getPageName());
+		setPagePath(markupPage.getPagePath());
+		setVersion(markupPage.getVersion());
+	}
+
+
 	/**
 	 * getContent: Returns the content.
 	 *
@@ -44,6 +72,7 @@ public class HtmlPage extends AbstractPage
 	{
 		return this.content;
 	}
+
 
 	/**
 	 * setContent: Sets the content.

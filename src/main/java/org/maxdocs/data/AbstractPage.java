@@ -1,6 +1,8 @@
 package org.maxdocs.data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,8 @@ public class AbstractPage
 	private String pageName;
 
 	private String pagePath;
+
+	private List<String> tags = new ArrayList<String>();
 
 	/**
 	 * getVersion: Returns the version.
@@ -192,4 +196,28 @@ public class AbstractPage
 		this.pagePath = pagePath;
 	}
 
+	/**
+	 * getTags: Returns the tags.
+	 * 
+	 * @return the tags
+	 */
+	public List<String> getTags()
+	{
+		return tags;
+	}
+
+	/**
+	 * setTags: Sets the tags.
+	 * 
+	 * @param tags the tags to set
+	 */
+	public void setTags(List<String> tags)
+	{
+		this.tags = tags;
+	}
+
+	public void addTag(String tag)
+	{
+		getTags().add(tag);
+	}
 }
