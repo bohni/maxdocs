@@ -1,10 +1,15 @@
 package org.maxdocs.parser;
 
+import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import net.java.textilej.parser.builder.HtmlDocumentBuilder;
+import net.java.textilej.parser.markup.mediawiki.MediaWikiDialect;
+
 import org.apache.commons.lang3.StringUtils;
+import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 import org.slf4j.Logger;
@@ -25,38 +30,28 @@ public class MarkupParserImpl implements MarkupParser
 	@Override
 	public HtmlPage parseToHtml(MarkupPage markupPage)
 	{
-		String pagePath = markupPage.getPagePath();
-		
 		HtmlPage htmlPage = new HtmlPage();
-		htmlPage.setContent("");
-
-		if (StringUtils.equals(pagePath, "/LeftMenu"))
+		htmlPage.setAuthor(markupPage.getAuthor());
+		htmlPage.setContentType(markupPage.getContentType());
+		htmlPage.setCurrentVersionCreationDate(markupPage.getCurrentVersionCreationDate());
+		htmlPage.setEditor(markupPage.getEditor());
+		htmlPage.setFirstVersionCreationDate(markupPage.getFirstVersionCreationDate());
+		htmlPage.setPageName(markupPage.getPageName());
+		htmlPage.setPagePath(markupPage.getPagePath());
+		htmlPage.setVersion(markupPage.getVersion());
+		
+		if(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI.equals(markupPage.getContentType()))
 		{
-			htmlPage.setAuthor("John Doe Senior");
-			htmlPage.setEditor("John Doe");
-			htmlPage.setContent("<a href=\"#\">Link 1</a><br/><a href=\"#\">Link 2</a><br/><a href=\"#\">Link 3</a><br/><a href=\"#\">Link 4</a>");
-			htmlPage.setContentType("text/textile");
-			Calendar date = GregorianCalendar.getInstance();
-			date.set(2011, 8, 16, 14, 27);
-			htmlPage.setFirstVersionCreationDate(date.getTime());
-			htmlPage.setCurrentVersionCreationDate(new Date());
-			htmlPage.setPagePath(pagePath);
-			htmlPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
-			htmlPage.setVersion(2);
+			net.java.textilej.parser.MarkupParser parser = new net.java.textilej.parser.MarkupParser();
+			parser.setDialect(new MediaWikiDialect());
+			StringWriter out = new StringWriter();
+			parser.setBuilder(new HtmlDocumentBuilder(out));
+			parser.parse(markupPage.getContent(), false);
+			htmlPage.setContent(out.toString());
 		}
 		else
 		{
-			htmlPage.setAuthor("John Doe Senior");
-			htmlPage.setEditor("John Doe");
-			htmlPage.setContent("<p>This is the Content...</p><ul><li>List 1</li><li>List 2</li></ul><p><strong>Bold Text</strong></p>");
-			htmlPage.setContentType("text/textile");
-			Calendar date = GregorianCalendar.getInstance();
-			date.set(2011, 8, 16, 14, 27);
-			htmlPage.setFirstVersionCreationDate(date.getTime());
-			htmlPage.setCurrentVersionCreationDate(new Date());
-			htmlPage.setPagePath(pagePath);
-			htmlPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
-			htmlPage.setVersion(2);
+			htmlPage.setContent("<b>error: content-type "+markupPage.getContentType()+" not supported</b>");
 		}
 
 		return htmlPage;

@@ -44,6 +44,11 @@ public final class MaxDocsConstants
 	 */
 	public static final String MAXDOCS_PAGE_PATH = "MAXDOCS_PAGE_PATH";
 
+	public static final String MARKUP_CONTENT_TYPE_MEDIAWIKI = "text/mediawiki";
+	public static final String MARKUP_CONTENT_TYPE_CREOLE = "text/creole";
+	public static final String MARKUP_CONTENT_TYPE_JSPWIKI = "text/jspwiki";
+	
+	
 	private MaxDocsConstants()
 	{
 		// no instance needed
