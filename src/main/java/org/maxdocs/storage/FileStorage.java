@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.data.MarkupPage;
@@ -148,7 +149,11 @@ public class FileStorage implements Storage
 					}
 					else if (StringUtils.startsWith(line, "tags"))
 					{
-						markupPage.setAuthor(StringUtils.substringAfterLast(line, "="));
+						StringTokenizer st = new StringTokenizer(StringUtils.substringAfterLast(line, "="), ",");
+						while(st.hasMoreElements())
+						{
+							markupPage.addTag(st.nextToken().trim());
+						}
 					}
 					else if (StringUtils.isBlank(line) && count == 0)
 					{
