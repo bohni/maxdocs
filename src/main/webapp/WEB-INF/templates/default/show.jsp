@@ -34,7 +34,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-<fmt:message key="show.title">
+<fmt:setBundle var="template" basename="template.default" /> 
+<fmt:setBundle var="maxdocs" basename="org.maxdocs.maxdocs" /> 
+<fmt:message key="show.title" bundle="${template}">
       <fmt:param>MaxDocs</fmt:param>
       <fmt:param><max:pageName plain="true" /></fmt:param>
     </fmt:message>
@@ -133,6 +135,10 @@
 			<div id="footer" role="contentinfo">This page (version <max:pageVersion />) was last changed on 
 				<max:date type="lastChange" /> by <max:author type="editor" />
 				<br />Layout based on <a href="http://www.yaml.de/">YAML</a>
+				<br />Version <fmt:message key="maxdocs.version" bundle="${maxdocs}"/> vom <fmt:message key="maxdocs.buildtime" bundle="${maxdocs}"/>
+				<br />&copy; <fmt:message key="maxdocs.inceptionYear" bundle="${maxdocs}"/>
+				 - <fmt:message key="maxdocs.currentYear" bundle="${maxdocs}"/>
+				 <a href="<fmt:message key="maxdocs.organization.url" bundle="${maxdocs}"/>"><fmt:message key="maxdocs.organization.name" bundle="${maxdocs}"/></a>
 			</div>
 			<!-- end: #footer -->
 		</div>
