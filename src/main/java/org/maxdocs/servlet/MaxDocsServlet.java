@@ -23,6 +23,8 @@
  */
 package org.maxdocs.servlet;
 
+import java.util.Iterator;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -73,36 +75,46 @@ public class MaxDocsServlet extends FrameworkServlet
 		String pathInfo = request.getPathInfo();
 		log.debug("PathInfo={}", pathInfo);
 
+		// PagePath
 		String pagePath = pathInfo;
 		if(StringUtils.equals(pagePath, "/"))
 		{
 			pagePath+=DEFAULT_PAGE_NAME;
 		}
 		log.debug("pagePath={}", pagePath);
+		request.setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
 		
+		// Breadcrumbs
 		CircularFifoBuffer breadcrumbs = (CircularFifoBuffer) request.getSession().getAttribute(
 			MaxDocsConstants.MAXDOCS_BREADCRUMBS);
-		
 		if(breadcrumbs == null)
 		{
-			breadcrumbs = new CircularFifoBuffer(5); // TODO: Configurable?
+			breadcrumbs = new CircularFifoBuffer(5); // TODO: Length configurable?
 		}
-
-		breadcrumbs.add(pagePath);
+		String lastPagePath = "";
+		Iterator iterator = breadcrumbs.iterator();
+		while(iterator.hasNext())
+		{
+			lastPagePath = (String) iterator.next();
+		}
+		if(!StringUtils.equals(lastPagePath, pagePath))
+		{
+			breadcrumbs.add(pagePath);
+		}
 		request.getSession().setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
 		request.setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
+
+		// TODO: determine template 
+		String templateName = DEFAULT_TEMPLATE_NAME;
+		log.debug("templateName={}", templateName);
+
+		// Actions
 		String action = request.getParameter(PARAMETER_NAME_ACTION);
 		if(StringUtils.isBlank(action))
 		{
 			action=DEFAULT_ACTION;
 		}
 		log.debug("action={}", action);
-
-		request.setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
-
-		// TODO: Template ermitteln
-		String templateName = DEFAULT_TEMPLATE_NAME;
-		log.debug("templateName={}", templateName);
 
 		if(StringUtils.equalsIgnoreCase(action, DEFAULT_ACTION))
 		{
