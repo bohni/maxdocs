@@ -34,7 +34,8 @@ Development
 
  Here are some links:
 
-   * {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}}
+	* {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}}
 
-   * {{{http://blog.code-adept.com/2008/01/25/unit-testing-jsp-custom-tags/}Unit Testing Custom Tags}}
+	* {{{http://blog.code-adept.com/2008/01/25/unit-testing-jsp-custom-tags/}Unit Testing Custom Tags}}
 
+	* {{{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}UTF-8 encoding with Apache Tomcat}}

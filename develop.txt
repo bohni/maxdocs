@@ -11,6 +11,7 @@ Schnittstellen für Plugins/Providers/etc:
 
 ===============================================================
 Storage
+http://wiki.apache.org/tomcat/FAQ/CharacterEncoding
 - Alles immer als UTF-8 behandeln, unabhängig vom System.
 - Storage liefert Linksliste für alle Seiten (wer verlink auf mich)
 - Engine nutzt Linkliste für z.B. rename. Sie benutzt den Parser für
@@ -26,6 +27,11 @@ FileStorageProvider
 - Lösungsansatz: Binaries als "root", daten als www
                  Install anbieten -> Doku aus Jarfile lesen und 
                  als www schreiben
+Alle Seiten werden auf dem Filesystem nur mit <lfdNr>.txt gespeichert.
+Die Seiten enthalten der PagePath als Metadaten
+Alle Seiten werden beim Start eingelesen in Liste/Map mit Zuordnung PagePath<->LfdNr
+
+Versionierung erfolgt als <ContentFolder>/<VersionsFolder>/<LfdNr>/<Version>.txt
 
 ===============================================================
 Wo wird entwickelt?

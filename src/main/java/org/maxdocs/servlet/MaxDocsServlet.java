@@ -133,6 +133,7 @@ public class MaxDocsServlet extends FrameworkServlet
 		{
 			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/source.jsp").forward(request, response);
 		}
+		response.setCharacterEncoding("UTF-8");
 	}
 
 
