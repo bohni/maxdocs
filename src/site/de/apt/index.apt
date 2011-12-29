@@ -34,9 +34,22 @@
 
  MaxDocs ist ein neuer Wiki-Ansatz mit den folgenden Punkten im Focus
 
-   * {{{http://www.w3.org/Provider/Style/URI}Cool URIs dont change}}
+	* {{{http://www.w3.org/Provider/Style/URI}Cool URIs dont change}}
 
-   * einfaches Templating
+	* einfaches Templating
 
-   * Unterstützung verschiedener Markups (MediaWiki, JSPWiki, Creole, Textitle, HTML, DocBook, ...)
+	* Unterstützung verschiedener Markups (MediaWiki, JSPWiki, Creole, Textitle, Confluence, Trac, Markdown, ...)
+	
+		* Creole [http://www.wikicreole.org/wiki/Creole1.0]
 
+		* Jspwiki [http://www.jspwiki.org/wiki/TextFormattingRules]
+
+		* Textile [http://textile.thresholdstate.com/] -> TextileJ
+
+		* Mediawiki [http://en.wikipedia.org/wiki/Help:Wiki_markup] -> TextileJ
+
+		* Confluence -> TextileJ
+
+		* Trac -> TextileJ
+
+		* Markdown [http://daringfireball.net/projects/markdown/]

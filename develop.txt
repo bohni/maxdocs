@@ -17,6 +17,7 @@ Storage
   geänderte Links und den Storage rein zum Speichern der geänderten Seiten. 
 - Ursprungsversion beim Speichern prüfen, ob noch vorhanden oder bereits eine 
   neuere Version gespeichert ist.
+
 ===============================================================
 FileStorageProvider
 - alles unter einem User ist schlecht (Security)
@@ -46,7 +47,6 @@ weitere Markups:
 * Confluence -> TextileJ
 * Trac -> TextileJ
 * Markdown [http://daringfireball.net/projects/markdown/]
-
 
 ===============================================================
 Plugins
@@ -81,6 +81,14 @@ Templates
 - University: Simple als Start für Template-Entwickler
 - Retro mit Bunt und Anim-Gif
 - Dreckstool: grün-schwarz
+
+- Pagetypes: Page (Wikiseite), Blog (Blog Homepage), Blogentry (Blogeintrag)
+  - Page: Eine Wikiseite, die im "Wikistyle" angezeigt wird
+  - Blog: Eine Wikiseite, die im Style "Blog" (z.B. mit Kalender) angezeigt wird. 
+    Hier wird per Plugin die Stelle angegeben, wo die x letzten Blogeinträge kommen.
+  - Blogentry: Ein Blogeintrag, der im Style "Blog" angezeigt wird.
+
+- "AbstractPage" als Vorlage für die einzelnen Seiten - sitemesh?
 
 ===============================================================
 Gallery
