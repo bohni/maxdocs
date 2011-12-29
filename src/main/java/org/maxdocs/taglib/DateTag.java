@@ -127,8 +127,9 @@ public class DateTag extends AbstractMaxDocsTagSupport
 			{
 				if(StringUtils.isBlank(format))
 				{
-					format = ((SimpleDateFormat)DateFormat.getDateTimeInstance(
-							DateFormat.SHORT, DateFormat.SHORT, pageContext.getRequest().getLocale())).toPattern();
+					format = "yyyy-MM-dd HH:mm"; 
+						//((SimpleDateFormat)DateFormat.getDateTimeInstance(
+						//DateFormat.SHORT, DateFormat.SHORT, pageContext.getRequest().getLocale())).toPattern();
 				}
 				SimpleDateFormat sdf = new SimpleDateFormat(format);
 	
