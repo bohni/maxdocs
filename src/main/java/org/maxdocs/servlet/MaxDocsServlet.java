@@ -46,6 +46,7 @@ public class MaxDocsServlet extends FrameworkServlet
 {
 	private static final String ACTION_DELETE = "delete";
 	private static final String ACTION_EDIT = "edit";
+	private static final String ACTION_SAVE = "save";
 	private static final String ACTION_SHOW = "show";
 	private static final String ACTION_SOURCE = "source";
 	private static final String DEFAULT_ACTION = ACTION_SHOW;
@@ -112,17 +113,25 @@ public class MaxDocsServlet extends FrameworkServlet
 		String action = request.getParameter(PARAMETER_NAME_ACTION);
 		if(StringUtils.isBlank(action))
 		{
-			action=DEFAULT_ACTION;
+			action=ACTION_SHOW;
 		}
 		log.debug("action={}", action);
 
-		if(StringUtils.equalsIgnoreCase(action, DEFAULT_ACTION))
+		if(StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
+		{
+			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/edit.jsp").forward(request, response);
+		}
+		else if(StringUtils.equalsIgnoreCase(action, ACTION_SAVE))
+		{
+//			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/edit.jsp").forward(request, response);
+		}
+		else if(StringUtils.equalsIgnoreCase(action, ACTION_SHOW))
 		{
 			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/show.jsp").forward(request, response);
 		}
-		else if(StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
+		else if(StringUtils.equalsIgnoreCase(action, ACTION_SOURCE))
 		{
-			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/edit.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/source.jsp").forward(request, response);
 		}
 	}
 
