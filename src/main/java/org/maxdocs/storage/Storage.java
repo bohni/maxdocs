@@ -65,10 +65,12 @@ public interface Storage
 	 * save:
 	 * Persists the MarkupPage object in the storage
 	 * 
-	 * @param page the MarkupPage object to persist.
+	 * @param page The MarkupPage object to persist.
+	 * @param isNew If set to <code>true</code>, a new file is created.
+	 * 				If set to <code>false</code>, the file is saved to version folder.
 	 * @return <code>true</code>, if saving succeeds.
 	 */
-	public boolean save(MarkupPage page);
+	public boolean save(MarkupPage page, boolean isNew);
 
 	
 	/**

@@ -25,10 +25,11 @@
 --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <%@ page session="false"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="/WEB-INF/maxdocs.tld" prefix="max"%>
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -69,6 +70,16 @@
         </ul>
       </div>
     </div>-->
+    		<div id="breadcrumbs">
+    			<max:breadcrumbs />
+			</div>
+    		<div id="action">
+				<span>
+					<a href="?action=edit">Edit</a> | 
+					<a href="?action=source">Source</a> | 
+					<a href="?action=info">Info</a>
+				</span>
+			</div>
 			<!-- end: main navigation -->
 
 			<!-- begin: main content area #main -->
@@ -95,10 +106,14 @@
 				<div id="col3" role="main">
 					<div id="col3_content" class="clearfix">
 						<h2>Seite <max:pageName plain="true" /> bearbeiten</h2>
-						<textarea rows="15" cols="58"><max:pageSource />
-						</textarea>
-						<input type="button" name="preview" value="Vorschau" />&nbsp;<input
-							type="submit" name="save" value="Speichern" />&nbsp;<a href="?action=show">Abbrechen</a>
+						<form method="post" action="?action=save" accept-charset="UTF-8">
+							<textarea rows="15" cols="58" name="content"><max:pageSource /></textarea>
+							<input type="hidden" name="action" value="save"/>
+							<input type="hidden" name="version" value="${MAXDOCS_MARKUP_PAGE.version}" />
+							<input type="hidden" name="editor" value=""/>
+							<input type="button" name="preview" value="Vorschau" />&nbsp;<input
+								type="submit" name="save" value="Speichern" />&nbsp;<a href="?action=show">Abbrechen</a>
+						</form>
 					</div>
 					<!-- IE Column Clearing -->
 					<div id="ie_clearing">&nbsp;</div>

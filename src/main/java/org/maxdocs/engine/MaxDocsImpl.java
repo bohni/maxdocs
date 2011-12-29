@@ -121,6 +121,14 @@ public class MaxDocsImpl implements MaxDocs
 		return markupPage;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#save(org.maxdocs.data.MarkupPage, boolean)
+	 */
+	public boolean save(MarkupPage markupPage, boolean isNew)
+	{
+		log.trace("save({})", markupPage.getPagePath());
+		return storage.save(markupPage, isNew);
+	}
 	/**
 	 * setStorage: Sets the storage.
 	 * 

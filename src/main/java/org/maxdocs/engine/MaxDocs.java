@@ -52,4 +52,22 @@ public interface MaxDocs
 	 * @return a map with the tag cloud.
 	 */
 	public Map<String, Integer> getTagCloud();
+
+
+	/**
+	 * save:
+	 * Saves the given markup page.
+	 * 
+	 * @return <code>true</code> if saving succeeds.
+	 */
+	/**
+	 * save:
+	 * Saves the given markup page.
+	 * 
+	 * @param markupPage The markup page to save
+	 * @param newPage If set to true, a new file is created.
+	 * 				  If set to false, the previous version is saved to versions folder. 
+	 * @return
+	 */
+	public boolean save(MarkupPage markupPage, boolean newPage);
 }

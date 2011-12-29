@@ -23,6 +23,7 @@
  */
 package org.maxdocs.servlet;
 
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
+import org.maxdocs.data.MarkupPage;
+import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
@@ -119,11 +122,37 @@ public class MaxDocsServlet extends FrameworkServlet
 
 		if(StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
 		{
+			MaxDocs maxDocs = (MaxDocs)getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
 			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/edit.jsp").forward(request, response);
 		}
 		else if(StringUtils.equalsIgnoreCase(action, ACTION_SAVE))
 		{
-//			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/edit.jsp").forward(request, response);
+			MaxDocs maxDocs = (MaxDocs)getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
+			if(StringUtils.equals((String) request.getParameter("version"), markupPage.getVersion() + ""))
+			{
+				// same version. No concurrent changes since edit
+				maxDocs.save(markupPage, false);
+				markupPage.setContent(request.getParameter("content"));
+				if(StringUtils.isBlank(request.getParameter("editor")))
+				{
+					markupPage.setEditor("Anonymous");
+				}
+				else
+				{
+					markupPage.setEditor(request.getParameter("editor"));
+				}
+				markupPage.setCurrentVersionCreationDate(new Date());
+				maxDocs.save(markupPage, true);
+			}
+			else
+			{
+				log.debug("Concurrent edit...");
+				// TODO: concurrent changes - show error message
+			}
+			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/show.jsp").forward(request, response);
 		}
 		else if(StringUtils.equalsIgnoreCase(action, ACTION_SHOW))
 		{
