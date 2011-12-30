@@ -18,6 +18,7 @@ public class MediaWikiDialect extends net.java.textilej.parser.markup.mediawiki.
 	@Override
 	public String toInternalHref(String pageName)
 	{
+		log.trace("toInternalHref", pageName);
 		if (pageName.startsWith(":")) //category
 		{ 
 			pageName = pageName.substring(1);

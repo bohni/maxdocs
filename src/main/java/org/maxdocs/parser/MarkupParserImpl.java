@@ -26,6 +26,7 @@ public class MarkupParserImpl implements MarkupParser
 	@Override
 	public HtmlPage parseToHtml(MarkupPage markupPage)
 	{
+		log.trace("parseToHtml", markupPage.getPagePath());
 		HtmlPage htmlPage = new HtmlPage(markupPage);
 		
 		if(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI.equals(markupPage.getContentType()))
