@@ -66,29 +66,17 @@
 
 		<menu name="MaxDocs">
 			<item
-				name="Über"
+				name="About"
 				href="index.html" />
-		</menu>
-
-		<menu name="Entwicklung">
-			<item
-				name="Entwicklung"
-				href="development.html" />
-			<item
-				name="TODOs"
-				href="todo.html" />
-			<item
-				name="Taglib"
-				href="taglib.html" />
 		</menu>
 
 		<menu name="Language">
 			<item
 				name="deutsch"
-				href="index.html" />
+				href="../index.html" />
 			<item
 				name="english"
-				href="../index.html" />
+				href="index.html" />
 		</menu>
 
 		<menu ref="reports" />

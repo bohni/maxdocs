@@ -23,27 +23,36 @@
 ~~
 
  ------
- MaxDocs TODO
+ MaxDocs Engine
  ------
  Team maxdocs.org
  ------
- 2011-09-26
+ 2011-12-30
 
 
-TODO
+MaxDocs Engine
 
- Hier ist eine Liste der TODOs:
+	* Lesen
 
-	* Implementieren
+	* Parsen
 
-		* Storage
+	* Ausliefern
 
-		* Parser
+	* Änderungen speichern
 
-		* Security
+	* Suchindex updaten
 
-	* Erweitern
+	* Referenzen aktualisieren (siehe Storage)
 
-		* Engine
+	* Locking
 
-	* PMD Regeln festlegen
+	* etc.
+
+	* zweimal Parser aufrufen:\
+	  erster Aufruf für Syntax\
+	  zweiter Aufruf für Plugins
+
+	* Attachments:
+	  Muessen von unserem Servlet verarbeitet werden wg. PrettyURL.\
+	  exists() darf nicht nur true, sondern muss auch den Mimetype liefern (oder  zwei Methoden)
+

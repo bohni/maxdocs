@@ -1,0 +1,92 @@
+~~
+~~ Copyright (c) 2010-2011, Team maxdocs.org
+~~
+~~ All rights reserved.
+~~
+~~ Redistribution and use in source and binary forms, with or without modification, are permitted provided
+~~ that the following conditions are met:
+~~
+~~ 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the
+~~    following disclaimer.
+~~ 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
+~~    the following disclaimer in the documentation and/or other materials provided with the distribution.
+~~ 3. The name of the author may not be used to endorse or promote products derived from this software
+~~    without specific prior written permission.
+~~
+~~ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+~~ DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+~~ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+~~ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+~~ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+~~
+
+ ------
+ MaxDocs Storage
+ ------
+ Team maxdocs.org
+ ------
+ 2011-12-30
+
+
+MaxDocs Storage
+
+
+Storage
+
+	* Alles immer als UTF-8 behandeln, unabhängig vom System. {{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}}
+ 
+  In web.xml der webapp als ersten Filter eintragen:
+
++-----------------------------------------
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
++-----------------------------------------
+
+  In server.xml vom Tomcat:\
+  Bei den Connector-Tags: URIEncoding="UTF-8" hinzufügen
+  
+  In jsps:
+
++-----------------------------------------
+  <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
++-----------------------------------------
+
+	* Storage liefert Linksliste für alle Seiten (wer verlink auf mich)
+
+	* Engine nutzt Linkliste für z.B. rename. Sie benutzt den Parser für 
+	geänderte Links und den Storage rein zum Speichern der geänderten Seiten. 
+
+	* Ursprungsversion beim Speichern prüfen, ob noch vorhanden oder bereits eine 
+	neuere Version gespeichert ist.
+
+FileStorageProvider
+
+	* alles unter einem User ist schlecht (Security)
+
+	* chmod 777 ist keine Lösung (Security)
+
+	* Problem 1: Entzippen als User, laufen als www -> Rechteprobleme
+
+	* Lösungsansatz:
+
+		* Binaries als "root", daten als www
+
+		* Install anbieten -> Doku aus Jarfile lesen und als www schreiben
+
+	* Alle Seiten werden auf dem Filesystem nur mit <lfdNr>.txt gespeichert.
+	Die Seiten enthalten den PagePath als Metadaten\
+	Alle Seiten werden beim Start eingelesen in Liste/Map mit Zuordnung PagePath<->LfdNr
+
+	*  	Versionierung erfolgt als <ContentFolder>/<VersionsFolder>/<LfdNr>/<Version>.txt

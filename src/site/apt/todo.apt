@@ -27,23 +27,27 @@
  ------
  Team maxdocs.org
  ------
- 2011-09-26
+ 2011-12-30
 
+~~ Hier soll eine freie Sammlung offener TODOs gepflegt werden
 
 TODO
 
- Here is a list of TODOs:
- 
-	* Implement
+ Hier ist eine Liste der TODOs:
 
-		* Storage
+	* Templates/Preferences für Eclipse bereitstellen
 
-		* Parser
+	* PMD Regeln festlegen
 
-		* Security
+	* UnitTest verbessern
 
-	* Extend
+	* FileStorage: Speichern unter lfdNr.
 
-		* Engine
+	* MarkupParser: Creole Syntax
 
-	* Define PMD rules
+	* Security: Konzept erstellen und prüfen, ob mit Spring Security umsetzbar
+
+	* Default Template: Favicon
+
+	* Maven Site: Eigenes Logo
+

@@ -23,33 +23,40 @@
 ~~
 
  ------
- MaxDocs About
+ MaxDocs Über
  ------
  Team maxdocs.org
  ------
- 2011-09-26
+ 2011-12-30
 
 
-About
+Über
 
- MaxDocs is a new wiki approach focusing on the following features
+ MaxDocs ist ein neuer Wiki-Ansatz mit den folgenden Punkten im Focus
 
 	* {{{http://www.w3.org/Provider/Style/URI}Cool URIs dont change}}
 
-	* simple templating
+	* einfaches Templating
 
-	* Support of different markups
+	* Unterstützung verschiedener Markups ({{{http://greensopinion.blogspot.com/2008/11/mylyn-wikitext-stand-alone-package.html}Wikitext}})
 
-		* Creole [http://www.wikicreole.org/wiki/Creole1.0]
+		* geplant
+	
+			* {{{http://www.wikicreole.org/wiki/Creole1.0}Creole}} -> WikiText Incubator
 
-		* Jspwiki [http://www.jspwiki.org/wiki/TextFormattingRules]
+			* {{{http://www.jspwiki.org/wiki/TextFormattingRules}Jspwiki}}
 
-		* Textile [http://textile.thresholdstate.com/] -> TextileJ
+			* {{{http://textile.thresholdstate.com/}Textile}} -> TextileJ/WikiText
 
-		* Mediawiki [http://en.wikipedia.org/wiki/Help:Wiki_markup] -> TextileJ
+			* {{{http://en.wikipedia.org/wiki/Help:Wiki_markup}Mediawiki}} -> TextileJ/WikiText
 
-		* Confluence -> TextileJ
+		* weitere
 
-		* Trac -> TextileJ
+			* Confluence -> TextileJ/WikiText
 
-		* Markdown [http://daringfireball.net/projects/markdown/]
+			* Trac -> TextileJ/WikiText
+
+			* {{{http://daringfireball.net/projects/markdown/}Markdown}}
+
+			* {{{http://docutils.sourceforge.net/rst.html}reStructuredText}}
+

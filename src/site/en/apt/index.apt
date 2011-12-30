@@ -23,43 +23,42 @@
 ~~
 
  ------
- MaxDocs Taglib
+ MaxDocs About
  ------
  Team maxdocs.org
  ------
- 2011-12-28
+ 2011-12-30
 
 
-MaxDocs Taglib
+About
 
- MaxDocs provides the following tags for creating templates.
+ MaxDocs is a new wiki approach focusing on the following features
 
-	* Document metadata
+	* {{{http://www.w3.org/Provider/Style/URI}Cool URIs dont change}}
 
-		* author (author/editor)
+	* simple templating
 
-		* contentType
+	* Support of different markups ({{{http://greensopinion.blogspot.com/2008/11/mylyn-wikitext-stand-alone-package.html}Wikitext}})
 
-		* date(creation/lastChange)
+		* planned
+	
+			* {{{http://www.wikicreole.org/wiki/Creole1.0}Creole}} -> WikiText Incubator
 
-		* pageVersion
+			* {{{http://www.jspwiki.org/wiki/TextFormattingRules}Jspwiki}}
 
-	* Document data
+			* {{{http://textile.thresholdstate.com/}Textile}} -> TextileJ/WikiText
 
-		* pageName
+			* {{{http://en.wikipedia.org/wiki/Help:Wiki_markup}Mediawiki}} -> TextileJ/WikiText
 
-		* pageContent
+		* others
 
-		* pageSource
+			* Confluence -> TextileJ/WikiText
 
-	* Miscellaneous
+			* Trac -> TextileJ/WikiText
 
-		* breadcrumbs
+			* {{{http://daringfireball.net/projects/markdown/}Markdown}}
 
-		* insertPage
+			* {{{http://docutils.sourceforge.net/rst.html}reStructuredText}}
+		
+ Sorry. There is no more documentation available in english. Feel free to translate the {{{../index.html}german}} pages.
 
-		* noSuchPage
-
-		* pageExists
-
-		* tagCloud
