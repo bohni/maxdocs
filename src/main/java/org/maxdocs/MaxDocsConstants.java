@@ -30,7 +30,7 @@ package org.maxdocs;
  * <li>key values for storing objects in context/session/request.</li>
  * </ul>
  * 
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public final class MaxDocsConstants
 {
