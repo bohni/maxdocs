@@ -39,12 +39,6 @@
 		<session-timeout>15</session-timeout>
 	</session-config>
 
-	<!-- Resource bundle default location -->
-	<context-param>
-		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-		<param-value>template.default</param-value>
-	</context-param>
-
 	<jsp-config>
 		<taglib>
 			<taglib-uri>http://www.maxdocs.org/taglib</taglib-uri>
@@ -52,6 +46,20 @@
 		</taglib>
 	</jsp-config>
 
+
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<!-- Spring Security filter -->
 
 	<filter>

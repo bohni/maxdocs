@@ -122,8 +122,8 @@
 				<!-- begin: #col3 static column -->
 				<div id="col3" role="main">
 					<div id="col3_content" class="clearfix">
-						<h2><max:pageName plain="true" /></h2>
-						<max:pageContent />
+						<h2>Seitenquelltext von <max:pageName plain="true" /></h2>
+						<pre><max:pageSource /></pre>
 					</div>
 					<!-- IE Column Clearing -->
 					<div id="ie_clearing">&nbsp;</div>

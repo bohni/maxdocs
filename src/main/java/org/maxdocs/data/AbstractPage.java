@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 
 /**
  * AbstractPage:
  *  TODO - Stefan, 20.12.2011: documentation
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 public class AbstractPage
 {
-	private static Logger log = LoggerFactory.getLogger(AbstractPage.class);
-
 	private int version;
 
 	private Date firstVersionCreationDate;
@@ -36,6 +33,23 @@ public class AbstractPage
 
 	private List<String> tags = new ArrayList<String>();
 
+	public AbstractPage()
+	{
+		this.version = 1;
+		this.currentVersionCreationDate = new Date();
+		this.firstVersionCreationDate = new Date();
+	}
+	
+	public AbstractPage(AbstractPage page)
+	{
+		this();
+		if(page != null)
+		{
+			BeanUtils.copyProperties(page, this);
+		}
+		this.currentVersionCreationDate = new Date();
+	}
+	
 	/**
 	 * getVersion: Returns the version.
 	 *

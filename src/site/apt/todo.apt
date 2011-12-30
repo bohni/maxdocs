@@ -25,7 +25,7 @@
  ------
  MaxDocs TODO
  ------
- Team jspserver.net
+ Team maxdocs.org
  ------
  2011-09-26
 
@@ -34,14 +34,16 @@ TODO
 
  Here is a list of TODOs:
  
-   * Implement
+	* Implement
 
-      * Storage
+		* Storage
 
-      * Parser
+		* Parser
 
-   * Extend
+		* Security
 
-      * Engine
+	* Extend
 
-   * Define PMD rules
+		* Engine
+
+	* Define PMD rules

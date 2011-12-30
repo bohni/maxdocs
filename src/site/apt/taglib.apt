@@ -25,7 +25,7 @@
  ------
  MaxDocs Taglib
  ------
- Team jspserver.net
+ Team maxdocs.org
  ------
  2011-12-28
 
@@ -34,30 +34,32 @@ MaxDocs Taglib
 
  MaxDocs provides the following tags for creating templates.
 
- * Document metadata
+	* Document metadata
 
-   * author (author/editor)
+		* author (author/editor)
 
-   * contentType
+		* contentType
 
-   * date(creation/lastChange)
+		* date(creation/lastChange)
 
-   * pageVersion
+		* pageVersion
 
- * Document data
+	* Document data
 
-   * pageName
+		* pageName
 
-   * pageContent
+		* pageContent
 
-   * pageSource
+		* pageSource
 
- * Miscellaneous
+	* Miscellaneous
 
-   * insertPage
+		* breadcrumbs
 
-   * noSuchPage
+		* insertPage
 
-   * pageExists
+		* noSuchPage
 
-   * tagCloud
+		* pageExists
+
+		* tagCloud

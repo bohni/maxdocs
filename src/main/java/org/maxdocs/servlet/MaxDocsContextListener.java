@@ -26,17 +26,14 @@ package org.maxdocs.servlet;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.maxdocs.MaxDocsConstants;
-import org.maxdocs.engine.MaxDocsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * MaxDocsContextListener:
  * ServletContextListener for storing the engine in the application context at startup time.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 public class MaxDocsContextListener implements ServletContextListener

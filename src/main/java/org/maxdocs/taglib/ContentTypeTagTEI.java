@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * ContentTypeTagTEI:
  * Provides validation of the plain attribute.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public class ContentTypeTagTEI extends AbstractMaxDocsTagTEI
 {

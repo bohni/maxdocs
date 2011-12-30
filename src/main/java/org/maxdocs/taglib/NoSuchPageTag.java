@@ -1,11 +1,7 @@
 package org.maxdocs.taglib;
 
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import org.apache.commons.lang3.StringUtils;
-import org.maxdocs.MaxDocsConstants;
-import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * PageExistsTag
  * If the page does not exists, the body part will be rendered.
  * 
- * @author Stefan Bohn
+ * @author Team maxdocs.org
  *
  */
 public class NoSuchPageTag extends PageExistsTag

@@ -23,13 +23,9 @@
  */
 package org.maxdocs.engine;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 import org.maxdocs.parser.MarkupParser;
@@ -41,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * MaxDocs:
  * Main engine of MaxDocs.
  * 
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public class MaxDocsImpl implements MaxDocs
 {
@@ -121,6 +117,29 @@ public class MaxDocsImpl implements MaxDocs
 		return markupPage;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#save(org.maxdocs.data.MarkupPage, org.maxdocs.data.MarkupPage)
+	 */
+	public boolean save(MarkupPage oldPage, MarkupPage newPage)
+	{
+		log.trace("save()");
+		if(oldPage != null)
+		{
+			if(oldPage.getVersion() == newPage.getVersion())
+			{
+				newPage.setVersion(oldPage.getVersion() + 1);
+				return storage.save(oldPage, newPage);
+			}
+			else
+			{
+				return false; 
+			}
+		}
+		else
+		{
+			return storage.save(newPage);
+		}
+	}
 	/**
 	 * setStorage: Sets the storage.
 	 * 

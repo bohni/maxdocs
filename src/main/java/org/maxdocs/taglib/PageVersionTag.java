@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * PageVersionTag:
  * Tag, that displays the version of the page within a span container.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 public class PageVersionTag extends AbstractMaxDocsTagSupport

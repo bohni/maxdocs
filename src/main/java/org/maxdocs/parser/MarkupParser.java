@@ -30,7 +30,7 @@ import org.maxdocs.data.MarkupPage;
  * MarkupParser:
  * Interface for markup parsers of MaxDocs.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public interface MarkupParser
 {

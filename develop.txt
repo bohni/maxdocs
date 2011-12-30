@@ -12,11 +12,31 @@ Schnittstellen für Plugins/Providers/etc:
 ===============================================================
 Storage
 - Alles immer als UTF-8 behandeln, unabhängig vom System.
+  http://wiki.apache.org/tomcat/FAQ/CharacterEncoding
+  In web.xml der webapp als ersten Filter eintragen:
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+  In server.xml vom Tomcat:
+  Bei den Connector-Tags: URIEncoding="UTF-8" hinzufügen
+  In jsps:
+  <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 - Storage liefert Linksliste für alle Seiten (wer verlink auf mich)
 - Engine nutzt Linkliste für z.B. rename. Sie benutzt den Parser für
   geänderte Links und den Storage rein zum Speichern der geänderten Seiten. 
 - Ursprungsversion beim Speichern prüfen, ob noch vorhanden oder bereits eine 
   neuere Version gespeichert ist.
+
 ===============================================================
 FileStorageProvider
 - alles unter einem User ist schlecht (Security)
@@ -25,6 +45,11 @@ FileStorageProvider
 - Lösungsansatz: Binaries als "root", daten als www
                  Install anbieten -> Doku aus Jarfile lesen und 
                  als www schreiben
+Alle Seiten werden auf dem Filesystem nur mit <lfdNr>.txt gespeichert.
+Die Seiten enthalten der PagePath als Metadaten
+Alle Seiten werden beim Start eingelesen in Liste/Map mit Zuordnung PagePath<->LfdNr
+
+Versionierung erfolgt als <ContentFolder>/<VersionsFolder>/<LfdNr>/<Version>.txt
 
 ===============================================================
 Wo wird entwickelt?
@@ -46,6 +71,7 @@ weitere Markups:
 * Confluence -> TextileJ/WikiText
 * Trac -> TextileJ/WikiText
 * Markdown [http://daringfireball.net/projects/markdown/]
+<<<<<<< HEAD
 * reStructuredText [http://docutils.sourceforge.net/rst.html]
 
 * [http://greensopinion.blogspot.com/2008/08/textile-j-is-moving-to-mylyn-wikitext.html].
@@ -110,6 +136,14 @@ Templates
 - University: Simple als Start für Template-Entwickler
 - Retro mit Bunt und Anim-Gif
 - Dreckstool: grün-schwarz
+
+- Pagetypes: Page (Wikiseite), Blog (Blog Homepage), Blogentry (Blogeintrag)
+  - Page: Eine Wikiseite, die im "Wikistyle" angezeigt wird
+  - Blog: Eine Wikiseite, die im Style "Blog" (z.B. mit Kalender) angezeigt wird. 
+    Hier wird per Plugin die Stelle angegeben, wo die x letzten Blogeinträge kommen.
+  - Blogentry: Ein Blogeintrag, der im Style "Blog" angezeigt wird.
+
+- "AbstractPage" als Vorlage für die einzelnen Seiten - sitemesh?
 
 ===============================================================
 Gallery
