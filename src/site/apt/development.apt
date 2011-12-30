@@ -23,19 +23,24 @@
 ~~
 
  ------
- MaxDocs Development
+ MaxDocs Entwicklung
  ------
  Team maxdocs.org
  ------
  2011-09-26
+ 
+ 
+Entwicklung
 
-
-Development
-
- Here are some links:
+ Hier sind einige Links:
 
 	* {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}}
 
 	* {{{http://blog.code-adept.com/2008/01/25/unit-testing-jsp-custom-tags/}Unit Testing Custom Tags}}
 
-	* {{{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}UTF-8 encoding with Apache Tomcat}}
+	* {{{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}UTF-8 encoding mit Apache Tomcat}}
+
+ Die Entwicklung läuft auf github. Der Entwicklungsbranch ist develop. Das
+ {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}} ist zu beachten!
+
+ 

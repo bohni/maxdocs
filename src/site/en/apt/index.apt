@@ -23,27 +23,42 @@
 ~~
 
  ------
- MaxDocs TODO
+ MaxDocs About
  ------
  Team maxdocs.org
  ------
  2011-09-26
 
 
-TODO
+About
 
- Hier ist eine Liste der TODOs:
+ MaxDocs is a new wiki approach focusing on the following features
 
-	* Implementieren
+	* {{{http://www.w3.org/Provider/Style/URI}Cool URIs dont change}}
 
-		* Storage
+	* simple templating
 
-		* Parser
+	* Support of different markups ({{{http://greensopinion.blogspot.com/2008/11/mylyn-wikitext-stand-alone-package.html}Wikitext}})
 
-		* Security
+		* planned
+	
+			* {{{http://www.wikicreole.org/wiki/Creole1.0}Creole}} -> WikiText Incubator
 
-	* Erweitern
+			* {{{http://www.jspwiki.org/wiki/TextFormattingRules}Jspwiki}}
 
-		* Engine
+			* {{{http://textile.thresholdstate.com/}Textile}} -> TextileJ/WikiText
 
-	* PMD Regeln festlegen
+			* {{{http://en.wikipedia.org/wiki/Help:Wiki_markup}Mediawiki}} -> TextileJ/WikiText
+
+		* others
+
+			* Confluence -> TextileJ/WikiText
+
+			* Trac -> TextileJ/WikiText
+
+			* {{{http://daringfireball.net/projects/markdown/}Markdown}}
+
+			* {{{http://docutils.sourceforge.net/rst.html}reStructuredText}}
+		
+ Sorry. There is no more documentation available in english. Feel free to translate the {{{..}german}} pages.
+

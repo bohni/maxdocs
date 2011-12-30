@@ -32,18 +32,21 @@
 
 TODO
 
- Here is a list of TODOs:
- 
-	* Implement
+ Hier ist eine Liste der TODOs:
 
-		* Storage
+	* Templates/Preferences für Eclipse bereitstellen
 
-		* Parser
+	* PMD Regeln festlegen
 
-		* Security
+	* UnitTest verbessern
 
-	* Extend
+	* FileStorage: Speichern unter lfdNr.
 
-		* Engine
+	* MarkupParser: Creole Syntax
 
-	* Define PMD rules
+	* Security: Konzept erstellen und prüfen, ob mit Spring Security umsetzbar
+
+	* Default Template: Favicon
+
+	* Maven Site: Eigenes Logo
+

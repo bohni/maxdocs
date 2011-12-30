@@ -79,11 +79,11 @@
 	</developers>
 
 	<scm>
-		<url>https://github.com/bohni/maxdocs</url>
+		<url>https://github.com/bohni/maxdocs/tree/develop</url>
 		<connection>scm:git:https://github.com/bohni/maxdocs.git</connection>
 	</scm>
 	<issueManagement>
-		<system>GitHub</system>
+		<system>github Issues 2.0</system>
 		<url>https://github.com/bohni/maxdocs/issues</url>
 	</issueManagement>
 
@@ -234,7 +234,7 @@
 				<configuration>
 					<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
 					<inputEncoding>${project.build.sourceEncoding}</inputEncoding>
-					<locales>en,de</locales>
+					<locales>de,en</locales>
 				</configuration>
 			</plugin>
 			<plugin>

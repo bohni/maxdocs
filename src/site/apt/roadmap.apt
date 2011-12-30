@@ -23,19 +23,62 @@
 ~~
 
  ------
- MaxDocs Entwicklung
+ MaxDocs Roadmap
  ------
  Team maxdocs.org
  ------
- 2011-09-26
+ 2011-12-30
  
- 
-Entwicklung
+Roadmap
 
- Hier sind einige Links:
+ Auf dieser Seite werden die nächsten geplanten Schritte beschrieben.
 
-	* {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}}
 
-	* {{{http://blog.code-adept.com/2008/01/25/unit-testing-jsp-custom-tags/}Unit Testing Custom Tags}}
 
-	* {{{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}UTF-8 encoding mit Apache Tomcat}}
+* nächster Schritt
+
+** FileStorage
+
+ Der FileStorage kann laden und speichern. Allerdings noch unter dem Seitennamen.
+ Zukünftig werden die Seiten auf der Festplatte nicht mit ihrem Namen gespeichert, sondern unter 
+ einer fortlaufenden Nummer. Seitenname und -pfad werden als Metadaten gespeichert. Dadurch kann 
+ eine Seite umbenannt werden, ohne dass die Seite auf der Festplatte umbenannt werden  muss. 
+ Außerdem sind kann so auch die Verlinkung innerhalb der Seiten einfacher gepflegt werden.
+
+** Dokumentation
+
+ Javadoc-Kommentare prüfen und vereinheitlichen.
+ Architektur dokumentieren.
+ Bereits implementierte Konzepte dokumentieren.
+
+
+* übernächster Schritt
+
+** Security
+
+ Security-Konzept erstellen:
+ Kann Spring Security verwendet werden?
+ Wie kann dynamisch auf Seitenbasis gesperrt werden?
+ Welche Rechte werden benötigt (View, Edit, Rename, Delete, Upload, etc.)
+ Wie wird Security konfiguriert?
+
+
+
+* Zukünftige Schritte
+
+	* Weitere Markups
+
+	* Delete (MaxDocs Engine, FileStorage)
+
+	* Rename (MaxDocs Engine, FileStorage)
+
+	* Plugin-Konzept erstellen
+
+	* Anhänge
+
+	* Bilder
+
+	* Gallery
+
+	* I18n
+

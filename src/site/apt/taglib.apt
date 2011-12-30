@@ -32,34 +32,41 @@
 
 MaxDocs Taglib
 
- MaxDocs provides the following tags for creating templates.
+ MaxDocs stellt folgende Tags zur Verfügung, um damit eigene Templates zu erstellen.
 
-	* Document metadata
+	* Dokument Metadaten
 
-		* author (author/editor)
+		* author (author/editor): Liefert den Autor (Ersteller) bzw. den Editor (Änderungen) der Seite
 
-		* contentType
+		* contentType: Liefert den ContentType der zugrundeliegenden Markupsprache
 
-		* date(creation/lastChange)
+		* date(creation/lastChange): Liefert das Erstelldatum bzw. das Datum der letzten Änderung
 
-		* pageVersion
+		* pageVersion: Liefert die Version der Seite
 
-	* Document data
+	* Dokument Daten
 
-		* pageName
+		* pageName: Liefert den Namen der Seite
 
-		* pageContent
+		* pageContent: Liefert den in (X)HTML übersetzten Inhalt der Seite
 
-		* pageSource
+		* pageSource: Liefert den Quellcode der Seite
 
-	* Miscellaneous
+	* Sonstige
 
-		* breadcrumbs
+		* breadcrumbs: Liefert die zuletzt besuchten Seiten
 
-		* insertPage
+		* insertPage: Liefert den übersetzten Inhalt der angegebenen Seite
 
-		* noSuchPage
+		* noSuchPage: Zeigt den Body des Tags an, wenn die Seite nicht existiert
 
-		* pageExists
+		* pageExists: Zeigt den Body des Tags an, wenn die Sete existiert
 
-		* tagCloud
+		* tagCloud: Liefert eine TagCloud
+
+ weitere geplante Tags
+
+	* variable: Liefert den Wert einer Variable, die in der Konfigurationsdatei definiert wird.
+
+	* gallery: Gallery nimmt als Attribut einen Pfad und bereitet daraus ein Album auf. Ggf. mit Ordnern zum navigieren,
+	  Lightbox für die Bildanzeige
