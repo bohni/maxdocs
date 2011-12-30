@@ -57,7 +57,9 @@ Wo wird entwickelt?
 - Heimserver? HTTP? SSH? Gitolite? Gitblit?
 => Entwicklung läuft vorerst auf Github bohni/maxdocs
 - Wie ist das bei Github mit evtl. User maxdocs?
-
+- Einstellungen für git unter Windows (~/.gitconfig):
+[core]
+	autocrlf = true
 ===============================================================
 Parser
 - Nur für Syntax, lässt Plugin Auszeichnung unverändert
