@@ -4,17 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Properties;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -27,13 +22,14 @@ import org.slf4j.LoggerFactory;
  * FileStorage
  * TODO, 23.12.2011: Documentation
  * 
- * @author Stefan Bohn
+ * @author Team maxdocs.org
  *
  */
 public class FileStorage implements Storage
 {
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
 	private String storagePath;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 
 	/**
@@ -152,13 +148,11 @@ public class FileStorage implements Storage
 					}
 					else if (StringUtils.startsWith(line, "creationDateFirst"))
 					{
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:MM:ss");
 						Date date = sdf.parse(StringUtils.substringAfterLast(line, "="));
 						markupPage.setFirstVersionCreationDate(date);
 					}
 					else if (StringUtils.startsWith(line, "creationDateThis"))
 					{
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:MM:ss");
 						Date date = sdf.parse(StringUtils.substringAfterLast(line, "="));
 						markupPage.setCurrentVersionCreationDate(date);
 					}
@@ -173,11 +167,12 @@ public class FileStorage implements Storage
 					}
 					else if (StringUtils.startsWith(line, "tags"))
 					{
-						StringTokenizer st = new StringTokenizer(StringUtils.substringAfterLast(line, "="), ",");
+						StringTokenizer st = new StringTokenizer(StringUtils.substringAfterLast(line, "="),
+							",");
 						while (st.hasMoreElements())
 						{
 							String tag = st.nextToken().trim();
-							if(StringUtils.isNotBlank(tag))
+							if (StringUtils.isNotBlank(tag))
 							{
 								markupPage.addTag(tag);
 							}
@@ -229,64 +224,75 @@ public class FileStorage implements Storage
 	 * @see org.maxdocs.storage.Storage#save(org.maxdocs.data.MarkupPage)
 	 */
 	@Override
-	public boolean save(MarkupPage page, boolean isNew)
+	public boolean save(MarkupPage oldPage, MarkupPage newPage)
 	{
-		log.trace("save()");
+		if(oldPage == null)
+		{
+			throw new IllegalArgumentException("save(oldPage, newPage): oldPage is null!"); //TODO: checked exceptions?
+		}
+		if(newPage == null)
+		{
+			throw new IllegalArgumentException("save(oldPage, newPage): newPage is null!"); //TODO: checked exceptions?
+		}
+		log.trace("save({}, {})", oldPage.getPagePath(), newPage.getPagePath());
 		boolean success = false;
 		String lineSeperator = "\n";
 		Writer writer = null;
 		try
 		{
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:MM:ss");
-			if (isNew)
+			StringBuilder tags;
+			
+			// oldPage
+			writer = new OutputStreamWriter(new FileOutputStream(new File(storagePath + "VERSIONS"
+				+ oldPage.getPagePath() + "." + oldPage.getVersion() + ".txt"), false), "UTF-8");
+			writer.append("pagePath=" + oldPage.getPagePath() + lineSeperator);
+			writer.append("author=" + oldPage.getAuthor() + lineSeperator);
+			writer.append("editor=" + oldPage.getEditor() + lineSeperator);
+			writer.append("creationDateFirst=" + sdf.format(oldPage.getFirstVersionCreationDate())
+				+ lineSeperator);
+			writer.append("creationDateThis=" + sdf.format(oldPage.getCurrentVersionCreationDate())
+				+ lineSeperator);
+			writer.append("contentType=" + oldPage.getContentType() + lineSeperator);
+			writer.append("version=" + (oldPage.getVersion()) + lineSeperator);
+			tags = new StringBuilder();
+			for (String tag : oldPage.getTags())
 			{
-				writer = new OutputStreamWriter(new FileOutputStream(new File(storagePath + page.getPagePath().substring(1) + ".txt")), "UTF-8");
-				writer = new FileWriter(new File(storagePath + page.getPagePath().substring(1) + ".txt"), false);
-				writer.append("pagePath=" + page.getPagePath() + lineSeperator);
-				writer.append("author=" + page.getAuthor() + lineSeperator);
-				writer.append("editor=" + page.getEditor() + lineSeperator);
-				writer.append("creationDateFirst=" + sdf.format(page.getFirstVersionCreationDate())+ lineSeperator);
-				writer.append("creationDateThis=" + sdf.format(page.getCurrentVersionCreationDate())+ lineSeperator);
-				writer.append("contentType=" + page.getContentType() + lineSeperator);
-				writer.append("version=" + (page.getVersion() + 1) + lineSeperator);
-				StringBuilder tags = new StringBuilder();
-				for (String tag : page.getTags())
-				{
-					tags.append(tag + ", ");
-				}
-				writer.append("tags=" + StringUtils.substringBeforeLast(tags.toString(), ",") + lineSeperator);
-				writer.append(lineSeperator);
-				String content = new String(page.getContent().getBytes(Charset.forName("UTF-8")));
-				writer.append(content);
+				tags.append(tag + ", ");
 			}
-			else
+			writer.append("tags=" + StringUtils.substringBeforeLast(tags.toString(), ",") + lineSeperator);
+			writer.append(lineSeperator);
+			writer.append(oldPage.getContent());
+			
+			writer.close();
+
+			// newPage
+			writer = new OutputStreamWriter(new FileOutputStream(new File(storagePath
+				+ newPage.getPagePath().substring(1) + ".txt")), "UTF-8");
+			writer.append("pagePath=" + newPage.getPagePath() + lineSeperator);
+			writer.append("author=" + newPage.getAuthor() + lineSeperator);
+			writer.append("editor=" + newPage.getEditor() + lineSeperator);
+			writer.append("creationDateFirst=" + sdf.format(newPage.getFirstVersionCreationDate())
+				+ lineSeperator);
+			writer.append("creationDateThis=" + sdf.format(newPage.getCurrentVersionCreationDate())
+				+ lineSeperator);
+			writer.append("contentType=" + newPage.getContentType() + lineSeperator);
+			writer.append("version=" + (newPage.getVersion()) + lineSeperator);
+			tags = new StringBuilder();
+			for (String tag : newPage.getTags())
 			{
-				// Versionierung
-				writer = new OutputStreamWriter(new FileOutputStream(new File(storagePath + "VERSIONS" + page.getPagePath() + "."
-					+ page.getVersion() + ".txt"), false), "UTF-8");
-				writer.append("pagePath=" + page.getPagePath() + lineSeperator);
-				writer.append("author=" + page.getAuthor() + lineSeperator);
-				writer.append("editor=" + page.getEditor() + lineSeperator);
-				writer.append("creationDateFirst=" + sdf.format(page.getFirstVersionCreationDate())+ lineSeperator);
-				writer.append("creationDateThis=" + sdf.format(page.getCurrentVersionCreationDate())+ lineSeperator);
-				writer.append("contentType=" + page.getContentType() + lineSeperator);
-				writer.append("version=" + (page.getVersion()) + lineSeperator);
-				StringBuilder tags = new StringBuilder();
-				for (String tag : page.getTags())
-				{
-					tags.append(tag + ", ");
-				}
-				writer.append("tags=" + StringUtils.substringBeforeLast(tags.toString(), ",") + lineSeperator);
-				writer.append(lineSeperator);
-				String content = new String(page.getContent().getBytes(Charset.forName("UTF-8")));
-				writer.append(content);
+				tags.append(tag + ", ");
 			}
+			writer.append("tags=" + StringUtils.substringBeforeLast(tags.toString(), ",") + lineSeperator);
+			writer.append(lineSeperator);
+			writer.append(newPage.getContent());
+
 			success = true;
 		}
 		catch (IOException e)
 		{
-			success = false;
 			log.error(e.getMessage(), e);
+			success = false;
+			throw new RuntimeException("Error while saving files!"); //TODO: checked exceptions?
 		}
 		finally
 		{
@@ -299,6 +305,76 @@ public class FileStorage implements Storage
 				catch (IOException e)
 				{
 					log.error(e.getMessage(), e);
+				}
+			}
+		}
+		return success;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#save(org.maxdocs.data.MarkupPage)
+	 */
+	@Override
+	public boolean save(MarkupPage newPage)
+	{
+		if(newPage == null)
+		{
+			throw new IllegalArgumentException("save(newPage): newPage is null!"); //TODO: checked exceptions?
+		}
+		log.trace("save({})", newPage.getPagePath());
+		boolean success = false;
+		String lineSeperator = "\n";
+		Writer writer = null;
+		if(exists(newPage.getPagePath()))
+		{
+			// Error: Page is not new
+			throw new RuntimeException("newPage already exists!"); //TODO: checked exceptions?
+		}
+		else
+		{
+			try
+			{
+				writer = new OutputStreamWriter(new FileOutputStream(new File(storagePath
+					+ newPage.getPagePath().substring(1) + ".txt")), "UTF-8");
+				writer.append("pagePath=" + newPage.getPagePath() + lineSeperator);
+				writer.append("author=" + newPage.getAuthor() + lineSeperator);
+				writer.append("editor=" + newPage.getEditor() + lineSeperator);
+				writer.append("creationDateFirst=" + sdf.format(newPage.getFirstVersionCreationDate())
+					+ lineSeperator);
+				writer.append("creationDateThis=" + sdf.format(newPage.getCurrentVersionCreationDate())
+					+ lineSeperator);
+				writer.append("contentType=" + newPage.getContentType() + lineSeperator);
+				writer.append("version=" + (newPage.getVersion()) + lineSeperator);
+				StringBuilder tags = new StringBuilder();
+				for (String tag : newPage.getTags())
+				{
+					tags.append(tag + ", ");
+				}
+				writer.append("tags=" + StringUtils.substringBeforeLast(tags.toString(), ",") + lineSeperator);
+				writer.append(lineSeperator);
+				writer.append(newPage.getContent());
+
+				success = true;
+			}
+			catch (IOException e)
+			{
+				log.error(e.getMessage(), e);
+				success = false;
+				throw new RuntimeException("Error while saving files!"); //TODO: checked exceptions?
+			}
+			finally
+			{
+				if (writer != null)
+				{
+					try
+					{
+						writer.close();
+					}
+					catch (IOException e)
+					{
+						log.error(e.getMessage(), e);
+					}
 				}
 			}
 		}

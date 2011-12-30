@@ -28,7 +28,7 @@ package org.maxdocs.data;
  * An object containing the data of a page.
  * The content is already rendered in HTML.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public class HtmlPage extends AbstractPage
 {
@@ -37,8 +37,9 @@ public class HtmlPage extends AbstractPage
 
 	/**
 	 * Default constructor.
-	 * Creates a HtmlPage object.
+	 * Creates a {@link HtmlPage} object.
 	 */
+
 	public HtmlPage()
 	{
 
@@ -47,19 +48,14 @@ public class HtmlPage extends AbstractPage
 
 	/**
 	 * Full constructor. Contains required and optional fields.
-	 * Creates a HtmlPage object with data from the given markup page.
+	 * Creates a {@link HtmlPage} object with data from the given {@link MarkupPage}.
 	 *
 	 * @param markupPage a markup page 
 	 */
 	public HtmlPage(MarkupPage markupPage)
 	{
-		setAuthor(markupPage.getAuthor());
-		setEditor(markupPage.getEditor());
-		setContentType(markupPage.getContentType());
+		super(markupPage);
 		setCurrentVersionCreationDate(markupPage.getCurrentVersionCreationDate());
-		setPageName(markupPage.getPageName());
-		setPagePath(markupPage.getPagePath());
-		setVersion(markupPage.getVersion());
 	}
 
 

@@ -29,7 +29,7 @@ import org.maxdocs.data.MarkupPage;
  * Storage:
  * Interface for storage providers of MaxDocs.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public interface Storage
 {
@@ -42,6 +42,7 @@ public interface Storage
 	 */
 	public boolean exists(String pagePath);
 
+
 	/**
 	 * load:
 	 * Creates a MarkupPage object of the given page.
@@ -50,6 +51,7 @@ public interface Storage
 	 * @return the MarkupPage object of the requested page
 	 */
 	public MarkupPage load(String pagePath);
+
 
 	/**
 	 * load:
@@ -61,23 +63,33 @@ public interface Storage
 	 */
 	public MarkupPage load(String pagePath, int version);
 
+
 	/**
 	 * save:
-	 * Persists the MarkupPage object in the storage
+	 * Persists the MarkupPage objects in the storage.
 	 * 
-	 * @param page The MarkupPage object to persist.
-	 * @param isNew If set to <code>true</code>, a new file is created.
-	 * 				If set to <code>false</code>, the file is saved to version folder.
-	 * @return <code>true</code>, if saving succeeds.
+	 * @param oldPage if not null it will be saved to the versions folder
+	 * @param newPage will be saved to the content folder
+	 * @return <code>true</code>, if saving succeeds
 	 */
-	public boolean save(MarkupPage page, boolean isNew);
+	public boolean save(MarkupPage oldVersion, MarkupPage newVersion);
 
-	
+
+	/**
+	 * save:
+	 * Persists the MarkupPage object in the storage.
+	 * 
+	 * @param newPage will be saved to the content folder
+	 * @return <code>true</code>, if saving succeeds
+	 */
+	public boolean save(MarkupPage newPage);
+
+
 	/**
 	 * delete:
 	 * Deletes the requested page.
 	 * @param pagePath the requested page
-	 * @return <code>true</code>, if deleting succeeds.
+	 * @return <code>true</code>, if deleting succeeds
 	 */
 	public boolean delete(String pagePath);
 }

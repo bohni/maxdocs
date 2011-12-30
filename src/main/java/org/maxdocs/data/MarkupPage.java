@@ -23,23 +23,43 @@
  */
 package org.maxdocs.data;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * MarkupPage
  * An object containing the data of a page.
  * The content is in markup.
  * 
- * @author Stefan Bohn
+ * @author Team maxdocs.org
  *
  */
 public class MarkupPage extends AbstractPage
 {
-	private static Logger log = LoggerFactory.getLogger(MarkupPage.class);
-
 	private String content;
 
+	/**
+	 * Default constructor.
+	 * Creates a(n) {@link MarkupPage} object.
+	 */
+	public MarkupPage()
+	{
+		super();
+	}
+	
+	/**
+	 * Full constructor. Contains required and optional fields.
+	 * Creates a {@link MarkupPage} object with the given parameters.
+	 *
+	 * @param page a markup page.
+	 */
+	public MarkupPage(MarkupPage page)
+	{
+		super(page);
+		if(page != null)
+		{
+			this.content = page.content;
+		}
+	}
+	
 	/**
 	 * getContent: Returns the content.
 	 *

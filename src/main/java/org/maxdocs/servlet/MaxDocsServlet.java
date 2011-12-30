@@ -23,7 +23,6 @@
  */
 package org.maxdocs.servlet;
 
-import java.util.Date;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +35,7 @@ import org.maxdocs.data.MarkupPage;
 import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.FrameworkServlet;
 
@@ -43,7 +43,7 @@ import org.springframework.web.servlet.FrameworkServlet;
  * MaxDocsServlet:
  * Main servlet of MaxDocs.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public class MaxDocsServlet extends FrameworkServlet
 {
@@ -52,10 +52,11 @@ public class MaxDocsServlet extends FrameworkServlet
 	private static final String ACTION_SAVE = "save";
 	private static final String ACTION_SHOW = "show";
 	private static final String ACTION_SOURCE = "source";
-	private static final String DEFAULT_ACTION = ACTION_SHOW;
 	private static final String DEFAULT_PAGE_NAME = "Main";
 	private static final String DEFAULT_TEMPLATE_NAME = "default";
 	private static final String PARAMETER_NAME_ACTION = "action";
+	private static final String PARAMETER_NAME_CONTENT = "content";
+	private static final String PARAMETER_NAME_VERSION = "version";
 
 	private static Logger log = LoggerFactory.getLogger(MaxDocsServlet.class);
 
@@ -79,6 +80,12 @@ public class MaxDocsServlet extends FrameworkServlet
 		String pathInfo = request.getPathInfo();
 		log.debug("PathInfo={}", pathInfo);
 
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		if(StringUtils.isBlank(username))
+		{
+			username = "Anonymous";
+		}
+
 		// PagePath
 		String pagePath = pathInfo;
 		if(StringUtils.equals(pagePath, "/"))
@@ -96,6 +103,7 @@ public class MaxDocsServlet extends FrameworkServlet
 			breadcrumbs = new CircularFifoBuffer(5); // TODO: Length configurable?
 		}
 		String lastPagePath = "";
+		@SuppressWarnings("rawtypes")
 		Iterator iterator = breadcrumbs.iterator();
 		while(iterator.hasNext())
 		{
@@ -119,8 +127,11 @@ public class MaxDocsServlet extends FrameworkServlet
 			action=ACTION_SHOW;
 		}
 		log.debug("action={}", action);
-
-		if(StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
+		if(StringUtils.equalsIgnoreCase(action, ACTION_DELETE))
+		{
+			// TODO
+		}
+		else if(StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
 		{
 			MaxDocs maxDocs = (MaxDocs)getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
@@ -130,26 +141,28 @@ public class MaxDocsServlet extends FrameworkServlet
 		else if(StringUtils.equalsIgnoreCase(action, ACTION_SAVE))
 		{
 			MaxDocs maxDocs = (MaxDocs)getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
-			if(StringUtils.equals((String) request.getParameter("version"), markupPage.getVersion() + ""))
+
+			MarkupPage oldPage = maxDocs.getMarkupPage(pagePath);
+			MarkupPage newPage = new MarkupPage(oldPage);
+			if(oldPage == null)
 			{
-				// same version. No concurrent changes since edit
-				maxDocs.save(markupPage, false);
-				markupPage.setContent(request.getParameter("content"));
-				if(StringUtils.isBlank(request.getParameter("editor")))
-				{
-					markupPage.setEditor("Anonymous");
-				}
-				else
-				{
-					markupPage.setEditor(request.getParameter("editor"));
-				}
-				markupPage.setCurrentVersionCreationDate(new Date());
-				maxDocs.save(markupPage, true);
+				newPage.setAuthor(username);
+				newPage.setEditor(username);
+				newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
+				newPage.setPagePath(pagePath);
+				newPage.setContentType(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI);
 			}
-			else
+			if(StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
 			{
-				log.debug("Concurrent edit...");
+				newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
+			}
+			newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
+
+			boolean success = maxDocs.save(oldPage, newPage);
+
+			if(! success)
+			{
+				log.debug("Concurrent changes...");
 				// TODO: concurrent changes - show error message
 			}
 			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/show.jsp").forward(request, response);
