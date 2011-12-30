@@ -27,7 +27,7 @@ package org.maxdocs.plugin;
  * MaxDocsPlugin:
  * Interface for plugins of MaxDocs.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public interface MaxDocsPlugin
 {

@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * Author:
  * Tag, that displays a tag cloud within a div container.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 public class TagCloudTag extends TagSupport

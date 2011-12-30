@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * AuthorTagTEI:
  * Provides validation of the plain and type attributes.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public class AuthorTagTEI extends AbstractMaxDocsTagTEI
 {

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * PageExistsTag
  * If the page exists, the body part will be rendered.
  * 
- * @author Stefan Bohn
+ * @author Team maxdocs.org
  *
  */
 public class PageExistsTag extends BodyTagSupport

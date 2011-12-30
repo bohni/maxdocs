@@ -32,7 +32,6 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
-import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
@@ -43,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * BreadcrumbsTag:
  * Tag, that displays breadcrumbs of the session.
  *
- * @author Stefan Bohn
+ * @author Team maxdocs.org
  *
  */
 public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
@@ -75,6 +74,8 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 			{
 				StringBuffer breadcrumbs = new StringBuffer();
 
+				
+				@SuppressWarnings("rawtypes")
 				Iterator iter = breadcrumbsMap.iterator();
 				
 				while(iter.hasNext())

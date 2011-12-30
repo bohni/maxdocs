@@ -27,7 +27,6 @@
 package org.maxdocs.taglib;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.jsp.JspException;
@@ -43,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * DateTag:
  * Tag, that displays the date within a span container.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 public class DateTag extends AbstractMaxDocsTagSupport

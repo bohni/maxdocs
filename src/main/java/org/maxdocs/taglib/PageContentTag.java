@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * PageContentTag:
  * Tag, that displays the content within a div container.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 public class PageContentTag extends TagSupport

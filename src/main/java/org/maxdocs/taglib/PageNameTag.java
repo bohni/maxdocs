@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * PageNameTag:
  * Tag, that displays the page name within a h1 container.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 public class PageNameTag extends AbstractMaxDocsTagSupport

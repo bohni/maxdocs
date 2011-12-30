@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * InsertPageTag:
  * Tag, that displays the content of the given page within a div container.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 public class InsertPageTag extends TagSupport

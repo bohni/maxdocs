@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * MaxDocsFilter:
  * Filter for MaxDocs to differ between static (/internal) and dynamic (/content) content.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public class MaxDocsFilter implements Filter
 {

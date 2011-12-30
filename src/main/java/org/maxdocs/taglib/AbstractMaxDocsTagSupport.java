@@ -31,7 +31,7 @@ import javax.servlet.jsp.tagext.TagSupport;
  * 
  * Provides styleClass and plain attributes.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public abstract class AbstractMaxDocsTagSupport extends TagSupport
 {

@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * DateTagTEI:
  * Provides validation of the plain, format and type attributes.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public class DateTagTEI extends AbstractMaxDocsTagTEI
 {

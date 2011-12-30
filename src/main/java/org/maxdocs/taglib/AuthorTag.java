@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * AuthorTag:
  * Tag, that displays the author within a span container.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 public class AuthorTag extends AbstractMaxDocsTagSupport

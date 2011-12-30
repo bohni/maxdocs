@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * 
  * Provides validation of the plain attribute.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public abstract class AbstractMaxDocsTagTEI extends TagExtraInfo
 {

@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * PageNameTagTEI:
  * Provides validation of the plain attribute.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
 public class PageNameTagTEI extends AbstractMaxDocsTagTEI
 {

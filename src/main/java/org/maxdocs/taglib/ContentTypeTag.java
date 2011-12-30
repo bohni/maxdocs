@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * ContentTypeTag:
  * Tag, that displays the contentType within a span container.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 public class ContentTypeTag extends AbstractMaxDocsTagSupport
