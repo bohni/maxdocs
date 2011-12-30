@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 /**
  * MarkupParserTest
  *
- * @author Matthias Mezger
+ * @author Team maxdocs.org
  */
 public class MarkupParserTest
 {

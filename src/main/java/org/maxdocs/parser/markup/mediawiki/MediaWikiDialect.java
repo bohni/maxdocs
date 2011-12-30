@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 /**
  * MediaWikiDialect
  *
- * @author Matthias Mezger
+ * @author Team maxdocs.org
  */
 public class MediaWikiDialect extends net.java.textilej.parser.markup.mediawiki.MediaWikiDialect
 {

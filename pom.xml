@@ -53,7 +53,7 @@
 		<developer>
 			<id>bohni</id>
 			<name>Stefan Bohn</name>
-			<email>bohni@bohni.net</email>
+			<email>stefan@bohni.net</email>
 			<url>http://bohni.net</url>
 			<organization>${project.organization.name}</organization>
 			<organizationUrl>${project.organization.url}</organizationUrl>

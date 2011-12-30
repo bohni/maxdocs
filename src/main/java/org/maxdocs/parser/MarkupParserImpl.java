@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 /**
  * MarkupParserImpl:
  *
- * @author Matthias Mezger
+ * @author Team maxdocs.org
  */
 public class MarkupParserImpl implements MarkupParser
 {
