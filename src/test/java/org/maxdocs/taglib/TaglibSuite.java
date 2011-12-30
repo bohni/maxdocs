@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
  * TaglibSuite:
  * Test suit for running all taglib test classes.
  *
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  *
  */
 @RunWith(Suite.class)

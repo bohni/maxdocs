@@ -1,6 +1,6 @@
 package org.maxdocs.engine;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
  * MaxDocsImplTest
  * Unit test for {@link MaxDocsImpl}.
  * 
- * @author Stefan Bohn
+ * @author Team maxdocs.org
  *
  */
-public class MaxDocsImplTest extends TestCase
+public class MaxDocsImplTest
 {
 	private static Logger log = LoggerFactory.getLogger(MaxDocsImplTest.class);
 
@@ -36,7 +36,6 @@ public class MaxDocsImplTest extends TestCase
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	@Override
 	@Before
 	public void setUp()
 	{

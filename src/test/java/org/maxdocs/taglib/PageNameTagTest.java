@@ -23,12 +23,12 @@
  */
 package org.maxdocs.taglib;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
-
-import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -47,9 +47,9 @@ import org.springframework.web.context.WebApplicationContext;
  * PageNameTagTest:
  * Unit test for {@link PageNameTag}.
  * 
- * @author Team jspserver.net
+ * @author Team maxdocs.org
  */
-public class PageNameTagTest extends TestCase
+public class PageNameTagTest
 {
 	private static Logger log = LoggerFactory.getLogger(PageNameTagTest.class);
 
@@ -71,12 +71,10 @@ public class PageNameTagTest extends TestCase
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	@Override
 	@Before
-	protected void setUp() throws Exception
+	public void setUp() throws Exception
 	{
 		log.trace("setUp");
-		super.setUp();
 		// Create the mock servlet context
 		mockServletContext = new MockServletContext();
 
