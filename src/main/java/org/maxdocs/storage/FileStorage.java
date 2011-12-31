@@ -43,21 +43,23 @@ import org.slf4j.LoggerFactory;
 
 /**
  * FileStorage
- * TODO, 23.12.2011: Documentation
+ * This storage persists the data in files on a hard disk.
  * 
  * @author Team maxdocs.org
  *
  */
 public class FileStorage implements Storage
 {
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	private static final String VERSION_PATH = "versions";
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
 	private String storagePath;
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
 
 	/**
 	 * Default constructor.
 	 * Creates a FileStorage object.
+	 * 
+	 * The storagePath is set to "content/".
 	 *
 	 */
 	public FileStorage()
@@ -75,6 +77,7 @@ public class FileStorage implements Storage
 	public FileStorage(String storagePath)
 	{
 		log.trace("FileStorage({})", storagePath);
+
 		if (StringUtils.endsWith(storagePath, "/"))
 		{
 			this.storagePath = storagePath;
@@ -83,6 +86,7 @@ public class FileStorage implements Storage
 		{
 			this.storagePath = storagePath + "/";
 		}
+
 		File file = new File(this.storagePath);
 		log.debug("Using content folder '{}'", file.getAbsolutePath());
 
@@ -97,7 +101,9 @@ public class FileStorage implements Storage
 				throw new RuntimeException("Error creating content folder.");
 			}
 		}
-		File versions = new File(this.storagePath + "VERSIONS");
+
+		File versions = new File(this.storagePath + VERSION_PATH);
+		log.debug("Using content folder '{}'", file.getAbsolutePath());
 		if (!versions.exists())
 		{
 			if (versions.mkdirs())
@@ -266,7 +272,7 @@ public class FileStorage implements Storage
 			StringBuilder tags;
 			
 			// oldPage
-			writer = new OutputStreamWriter(new FileOutputStream(new File(storagePath + "VERSIONS"
+			writer = new OutputStreamWriter(new FileOutputStream(new File(storagePath + VERSION_PATH
 				+ oldPage.getPagePath() + "." + oldPage.getVersion() + ".txt"), false), "UTF-8");
 			writer.append("pagePath=" + oldPage.getPagePath() + lineSeperator);
 			writer.append("author=" + oldPage.getAuthor() + lineSeperator);
