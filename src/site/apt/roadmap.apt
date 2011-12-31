@@ -40,16 +40,21 @@ Roadmap
 ** FileStorage
 
  Der FileStorage kann laden und speichern. Allerdings noch unter dem Seitennamen.
+
  Zukünftig werden die Seiten auf der Festplatte nicht mit ihrem Namen gespeichert, sondern unter 
- einer fortlaufenden Nummer. Seitenname und -pfad werden als Metadaten gespeichert. Dadurch kann 
- eine Seite umbenannt werden, ohne dass die Seite auf der Festplatte umbenannt werden  muss. 
- Außerdem sind kann so auch die Verlinkung innerhalb der Seiten einfacher gepflegt werden.
+ einer fortlaufenden Nummer. Seitenname und -pfad werden als Metadaten gespeichert.
+
+ Dadurch kann  eine Seite umbenannt werden, ohne dass die Seite auf der Festplatte umbenannt werden
+ muss. Außerdem sind kann so auch die Verlinkung innerhalb der Seiten einfacher gepflegt werden.
 
 ** Dokumentation
 
  Javadoc-Kommentare prüfen und vereinheitlichen.
+
  Architektur dokumentieren.
+
  Bereits implementierte Konzepte dokumentieren.
+
 
 
 * übernächster Schritt
@@ -57,9 +62,13 @@ Roadmap
 ** Security
 
  Security-Konzept erstellen:
+
  Kann Spring Security verwendet werden?
+
  Wie kann dynamisch auf Seitenbasis gesperrt werden?
+
  Welche Rechte werden benötigt (View, Edit, Rename, Delete, Upload, etc.)
+
  Wie wird Security konfiguriert?
 
 
@@ -71,6 +80,10 @@ Roadmap
 	* Delete (MaxDocs Engine, FileStorage)
 
 	* Rename (MaxDocs Engine, FileStorage)
+
+	* Load version (MaxDocs Engine, FileStorage)
+
+	* Compare Versions (MaxDocs Engine)
 
 	* Plugin-Konzept erstellen
 

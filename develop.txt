@@ -1,11 +1,8 @@
-TODO
-- Storage (delete, rename, load version) ist Fleißarbeit
-- Attachments, Web-Handling
-- Security konzipieren
+TODO:
+Diese Datei in die Maven-Site-Doku überführen
 
-erledigte TODO
-- Editieren, Showsource
-- Parser TextileJ muss analysiert werden: Verwenden? Selber machen?
+Plugins
+- verarbeiten bereits geparsten Content
 
 ===============================================================
 Schnittstellen für Plugins/Providers/etc:
@@ -106,11 +103,6 @@ weitere Markups:
   [http://dev.eclipse.org/git/org.eclipse.mylyn/org.eclipse.mylyn.git] Mylyn
   [http://git.eclipse.org/gitroot/mylyn/org.eclipse.mylyn.incubator.git] Mylyn Incubator
   
-  
-===============================================================
-Plugins
-- verarbeiten bereits geparsten Content
-
 ===============================================================
 Engine
 - Lesen

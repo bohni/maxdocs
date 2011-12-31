@@ -35,19 +35,29 @@ TODO
 
  Hier ist eine Liste der TODOs:
 
-	* Templates/Preferences für Eclipse bereitstellen
+	* Entwicklungsumgebung
 
-	* PMD Regeln festlegen
+		* Templates/Preferences für Eclipse bereitstellen
+	
+		* PMD Regeln festlegen
 
-	* UnitTest verbessern
+	* Dokumentation
 
-	* FileStorage: Speichern unter lfdNr.
+		* develop.txt nach apt für Maven-Site-Dokumentation
 
-	* MarkupParser: Creole Syntax
+	* Entwicklung
+	
+		* UnitTest verbessern
+	
+		* FileStorage: Speichern unter lfdNr., Delete, Rename, Load Version
 
-	* Security: Konzept erstellen und prüfen, ob mit Spring Security umsetzbar
+		* Attachments, Web-Handling
 
-	* Default Template: Favicon
-
-	* Maven Site: Eigenes Logo
-
+		* MarkupParser: weitere Markups
+	
+		* Security: Konzept erstellen und prüfen, ob mit Spring Security umsetzbar
+	
+		* Default Template: Favicon
+	
+		* Maven Site: Eigenes Logo
+	
