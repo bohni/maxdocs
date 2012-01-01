@@ -33,6 +33,8 @@ import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -44,6 +46,9 @@ import org.slf4j.LoggerFactory;
 /**
  * FileStorage
  * This storage persists the data in files on a hard disk.
+ * <br />
+ * Files are saved with as &lt;number&gt;.txt where number is an increasing number.<br />
+ * Old versions are saved with filename &lt;storagePath&gt;/versions/&lt;number&gt;/&lt;version&gt;.txt.
  * 
  * @author Team maxdocs.org
  *
@@ -54,7 +59,7 @@ public class FileStorage implements Storage
 	private static final String VERSION_PATH = "versions";
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
 	private String storagePath;
-
+	private Map<String, String> files;
 	/**
 	 * Default constructor.
 	 * Creates a FileStorage object.
@@ -87,14 +92,14 @@ public class FileStorage implements Storage
 			this.storagePath = storagePath + "/";
 		}
 
-		File file = new File(this.storagePath);
-		log.debug("Using content folder '{}'", file.getAbsolutePath());
+		File storage = new File(this.storagePath);
+		log.debug("Using content folder '{}'", storage.getAbsolutePath());
 
-		if (!file.exists())
+		if (!storage.exists())
 		{
-			if (file.mkdirs())
+			if (storage.mkdirs())
 			{
-				log.info("Created content folder '{}'", file.getAbsolutePath());
+				log.info("Created content folder '{}'", storage.getAbsolutePath());
 			}
 			else
 			{
@@ -103,7 +108,7 @@ public class FileStorage implements Storage
 		}
 
 		File versions = new File(this.storagePath + VERSION_PATH);
-		log.debug("Using content folder '{}'", file.getAbsolutePath());
+		log.debug("Using content folder '{}'", storage.getAbsolutePath());
 		if (!versions.exists())
 		{
 			if (versions.mkdirs())
@@ -115,6 +120,41 @@ public class FileStorage implements Storage
 				throw new RuntimeException("Error creating versions folder.");
 			}
 		}
+		files = new HashMap<String, String>();
+		for (File child : storage.listFiles())
+		{
+			if (child.getName().equals(".") || child.getName().equals("..") || child.isDirectory())
+			{
+				continue; // Ignore self and parent aliases
+			}
+			Scanner scanner = null;
+			try
+			{
+				scanner = new Scanner(new FileInputStream(child), "UTF-8");
+				String line;
+				while (scanner.hasNextLine())
+				{
+					line = scanner.nextLine();
+					if (StringUtils.startsWith(line, "pagePath"))
+					{
+						files.put(StringUtils.substringAfterLast(line, "="), child.getName());
+						break;
+					}
+				}
+			}
+			catch (FileNotFoundException e)
+			{
+				log.error("Error while reading files in internal map.", e);
+			}
+			finally
+			{
+				if (scanner != null)
+				{
+					scanner.close();
+				}
+			}
+
+		}
 	}
 
 
@@ -124,23 +164,7 @@ public class FileStorage implements Storage
 	@Override
 	public boolean exists(String pagePath)
 	{
-		File file;
-		if (pagePath.startsWith("/"))
-		{
-			file = new File(storagePath + pagePath.substring(1) + ".txt");
-		}
-		else
-		{
-			file = new File(storagePath + pagePath + ".txt");
-		}
-		if (file.exists())
-		{
-			if (file.isFile())
-			{
-				return true;
-			}
-		}
-		return false;
+		return files.containsKey(pagePath);
 	}
 
 
@@ -150,7 +174,7 @@ public class FileStorage implements Storage
 	@Override
 	public MarkupPage load(String pagePath)
 	{
-		String pathname = storagePath + pagePath.substring(1) + ".txt";
+		String pathname = storagePath + files.get(pagePath);
 		MarkupPage markupPage = new MarkupPage();
 		File file = new File(pathname);
 		if (file.exists())
@@ -271,9 +295,15 @@ public class FileStorage implements Storage
 		{
 			StringBuilder tags;
 			
+			String pageNumber = StringUtils.substringBefore(files.get(oldPage.getPagePath()), ".");
+			String path = storagePath + VERSION_PATH + "/" + pageNumber;
+			File folder = new File(path);
+			if(!folder.exists())
+			{
+				folder.mkdirs();
+			}
 			// oldPage
-			writer = new OutputStreamWriter(new FileOutputStream(new File(storagePath + VERSION_PATH
-				+ oldPage.getPagePath() + "." + oldPage.getVersion() + ".txt"), false), "UTF-8");
+			writer = new OutputStreamWriter(new FileOutputStream(new File(path + "/" + oldPage.getVersion() + ".txt"), false), "UTF-8");
 			writer.append("pagePath=" + oldPage.getPagePath() + lineSeperator);
 			writer.append("author=" + oldPage.getAuthor() + lineSeperator);
 			writer.append("editor=" + oldPage.getEditor() + lineSeperator);
@@ -296,7 +326,7 @@ public class FileStorage implements Storage
 
 			// newPage
 			writer = new OutputStreamWriter(new FileOutputStream(new File(storagePath
-				+ newPage.getPagePath().substring(1) + ".txt")), "UTF-8");
+				+ files.get(newPage.getPagePath()))), "UTF-8");
 			writer.append("pagePath=" + newPage.getPagePath() + lineSeperator);
 			writer.append("author=" + newPage.getAuthor() + lineSeperator);
 			writer.append("editor=" + newPage.getEditor() + lineSeperator);
@@ -355,7 +385,7 @@ public class FileStorage implements Storage
 		boolean success = false;
 		String lineSeperator = "\n";
 		Writer writer = null;
-		if(exists(newPage.getPagePath()))
+		if(files.containsKey(newPage.getPagePath()))
 		{
 			// Error: Page is not new
 			throw new RuntimeException("newPage already exists!"); //TODO: checked exceptions?
@@ -364,8 +394,19 @@ public class FileStorage implements Storage
 		{
 			try
 			{
-				writer = new OutputStreamWriter(new FileOutputStream(new File(storagePath
-					+ newPage.getPagePath().substring(1) + ".txt")), "UTF-8");
+				// TODO: lfdNr ermitteln zum Speichern
+				int max = 0;
+				for (String key : files.keySet())
+				{
+					int number = Integer.parseInt(StringUtils.substringBeforeLast(files.get(key), "."));
+					if(number > max)
+					{
+						max = number;
+					}
+				}
+				max++;
+				String filename = storagePath + max + ".txt";
+				writer = new OutputStreamWriter(new FileOutputStream(new File(filename)), "UTF-8");
 				writer.append("pagePath=" + newPage.getPagePath() + lineSeperator);
 				writer.append("author=" + newPage.getAuthor() + lineSeperator);
 				writer.append("editor=" + newPage.getEditor() + lineSeperator);
