@@ -33,7 +33,7 @@ Roadmap
 
  Auf dieser Seite werden die nächsten geplanten Schritte beschrieben.
 
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * nächster Schritt
 
@@ -55,7 +55,16 @@ Roadmap
 
  Bereits implementierte Konzepte dokumentieren.
 
+** Codereview
 
+ Auf den bisher erstellten Code muss ein Review durchgeführt werden.
+ Gegebenenfalls gefundende Punkte müssen überarbeitet werden.
+
+** Unit Tests
+
+ Es sollten für den bestehenden Code alle nötigen Unit Tests erstellt werden.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * übernächster Schritt
 
@@ -71,7 +80,7 @@ Roadmap
 
  Wie wird Security konfiguriert?
 
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Zukünftige Schritte
 
