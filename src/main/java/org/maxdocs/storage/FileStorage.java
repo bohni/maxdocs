@@ -424,6 +424,8 @@ public class FileStorage implements Storage
 				writer.append("tags=" + StringUtils.substringBeforeLast(tags.toString(), ",") + lineSeperator);
 				writer.append(lineSeperator);
 				writer.append(newPage.getContent());
+				
+				files.put(newPage.getPagePath(), max + ".txt");
 
 				success = true;
 			}
