@@ -34,14 +34,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ContentTypeTagTEI:
+ * MarkupLanguageTagTEI:
  * Provides validation of the plain attribute.
  *
  * @author Team maxdocs.org
  */
-public class ContentTypeTagTEI extends AbstractMaxDocsTagTEI
+public class MarkupLanguageTagTEI extends AbstractMaxDocsTagTEI
 {
-	private static Logger log = LoggerFactory.getLogger(ContentTypeTagTEI.class);
+	private static Logger log = LoggerFactory.getLogger(MarkupLanguageTagTEI.class);
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagExtraInfo#validate(javax.servlet.jsp.tagext.TagData)

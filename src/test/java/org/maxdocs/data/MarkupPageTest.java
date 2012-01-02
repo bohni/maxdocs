@@ -62,7 +62,7 @@ public class MarkupPageTest
 		MarkupPage page1 = new MarkupPage();
 		page1.setAuthor(author);
 		page1.setContent(content);
-		page1.setContentType(contentType);
+		page1.setMarkupLanguage(contentType);
 		page1.setCurrentVersionCreationDate(currentVersionCreationDate);
 		page1.setEditor(editor);
 		page1.setFirstVersionCreationDate(firstVersionCreationDate);
@@ -77,7 +77,7 @@ public class MarkupPageTest
 		assertNotSame(page1, page2);
 		assertEquals(author, page2.getAuthor());
 		assertEquals(content, page2.getContent());
-		assertEquals(contentType, page2.getContentType());
+		assertEquals(contentType, page2.getMarkupLanguage());
 		assertEquals(currentVersionCreationDate, page2.getCurrentVersionCreationDate());
 		assertEquals(editor, page2.getEditor());
 		assertEquals(firstVersionCreationDate, page2.getFirstVersionCreationDate());

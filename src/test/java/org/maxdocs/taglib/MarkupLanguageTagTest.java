@@ -44,14 +44,14 @@ import org.springframework.mock.web.MockServletContext;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * ContentTypeTagTest:
- * Unit test for {@link ContentTypeTag}.
+ * MarkupLanguageTagTest:
+ * Unit test for {@link MarkupLanguageTag}.
  * 
  * @author Team maxdocs.org
  */
-public class ContentTypeTagTest
+public class MarkupLanguageTagTest
 {
-	private static Logger log = LoggerFactory.getLogger(ContentTypeTagTest.class);
+	private static Logger log = LoggerFactory.getLogger(MarkupLanguageTagTest.class);
 
 	private MaxDocs mockEngine;
 
@@ -59,7 +59,7 @@ public class ContentTypeTagTest
 
 	private final String pagePath = "/Main";
 
-	private ContentTypeTag contentTypeTag;
+	private MarkupLanguageTag markupLanguageTag;
 
 	private MockServletContext mockServletContext;
 
@@ -89,7 +89,7 @@ public class ContentTypeTagTest
 
 		// Test data
 		htmlPage = new HtmlPage();
-		htmlPage.setContentType("text/jspwiki");
+		htmlPage.setMarkupLanguage("text/jspwiki");
 
 		// Create the mocked MaxDocs engine
 		mockEngine = EasyMock.createMock(MaxDocs.class);
@@ -98,8 +98,8 @@ public class ContentTypeTagTest
 		mockServletContext.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, mockEngine);
 		// Create an instance of the custom tag we want to test
 		// set it's PageContext to the MockPageContext we created above
-		contentTypeTag = new ContentTypeTag();
-		contentTypeTag.setPageContext(mockPageContext);
+		markupLanguageTag = new MarkupLanguageTag();
+		markupLanguageTag.setPageContext(mockPageContext);
 
 		// Whenever you make a call to the doStartTag() method on the custom tag it calls getServletContext()
 		// on the WebApplicationContext. So to avoid having to put this expect statement in every test
@@ -119,12 +119,12 @@ public class ContentTypeTagTest
 	@Test
 	public void testDoStartTagDefault() throws JspException, UnsupportedEncodingException
 	{
-		String expectedOutput = "<span class=\"maxdocsContentType\">" + htmlPage.getContentType() + "</span>";
+		String expectedOutput = "<span class=\"maxdocsContentType\">" + htmlPage.getMarkupLanguage() + "</span>";
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
-		int tagReturnValue = contentTypeTag.doStartTag();
+		int tagReturnValue = markupLanguageTag.doStartTag();
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
@@ -145,13 +145,13 @@ public class ContentTypeTagTest
 	public void testDoStartTagWithStyle() throws JspException, UnsupportedEncodingException
 	{
 		String styleClass = "style";
-		String expectedOutput = "<span class=\"" + styleClass + "\">" + htmlPage.getContentType() + "</span>";
+		String expectedOutput = "<span class=\"" + styleClass + "\">" + htmlPage.getMarkupLanguage() + "</span>";
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
-		contentTypeTag.setStyleClass(styleClass);
-		int tagReturnValue = contentTypeTag.doStartTag();
+		markupLanguageTag.setStyleClass(styleClass);
+		int tagReturnValue = markupLanguageTag.doStartTag();
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
@@ -172,13 +172,13 @@ public class ContentTypeTagTest
 	public void testDoStartTagWithPlain() throws JspException, UnsupportedEncodingException
 	{
 		boolean plain = true;
-		String expectedOutput = htmlPage.getContentType();
+		String expectedOutput = htmlPage.getMarkupLanguage();
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
-		contentTypeTag.setPlain(plain);
-		int tagReturnValue = contentTypeTag.doStartTag();
+		markupLanguageTag.setPlain(plain);
+		int tagReturnValue = markupLanguageTag.doStartTag();
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
@@ -200,14 +200,14 @@ public class ContentTypeTagTest
 	{
 		boolean plain = true;
 		String styleClass = "style";
-		String expectedOutput = htmlPage.getContentType();
+		String expectedOutput = htmlPage.getMarkupLanguage();
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
-		contentTypeTag.setPlain(plain);
-		contentTypeTag.setStyleClass(styleClass);
-		int tagReturnValue = contentTypeTag.doStartTag();
+		markupLanguageTag.setPlain(plain);
+		markupLanguageTag.setStyleClass(styleClass);
+		int tagReturnValue = markupLanguageTag.doStartTag();
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
@@ -233,7 +233,7 @@ public class ContentTypeTagTest
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
 		replayAllMocks();
 
-		int tagReturnValue = contentTypeTag.doStartTag();
+		int tagReturnValue = markupLanguageTag.doStartTag();
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);

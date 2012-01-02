@@ -197,7 +197,7 @@ public class FileStorage implements Storage
 					}
 					else if (StringUtils.startsWith(line, "contentType"))
 					{
-						markupPage.setContentType(StringUtils.substringAfterLast(line, "="));
+						markupPage.setMarkupLanguage(StringUtils.substringAfterLast(line, "="));
 					}
 					else if (StringUtils.startsWith(line, "creationDateFirst"))
 					{
@@ -311,7 +311,7 @@ public class FileStorage implements Storage
 				+ lineSeperator);
 			writer.append("creationDateThis=" + sdf.format(oldPage.getCurrentVersionCreationDate())
 				+ lineSeperator);
-			writer.append("contentType=" + oldPage.getContentType() + lineSeperator);
+			writer.append("contentType=" + oldPage.getMarkupLanguage() + lineSeperator);
 			writer.append("version=" + (oldPage.getVersion()) + lineSeperator);
 			tags = new StringBuilder();
 			for (String tag : oldPage.getTags())
@@ -334,7 +334,7 @@ public class FileStorage implements Storage
 				+ lineSeperator);
 			writer.append("creationDateThis=" + sdf.format(newPage.getCurrentVersionCreationDate())
 				+ lineSeperator);
-			writer.append("contentType=" + newPage.getContentType() + lineSeperator);
+			writer.append("contentType=" + newPage.getMarkupLanguage() + lineSeperator);
 			writer.append("version=" + (newPage.getVersion()) + lineSeperator);
 			tags = new StringBuilder();
 			for (String tag : newPage.getTags())
@@ -414,7 +414,7 @@ public class FileStorage implements Storage
 					+ lineSeperator);
 				writer.append("creationDateThis=" + sdf.format(newPage.getCurrentVersionCreationDate())
 					+ lineSeperator);
-				writer.append("contentType=" + newPage.getContentType() + lineSeperator);
+				writer.append("contentType=" + newPage.getMarkupLanguage() + lineSeperator);
 				writer.append("version=" + (newPage.getVersion()) + lineSeperator);
 				StringBuilder tags = new StringBuilder();
 				for (String tag : newPage.getTags())

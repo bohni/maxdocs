@@ -37,22 +37,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ContentTypeTag:
+ * MarkupLanguageTag:
  * Tag, that displays the contentType within a span container.
  *
  * @author Team maxdocs.org
  *
  */
-public class ContentTypeTag extends AbstractMaxDocsTagSupport
+public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 {
-	private static Logger log = LoggerFactory.getLogger(ContentTypeTag.class);
+	private static Logger log = LoggerFactory.getLogger(MarkupLanguageTag.class);
 
 
 	/**
 	 * Constructor.
 	 *
 	 */
-	public ContentTypeTag()
+	public MarkupLanguageTag()
 	{
 		super();
 		setStyleClass("maxdocsContentType");
@@ -75,7 +75,7 @@ public class ContentTypeTag extends AbstractMaxDocsTagSupport
 
 			if(htmlPage != null)
 			{
-				String contentType = htmlPage.getContentType();
+				String contentType = htmlPage.getMarkupLanguage();
 	
 				if (isPlain())
 				{

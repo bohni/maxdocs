@@ -52,7 +52,7 @@ public class MarkupParserImpl implements MarkupParser
 		log.trace("parseToHtml", markupPage.getPagePath());
 		HtmlPage htmlPage = new HtmlPage(markupPage);
 		
-		if(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI.equals(markupPage.getContentType()))
+		if(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI.equals(markupPage.getMarkupLanguage()))
 		{
 			net.java.textilej.parser.MarkupParser parser = new net.java.textilej.parser.MarkupParser();
 			MediaWikiDialect dialect = new MediaWikiDialect();
@@ -64,7 +64,7 @@ public class MarkupParserImpl implements MarkupParser
 		}
 		else
 		{
-			htmlPage.setContent("<b>error: content-type "+markupPage.getContentType()+" not supported</b>");
+			htmlPage.setContent("<b>error: content-type "+markupPage.getMarkupLanguage()+" not supported</b>");
 		}
 
 		return htmlPage;

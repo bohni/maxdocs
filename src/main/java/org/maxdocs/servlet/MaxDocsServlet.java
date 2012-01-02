@@ -186,7 +186,7 @@ public class MaxDocsServlet extends HttpServlet
 				newPage.setAuthor(username);
 				newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 				newPage.setPagePath(pagePath);
-				newPage.setContentType(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI);
+				newPage.setMarkupLanguage(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI);
 			}
 			if(StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
 			{

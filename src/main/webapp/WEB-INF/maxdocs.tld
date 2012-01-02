@@ -93,9 +93,9 @@
 
 	<tag>
 		<description>Displays the content type</description>
-		<name>contentType</name>
-		<tag-class>org.maxdocs.taglib.ContentTypeTag</tag-class>
-		<tei-class>org.maxdocs.taglib.ContentTypeTagTEI</tei-class>
+		<name>markupLanguage</name>
+		<tag-class>org.maxdocs.taglib.MarkupLanguageTag</tag-class>
+		<tei-class>org.maxdocs.taglib.MarkupLanguageTagTEI</tei-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description>The styleClass attribute sets the CSS class to apply to this component when it is rendered.</description>

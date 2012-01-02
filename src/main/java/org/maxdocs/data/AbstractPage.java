@@ -48,7 +48,7 @@ public class AbstractPage
 
 	private String editor;
 
-	private String contentType;
+	private String markupLanguage;
 
 	private String pageName;
 
@@ -175,23 +175,23 @@ public class AbstractPage
 	}
 
 	/**
-	 * getContentType: Returns the contentType.
+	 * getContentType: Returns the markupLanguage.
 	 *
-	 * @return the contentType
+	 * @return the markupLanguage
 	 */
-	public String getContentType()
+	public String getMarkupLanguage()
 	{
-		return this.contentType;
+		return this.markupLanguage;
 	}
 
 	/**
-	 * setContentType: Sets the contentType.
+	 * setContentType: Sets the markupLanguage.
 	 *
-	 * @param contentType the contentType to set
+	 * @param markupLanguage the markupLanguage to set
 	 */
-	public void setContentType(String contentType)
+	public void setMarkupLanguage(String contentType)
 	{
-		this.contentType = contentType;
+		this.markupLanguage = contentType;
 	}
 
 	/**
