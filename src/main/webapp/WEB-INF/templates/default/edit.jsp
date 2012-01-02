@@ -115,6 +115,7 @@
 					<div id="col3_content" class="clearfix">
 						<h2>Seite <max:pageName plain="true" /> bearbeiten</h2>
 						<form method="post" action="?action=save" accept-charset="UTF-8">
+							<p>Markup: <max:markupLanguage type="input" size="1" /></p>
 							<textarea rows="15" cols="58" name="content"><max:pageSource /></textarea>
 							<input type="hidden" name="action" value="save"/>
 							<input type="hidden" name="version" value="${MAXDOCS_MARKUP_PAGE.version}" />

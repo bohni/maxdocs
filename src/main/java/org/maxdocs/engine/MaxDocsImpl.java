@@ -26,6 +26,7 @@ package org.maxdocs.engine;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 import org.maxdocs.parser.MarkupParser;
@@ -140,6 +141,23 @@ public class MaxDocsImpl implements MaxDocs
 			return storage.save(newPage);
 		}
 	}
+
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#getMarkupLangages()
+	 */
+	@Override
+	public Map<String, String> getMarkupLangages()
+	{
+		Map<String, String> markupLanguages = new HashMap<String, String>();
+		markupLanguages.put("mediawiki", MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI);
+		markupLanguages.put("creole", MaxDocsConstants.MARKUP_CONTENT_TYPE_CREOLE);
+		markupLanguages.put("jspwiki", MaxDocsConstants.MARKUP_CONTENT_TYPE_JSPWIKI);
+		return markupLanguages;
+	}
+
 	/**
 	 * setStorage: Sets the storage.
 	 * 

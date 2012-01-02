@@ -58,6 +58,30 @@ public class MarkupLanguageTagTEI extends AbstractMaxDocsTagTEI
 			msgs.addAll(Arrays.asList(supermsgs));
 		}
 
+		Object o = data.getAttribute("type");
+		if (o != null && o != TagData.REQUEST_TIME_VALUE)
+		{
+			if (!((String) o).toLowerCase().equals("input") &&
+					!((String) o).toLowerCase().equals("output"))
+			{
+				msgs.add(new ValidationMessage(data.getId(),
+						"Invalid value for type. Only 'input' or 'output' supported."));
+			}
+		}
+
+		o = data.getAttribute("size");
+		if (o != null && o != TagData.REQUEST_TIME_VALUE)
+		{
+			try
+			{
+				Integer.parseInt((String) o);
+			}
+			catch (NumberFormatException e)
+			{
+				msgs.add(new ValidationMessage(data.getId(), "Invalid integer value."));
+			}
+		}
+		
 		if(msgs.size() == 0)
 		{
 			return null;

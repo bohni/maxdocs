@@ -27,9 +27,12 @@
 package org.maxdocs.taglib;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.jsp.JspException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.engine.MaxDocs;
@@ -47,6 +50,9 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(MarkupLanguageTag.class);
 
+	private String type = "output";
+	
+	private int size = 1;
 
 	/**
 	 * Constructor.
@@ -55,7 +61,7 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 	public MarkupLanguageTag()
 	{
 		super();
-		setStyleClass("maxdocsContentType");
+		setStyleClass("maxdocsMarkupLanguage");
 	}
 
 
@@ -72,19 +78,38 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
-
+			Map<String, String> markupLanguages = engine.getMarkupLangages();
+			
 			if(htmlPage != null)
 			{
-				String contentType = htmlPage.getMarkupLanguage();
+				String markupLanguage = htmlPage.getMarkupLanguage();
 	
-				if (isPlain())
+				if(StringUtils.equalsIgnoreCase(getType(), "output"))
 				{
-					pageContext.getOut().write(contentType);
+					if (isPlain())
+					{
+						pageContext.getOut().write(markupLanguage);
+					}
+					else
+					{
+						pageContext.getOut().write(
+								"<span class=\"" + getStyleClass() + "\">" + markupLanguage + "</span>");
+					}
 				}
 				else
 				{
-					pageContext.getOut().write(
-							"<span class=\"" + getStyleClass() + "\">" + contentType + "</span>");
+					pageContext.getOut().write("<select class=\"" + getStyleClass() +  "\" name=\"markupLanguage\" size=\"" + size + "\">");
+					for (String key : markupLanguages.keySet())
+					{
+						pageContext.getOut().write("<option value=\"" + key +"\" ");
+						if(StringUtils.equals(markupLanguage, markupLanguages.get(key)))
+						{
+							pageContext.getOut().write("selected=\"selected\"");
+						}
+						pageContext.getOut().write(">" + markupLanguages.get(key) + "</option>");
+					}
+
+					pageContext.getOut().write("</select>");
 				}
 			}
 		}
@@ -105,6 +130,50 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 	{
 		log.trace("doEndTag");
 		return EVAL_PAGE;
+	}
+
+
+	/**
+	 * getType: Returns the type.
+	 *
+	 * @return the type
+	 */
+	public String getType()
+	{
+		return type;
+	}
+
+
+	/**
+	 * setType: Sets the type.
+	 *
+	 * @param type the type to set
+	 */
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+
+
+	/**
+	 * getSize: Returns the size.
+	 *
+	 * @return the size
+	 */
+	public int getSize()
+	{
+		return size;
+	}
+
+
+	/**
+	 * setSize: Sets the size.
+	 *
+	 * @param size the size to set
+	 */
+	public void setSize(int size)
+	{
+		this.size = size;
 	}
 
 }

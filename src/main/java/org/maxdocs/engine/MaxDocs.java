@@ -83,4 +83,15 @@ public interface MaxDocs
 	 * @return <code>true</code> if saving succeeds
 	 */
 	public boolean save(MarkupPage oldPage, MarkupPage newPage);
+
+	/**
+	 * getMarkupLangages:
+	 * Returns a map with all supported markup languages.
+	 * 
+	 * key is service name.
+	 * value is display name.
+	 *
+	 * @return all supported markup languages as map.
+	 */
+	public Map<String, String> getMarkupLangages();
 }
