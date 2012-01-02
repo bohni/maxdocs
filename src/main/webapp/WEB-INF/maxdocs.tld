@@ -32,7 +32,6 @@
 	<description>MaxDocs Custom Tags</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>maxdocs</short-name>
-	<uri>http://www.jspserver.net/maxdocs/taglib</uri>
 
 	<tag>
 		<description>Displays the authors name</description>
