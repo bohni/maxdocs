@@ -118,7 +118,7 @@ public class MaxDocsServlet extends HttpServlet
 		log.debug("PathInfo={}", pathInfo);
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		if(StringUtils.isBlank(username))
+		if(StringUtils.isBlank(username)) // Spring liefert anonymousUser
 		{
 			username = "Anonymous";
 		}
@@ -157,7 +157,7 @@ public class MaxDocsServlet extends HttpServlet
 		String templateName = DEFAULT_TEMPLATE_NAME;
 		log.debug("templateName={}", templateName);
 
-		// Actions
+		// Actions - TODO: Per doDelete() doPost() do Get() doPut()?
 		String action = request.getParameter(PARAMETER_NAME_ACTION);
 		if(StringUtils.isBlank(action))
 		{
@@ -184,7 +184,6 @@ public class MaxDocsServlet extends HttpServlet
 			if(oldPage == null)
 			{
 				newPage.setAuthor(username);
-				newPage.setEditor(username);
 				newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 				newPage.setPagePath(pagePath);
 				newPage.setContentType(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI);
@@ -194,7 +193,7 @@ public class MaxDocsServlet extends HttpServlet
 				newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
 			}
 			newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
-
+			newPage.setEditor(username);
 			boolean success = maxDocs.save(oldPage, newPage);
 
 			if(! success)

@@ -59,8 +59,9 @@ public class AbstractPage
 	public AbstractPage()
 	{
 		this.version = 1;
-		this.currentVersionCreationDate = new Date();
-		this.firstVersionCreationDate = new Date();
+		Date date = new Date();
+		this.currentVersionCreationDate = date;
+		this.firstVersionCreationDate = date;
 	}
 	
 	public AbstractPage(AbstractPage page)
