@@ -101,7 +101,7 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 					pageContext.getOut().write("<select class=\"" + getStyleClass() +  "\" name=\"markupLanguage\" size=\"" + size + "\">");
 					for (String key : markupLanguages.keySet())
 					{
-						pageContext.getOut().write("<option value=\"" + key +"\" ");
+						pageContext.getOut().write("<option value=\"" + markupLanguages.get(key) +"\" ");
 						if(StringUtils.equals(markupLanguage, markupLanguages.get(key)))
 						{
 							pageContext.getOut().write("selected=\"selected\"");

@@ -61,6 +61,7 @@ public class MaxDocsServlet extends HttpServlet
 	private static final String PARAMETER_NAME_ACTION = "action";
 	private static final String PARAMETER_NAME_CONTENT = "content";
 	private static final String PARAMETER_NAME_VERSION = "version";
+	private static final String PARAMETER_NAME_MARKUP = "markupLanguage";
 
 	private static Logger log = LoggerFactory.getLogger(MaxDocsServlet.class);
 
@@ -186,13 +187,13 @@ public class MaxDocsServlet extends HttpServlet
 				newPage.setAuthor(username);
 				newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 				newPage.setPagePath(pagePath);
-				newPage.setMarkupLanguage(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI);
 			}
 			if(StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
 			{
 				newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
 			}
 			newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
+			newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
 			newPage.setEditor(username);
 			boolean success = maxDocs.save(oldPage, newPage);
 
