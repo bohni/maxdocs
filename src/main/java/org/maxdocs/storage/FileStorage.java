@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FileStorage implements Storage
 {
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final String VERSION_PATH = "versions";
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
 	private String storagePath;
