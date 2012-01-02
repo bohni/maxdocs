@@ -23,8 +23,12 @@
  */
 package org.maxdocs.servlet;
 
+import java.io.IOException;
 import java.util.Iterator;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,7 +41,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.FrameworkServlet;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * MaxDocsServlet:
@@ -45,7 +49,7 @@ import org.springframework.web.servlet.FrameworkServlet;
  *
  * @author Team maxdocs.org
  */
-public class MaxDocsServlet extends FrameworkServlet
+public class MaxDocsServlet extends HttpServlet
 {
 	private static final String ACTION_DELETE = "delete";
 	private static final String ACTION_EDIT = "edit";
@@ -60,12 +64,45 @@ public class MaxDocsServlet extends FrameworkServlet
 
 	private static Logger log = LoggerFactory.getLogger(MaxDocsServlet.class);
 
-
+	
+	
+	
 	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.FrameworkServlet#doService(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 * @see javax.servlet.GenericServlet#init()
 	 */
 	@Override
-	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception
+	public void init() throws ServletException
+	{
+		ServletContext servletContext = getServletContext();
+		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		servletContext.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, webApplicationContext.getBean("maxDocs"));
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+			doServicet(request, response);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		doServicet(request, response);
+	}
+
+
+
+	protected void doServicet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		log.trace("doService({})", request.getRequestURL());
 
@@ -177,19 +214,4 @@ public class MaxDocsServlet extends FrameworkServlet
 		}
 		response.setCharacterEncoding("UTF-8");
 	}
-
-
-	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.FrameworkServlet#initWebApplicationContext()
-	 */
-	@Override
-	protected WebApplicationContext initWebApplicationContext()
-	{
-		WebApplicationContext webApplicationContext = super.initWebApplicationContext();
-		webApplicationContext.getServletContext().setAttribute(
-			MaxDocsConstants.MAXDOCS_ENGINE,webApplicationContext.getBean("maxDocs"));
-		return webApplicationContext;
-	}
-	
-	
 }
