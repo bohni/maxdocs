@@ -23,6 +23,8 @@
  */
 package org.maxdocs.parser;
 
+import java.util.Map;
+
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 
@@ -35,4 +37,6 @@ import org.maxdocs.data.MarkupPage;
 public interface MarkupParser
 {
 	public HtmlPage parseToHtml(MarkupPage markupPage);
+	
+	public  Map<String, String> getMarkupLanguages();
 }

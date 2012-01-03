@@ -119,4 +119,14 @@ public class MarkupParserImpl implements MarkupParser
 	{
 		this.markupLanguageFactory = markupLanguageFactory;
 	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.parser.MarkupParser#getMarkupLanguages()
+	 */
+	@Override
+	public Map<String, String> getMarkupLanguages()
+	{
+		return languageMapping;
+	}
 }

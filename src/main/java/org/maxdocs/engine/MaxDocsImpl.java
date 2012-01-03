@@ -151,11 +151,7 @@ public class MaxDocsImpl implements MaxDocs
 	@Override
 	public Map<String, String> getMarkupLangages()
 	{
-		Map<String, String> markupLanguages = new HashMap<String, String>();
-		markupLanguages.put("mediawiki", MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI);
-		markupLanguages.put("creole", MaxDocsConstants.MARKUP_CONTENT_TYPE_CREOLE);
-		markupLanguages.put("jspwiki", MaxDocsConstants.MARKUP_CONTENT_TYPE_JSPWIKI);
-		return markupLanguages;
+		return parser.getMarkupLanguages();
 	}
 
 	/**
