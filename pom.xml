@@ -191,6 +191,14 @@
 		</dependency>
 	</dependencies>
 
+	<repositories>
+		<repository>
+			<id>wikitext</id>
+			<name>wikitext-maxdocs</name>
+			<url>http://maxdocs.org/maven-repository/</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<resources>
 			<resource>
