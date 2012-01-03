@@ -175,9 +175,19 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.java</groupId>
-			<artifactId>textile-j</artifactId>
-			<version>2.2</version>
+			<groupId>org.eclipse.mylyn.wikitext</groupId>
+			<artifactId>creole-core</artifactId>
+			<version>1.6.0.i20111227</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.mylyn.wikitext</groupId>
+			<artifactId>mediawiki-core</artifactId>
+			<version>1.6.0.i20111227</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.mylyn.wikitext</groupId>
+			<artifactId>wikitext-core</artifactId>
+			<version>1.6.0.i20111227</version>
 		</dependency>
 	</dependencies>
 
