@@ -31,13 +31,13 @@
 	xsi:schemaLocation="http://maven.apache.org/DECORATION/1.1.0 http://maven.apache.org/xsd/decoration-1.1.0.xsd">
 
 	<bannerLeft>
-		<name>jspserver</name>
-		<src>images/jspserver-logo-05.png</src>
-		<href>http://jspserver.net/</href>
+		<name>maxdocs</name>
+		<src>images/maxdocs-klein.png</src>
+		<href>http://maxdocs.org/</href>
 	</bannerLeft>
 
 	<bannerRight>
-		<src>images/jspserver-logo-05.png</src>
+		<src>images/maxdocs-klein.png</src>
 	</bannerRight>
 
 	<publishDate

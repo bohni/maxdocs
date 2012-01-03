@@ -69,7 +69,8 @@
 						<a href="#">Imprint</a>
 					</span>
 				</div>
-				<h1>MaxDocs - The Multi Document Wiki Blog Engine</h1>
+				<h1><img src="<%=request.getContextPath()%>/internal/images/maxdocs-klein.png" alt="MaxDocs" />
+				MaxDocs - The Multi Markup Wiki Blog Engine</h1>
 			</div>
 			<!-- begin: main navigation #nav -->
 <!-- 			<div id="nav" role="navigation">
