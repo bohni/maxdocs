@@ -88,7 +88,7 @@ public class MaxDocsServlet extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-			doServicet(request, response);
+			doService(request, response);
 	}
 
 
@@ -99,12 +99,12 @@ public class MaxDocsServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		doServicet(request, response);
+		doService(request, response);
 	}
 
 
 
-	protected void doServicet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected void doService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		log.trace("doService({})", request.getRequestURL());
 
@@ -159,7 +159,7 @@ public class MaxDocsServlet extends HttpServlet
 		String templateName = DEFAULT_TEMPLATE_NAME;
 		log.debug("templateName={}", templateName);
 
-		// Actions - TODO: Per doDelete() doPost() do Get() doPut()?
+		// Actions - TODO: Per doDelete() doPost() doGet() doPut()?
 		String action = request.getParameter(PARAMETER_NAME_ACTION);
 		if(StringUtils.isBlank(action))
 		{
