@@ -39,7 +39,7 @@
 
 	<!-- Scans within the base package of the application for @Components to configure as beans -->
 	<!-- @Controller, @Service, @Configuration, etc. -->
-<!-- 	<context:component-scan base-package="net.mezger.jcontent" /> -->
+	<context:component-scan base-package="org.maxdocs.parser" />
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 <!-- 	<mvc:annotation-driven /> -->
@@ -54,7 +54,17 @@
 		<constructor-arg value="${maxdocs.content-path}"/>
 	</bean>
 
+	<bean id="mediawiki" class="org.eclipse.mylyn.wikitext.mediawiki.core.MediaWikiLanguage">
+		<property name="internalLinkPattern" value="/{0}" />
+	</bean>
+	<bean id="creole" class="org.eclipse.mylyn.wikitext.creole.core.CreoleLanguage" />
+
+	<bean id="markupLanguageFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+		<property name="serviceLocatorInterface" value="org.maxdocs.parser.MarkupLanguageFactory"/>
+	</bean>
+	
 	<bean id="parserImpl" class="org.maxdocs.parser.MarkupParserImpl">
+		<property name="markupLanguageFactory" ref="markupLanguageFactory"/>
 	</bean>
 
 	<bean id="maxDocs" class="org.maxdocs.engine.MaxDocsImpl">
