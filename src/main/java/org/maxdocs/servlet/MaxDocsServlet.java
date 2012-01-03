@@ -53,6 +53,7 @@ public class MaxDocsServlet extends HttpServlet
 {
 	private static final String ACTION_DELETE = "delete";
 	private static final String ACTION_EDIT = "edit";
+	private static final String ACTION_RENAME = "rename";
 	private static final String ACTION_SAVE = "save";
 	private static final String ACTION_SHOW = "show";
 	private static final String ACTION_SOURCE = "source";
@@ -175,6 +176,10 @@ public class MaxDocsServlet extends HttpServlet
 			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
 			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/edit.jsp").forward(request, response);
+		}
+		else if(StringUtils.equalsIgnoreCase(action, ACTION_RENAME))
+		{
+			// TODO
 		}
 		else if(StringUtils.equalsIgnoreCase(action, ACTION_SAVE))
 		{
