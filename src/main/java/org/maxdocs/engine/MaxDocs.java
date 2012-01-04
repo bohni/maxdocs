@@ -94,4 +94,12 @@ public interface MaxDocs
 	 * @return all supported markup languages as map.
 	 */
 	public Map<String, String> getMarkupLangages();
+
+	/**
+	 * getDefaultMarkupLangages:
+	 * Returns the default markup language.
+	 * 
+	 * @return the default markup language
+	 */
+	public String getDefaultMarkupLangages();
 }

@@ -173,4 +173,15 @@ public class MaxDocsImpl implements MaxDocs
 	{
 		this.parser = parser;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#getDefaultMarkupLangages()
+	 */
+	@Override
+	public String getDefaultMarkupLangages()
+	{
+		return "MediaWiki";
+	}
+	
+	
 }

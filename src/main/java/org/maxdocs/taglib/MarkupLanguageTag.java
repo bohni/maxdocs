@@ -79,37 +79,37 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
 			Map<String, String> markupLanguages = engine.getMarkupLangages();
 			
+			String markupLanguage = engine.getDefaultMarkupLangages();
 			if(htmlPage != null)
 			{
-				String markupLanguage = htmlPage.getMarkupLanguage();
-	
-				if(StringUtils.equalsIgnoreCase(getType(), "output"))
+				markupLanguage = htmlPage.getMarkupLanguage();
+			}
+			if(StringUtils.equalsIgnoreCase(getType(), "output"))
+			{
+				if (isPlain())
 				{
-					if (isPlain())
-					{
-						pageContext.getOut().write(markupLanguage);
-					}
-					else
-					{
-						pageContext.getOut().write(
-								"<span class=\"" + getStyleClass() + "\">" + markupLanguage + "</span>");
-					}
+					pageContext.getOut().write(markupLanguage);
 				}
 				else
 				{
-					pageContext.getOut().write("<select class=\"" + getStyleClass() +  "\" name=\"markupLanguage\" size=\"" + size + "\">");
-					for (String key : markupLanguages.keySet())
-					{
-						pageContext.getOut().write("<option value=\"" + key +"\" ");
-						if(StringUtils.equals(markupLanguage, key))
-						{
-							pageContext.getOut().write("selected=\"selected\"");
-						}
-						pageContext.getOut().write(">" + key + "</option>");
-					}
-
-					pageContext.getOut().write("</select>");
+					pageContext.getOut().write(
+							"<span class=\"" + getStyleClass() + "\">" + markupLanguage + "</span>");
 				}
+			}
+			else
+			{
+				pageContext.getOut().write("<select class=\"" + getStyleClass() +  "\" name=\"markupLanguage\" size=\"" + size + "\">");
+				for (String key : markupLanguages.keySet())
+				{
+					pageContext.getOut().write("<option value=\"" + key +"\" ");
+					if(StringUtils.equals(markupLanguage, key))
+					{
+						pageContext.getOut().write("selected=\"selected\"");
+					}
+					pageContext.getOut().write(">" + key + "</option>");
+				}
+
+				pageContext.getOut().write("</select>");
 			}
 		}
 		catch (IOException e)
