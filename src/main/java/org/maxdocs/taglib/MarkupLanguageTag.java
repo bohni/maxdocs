@@ -27,7 +27,6 @@
 package org.maxdocs.taglib;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.jsp.JspException;
