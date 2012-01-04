@@ -55,7 +55,7 @@
 	</bean>
 
 	<bean id="mediawiki" class="org.eclipse.mylyn.wikitext.mediawiki.core.MediaWikiLanguage">
-		<property name="internalLinkPattern" value="/{0}" />
+		<property name="internalLinkPattern" value="{0}" />
 	</bean>
 	<bean id="creole" class="org.eclipse.mylyn.wikitext.creole.core.CreoleLanguage" />
 
