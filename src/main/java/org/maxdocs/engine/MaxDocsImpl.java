@@ -26,7 +26,6 @@ package org.maxdocs.engine;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 import org.maxdocs.parser.MarkupParser;

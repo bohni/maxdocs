@@ -30,8 +30,6 @@ import java.util.Map;
 import org.eclipse.mylyn.wikitext.core.parser.builder.HtmlDocumentBuilder;
 import org.eclipse.mylyn.wikitext.core.parser.markup.AbstractMarkupLanguage;
 import org.eclipse.mylyn.wikitext.core.parser.markup.MarkupLanguage;
-import org.eclipse.mylyn.wikitext.mediawiki.core.MediaWikiLanguage;
-import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 import org.slf4j.Logger;
