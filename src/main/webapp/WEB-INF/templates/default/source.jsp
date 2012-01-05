@@ -88,10 +88,11 @@
 			</div>
     		<div id="action">
 				<span>
+					<a href="?action=show">Show</a> | 
 					<a href="?action=edit">Edit</a> | 
 					<a href="?action=delete">Delete</a> | 
 					<a href="?action=rename">Rename</a> | 
-					<a href="?action=source">Source</a> | 
+					Source | 
 					<a href="?action=info">Info</a>
 				</span>
 			</div>

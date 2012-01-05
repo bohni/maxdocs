@@ -29,6 +29,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/maxdocs.tld" prefix="max"%>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -87,12 +88,28 @@
     			<max:breadcrumbs />
 			</div>
     		<div id="action">
+					<c:url var="edit" value="">
+					   <c:param name="action" value="edit" />
+					</c:url>
+					<c:url var="delete" value="">
+					   <c:param name="action" value="delete1" />
+					</c:url>
+					<c:url var="rename" value="">
+					   <c:param name="action" value="rename1" />
+					</c:url>
+					<c:url var="source" value="">
+					   <c:param name="action" value="source" />
+					</c:url>
+					<c:url var="info" value="">
+					   <c:param name="action" value="info1" />
+					</c:url>
 				<span>
-					<a href="?action=edit">Edit</a> | 
-					<a href="?action=delete">Delete</a> | 
-					<a href="?action=rename">Rename</a> | 
-					<a href="?action=source">Source</a> | 
-					<a href="?action=info">Info</a>
+					Show | 
+					<a href="${edit}">Edit</a> | 
+					<a href="${delete}">Delete</a> | 
+					<a href="${rename}">Rename</a> | 
+					<a href="${source}">Source</a> | 
+					<a href="${info}">Info</a>
 				</span>
 			</div>
 			<!-- end: main navigation -->
