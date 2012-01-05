@@ -1,6 +1,20 @@
 TODO:
 Diese Datei in die Maven-Site-Doku überführen
 
+License prüfen, auflisten
+Doku
+ - Vorbedingungen (Eclipse, Plugins, *.epf, ...); Getting started developping maxdocs
+ - API-Dok erweitern
+Code aufräumen
+ - Refactor von zu langen Methoden 
+ - Schnittstellen prüfen
+Security
+ - Rollen
+ - Rechte
+
+Plugin-Design
+ 
+
 Plugins
 - verarbeiten bereits geparsten Content
 

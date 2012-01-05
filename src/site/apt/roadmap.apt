@@ -84,11 +84,25 @@ Roadmap
 
 * Zukünftige Schritte
 
-	* Weitere Markups
+	* Caching der Seiten
+
+	* Save: Parsen und interne Links als Metadata speichern
+	
+	* Wikistart: 
+
+		* Map1 pagePath -> Filename [String]
+
+		* Map2 pagePath -> Links2Me [List]
+
+		* List für RecentChanges (30 neuesten); evtl. über Lucene?
+		
+		* Map3 tag -> pagePath [List]	
 
 	* Delete (MaxDocs Engine, FileStorage)
 
 	* Rename (MaxDocs Engine, FileStorage)
+
+	* Weitere Markups
 
 	* Load version (MaxDocs Engine, FileStorage)
 
@@ -97,6 +111,8 @@ Roadmap
 	* Plugin-Konzept erstellen
 
 	* Anhänge
+
+	* Hook für Search und Statistik
 
 	* Bilder
 

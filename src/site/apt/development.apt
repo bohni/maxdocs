@@ -33,8 +33,7 @@
  
 Entwicklung
 
-
- Hier sind einige Links:
+* Links
 
 	* {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}}
 
@@ -42,7 +41,15 @@ Entwicklung
 
 	* {{{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}UTF-8 encoding mit Apache Tomcat}}
 
+* Allgemeines
+
  Die Entwicklung läuft auf github. Der Entwicklungsbranch ist develop. Das
  {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}} ist zu beachten!
 
+* Issues
+
+ Damit die Issues direkt in Eclipse bearbeitet werden können, kann über den Eclipse Marketplace
+ der Github Mylyn Connector installiert werden.
+
+ 
  
