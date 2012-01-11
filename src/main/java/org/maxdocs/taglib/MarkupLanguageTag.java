@@ -79,7 +79,7 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
 			Map<String, String> markupLanguages = engine.getMarkupLangages();
 			
-			String markupLanguage = engine.getDefaultMarkupLangages();
+			String markupLanguage = engine.getDefaultMarkupLangage();
 			if(htmlPage != null)
 			{
 				markupLanguage = htmlPage.getMarkupLanguage();

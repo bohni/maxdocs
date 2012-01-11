@@ -96,10 +96,10 @@ public interface MaxDocs
 	public Map<String, String> getMarkupLangages();
 
 	/**
-	 * getDefaultMarkupLangages:
+	 * getDefaultMarkupLangage:
 	 * Returns the default markup language.
 	 * 
 	 * @return the default markup language
 	 */
-	public String getDefaultMarkupLangages();
+	public String getDefaultMarkupLangage();
 }

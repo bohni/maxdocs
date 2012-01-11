@@ -178,7 +178,7 @@ public class MaxDocsImpl implements MaxDocs
 	 * @see org.maxdocs.engine.MaxDocs#getDefaultMarkupLangages()
 	 */
 	@Override
-	public String getDefaultMarkupLangages()
+	public String getDefaultMarkupLangage()
 	{
 		return "MediaWiki";
 	}

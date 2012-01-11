@@ -26,6 +26,8 @@ package org.maxdocs.taglib;
 import static org.junit.Assert.assertEquals;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -89,10 +91,14 @@ public class MarkupLanguageTagTest
 
 		// Test data
 		htmlPage = new HtmlPage();
-		htmlPage.setMarkupLanguage("text/jspwiki");
+		htmlPage.setMarkupLanguage("MediaWiki");
+		Map<String, String> languages = new HashMap<String, String>();
+		languages.put("MediaWiki", "mediawiki");
 
 		// Create the mocked MaxDocs engine
 		mockEngine = EasyMock.createMock(MaxDocs.class);
+		EasyMock.expect(mockEngine.getMarkupLangages()).andReturn(languages);
+		EasyMock.expect(mockEngine.getDefaultMarkupLangage()).andReturn("MediaWiki");
 
 		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
 		mockServletContext.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, mockEngine);
@@ -119,7 +125,7 @@ public class MarkupLanguageTagTest
 	@Test
 	public void testDoStartTagDefault() throws JspException, UnsupportedEncodingException
 	{
-		String expectedOutput = "<span class=\"maxdocsContentType\">" + htmlPage.getMarkupLanguage() + "</span>";
+		String expectedOutput = "<span class=\"maxdocsMarkupLanguage\">" + htmlPage.getMarkupLanguage() + "</span>";
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
@@ -228,7 +234,7 @@ public class MarkupLanguageTagTest
 	public void testDoStartTagPageNotExists() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagPageNotExists");
-		String expectedOutput = "";
+		String expectedOutput = "<span class=\"maxdocsMarkupLanguage\">MediaWiki</span>";
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
 		replayAllMocks();
