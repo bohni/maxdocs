@@ -57,8 +57,9 @@ public class MaxDocsServlet extends HttpServlet
 	private static final String ACTION_SAVE = "save";
 	private static final String ACTION_SHOW = "show";
 	private static final String ACTION_SOURCE = "source";
+	
 	private static final String DEFAULT_PAGE_NAME = "Main";
-	private static final String DEFAULT_TEMPLATE_NAME = "default";
+
 	private static final String PARAMETER_NAME_ACTION = "action";
 	private static final String PARAMETER_NAME_CONTENT = "content";
 	private static final String PARAMETER_NAME_VERSION = "version";
@@ -66,9 +67,7 @@ public class MaxDocsServlet extends HttpServlet
 
 	private static Logger log = LoggerFactory.getLogger(MaxDocsServlet.class);
 
-	
-	
-	
+
 	/* (non-Javadoc)
 	 * @see javax.servlet.GenericServlet#init()
 	 */
@@ -76,35 +75,37 @@ public class MaxDocsServlet extends HttpServlet
 	public void init() throws ServletException
 	{
 		ServletContext servletContext = getServletContext();
-		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-		servletContext.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, webApplicationContext.getBean("maxDocs"));
+		WebApplicationContext webApplicationContext = WebApplicationContextUtils
+			.getWebApplicationContext(servletContext);
+		servletContext
+			.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, webApplicationContext.getBean("maxDocs"));
 	}
-
 
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+		IOException
 	{
-			doService(request, response);
+		doService(request, response);
 	}
-
 
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+		IOException
 	{
 		doService(request, response);
 	}
 
 
-
-	protected void doService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected void doService(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
 	{
 		log.trace("doService({})", request.getRequestURL());
 
@@ -119,104 +120,231 @@ public class MaxDocsServlet extends HttpServlet
 		String pathInfo = request.getPathInfo();
 		log.debug("PathInfo={}", pathInfo);
 
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		if(StringUtils.isBlank(username)) // Spring liefert anonymousUser
-		{
-			username = "Anonymous";
-		}
-
 		// PagePath
 		String pagePath = pathInfo;
-		if(StringUtils.equals(pagePath, "/"))
+		if (StringUtils.equals(pagePath, "/"))
 		{
-			pagePath+=DEFAULT_PAGE_NAME;
+			pagePath += DEFAULT_PAGE_NAME;
 		}
 		log.debug("pagePath={}", pagePath);
 		request.setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
-		
+
+		// breadcrumbs
+		buildBreadcrumbs(request);
+
+		// Action
+		String action = request.getParameter(PARAMETER_NAME_ACTION);
+		if (StringUtils.isBlank(action))
+		{
+			action = ACTION_SHOW;
+		}
+		log.debug("action={}", action);
+
+		if (StringUtils.equalsIgnoreCase(action, ACTION_DELETE))
+		{
+			actionDelete(request, response);
+		}
+		else if (StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
+		{
+			actionEdit(request, response);
+		}
+		else if (StringUtils.equalsIgnoreCase(action, ACTION_RENAME))
+		{
+			actionRename(request, response);
+		}
+		else if (StringUtils.equalsIgnoreCase(action, ACTION_SAVE))
+		{
+			actionSave(request, response);
+		}
+		else if (StringUtils.equalsIgnoreCase(action, ACTION_SHOW))
+		{
+			actionShow(request, response);
+		}
+		else if (StringUtils.equalsIgnoreCase(action, ACTION_SOURCE))
+		{
+			actionSource(request, response);
+		}
+		response.setCharacterEncoding("UTF-8");
+	}
+
+
+	/**
+	 * buildBreadcrumbs:
+	 * Build the breadcrumbs
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 */
+	private void buildBreadcrumbs(HttpServletRequest request)
+	{
 		// Breadcrumbs
 		CircularFifoBuffer breadcrumbs = (CircularFifoBuffer) request.getSession().getAttribute(
 			MaxDocsConstants.MAXDOCS_BREADCRUMBS);
-		if(breadcrumbs == null)
+		if (breadcrumbs == null)
 		{
 			breadcrumbs = new CircularFifoBuffer(5); // TODO: Length configurable?
 		}
 		String lastPagePath = "";
 		@SuppressWarnings("rawtypes")
 		Iterator iterator = breadcrumbs.iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 		{
 			lastPagePath = (String) iterator.next();
 		}
-		if(!StringUtils.equals(lastPagePath, pagePath))
+		if (!StringUtils.equals(lastPagePath,
+			(String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH)))
 		{
-			breadcrumbs.add(pagePath);
+			breadcrumbs.add((String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH));
 		}
 		request.getSession().setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
 		request.setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
+	}
 
-		// TODO: determine template 
-		String templateName = DEFAULT_TEMPLATE_NAME;
+
+	/**
+	 * actionDelete:
+	 * Delete a page
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void actionDelete(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+		//TODO: maxDocs.delete(pagePath,  username);
+		actionShow(request, response);
+	}
+
+
+	/**
+	 * actionEdit:
+	 * Edit a page
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void actionEdit(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+		MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
+		request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
+		request.getRequestDispatcher("/WEB-INF/templates/" +  getTemplate() + "/edit.jsp").forward(request, response);
+	}
+
+
+	/**
+	 * actionRename:
+	 * Rename a page
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void actionRename(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+		//TODO: maxDocs.rename(pagePath, username);
+		actionShow(request, response);
+	}
+
+
+	/**
+	 * actionSave:
+	 * Save a page
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void actionSave(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+		MarkupPage oldPage = maxDocs.getMarkupPage(pagePath);
+		MarkupPage newPage = new MarkupPage(oldPage);
+		if (oldPage == null)
+		{
+			newPage.setAuthor(username);
+			newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
+			newPage.setPagePath(pagePath);
+		}
+		if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
+		{
+			newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
+		}
+		newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
+		newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
+		newPage.setEditor(username);
+		boolean success = maxDocs.save(oldPage, newPage);
+
+		if (!success)
+		{
+			log.debug("Concurrent changes...");
+			// TODO: concurrent changes - show error message
+		}
+		actionShow(request, response);
+	}
+
+
+	/**
+	 * actionShow:
+	 * Show a page
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void actionShow(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		request.getRequestDispatcher("/WEB-INF/templates/" +  getTemplate() + "/show.jsp").forward(request, response);
+	}
+
+
+	/**
+	 * actionSource:
+	 * Show the page source
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void actionSource(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		request.getRequestDispatcher("/WEB-INF/templates/" +  getTemplate() + "/source.jsp").forward(request, response);
+	}
+
+
+	/**
+	 * getTemplate:
+	 * returns the template name
+	 * 
+	 * @return the configured template name
+	 */
+	private String getTemplate()
+	{
+		// TODO: get template name from configuration 
+		String templateName = "default";
 		log.debug("templateName={}", templateName);
-
-		// Actions - TODO: Per doDelete() doPost() doGet() doPut()?
-		String action = request.getParameter(PARAMETER_NAME_ACTION);
-		if(StringUtils.isBlank(action))
-		{
-			action=ACTION_SHOW;
-		}
-		log.debug("action={}", action);
-		if(StringUtils.equalsIgnoreCase(action, ACTION_DELETE))
-		{
-			// TODO
-		}
-		else if(StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
-		{
-			MaxDocs maxDocs = (MaxDocs)getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
-			request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
-			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/edit.jsp").forward(request, response);
-		}
-		else if(StringUtils.equalsIgnoreCase(action, ACTION_RENAME))
-		{
-			// TODO
-		}
-		else if(StringUtils.equalsIgnoreCase(action, ACTION_SAVE))
-		{
-			MaxDocs maxDocs = (MaxDocs)getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-
-			MarkupPage oldPage = maxDocs.getMarkupPage(pagePath);
-			MarkupPage newPage = new MarkupPage(oldPage);
-			if(oldPage == null)
-			{
-				newPage.setAuthor(username);
-				newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
-				newPage.setPagePath(pagePath);
-			}
-			if(StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
-			{
-				newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
-			}
-			newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
-			newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
-			newPage.setEditor(username);
-			boolean success = maxDocs.save(oldPage, newPage);
-
-			if(! success)
-			{
-				log.debug("Concurrent changes...");
-				// TODO: concurrent changes - show error message
-			}
-			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/show.jsp").forward(request, response);
-		}
-		else if(StringUtils.equalsIgnoreCase(action, ACTION_SHOW))
-		{
-			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/show.jsp").forward(request, response);
-		}
-		else if(StringUtils.equalsIgnoreCase(action, ACTION_SOURCE))
-		{
-			request.getRequestDispatcher("/WEB-INF/templates/"+ templateName + "/source.jsp").forward(request, response);
-		}
-		response.setCharacterEncoding("UTF-8");
+		return templateName;
 	}
 }
