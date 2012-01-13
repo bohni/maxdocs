@@ -24,8 +24,11 @@
 package org.maxdocs.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 
@@ -54,7 +57,7 @@ public class AbstractPage
 
 	private String pagePath;
 
-	private List<String> tags = new ArrayList<String>();
+	private Set<String> tags = Collections.synchronizedSet(new HashSet<String>());
 
 	public AbstractPage()
 	{
@@ -239,7 +242,7 @@ public class AbstractPage
 	 * 
 	 * @return the tags
 	 */
-	public List<String> getTags()
+	public Set<String> getTags()
 	{
 		return tags;
 	}
@@ -249,7 +252,7 @@ public class AbstractPage
 	 * 
 	 * @param tags the tags to set
 	 */
-	public void setTags(List<String> tags)
+	public void setTags(Set<String> tags)
 	{
 		this.tags = tags;
 	}
