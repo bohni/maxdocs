@@ -308,7 +308,9 @@
 					<excludes>
 						<!-- Unsere License-Vorlage und yaml nicht -->
 						<exclude>src/main/config/license/LICENSE.txt</exclude>
-						<exclude>src/main/webapp/internal/**</exclude>
+						<exclude>/src/main/java/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
+						<exclude>src/main/webapp/internal/yaml/**</exclude>
+						<exclude>src/main/webapp/internal/css/**</exclude>
 						<exclude>target/**</exclude>
 					</excludes>
 					<includes>
