@@ -32,9 +32,10 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.engine.MaxDocs;
-import org.maxdocs.util.UrlEncodedQueryString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.kennardconsulting.core.net.UrlEncodedQueryString;
 
 /**
  * PageContentTag:

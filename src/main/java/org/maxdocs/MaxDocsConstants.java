@@ -46,10 +46,6 @@ public final class MaxDocsConstants
 
 	public static final String MAXDOCS_BREADCRUMBS = "MAXDOCS_BREADCRUMBS";
 
-	public static final String MARKUP_CONTENT_TYPE_MEDIAWIKI = "text/mediawiki";
-	public static final String MARKUP_CONTENT_TYPE_CREOLE = "text/creole";
-	public static final String MARKUP_CONTENT_TYPE_JSPWIKI = "text/jspwiki";
-
 	public static final String MAXDOCS_MARKUP_PAGE = "MAXDOCS_MARKUP_PAGE";
 	
 	private MaxDocsConstants()
