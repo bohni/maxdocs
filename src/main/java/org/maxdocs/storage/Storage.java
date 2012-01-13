@@ -23,7 +23,10 @@
  */
 package org.maxdocs.storage;
 
+import java.util.List;
+
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.data.TagCloudEntry;
 
 /**
  * Storage:
@@ -92,4 +95,14 @@ public interface Storage
 	 * @return <code>true</code>, if deleting succeeds
 	 */
 	public boolean delete(String pagePath);
+
+
+	/**
+	 * getTagCloud:
+	 * Returns a List with tags cloud entries.
+	 * 
+	 * @return a list with tag cloud entries
+	 */
+	public List<TagCloudEntry> getTagCloudEntries();
+	
 }

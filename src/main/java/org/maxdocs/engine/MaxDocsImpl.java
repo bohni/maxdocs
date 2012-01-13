@@ -24,10 +24,15 @@
 package org.maxdocs.engine;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.data.TagCloudEntry;
 import org.maxdocs.parser.MarkupParser;
 import org.maxdocs.storage.Storage;
 import org.slf4j.Logger;
@@ -75,15 +80,37 @@ public class MaxDocsImpl implements MaxDocs
 	@Override
 	public Map<String, Integer> getTagCloud()
 	{
+		log.trace("getTagCloud()");
+		List<TagCloudEntry> tagCloudEntries = storage.getTagCloudEntries();
+		
+		
+		int max = 0;
+		int min = Integer.MAX_VALUE;
+		
+		for (Iterator<TagCloudEntry> iterator = tagCloudEntries.iterator(); iterator.hasNext();)
+		{
+			TagCloudEntry tagCloudEntry = (TagCloudEntry) iterator.next();
+			if(tagCloudEntry.getCount()> max)
+			{
+				max = tagCloudEntry.getCount();
+			}
+			if(tagCloudEntry.getCount()< min)
+			{
+				min = tagCloudEntry.getCount();
+			}
+		}
+		
+		int step = (max-min)/7 + 1;
+
 		Map<String, Integer> tagCloud = new HashMap<String, Integer>();
-		tagCloud.put("wiki", Integer.valueOf(1));
-		tagCloud.put("blog", Integer.valueOf(2));
-		tagCloud.put("servlet", Integer.valueOf(1));
-		tagCloud.put("linux", Integer.valueOf(3));
-		tagCloud.put("tomcat", Integer.valueOf(5));
-		tagCloud.put("java", Integer.valueOf(2));
-		tagCloud.put("spring", Integer.valueOf(7));
-		tagCloud.put("maxdocs", Integer.valueOf(6));
+
+		for (Iterator<TagCloudEntry> iterator = tagCloudEntries.iterator(); iterator.hasNext();)
+		{
+			TagCloudEntry tagCloudEntry = (TagCloudEntry) iterator.next();
+			int weight = tagCloudEntry.getCount()/step;
+			tagCloud.put(tagCloudEntry.getTagName() + "(" + tagCloudEntry.getCount() + ")", weight > 0 ? weight : 1);
+		}
+
 		return tagCloud;
 	}
 

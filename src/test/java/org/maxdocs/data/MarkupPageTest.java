@@ -27,7 +27,9 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -56,7 +58,7 @@ public class MarkupPageTest
 		Date firstVersionCreationDate = new Date();
 		String pageName = "PageName";
 		String pagePath = "/PagName";
-		List<String> tags = new ArrayList<String>();
+		Set<String> tags = new HashSet<String>();
 		int version = 1;
 		
 		MarkupPage page1 = new MarkupPage();

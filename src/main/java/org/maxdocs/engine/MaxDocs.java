@@ -65,7 +65,7 @@ public interface MaxDocs
 
 	/**
 	 * getTagCloud:
-	 * Creates a map with the tags of the tag cloud.
+	 * Returns a map with the tags of the tag cloud.
 	 * Keys of the map are the tags.
 	 * Value of the map is the weight of the tag as Integer.
 	 * 

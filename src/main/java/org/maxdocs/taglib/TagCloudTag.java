@@ -29,6 +29,7 @@ package org.maxdocs.taglib;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -54,26 +55,7 @@ public class TagCloudTag extends TagSupport
 
 	private String styleClass = "maxdocsTagCloud";
 
-	/**
-	 * getStyleClass: Returns the styleClass.
-	 * 
-	 * @return the styleClass
-	 */
-	public String getStyleClass()
-	{
-		return styleClass;
-	}
-
-	/**
-	 * setStyleClass: Sets the styleClass.
-	 * 
-	 * @param styleClass
-	 *            the styleClass to set
-	 */
-	public void setStyleClass(final String styleClass)
-	{
-		this.styleClass = styleClass;
-	}
+	private int size = 0;
 
 
 	/* (non-Javadoc)
@@ -93,8 +75,27 @@ public class TagCloudTag extends TagSupport
 			{
 				StringBuffer tagCloud = new StringBuffer();
 				List<String> list = new ArrayList<String>();
-				list.addAll(tagCloudMap.keySet());
-				Collections.sort(list);
+				if(size==0)
+				{
+					list.addAll(tagCloudMap.keySet());
+				}
+				else
+				{
+					int count = 0;
+					for (Iterator<String> iterator = tagCloudMap.keySet().iterator(); iterator.hasNext() && count < size;)
+					{
+						String string = (String) iterator.next();
+						count ++;
+						list.add(string);
+					}
+				}
+				Collections.sort(list, new Comparator<String>() {
+					@Override
+					public int compare(String o1, String o2)
+					{
+						return o1.compareToIgnoreCase(o2);
+					}
+				});
 	
 				for (Iterator<String> iterator = list.iterator(); iterator.hasNext();)
 				{
@@ -126,4 +127,45 @@ public class TagCloudTag extends TagSupport
 	}
 
 
+	/**
+	 * getStyleClass: Returns the styleClass.
+	 * 
+	 * @return the styleClass
+	 */
+	public String getStyleClass()
+	{
+		return styleClass;
+	}
+
+	/**
+	 * setStyleClass: Sets the styleClass.
+	 * 
+	 * @param styleClass
+	 *            the styleClass to set
+	 */
+	public void setStyleClass(final String styleClass)
+	{
+		this.styleClass = styleClass;
+	}
+
+
+	/**
+	 * getSize: Returns the size.
+	 * 
+	 * @return the size
+	 */
+	public int getSize()
+	{
+		return size;
+	}
+
+	/**
+	 * setSize: Sets the size.
+	 * 
+	 * @param size the size to set
+	 */
+	public void setSize(int size)
+	{
+		this.size = size;
+	}
 }
