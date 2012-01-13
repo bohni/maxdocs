@@ -32,14 +32,19 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.data.TagCloudEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +65,10 @@ public class FileStorage implements Storage
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
 	private String storagePath;
 	private Map<String, String> files;
+	private Map<String, List<String>> links2me;
+	private Map<String, TagCloudEntry> tagMap;
+
+
 	/**
 	 * Default constructor.
 	 * Creates a FileStorage object.
@@ -121,6 +130,8 @@ public class FileStorage implements Storage
 			}
 		}
 		files = new HashMap<String, String>();
+		links2me = new HashMap<String, List<String>>();
+		tagMap = new HashMap<String, TagCloudEntry>();
 		for (File child : storage.listFiles())
 		{
 			if (child.getName().equals(".") || child.getName().equals("..") || child.isDirectory())
@@ -131,17 +142,45 @@ public class FileStorage implements Storage
 			try
 			{
 				scanner = new Scanner(new FileInputStream(child), "UTF-8");
-				String line;
+				String line = null;
+				String pagePath = null;
+				String tagsString = null;
 				while (scanner.hasNextLine())
 				{
 					line = scanner.nextLine();
 					if (StringUtils.startsWith(line, "pagePath"))
 					{
+						pagePath = StringUtils.substringAfterLast(line, "=");
 						files.put(StringUtils.substringAfterLast(line, "="), child.getName());
-						break;
+					}
+					if (StringUtils.startsWith(line, "tags"))
+					{
+						tagsString = StringUtils.substringAfterLast(line, "=");
 					}
 				}
-			}
+				if(tagsString != null)
+				{
+					StringTokenizer st = new StringTokenizer(tagsString, ",");
+					while (st.hasMoreElements())
+					{
+						String tag = st.nextToken().trim();
+						if (StringUtils.isNotBlank(tag))
+						{
+							if(tagMap.get(tag) == null)
+							{
+								TagCloudEntry entry = new TagCloudEntry(tag);
+								tagMap.put(tag, entry);
+							}
+							TagCloudEntry entry = tagMap.get(tag);
+							if(pagePath != null && ! entry.getPages().contains(pagePath))
+							{
+								entry.addPage(pagePath);
+							}
+							tagMap.put(tag, entry);
+						}
+					}
+				}
+			} 
 			catch (FileNotFoundException e)
 			{
 				log.error("Error while reading files in internal map.", e);
@@ -153,7 +192,6 @@ public class FileStorage implements Storage
 					scanner.close();
 				}
 			}
-
 		}
 	}
 
@@ -174,6 +212,7 @@ public class FileStorage implements Storage
 	@Override
 	public MarkupPage load(String pagePath)
 	{
+		log.trace("load({}", pagePath);
 		String pathname = storagePath + files.get(pagePath);
 		MarkupPage markupPage = new MarkupPage();
 		File file = new File(pathname);
@@ -268,6 +307,7 @@ public class FileStorage implements Storage
 	@Override
 	public MarkupPage load(String pagePath, int version)
 	{
+		log.trace("load({}, {}", pagePath, version);
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -279,6 +319,7 @@ public class FileStorage implements Storage
 	@Override
 	public boolean save(MarkupPage oldPage, MarkupPage newPage)
 	{
+		log.trace("save({}, {})", oldPage, newPage);
 		if(oldPage == null)
 		{
 			throw new IllegalArgumentException("save(oldPage, newPage): oldPage is null!"); //TODO: checked exceptions?
@@ -377,6 +418,7 @@ public class FileStorage implements Storage
 	@Override
 	public boolean save(MarkupPage newPage)
 	{
+		log.trace("save({})", newPage);
 		if(newPage == null)
 		{
 			throw new IllegalArgumentException("save(newPage): newPage is null!"); //TODO: checked exceptions?
@@ -394,7 +436,6 @@ public class FileStorage implements Storage
 		{
 			try
 			{
-				// TODO: lfdNr ermitteln zum Speichern
 				int max = 0;
 				for (String key : files.keySet())
 				{
@@ -460,7 +501,28 @@ public class FileStorage implements Storage
 	@Override
 	public boolean delete(String pagePath)
 	{
+		log.trace("delete()");
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#getTagCloud()
+	 */
+	@Override
+	public List<TagCloudEntry> getTagCloudEntries()
+	{
+		log.trace("getTagCloud()");
+		List<TagCloudEntry> tagCloudEntries = Collections.synchronizedList(new ArrayList<TagCloudEntry>());
+		tagCloudEntries.addAll(tagMap.values());
+		Collections.sort(tagCloudEntries, new Comparator<TagCloudEntry>() {
+			@Override
+			public int compare(TagCloudEntry o1, TagCloudEntry o2)
+			{
+				return (o2.getCount()<o1.getCount() ? -1 : (o2.getCount()==o1.getCount() ? 0 : 1));
+			}
+		});
+		return tagCloudEntries;
 	}
 }

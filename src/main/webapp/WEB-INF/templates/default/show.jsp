@@ -134,7 +134,7 @@
 				<div id="col2" role="complementary">
 					<div id="col2_content" class="clearfix">
 						<h2>TagCloud</h2>
-						<max:tagCloud />
+						<max:tagCloud size="15" />
 					</div>
 				</div>
 				<!-- end: #col2 -->
