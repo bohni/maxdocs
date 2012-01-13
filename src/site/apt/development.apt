@@ -33,14 +33,6 @@
  
 Entwicklung
 
-* Links
-
-	* {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}}
-
-	* {{{http://blog.code-adept.com/2008/01/25/unit-testing-jsp-custom-tags/}Unit Testing Custom Tags}}
-
-	* {{{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}UTF-8 encoding mit Apache Tomcat}}
-
 * Allgemeines
 
  Die Entwicklung läuft auf github. Der Entwicklungsbranch ist develop. Das
@@ -51,5 +43,27 @@ Entwicklung
  Damit die Issues direkt in Eclipse bearbeitet werden können, kann über den Eclipse Marketplace
  der Github Mylyn Connector installiert werden.
 
+* Entwicklungsumgebung
+
+** Eclipse
+
+ Bei der Entwicklung kommt die  {{http://www.eclipse.org/downloads/}Eclipse IDE for Java EE Developers}}
+ zum Einsatz. Zusätzlich werden noch die Plugins von Maven (m2e) und Git (EGit) benötigt. Diese können 
+ über den Eclipse Marketplace direkt in der IDE installiert werden.
+
+** Maven
+
+ Für den Standbau verrwendet MaxDocs {{{http://maven.apache.org}apache Maven}}.
  
+** Git
+
+ Die Versionierung erfolgt mit {{{http://www.git-scm.org}Git}} auf {{{http://www.github.com/bohni/maxdocs}github.com}}.
+ 
+* nützliche Links
+
+	* {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}}
+
+	* {{{http://blog.code-adept.com/2008/01/25/unit-testing-jsp-custom-tags/}Unit Testing Custom Tags}}
+
+	* {{{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}UTF-8 encoding mit Apache Tomcat}}
  
