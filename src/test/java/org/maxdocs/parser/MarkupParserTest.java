@@ -65,7 +65,7 @@ public class MarkupParserTest
 		markupPage.setContent("=== Heading ===\nHier normaler Text mit ''italic'' und '''bold'''.");
 		markupPage.setPagePath("/Foo");
 		markupPage.setPageName("Foo");
-		markupPage.setMarkupLanguage(MaxDocsConstants.MARKUP_CONTENT_TYPE_MEDIAWIKI);
+		markupPage.setMarkupLanguage("MediaWiki");
 		markupPage.setVersion(1);
 		markupPage.setAuthor("Karl Klämmerle");
 		markupPage.setFirstVersionCreationDate(new Date(42, 1, 4, 8, 15));
