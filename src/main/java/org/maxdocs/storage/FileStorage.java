@@ -167,14 +167,32 @@ public class FileStorage implements Storage
 				throw new RuntimeException("Error creating versions folder.");
 			}
 		}
+		buildIndexes();
+	}
+
+
+	/**
+	 * buildIndexes:
+	 * (Re-)builds the indexes:
+	 * <ul>
+	 * <li>files - stores to a page path the filename on disk</li>
+	 * <li>link2me - stores to a page all pages that link to it</li>
+	 * <li>tagMap - stores to each tag its count</li>
+	 * </ul>
+	 *
+	 * @param storage
+	 */
+	private void buildIndexes()
+	{
+		File storage = new File(storagePath);
 		files = new HashMap<String, String>();
 		links2me = new HashMap<String, List<String>>();
 		tagMap = new HashMap<String, TagCloudEntry>();
 		for (File child : storage.listFiles())
 		{
-			if (child.getName().equals(".") || child.getName().equals("..") || child.isDirectory())
+			if (child.isDirectory())
 			{
-				continue; // Ignore self and parent aliases
+				continue; // Ignore all directories
 			}
 			Scanner scanner = null;
 			try
