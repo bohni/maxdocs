@@ -23,68 +23,12 @@
 ~~
 
  ------
- MaxDocs TODO
+ MaxDocs Parser
  ------
  Team maxdocs.org
  ------
- 2011-12-30
+ 2011-01-20
 
-~~ Hier soll eine freie Sammlung offener TODOs gepflegt werden
-
-TODO
-
- Hier ist eine Liste der TODOs:
-
-	* Entwicklungsumgebung
-
-		* Preferences/Templates für Eclipse bereitstellen
+MaxDocs Plugins
 	
-		* PMD Regeln festlegen
-
-	* Dokumentation
-
-		* develop.txt nach apt für Maven-Site-Dokumentation
-		
-		* Lizenzen prüfen, auflisten
-		
-		* Getting started Doku für Entwickler
-		
-			* Eclipse und Plugins installieren
-			
-			* Eclipse konfigurieren (Preferences, Templates, PMD Regeln, etc.)
-			
-			* GitHub
-			
-			* Branching Model
-
-	* Entwicklung
-	
-		* UnitTest verbessern
-	
-		* FileStorage: Speichern unter lfdNr., Delete, Rename, Load Version
-
-		* Attachments, Web-Handling
-
-		* MarkupParser: weitere Markups
-	
-		* Security: Konzept erstellen und prüfen, ob mit Spring Security umsetzbar
-	
-		* Default Template: Favicon
-	
-		* MaxDocs-Konfig: Konzept erstellen
-		
-		* Code aufräumen
-		
-			* Refactor lange Mehtoden
-			
-			* Schnittstellen prüfen
-
-	* Design / Konzepte	
-	
-		* Securtiy
-		
-			* Rollen
-			
-			* Rechte
-		
-		* Plugins
+	* Plugins verarbeiten bereits geparsten Content und ersetzen dort ihre Auszeichnung
