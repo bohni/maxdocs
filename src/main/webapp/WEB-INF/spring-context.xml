@@ -52,6 +52,7 @@
 
 	<bean id="storageImpl" class="org.maxdocs.storage.FileStorage">
 		<constructor-arg value="${maxdocs.content-path}"/>
+		<constructor-arg value="${maxdocs.version-folder}"/>
 	</bean>
 
 	<bean id="mediawiki" class="org.eclipse.mylyn.wikitext.mediawiki.core.MediaWikiLanguage">

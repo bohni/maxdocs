@@ -74,6 +74,7 @@ public class FileStorage implements Storage
 	 * Creates a FileStorage object.
 	 * 
 	 * The storagePath is set to "content/".
+	 * The versionsFolder is set to "versions/".
 	 *
 	 */
 	public FileStorage()
@@ -85,20 +86,43 @@ public class FileStorage implements Storage
 	/**
 	 * Minimal constructor. Contains required fields.
 	 * Creates a FileStorage object with the given parameters.
+	 * 
+	 * The versionsFolder is set to "versions/".
 	 *
-	 * @param storagePath
+	 * @param storagePath the path to the folder for storing the page source files.
 	 */
 	public FileStorage(String storagePath)
 	{
-		log.trace("FileStorage({})", storagePath);
+		this("content/", "versions/");
+	}
+	
+	
+	/**
+	 * Full constructor. Contains required and optional fields.
+	 * Creates a {@link FileStorage} object with the given parameters.
+	 *
+	 * @param storagePath the path to the folder for storing the page source files.
+	 * @param versionsFolder the name to the folder for storing old versions of the page source files.
+	 */
+	public FileStorage(String storagePath, String versionsFolder)
+	{
+		log.trace("FileStorage({}, {})", storagePath, versionsFolder);
 
-		if (StringUtils.endsWith(storagePath, "/"))
+		String fileSeparator = System.getProperty("file.separator");
+
+		if(StringUtils.isBlank(storagePath))
+		{
+			log.warn("Parameter storagePath is not set. Using default value 'content/'");
+			this.storagePath = "content/";
+		}
+			
+		if (StringUtils.endsWith(storagePath, fileSeparator))
 		{
 			this.storagePath = storagePath;
 		}
 		else
 		{
-			this.storagePath = storagePath + "/";
+			this.storagePath = storagePath + fileSeparator;
 		}
 
 		File storage = new File(this.storagePath);
@@ -115,9 +139,23 @@ public class FileStorage implements Storage
 				throw new RuntimeException("Error creating content folder.");
 			}
 		}
+		String versionFolderPath;
+		if(StringUtils.startsWith(versionsFolder, fileSeparator))
+		{
+			versionFolderPath = this.storagePath + versionsFolder.substring(1);
+		}
+		else
+		{
+			versionFolderPath = this.storagePath + versionsFolder;
+		}
+		if (!StringUtils.endsWith(versionFolderPath, fileSeparator))
+		{
+			versionFolderPath = versionFolderPath + fileSeparator;
+		}
 
-		File versions = new File(this.storagePath + VERSION_PATH);
-		log.debug("Using content folder '{}'", storage.getAbsolutePath());
+		
+		File versions = new File(versionFolderPath);
+		log.debug("Using versions folder '{}'", versions.getAbsolutePath());
 		if (!versions.exists())
 		{
 			if (versions.mkdirs())
@@ -183,7 +221,7 @@ public class FileStorage implements Storage
 			} 
 			catch (FileNotFoundException e)
 			{
-				log.error("Error while reading files in internal map.", e);
+				log.error("Error while reading files into internal map.", e);
 			}
 			finally
 			{
