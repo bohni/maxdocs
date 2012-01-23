@@ -291,6 +291,8 @@ public class MaxDocsServlet extends HttpServlet
 		newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
 		newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
 		newPage.setEditor(username);
+		// TODO: oldPage wird nicht benoetigt. Kann FileStorage selbst pruefen...
+		// Merken: die Versionsnummer von newPage ist die alte und wird erst spaeter vor dem Speichern erhoeht
 		boolean success = maxDocs.save(oldPage, newPage);
 
 		if (!success)
