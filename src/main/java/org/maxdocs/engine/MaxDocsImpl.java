@@ -33,6 +33,8 @@ import java.util.Set;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 import org.maxdocs.data.TagCloudEntry;
+import org.maxdocs.exceptions.ConcurrentEditException;
+import org.maxdocs.exceptions.EditWithoutChangesException;
 import org.maxdocs.parser.MarkupParser;
 import org.maxdocs.storage.Storage;
 import org.slf4j.Logger;
@@ -147,25 +149,14 @@ public class MaxDocsImpl implements MaxDocs
 	/* (non-Javadoc)
 	 * @see org.maxdocs.engine.MaxDocs#save(org.maxdocs.data.MarkupPage, org.maxdocs.data.MarkupPage)
 	 */
-	public boolean save(MarkupPage oldPage, MarkupPage newPage)
+	public boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException
 	{
-		log.trace("save()");
-		if(oldPage != null)
+		if(newPage == null)
 		{
-			if(oldPage.getVersion() == newPage.getVersion())
-			{
-				newPage.setVersion(oldPage.getVersion() + 1);
-				return storage.save(oldPage, newPage);
-			}
-			else
-			{
-				return false; 
-			}
+			throw new IllegalArgumentException("save(markupPage): markupPage is null!");
 		}
-		else
-		{
-			return storage.save(newPage);
-		}
+		log.trace("save({})", newPage.getPagePath());
+		return storage.save(newPage);
 	}
 
 	

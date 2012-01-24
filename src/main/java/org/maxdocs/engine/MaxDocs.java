@@ -27,6 +27,8 @@ import java.util.Map;
 
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.exceptions.ConcurrentEditException;
+import org.maxdocs.exceptions.EditWithoutChangesException;
 
 /**
  * MaxDocs:
@@ -76,13 +78,12 @@ public interface MaxDocs
 
 	/**
 	 * save:
-	 * Saves the given markup pages.
+	 * Saves the given markup page.
 	 * 
-	 * @param oldPage if not null it will be saved to the versions folder
-	 * @param newPage will be saved to the content folder
+	 * @param markupPage will be saved to the content folder
 	 * @return <code>true</code> if saving succeeds
 	 */
-	public boolean save(MarkupPage oldPage, MarkupPage newPage);
+	public boolean save(MarkupPage markupPage) throws ConcurrentEditException, EditWithoutChangesException;
 
 	/**
 	 * getMarkupLangages:

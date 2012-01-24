@@ -27,6 +27,8 @@ import java.util.List;
 
 import org.maxdocs.data.MarkupPage;
 import org.maxdocs.data.TagCloudEntry;
+import org.maxdocs.exceptions.ConcurrentEditException;
+import org.maxdocs.exceptions.EditWithoutChangesException;
 
 /**
  * Storage:
@@ -69,23 +71,13 @@ public interface Storage
 
 	/**
 	 * save:
-	 * Persists the MarkupPage objects in the storage.
-	 * 
-	 * @param oldPage if not null it will be saved to the versions folder
-	 * @param newPage will be saved to the content folder
-	 * @return <code>true</code>, if saving succeeds
-	 */
-	public boolean save(MarkupPage oldVersion, MarkupPage newVersion);
-
-
-	/**
-	 * save:
 	 * Persists the MarkupPage object in the storage.
+	 * If the page exists, the current version will be saved in the versions folder. 
 	 * 
-	 * @param newPage will be saved to the content folder
+	 * @param newPage the page to save
 	 * @return <code>true</code>, if saving succeeds
 	 */
-	public boolean save(MarkupPage newPage);
+	public boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException;
 
 
 	/**

@@ -37,6 +37,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.MarkupPage;
 import org.maxdocs.engine.MaxDocs;
+import org.maxdocs.exceptions.ConcurrentEditException;
+import org.maxdocs.exceptions.EditWithoutChangesException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -276,29 +278,38 @@ public class MaxDocsServlet extends HttpServlet
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		MarkupPage oldPage = maxDocs.getMarkupPage(pagePath);
-		MarkupPage newPage = new MarkupPage(oldPage);
-		if (oldPage == null)
-		{
-			newPage.setAuthor(username);
-			newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
-			newPage.setPagePath(pagePath);
-		}
+		MarkupPage newPage = new MarkupPage();
+		newPage.setAuthor(username);
+		newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
+		newPage.setEditor(username);
+		newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
+		newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
+		newPage.setPagePath(pagePath);
+		// TODO: newPage.setTags(tags);
 		if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
 		{
 			newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
 		}
-		newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
-		newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
-		newPage.setEditor(username);
-		// TODO: oldPage wird nicht benoetigt. Kann FileStorage selbst pruefen...
-		// Merken: die Versionsnummer von newPage ist die alte und wird erst spaeter vor dem Speichern erhoeht
-		boolean success = maxDocs.save(oldPage, newPage);
+		boolean success = false;
+		try
+		{
+			success = maxDocs.save(newPage);
+		}
+		catch (ConcurrentEditException e)
+		{
+			// TODO: show error message
+			log.debug("Concurrent changes...");
+		}
+		catch (EditWithoutChangesException e)
+		{
+			// TODO: show error message
+			log.debug("No changes...");
+		}
 
 		if (!success)
 		{
-			log.debug("Concurrent changes...");
-			// TODO: concurrent changes - show error message
+			// TODO: show error message
+			log.error("Other error");
 		}
 		actionShow(request, response);
 	}
