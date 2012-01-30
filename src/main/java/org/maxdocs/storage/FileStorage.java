@@ -270,7 +270,7 @@ public class FileStorage implements Storage
 	@Override
 	public MarkupPage load(String pagePath)
 	{
-		log.trace("load({}", pagePath);
+		log.trace("load({})", pagePath);
 		String pathname = storagePath + files.get(pagePath);
 		MarkupPage markupPage = null;
 		File file = new File(pathname);
@@ -366,7 +366,7 @@ public class FileStorage implements Storage
 	@Override
 	public MarkupPage load(String pagePath, int version)
 	{
-		log.trace("load({}, {}", pagePath, version);
+		log.trace("load({}, {})", pagePath, version);
 		// TODO Auto-generated method stub
 		return null;
 	}

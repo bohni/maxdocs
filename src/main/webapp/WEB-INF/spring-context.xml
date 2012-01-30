@@ -25,35 +25,29 @@
 
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:security="http://www.springframework.org/schema/security"	
 	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-
-	<!-- Scans within the base package of the application for @Components to configure as beans -->
-	<!-- @Controller, @Service, @Configuration, etc. -->
-	<context:component-scan base-package="org.maxdocs.parser" />
-
-	<!-- Enables the Spring MVC @Controller programming model -->
-<!-- 	<mvc:annotation-driven /> -->
-
+	<!-- Properties -->
 	<context:property-placeholder location="classpath:maxdocs.properties"/>
-
-	<bean id="baz" class="java.lang.String">
-		<constructor-arg value="Hallo Spring!"/>
-	</bean>
-
+	
+	<!-- Storage -->
 	<bean id="storageImpl" class="org.maxdocs.storage.FileStorage">
 		<constructor-arg value="${maxdocs.content-path}"/>
 		<constructor-arg value="${maxdocs.version-folder}"/>
 	</bean>
+
+	<!-- Markup parser -->
+	<context:component-scan base-package="org.maxdocs.parser" />
 
 	<bean id="mediawiki" class="org.eclipse.mylyn.wikitext.mediawiki.core.MediaWikiLanguage">
 		<property name="internalLinkPattern" value="{0}" />
@@ -68,11 +62,13 @@
 		<property name="markupLanguageFactory" ref="markupLanguageFactory"/>
 	</bean>
 
+	<!-- Maxdocs engine -->
 	<bean id="maxDocs" class="org.maxdocs.engine.MaxDocsImpl">
 		<property name="storage" ref="storageImpl" />
 		<property name="parser" ref="parserImpl" />
 	</bean>
-	
+
+	<!-- Security -->
 	<security:http auto-config="true">
 		<!-- the most specific matches at the top -->
 		<security:intercept-url pattern="/internal/**" filters="none"/>

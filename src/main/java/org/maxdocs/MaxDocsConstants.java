@@ -40,12 +40,18 @@ public final class MaxDocsConstants
 	public static final String MAXDOCS_ENGINE = "MAXDOCS_ENGINE";
 
 	/**
-	 * Key for storing the page path in the request
+	 * Key for storing the page path
 	 */
 	public static final String MAXDOCS_PAGE_PATH = "MAXDOCS_PAGE_PATH";
 
+	/**
+	 * Key for storing the breadcrumb collection
+	 */
 	public static final String MAXDOCS_BREADCRUMBS = "MAXDOCS_BREADCRUMBS";
 
+	/**
+	 * Key for storing the markup page
+	 */
 	public static final String MAXDOCS_MARKUP_PAGE = "MAXDOCS_MARKUP_PAGE";
 	
 	private MaxDocsConstants()

@@ -178,7 +178,7 @@ public class MaxDocsServlet extends HttpServlet
 	 */
 	private void buildBreadcrumbs(HttpServletRequest request)
 	{
-		// Breadcrumbs
+		// get Breadcrumbs from session 
 		CircularFifoBuffer breadcrumbs = (CircularFifoBuffer) request.getSession().getAttribute(
 			MaxDocsConstants.MAXDOCS_BREADCRUMBS);
 		if (breadcrumbs == null)
@@ -197,7 +197,9 @@ public class MaxDocsServlet extends HttpServlet
 		{
 			breadcrumbs.add((String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH));
 		}
+		// store breadcrumbs in session ...
 		request.getSession().setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
+		// ... and request (for BreadcrumbsTag) TODO: why can't it be
 		request.setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
 	}
 
