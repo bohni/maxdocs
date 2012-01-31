@@ -59,6 +59,52 @@ Entwicklung
 
  Die Versionierung erfolgt mit {{{http://www.git-scm.org}Git}} auf {{{http://www.github.com/bohni/maxdocs}github.com}}.
  
+* Getting started
+
+	* git installieren
+	
+		* git config --global user.name "John Doe"
+		
+		* git config --global user.email johndoe@example.com
+		
+		* Windows: git config --global core.autocrlf true
+		
+		* Mac/Unix : git config --global core.autocrlf input
+	
+	* mvn installieren
+	
+	* Eclipse installieren
+	
+		* Maven-Plugin m2e 
+		
+		* EGit
+		
+		* Preferences einstellen (alle "Muss" Einstellungen (UTF8, Linelength, etc.)
+
+** Command line
+
+	* Verzeichnis anlegen
+	
+	* git clone https://github.com/bohni/maxdocs.git (read-only)
+
+	* git clone https://<user>@github.com/bohni/maxdocs.git (writable)
+	
+	* Eclipse: Import existing project
+
+** Eclipse
+
+	* File/New/Git/Git Repository
+	
+	* Paste Repository Path or URI: https://github.com/bohni/maxdocs.git)
+	
+	* Git Repository View: Import projects
+	
+** Beide
+
+ 	* Maven Dependencies ins lokale Repository aufnehmen (wikitext)
+	
+		* mvn install ...
+	
 * nützliche Links
 
 	* {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}}
