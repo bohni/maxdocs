@@ -217,9 +217,13 @@ public class MaxDocsServlet extends HttpServlet
 		throws ServletException, IOException
 	{
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		// TODO, 03.02.2012: check user role
 		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		//TODO: maxDocs.delete(pagePath,  username);
+		if(! maxDocs.delete(pagePath))
+		{
+			// TODO, 03.02.2012: show error message
+		}
 		actionShow(request, response);
 	}
 
@@ -237,6 +241,7 @@ public class MaxDocsServlet extends HttpServlet
 		throws ServletException, IOException
 	{
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		// TODO, 03.02.2012: check user role
 		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 		MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
@@ -258,9 +263,10 @@ public class MaxDocsServlet extends HttpServlet
 		throws ServletException, IOException
 	{
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		// TODO, 03.02.2012: check user role
 		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		//TODO: maxDocs.rename(pagePath, username);
+		// maxDocs.rename(pagePath);
 		actionShow(request, response);
 	}
 
@@ -278,6 +284,7 @@ public class MaxDocsServlet extends HttpServlet
 		throws ServletException, IOException
 	{
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		// TODO, 03.02.2012: check user role
 		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 		MarkupPage newPage = new MarkupPage();
@@ -329,6 +336,8 @@ public class MaxDocsServlet extends HttpServlet
 	private void actionShow(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		// TODO, 03.02.2012: check user role
 		request.getRequestDispatcher("/WEB-INF/templates/" +  getTemplate() + "/show.jsp").forward(request, response);
 	}
 
@@ -345,6 +354,8 @@ public class MaxDocsServlet extends HttpServlet
 	private void actionSource(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		// TODO, 03.02.2012: check user role
 		request.getRequestDispatcher("/WEB-INF/templates/" +  getTemplate() + "/source.jsp").forward(request, response);
 	}
 

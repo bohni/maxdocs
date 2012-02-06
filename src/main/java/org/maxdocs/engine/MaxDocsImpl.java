@@ -27,8 +27,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
@@ -199,6 +197,16 @@ public class MaxDocsImpl implements MaxDocs
 	public String getDefaultMarkupLangage()
 	{
 		return "MediaWiki";
+	}
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#delete(java.lang.String)
+	 */
+	@Override
+	public boolean delete(String pagePath)
+	{
+		log.trace("delete()");
+		return storage.delete(pagePath);
 	}
 	
 	

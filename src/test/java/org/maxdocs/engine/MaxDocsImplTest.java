@@ -56,8 +56,9 @@ public class MaxDocsImplTest
 	private MarkupPage markupPage;
 
 
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
+	/**
+	 * Sets up the fixture, for example, open a network connection.
+	 * This method is called before a test is executed.
 	 */
 	@Before
 	public void setUp()

@@ -77,7 +77,7 @@ public class FileStorage implements Storage
 	 * Creates a FileStorage object.
 	 * 
 	 * The storagePath is set to "content/".
-	 * The versionsFolder is set to "versions/".
+	 * The versionsFolder is set to "content/versions/".
 	 *
 	 */
 	public FileStorage()
@@ -90,7 +90,7 @@ public class FileStorage implements Storage
 	 * Minimal constructor. Contains required fields.
 	 * Creates a FileStorage object with the given parameters.
 	 * 
-	 * The versionsFolder is set to "versions/".
+	 * The versionsFolder is set to "&lt;storagePath&gt;/versions/".
 	 *
 	 * @param storagePath the path to the folder for storing the page source files.
 	 */
@@ -98,14 +98,16 @@ public class FileStorage implements Storage
 	{
 		this("content/", "versions/");
 	}
-	
-	
+
+
 	/**
 	 * Full constructor. Contains required and optional fields.
 	 * Creates a {@link FileStorage} object with the given parameters.
 	 *
+	 * The versionsFolder is set to "&lt;storagePath&gt;/&lt;versionsFolder&gt;/".
+	 * 
 	 * @param storagePath the path to the folder for storing the page source files.
-	 * @param versionsFolder the name to the folder for storing old versions of the page source files.
+	 * @param versionsFolder the name of the sub folder for storing old versions of the page source files.
 	 */
 	public FileStorage(String storagePath, String versionsFolder)
 	{
@@ -113,12 +115,12 @@ public class FileStorage implements Storage
 
 		String fileSeparator = System.getProperty("file.separator");
 
-		if(StringUtils.isBlank(storagePath))
+		if (StringUtils.isBlank(storagePath))
 		{
 			log.warn("Parameter storagePath is not set. Using default value 'content/'");
 			this.storagePath = "content/";
 		}
-			
+
 		if (StringUtils.endsWith(storagePath, fileSeparator))
 		{
 			this.storagePath = storagePath;
@@ -142,7 +144,7 @@ public class FileStorage implements Storage
 				throw new RuntimeException("Error creating content folder.");
 			}
 		}
-		if(StringUtils.startsWith(versionsFolder, fileSeparator))
+		if (StringUtils.startsWith(versionsFolder, fileSeparator))
 		{
 			this.versionPath = this.storagePath + versionsFolder.substring(1);
 		}
@@ -155,7 +157,6 @@ public class FileStorage implements Storage
 			this.versionPath = this.versionPath + fileSeparator;
 		}
 
-		
 		File versions = new File(this.versionPath);
 		log.debug("Using versions folder '{}'", versions.getAbsolutePath());
 		if (!versions.exists())
@@ -216,7 +217,7 @@ public class FileStorage implements Storage
 						tagsString = StringUtils.substringAfterLast(line, "=");
 					}
 				}
-				if(tagsString != null)
+				if (tagsString != null)
 				{
 					StringTokenizer st = new StringTokenizer(tagsString, ",");
 					while (st.hasMoreElements())
@@ -224,13 +225,13 @@ public class FileStorage implements Storage
 						String tag = st.nextToken().trim();
 						if (StringUtils.isNotBlank(tag))
 						{
-							if(tagMap.get(tag) == null)
+							if (tagMap.get(tag) == null)
 							{
 								TagCloudEntry entry = new TagCloudEntry(tag);
 								tagMap.put(tag, entry);
 							}
 							TagCloudEntry entry = tagMap.get(tag);
-							if(pagePath != null && ! entry.getPages().contains(pagePath))
+							if (pagePath != null && !entry.getPages().contains(pagePath))
 							{
 								entry.addPage(pagePath);
 							}
@@ -238,7 +239,7 @@ public class FileStorage implements Storage
 						}
 					}
 				}
-			} 
+			}
 			catch (FileNotFoundException e)
 			{
 				log.error("Error while reading files into internal map.", e);
@@ -378,36 +379,36 @@ public class FileStorage implements Storage
 	@Override
 	public boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException
 	{
-		if(newPage == null)
+		if (newPage == null)
 		{
 			throw new IllegalArgumentException("save(markupPage): markupPage is null!");
 		}
 		log.trace("save({})", newPage.getPagePath());
-		
+
 		boolean success = true;
-		
+
 		String filenameNew;
 		MarkupPage oldPage = load(newPage.getPagePath());
-		if(oldPage != null)
+		if (oldPage != null)
 		{
-			if(oldPage.getVersion() != newPage.getVersion())
+			if (oldPage.getVersion() != newPage.getVersion())
 			{
 				throw new ConcurrentEditException();
 			}
-			
-			if(StringUtils.equals(oldPage.getContent(), newPage.getContent()) 
+
+			if (StringUtils.equals(oldPage.getContent(), newPage.getContent())
 				&& CollectionUtils.isEqualCollection(oldPage.getTags(), newPage.getTags()))
 			{
 				throw new EditWithoutChangesException();
 			}
-			
+
 			newPage.setAuthor(oldPage.getAuthor());
 			newPage.setFirstVersionCreationDate(oldPage.getFirstVersionCreationDate());
 
 			String pageNumber = StringUtils.substringBefore(files.get(oldPage.getPagePath()), ".");
 			String path = versionPath + "/" + pageNumber;
 			File folder = new File(path);
-			if(!folder.exists())
+			if (!folder.exists())
 			{
 				folder.mkdirs();
 			}
@@ -420,16 +421,16 @@ public class FileStorage implements Storage
 			filenameNew = storagePath + max + ".txt";
 		}
 
-		if(success)
+		if (success)
 		{
 			newPage.setVersion(newPage.getVersion() + 1);
 			success = writePage(newPage, filenameNew);
-			if(success)
+			if (success)
 			{
 				files.put(newPage.getPagePath(), StringUtils.substringAfterLast(filenameNew, storagePath));
 			}
 		}
-		
+
 		return success;
 	}
 
@@ -446,7 +447,7 @@ public class FileStorage implements Storage
 		for (String key : files.keySet())
 		{
 			int number = Integer.parseInt(StringUtils.substringBeforeLast(files.get(key), "."));
-			if(number > max)
+			if (number > max)
 			{
 				max = number;
 			}
@@ -463,8 +464,62 @@ public class FileStorage implements Storage
 	public boolean delete(String pagePath)
 	{
 		log.trace("delete()");
-		// TODO Auto-generated method stub
-		return false;
+
+		boolean success = true;
+		if (exists(pagePath))
+		{
+			String fileName = storagePath + files.get(pagePath);
+
+			// delete current version
+			File f = new File(fileName);
+			if (f.exists())
+			{
+				success = f.delete();
+				if (success)
+				{
+					log.debug("File '{}' deleted.", fileName);
+					String pageNumber = StringUtils.substringBefore(files.get(pagePath), ".");
+					files.remove(pagePath);
+					// delete history
+					String fileVersionPath = versionPath + "/" + pageNumber;
+					f = new File(fileVersionPath);
+					if (f.exists())
+					{
+						if (!deleteRecursive(f))
+						{
+							log.error("File '{}' deleted, but version folder '{}' could not be deleted. Manual deletion necessary.", fileName, fileVersionPath);
+						}
+					}
+				}
+			}
+		}
+		return success;
+	}
+
+
+	/**
+	 * deleteRecursive:
+	 * Deletes the file or directory denoted by this abstract pathname.
+	 * Works recursively to delete non empty directories as well.
+	 * @param path file or directory to be deleted
+	 * @return <code>true</code> if and only if the file or directory is successfully deleted; <code>false</code> otherwise
+	 */
+	private boolean deleteRecursive(File path)
+	{
+		boolean success = true;
+		if (!path.exists())
+		{
+			return success;
+		}
+		if (path.isDirectory())
+		{
+			for (File f : path.listFiles())
+			{
+				success = success && deleteRecursive(f);
+			}
+		}
+		return success && path.delete();
+
 	}
 
 
@@ -481,20 +536,20 @@ public class FileStorage implements Storage
 			@Override
 			public int compare(TagCloudEntry o1, TagCloudEntry o2)
 			{
-				return (o2.getCount()<o1.getCount() ? -1 : (o2.getCount()==o1.getCount() ? 0 : 1));
+				return (o2.getCount() < o1.getCount() ? -1 : (o2.getCount() == o1.getCount() ? 0 : 1));
 			}
 		});
 		return tagCloudEntries;
 	}
-	
-	
+
+
 	/**
 	 * writePage:
 	 * Saves the given markup page to a file with the given filename.
 	 *
 	 * @param page the markup page to save
 	 * @param filename the filename
-	 * @return <code>true</code>, if saving succeeds
+	 * @return <code>true</code>, if and only if the page is successfully saved; <code>false</code> otherwise
 	 */
 	private boolean writePage(MarkupPage page, String filename)
 	{
@@ -504,7 +559,7 @@ public class FileStorage implements Storage
 		try
 		{
 			StringBuilder tags;
-			
+
 			writer = new OutputStreamWriter(new FileOutputStream(new File(filename)), "UTF-8");
 			writer.append("pagePath=" + page.getPagePath() + lineSeperator);
 			writer.append("author=" + page.getAuthor() + lineSeperator);
@@ -523,7 +578,7 @@ public class FileStorage implements Storage
 			writer.append("tags=" + StringUtils.substringBeforeLast(tags.toString(), ",") + lineSeperator);
 			writer.append(lineSeperator);
 			writer.append(page.getContent());
-			
+
 			writer.close();
 			success = true;
 		}

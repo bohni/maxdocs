@@ -61,7 +61,7 @@ public interface MaxDocs
 	 * Checks if a page exists with the given pagePath.
 	 * 
 	 * @param pagePath the requested page
-	 * @return <code>true</code> if the pagePath exists
+	 * @return <code>true</code> if the pagePath exists; <code>false</code> otherwise
 	 */
 	public boolean exists(String pagePath);
 
@@ -81,7 +81,7 @@ public interface MaxDocs
 	 * Saves the given markup page.
 	 * 
 	 * @param markupPage will be saved to the content folder
-	 * @return <code>true</code> if saving succeeds
+	 * @return <code>true</code> if and only if the page is successfully saved; <code>false</code> otherwise
 	 */
 	public boolean save(MarkupPage markupPage) throws ConcurrentEditException, EditWithoutChangesException;
 
@@ -103,4 +103,13 @@ public interface MaxDocs
 	 * @return the default markup language
 	 */
 	public String getDefaultMarkupLangage();
+
+	/**
+	 * delete:
+	 * Deletes the page with the given path.
+	 * 
+	 * @param pagePath
+	 * @return <code>true</code> if and only if the file is successfully deleted; <code>false</code> otherwise
+	 */
+	public boolean delete(String pagePath);
 }

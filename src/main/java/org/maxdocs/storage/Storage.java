@@ -43,7 +43,7 @@ public interface Storage
 	 * Checks if a page exists with the given pagePath.
 	 * 
 	 * @param pagePath the requested page
-	 * @return <code>true</code> if the pagePath exists
+	 * @return <code>true</code> if the pagePath exists; <code>false</code> otherwise
 	 */
 	public boolean exists(String pagePath);
 
@@ -75,7 +75,7 @@ public interface Storage
 	 * If the page exists, the current version will be saved in the versions folder. 
 	 * 
 	 * @param newPage the page to save
-	 * @return <code>true</code>, if saving succeeds
+	 * @return <code>true</code> if and only if the page is successfully deleted; <code>false</code> otherwise
 	 */
 	public boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException;
 
@@ -84,7 +84,7 @@ public interface Storage
 	 * delete:
 	 * Deletes the requested page.
 	 * @param pagePath the requested page
-	 * @return <code>true</code>, if deleting succeeds
+	 * @return <code>true</code> if and only if the page is successfully deleted; <code>false</code> otherwise
 	 */
 	public boolean delete(String pagePath);
 
