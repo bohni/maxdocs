@@ -66,6 +66,7 @@ public class MaxDocsServlet extends HttpServlet
 	private static final String PARAMETER_NAME_CONTENT = "content";
 	private static final String PARAMETER_NAME_VERSION = "version";
 	private static final String PARAMETER_NAME_MARKUP = "markupLanguage";
+	private static final String PARAMETER_NAME_TAGS= "tags";
 
 	private static Logger log = LoggerFactory.getLogger(MaxDocsServlet.class);
 
@@ -294,6 +295,7 @@ public class MaxDocsServlet extends HttpServlet
 		newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
 		newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 		newPage.setPagePath(pagePath);
+		String tags = request.getParameter(PARAMETER_NAME_TAGS);
 		// TODO: newPage.setTags(tags);
 		if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
 		{

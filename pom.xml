@@ -178,6 +178,11 @@
 			<artifactId>wikitext-core</artifactId>
 			<version>1.6.0.i20111227</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.1</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>
