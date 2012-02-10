@@ -308,10 +308,12 @@
 					<excludes>
 						<!-- Unsere License-Vorlage und yaml nicht -->
 						<exclude>src/main/config/license/LICENSE.txt</exclude>
-						<exclude>/src/main/java/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
+						<exclude>src/main/java/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
 						<exclude>src/main/webapp/internal/yaml/**</exclude>
 						<exclude>src/main/webapp/internal/css/**</exclude>
+						<exclude>src/site/resources/maxdocs.epf</exclude>
 						<exclude>target/**</exclude>
+						<exclude>**/delete.me</exclude>
 					</excludes>
 					<includes>
 						<include>src/**</include>
