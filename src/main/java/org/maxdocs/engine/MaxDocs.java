@@ -39,6 +39,34 @@ import org.maxdocs.exceptions.EditWithoutChangesException;
  */
 public interface MaxDocs
 {
+	/**
+	 * delete:
+	 * Deletes the page with the given path.
+	 * 
+	 * @param pagePath the complete path of the page
+	 * @return <code>true</code> if and only if the file is successfully deleted; <code>false</code> otherwise
+	 */
+	public boolean delete(String pagePath);
+
+
+	/**
+	 * exists:
+	 * Checks if a page exists with the given pagePath.
+	 * 
+	 * @param pagePath the complete path of the page
+	 * @return <code>true</code> if the pagePath exists; <code>false</code> otherwise
+	 */
+	public boolean exists(String pagePath);
+
+
+	/**
+	 * getDefaultMarkupLangage:
+	 * Returns the default markup language.
+	 * 
+	 * @return the default markup language
+	 */
+	public String getDefaultMarkupLangage();
+
 
 	/**
 	 * getHtmlPage() creates an object containing all data of the requested page.
@@ -48,6 +76,19 @@ public interface MaxDocs
 	 */
 	public HtmlPage getHtmlPage(String pagePath);
 
+
+	/**
+	 * getMarkupLangages:
+	 * Returns a map with all supported markup languages.
+	 * 
+	 * key is service name.
+	 * value is display name.
+	 *
+	 * @return all supported markup languages as map.
+	 */
+	public Map<String, String> getMarkupLangages();
+
+
 	/**
 	 * getHtmlPage() creates an object containing all data of the requested page.
 	 * 
@@ -56,14 +97,6 @@ public interface MaxDocs
 	 */
 	public MarkupPage getMarkupPage(String pagePath);
 
-	/**
-	 * exists:
-	 * Checks if a page exists with the given pagePath.
-	 * 
-	 * @param pagePath the requested page
-	 * @return <code>true</code> if the pagePath exists; <code>false</code> otherwise
-	 */
-	public boolean exists(String pagePath);
 
 	/**
 	 * getTagCloud:
@@ -77,39 +110,25 @@ public interface MaxDocs
 
 
 	/**
+	 * rename:
+	 * Renames the page with the given pagePath
+	 * 
+	 * @param pagePath the complete current path of the page
+	 * @param newPagePath the complete new path of the page
+	 * @return <code>true</code> if and only if the file is successfully renamed; <code>false</code> otherwise
+	 * @throws ConcurrentEditException
+	 */
+	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException;
+
+
+	/**
 	 * save:
 	 * Saves the given markup page.
 	 * 
 	 * @param markupPage will be saved to the content folder
 	 * @return <code>true</code> if and only if the page is successfully saved; <code>false</code> otherwise
+	 * @throws ConcurrentEditException
+	 * @throws EditWithoutChangesException
 	 */
 	public boolean save(MarkupPage markupPage) throws ConcurrentEditException, EditWithoutChangesException;
-
-	/**
-	 * getMarkupLangages:
-	 * Returns a map with all supported markup languages.
-	 * 
-	 * key is service name.
-	 * value is display name.
-	 *
-	 * @return all supported markup languages as map.
-	 */
-	public Map<String, String> getMarkupLangages();
-
-	/**
-	 * getDefaultMarkupLangage:
-	 * Returns the default markup language.
-	 * 
-	 * @return the default markup language
-	 */
-	public String getDefaultMarkupLangage();
-
-	/**
-	 * delete:
-	 * Deletes the page with the given path.
-	 * 
-	 * @param pagePath
-	 * @return <code>true</code> if and only if the file is successfully deleted; <code>false</code> otherwise
-	 */
-	public boolean delete(String pagePath);
 }

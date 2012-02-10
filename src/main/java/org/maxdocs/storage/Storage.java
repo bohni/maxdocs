@@ -39,6 +39,15 @@ import org.maxdocs.exceptions.EditWithoutChangesException;
 public interface Storage
 {
 	/**
+	 * delete:
+	 * Deletes the requested page.
+	 * @param pagePath the requested page
+	 * @return <code>true</code> if and only if the page is successfully deleted; <code>false</code> otherwise
+	 */
+	public boolean delete(String pagePath);
+
+
+	/**
 	 * exists:
 	 * Checks if a page exists with the given pagePath.
 	 * 
@@ -46,6 +55,15 @@ public interface Storage
 	 * @return <code>true</code> if the pagePath exists; <code>false</code> otherwise
 	 */
 	public boolean exists(String pagePath);
+
+
+	/**
+	 * getTagCloud:
+	 * Returns a List with tags cloud entries.
+	 * 
+	 * @return a list with tag cloud entries
+	 */
+	public List<TagCloudEntry> getTagCloudEntries();
 
 
 	/**
@@ -70,31 +88,26 @@ public interface Storage
 
 
 	/**
+	 * rename:
+	 * Renames the page with the given pagePath
+	 * 
+	 * @param pagePath the complete current path of the page
+	 * @param newPagePath the complete new path of the page
+	 * @return <code>true</code> if and only if the page is successfully renamed; <code>false</code> otherwise
+	 * @throws ConcurrentEditException
+	 */
+	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException;
+
+
+	/**
 	 * save:
 	 * Persists the MarkupPage object in the storage.
 	 * If the page exists, the current version will be saved in the versions folder. 
 	 * 
 	 * @param newPage the page to save
 	 * @return <code>true</code> if and only if the page is successfully deleted; <code>false</code> otherwise
+	 * @throws ConcurrentEditException
+	 * @throws EditWithoutChangesException
 	 */
 	public boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException;
-
-
-	/**
-	 * delete:
-	 * Deletes the requested page.
-	 * @param pagePath the requested page
-	 * @return <code>true</code> if and only if the page is successfully deleted; <code>false</code> otherwise
-	 */
-	public boolean delete(String pagePath);
-
-
-	/**
-	 * getTagCloud:
-	 * Returns a List with tags cloud entries.
-	 * 
-	 * @return a list with tag cloud entries
-	 */
-	public List<TagCloudEntry> getTagCloudEntries();
-	
 }

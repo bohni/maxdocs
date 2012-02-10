@@ -63,15 +63,13 @@ import org.slf4j.LoggerFactory;
  */
 public class FileStorage implements Storage
 {
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
-	private String storagePath;
-	private String versionPath;
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private Map<String, String> files;
 	private Map<String, List<String>> links2me;
+	private String storagePath;
 	private Map<String, TagCloudEntry> tagMap;
-
-
+	private String versionPath;
 	/**
 	 * Default constructor.
 	 * Creates a FileStorage object.
@@ -256,12 +254,120 @@ public class FileStorage implements Storage
 
 
 	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#delete(java.lang.String)
+	 */
+	@Override
+	public boolean delete(String pagePath)
+	{
+		log.trace("delete()");
+
+		boolean success = true;
+		if (exists(pagePath))
+		{
+			String fileName = storagePath + files.get(pagePath);
+
+			// delete current version
+			File f = new File(fileName);
+			if (f.exists())
+			{
+				success = f.delete();
+				if (success)
+				{
+					log.debug("File '{}' deleted.", fileName);
+					String pageNumber = StringUtils.substringBefore(files.get(pagePath), ".");
+					files.remove(pagePath);
+					// delete history
+					String fileVersionPath = versionPath + "/" + pageNumber;
+					f = new File(fileVersionPath);
+					if (f.exists())
+					{
+						if (!deleteRecursive(f))
+						{
+							log.error("File '{}' deleted, but version folder '{}' could not be deleted. Manual deletion necessary.", fileName, fileVersionPath);
+						}
+					}
+				}
+			}
+		}
+		return success;
+	}
+
+
+	/**
+	 * deleteRecursive:
+	 * Deletes the file or directory denoted by this abstract pathname.
+	 * Works recursively to delete non empty directories as well.
+	 * @param path file or directory to be deleted
+	 * @return <code>true</code> if and only if the file or directory is successfully deleted; <code>false</code> otherwise
+	 */
+	private boolean deleteRecursive(File path)
+	{
+		boolean success = true;
+		if (!path.exists())
+		{
+			return success;
+		}
+		if (path.isDirectory())
+		{
+			for (File f : path.listFiles())
+			{
+				success = success && deleteRecursive(f);
+			}
+		}
+		return success && path.delete();
+
+	}
+
+
+	/* (non-Javadoc)
 	 * @see org.maxdocs.storage.Storage#exists(java.lang.String)
 	 */
 	@Override
 	public boolean exists(String pagePath)
 	{
 		return files.containsKey(pagePath);
+	}
+
+
+	/**
+	 * getNextPageNumber:
+	 * Return the next free number for saving a page.
+	 *
+	 * @return the next free number
+	 */
+	private synchronized int getNextPageNumber()
+	{
+		int max = 0;
+		for (String key : files.keySet())
+		{
+			int number = Integer.parseInt(StringUtils.substringBeforeLast(files.get(key), "."));
+			if (number > max)
+			{
+				max = number;
+			}
+		}
+		max++;
+		return max;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#getTagCloud()
+	 */
+	@Override
+	public List<TagCloudEntry> getTagCloudEntries()
+	{
+		log.trace("getTagCloud()");
+		List<TagCloudEntry> tagCloudEntries = Collections.synchronizedList(new ArrayList<TagCloudEntry>());
+		tagCloudEntries.addAll(tagMap.values());
+		Collections.sort(tagCloudEntries, new Comparator<TagCloudEntry>() {
+			@Override
+			public int compare(TagCloudEntry o1, TagCloudEntry o2)
+			{
+				return (o2.getCount() < o1.getCount() ? -1 : (o2.getCount() == o1.getCount() ? 0 : 1));
+			}
+		});
+		return tagCloudEntries;
 	}
 
 
@@ -374,6 +480,33 @@ public class FileStorage implements Storage
 
 
 	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#rename(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException
+	{
+		MarkupPage page = load(pagePath);
+		page.setPagePath(newPagePath);
+		page.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
+		boolean success = false; 
+		try
+		{
+			success = save(page);
+			if(success)
+			{
+				files.put(newPagePath, files.get(pagePath));
+				files.remove(pagePath);
+			}
+		}
+		catch (EditWithoutChangesException e)
+		{
+			log.error("This exception should never been thrown, because rename does a change.");
+		}
+		return success;
+	}
+
+
+	/* (non-Javadoc)
 	 * @see org.maxdocs.storage.Storage#save(org.maxdocs.data.MarkupPage)
 	 */
 	@Override
@@ -397,7 +530,8 @@ public class FileStorage implements Storage
 			}
 
 			if (StringUtils.equals(oldPage.getContent(), newPage.getContent())
-				&& CollectionUtils.isEqualCollection(oldPage.getTags(), newPage.getTags()))
+				&& CollectionUtils.isEqualCollection(oldPage.getTags(), newPage.getTags())
+				&& StringUtils.equals(oldPage.getPagePath(), newPage.getPagePath()))
 			{
 				throw new EditWithoutChangesException();
 			}
@@ -432,114 +566,6 @@ public class FileStorage implements Storage
 		}
 
 		return success;
-	}
-
-
-	/**
-	 * getNextPageNumber:
-	 * Return the next free number for saving a page.
-	 *
-	 * @return the next free number
-	 */
-	private synchronized int getNextPageNumber()
-	{
-		int max = 0;
-		for (String key : files.keySet())
-		{
-			int number = Integer.parseInt(StringUtils.substringBeforeLast(files.get(key), "."));
-			if (number > max)
-			{
-				max = number;
-			}
-		}
-		max++;
-		return max;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see org.maxdocs.storage.Storage#delete(java.lang.String)
-	 */
-	@Override
-	public boolean delete(String pagePath)
-	{
-		log.trace("delete()");
-
-		boolean success = true;
-		if (exists(pagePath))
-		{
-			String fileName = storagePath + files.get(pagePath);
-
-			// delete current version
-			File f = new File(fileName);
-			if (f.exists())
-			{
-				success = f.delete();
-				if (success)
-				{
-					log.debug("File '{}' deleted.", fileName);
-					String pageNumber = StringUtils.substringBefore(files.get(pagePath), ".");
-					files.remove(pagePath);
-					// delete history
-					String fileVersionPath = versionPath + "/" + pageNumber;
-					f = new File(fileVersionPath);
-					if (f.exists())
-					{
-						if (!deleteRecursive(f))
-						{
-							log.error("File '{}' deleted, but version folder '{}' could not be deleted. Manual deletion necessary.", fileName, fileVersionPath);
-						}
-					}
-				}
-			}
-		}
-		return success;
-	}
-
-
-	/**
-	 * deleteRecursive:
-	 * Deletes the file or directory denoted by this abstract pathname.
-	 * Works recursively to delete non empty directories as well.
-	 * @param path file or directory to be deleted
-	 * @return <code>true</code> if and only if the file or directory is successfully deleted; <code>false</code> otherwise
-	 */
-	private boolean deleteRecursive(File path)
-	{
-		boolean success = true;
-		if (!path.exists())
-		{
-			return success;
-		}
-		if (path.isDirectory())
-		{
-			for (File f : path.listFiles())
-			{
-				success = success && deleteRecursive(f);
-			}
-		}
-		return success && path.delete();
-
-	}
-
-
-	/* (non-Javadoc)
-	 * @see org.maxdocs.storage.Storage#getTagCloud()
-	 */
-	@Override
-	public List<TagCloudEntry> getTagCloudEntries()
-	{
-		log.trace("getTagCloud()");
-		List<TagCloudEntry> tagCloudEntries = Collections.synchronizedList(new ArrayList<TagCloudEntry>());
-		tagCloudEntries.addAll(tagMap.values());
-		Collections.sort(tagCloudEntries, new Comparator<TagCloudEntry>() {
-			@Override
-			public int compare(TagCloudEntry o1, TagCloudEntry o2)
-			{
-				return (o2.getCount() < o1.getCount() ? -1 : (o2.getCount() == o1.getCount() ? 0 : 1));
-			}
-		});
-		return tagCloudEntries;
 	}
 
 

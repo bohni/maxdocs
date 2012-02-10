@@ -266,7 +266,7 @@ public class MaxDocsServlet extends HttpServlet
 		// TODO, 03.02.2012: check user role
 		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		// maxDocs.rename(pagePath);
+		// maxDocs.rename(pagePath, newPagePath);
 		actionShow(request, response);
 	}
 
