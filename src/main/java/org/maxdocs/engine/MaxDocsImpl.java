@@ -48,8 +48,38 @@ public class MaxDocsImpl implements MaxDocs
 {
 	private static Logger log = LoggerFactory.getLogger(MaxDocsImpl.class);
 
-	private Storage storage;
 	private MarkupParser parser;
+
+	private Storage storage;
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#delete(java.lang.String)
+	 */
+	@Override
+	public boolean delete(String pagePath)
+	{
+		log.trace("delete()");
+		return storage.delete(pagePath);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.maxdocs.engine.MaxDocs#exists(java.lang.String)
+	 */
+	@Override
+	public boolean exists(String pagePath)
+	{
+		return storage.exists(pagePath);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#getDefaultMarkupLangages()
+	 */
+	@Override
+	public String getDefaultMarkupLangage()
+	{
+		return "MediaWiki";
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -70,6 +100,34 @@ public class MaxDocsImpl implements MaxDocs
 		HtmlPage htmlPage = parser.parseToHtml(markupPage);
 		
 		return htmlPage;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#getMarkupLangages()
+	 */
+	@Override
+	public Map<String, String> getMarkupLangages()
+	{
+		return parser.getMarkupLanguages();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.maxdocs.engine.MaxDocs#getMarkupPage(java.lang.String)
+	 */
+	@Override
+	public MarkupPage getMarkupPage(String pagePath)
+	{
+		log.trace("getMarkupPage({})", pagePath);
+
+		if(!exists(pagePath))
+		{
+			return null;
+		}
+
+		MarkupPage markupPage = storage.load(pagePath);
+		return markupPage;
 	}
 
 	/*
@@ -114,34 +172,13 @@ public class MaxDocsImpl implements MaxDocs
 		return tagCloud;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.maxdocs.engine.MaxDocs#exists(java.lang.String)
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#rename(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public boolean exists(String pagePath)
+	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException
 	{
-		return storage.exists(pagePath);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.maxdocs.engine.MaxDocs#getMarkupPage(java.lang.String)
-	 */
-	@Override
-	public MarkupPage getMarkupPage(String pagePath)
-	{
-		log.trace("getMarkupPage({})", pagePath);
-
-		if(!exists(pagePath))
-		{
-			return null;
-		}
-
-		MarkupPage markupPage = storage.load(pagePath);
-		return markupPage;
+		return storage.rename(pagePath, newPagePath);
 	}
 
 	/* (non-Javadoc)
@@ -160,13 +197,14 @@ public class MaxDocsImpl implements MaxDocs
 	
 	
 	
-	/* (non-Javadoc)
-	 * @see org.maxdocs.engine.MaxDocs#getMarkupLangages()
+	/**
+	 * setParser() sets the parser
+	 *
+	 * @param parser the parser to set
 	 */
-	@Override
-	public Map<String, String> getMarkupLangages()
+	public void setParser(MarkupParser parser)
 	{
-		return parser.getMarkupLanguages();
+		this.parser = parser;
 	}
 
 	/**
@@ -178,35 +216,6 @@ public class MaxDocsImpl implements MaxDocs
 	public void setStorage(Storage storage)
 	{
 		this.storage = storage;
-	}
-
-	/**
-	 * setParser() sets the parser
-	 *
-	 * @param parser the parser to set
-	 */
-	public void setParser(MarkupParser parser)
-	{
-		this.parser = parser;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.maxdocs.engine.MaxDocs#getDefaultMarkupLangages()
-	 */
-	@Override
-	public String getDefaultMarkupLangage()
-	{
-		return "MediaWiki";
-	}
-
-	/* (non-Javadoc)
-	 * @see org.maxdocs.engine.MaxDocs#delete(java.lang.String)
-	 */
-	@Override
-	public boolean delete(String pagePath)
-	{
-		log.trace("delete()");
-		return storage.delete(pagePath);
 	}
 	
 	
