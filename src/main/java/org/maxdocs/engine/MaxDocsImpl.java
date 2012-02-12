@@ -166,7 +166,7 @@ public class MaxDocsImpl implements MaxDocs
 		{
 			TagCloudEntry tagCloudEntry = (TagCloudEntry) iterator.next();
 			int weight = tagCloudEntry.getCount()/step;
-			tagCloud.put(tagCloudEntry.getTagName() + "(" + tagCloudEntry.getCount() + ")", weight > 0 ? weight : 1);
+			tagCloud.put(tagCloudEntry.getTagName(), weight > 0 ? weight : 1);
 		}
 
 		return tagCloud;

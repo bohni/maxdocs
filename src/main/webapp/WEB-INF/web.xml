@@ -93,9 +93,20 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>		
 
+	<servlet>
+		<servlet-name>ajaxServlet</servlet-name>
+		<servlet-class>org.maxdocs.servlet.MaxDocsAjaxServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>		
+
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/content/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ajaxServlet</servlet-name>
+		<url-pattern>/internal/ajax/*</url-pattern>
 	</servlet-mapping>
 
 

@@ -47,8 +47,14 @@
 <c:set var="author"><fmt:message key="author" bundle="${maxdocs}" /></c:set>
 <meta name="description" content="${description}"/>
 <meta name="author" content="${author}"/>
-<link href="<%=request.getContextPath()%>/internal/css/maxdocs.css"
-	rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/internal/css/maxdocs.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/internal/css/smoothness/jquery-ui-1.8.17.custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/internal/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/internal/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript">
+var contextPath = "<%=request.getContextPath()%>";
+</script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/internal/js/maxdocs.js"></script>
 <!--[if lte IE 7]>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/internal/yaml/core/iehacks.min.css" type="text/css"/>
 <![endif]-->
@@ -134,6 +140,7 @@
 						<form method="post" action="?action=save" accept-charset="UTF-8">
 							<p>Markup: <max:markupLanguage type="input" size="1" /></p>
 							<textarea rows="15" cols="58" name="content"><max:pageSource /></textarea>
+							<label for="tags">Tags:</label><input type="text" name="tags" id="tags" size="50" value="${MAXDOCS_MARKUP_PAGE.tagsAsString}" /><br/>
 							<input type="hidden" name="action" value="save"/>
 							<input type="hidden" name="version" value="${MAXDOCS_MARKUP_PAGE.version}" />
 							<input type="hidden" name="editor" value=""/>
