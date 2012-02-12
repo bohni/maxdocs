@@ -140,7 +140,7 @@ var contextPath = "<%=request.getContextPath()%>";
 						<form method="post" action="?action=save" accept-charset="UTF-8">
 							<p>Markup: <max:markupLanguage type="input" size="1" /></p>
 							<textarea rows="15" cols="58" name="content"><max:pageSource /></textarea>
-							<label for="tags">Tags:</label><input type="text" name="tags" id="tags" size="50" /><br/>
+							<label for="tags">Tags:</label><input type="text" name="tags" id="tags" size="50" value="${MAXDOCS_MARKUP_PAGE.tagsAsString}" /><br/>
 							<input type="hidden" name="action" value="save"/>
 							<input type="hidden" name="version" value="${MAXDOCS_MARKUP_PAGE.version}" />
 							<input type="hidden" name="editor" value=""/>

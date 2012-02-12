@@ -30,6 +30,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.sql.Array;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,9 +40,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -217,25 +222,7 @@ public class FileStorage implements Storage
 				}
 				if (tagsString != null)
 				{
-					StringTokenizer st = new StringTokenizer(tagsString, ",");
-					while (st.hasMoreElements())
-					{
-						String tag = st.nextToken().trim();
-						if (StringUtils.isNotBlank(tag))
-						{
-							if (tagMap.get(tag) == null)
-							{
-								TagCloudEntry entry = new TagCloudEntry(tag);
-								tagMap.put(tag, entry);
-							}
-							TagCloudEntry entry = tagMap.get(tag);
-							if (pagePath != null && !entry.getPages().contains(pagePath))
-							{
-								entry.addPage(pagePath);
-							}
-							tagMap.put(tag, entry);
-						}
-					}
+					updateTagMap(pagePath, tagsString);
 				}
 			}
 			catch (FileNotFoundException e)
@@ -248,6 +235,56 @@ public class FileStorage implements Storage
 				{
 					scanner.close();
 				}
+			}
+		}
+	}
+
+
+	/**
+	 * updateTagMap:
+	 * TODO: Documentation
+	 *
+	 * @param pagePath
+	 * @param tagsString
+	 */
+	private void updateTagMap(String pagePath, String tagsString)
+	{
+		// First all tags of the page are deleted
+		List<String> tagsToRemove = new ArrayList<String>();
+		for (String tag : tagMap.keySet())
+		{
+			TagCloudEntry tagCloudEntry = tagMap.get(tag);
+			if(tagCloudEntry.getPages().contains(pagePath))
+			{
+				tagCloudEntry.getPages().remove(pagePath);
+				if(tagCloudEntry.getCount() == 0)
+				{
+					tagsToRemove.add(tag);
+				}
+			}
+		}
+		for (String tag : tagsToRemove)
+		{
+			tagMap.remove(tag);
+		}
+		// Then all new Tags are added
+		List<String> newtags = new ArrayList<String>();
+		CollectionUtils.addAll(newtags, StringUtils.splitByWholeSeparator(tagsString, ", "));
+		for (String tag : newtags)
+		{
+			if (StringUtils.isNotBlank(tag))
+			{
+				if (tagMap.get(tag) == null)
+				{
+					TagCloudEntry entry = new TagCloudEntry(tag);
+					tagMap.put(tag, entry);
+				}
+				TagCloudEntry entry = tagMap.get(tag);
+				if (pagePath != null && !entry.getPages().contains(pagePath))
+				{
+					entry.addPage(pagePath);
+				}
+				tagMap.put(tag, entry);
 			}
 		}
 	}
@@ -364,7 +401,7 @@ public class FileStorage implements Storage
 			@Override
 			public int compare(TagCloudEntry o1, TagCloudEntry o2)
 			{
-				return (o2.getCount() < o1.getCount() ? -1 : (o2.getCount() == o1.getCount() ? 0 : 1));
+				return Integer.compare(o1.getCount(), o2.getCount());
 			}
 		});
 		return tagCloudEntries;
@@ -425,16 +462,11 @@ public class FileStorage implements Storage
 					}
 					else if (StringUtils.startsWith(line, "tags"))
 					{
-						StringTokenizer st = new StringTokenizer(StringUtils.substringAfterLast(line, "="),
-							",");
-						while (st.hasMoreElements())
-						{
-							String tag = st.nextToken().trim();
-							if (StringUtils.isNotBlank(tag))
-							{
-								markupPage.addTag(tag);
-							}
-						}
+						String tags = StringUtils.substringAfterLast(line, "=");
+						Set<String> taglist = Collections.synchronizedSet(new HashSet<String>());
+						String[] stringarr =StringUtils.splitByWholeSeparator(tags, ", ");
+						CollectionUtils.addAll(taglist, stringarr);
+						markupPage.setTags(taglist);
 					}
 					else if (StringUtils.isBlank(line) && count == 0)
 					{
@@ -584,8 +616,6 @@ public class FileStorage implements Storage
 		Writer writer = null;
 		try
 		{
-			StringBuilder tags;
-
 			writer = new OutputStreamWriter(new FileOutputStream(new File(filename)), "UTF-8");
 			writer.append("pagePath=" + page.getPagePath() + lineSeperator);
 			writer.append("author=" + page.getAuthor() + lineSeperator);
@@ -595,13 +625,9 @@ public class FileStorage implements Storage
 			writer.append("creationDateThis=" + sdf.format(page.getCurrentVersionCreationDate())
 				+ lineSeperator);
 			writer.append("contentType=" + page.getMarkupLanguage() + lineSeperator);
-			writer.append("version=" + (page.getVersion()) + lineSeperator);
-			tags = new StringBuilder();
-			for (String tag : page.getTags())
-			{
-				tags.append(tag + ", ");
-			}
-			writer.append("tags=" + StringUtils.substringBeforeLast(tags.toString(), ",") + lineSeperator);
+			writer.append("version=" + page.getVersion() + lineSeperator);
+			writer.append("tags=" + page.getTagsAsString()  + lineSeperator);
+			updateTagMap(page.getPagePath(), page.getTagsAsString());
 			writer.append(lineSeperator);
 			writer.append(page.getContent());
 

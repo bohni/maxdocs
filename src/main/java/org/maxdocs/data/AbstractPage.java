@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -247,6 +248,17 @@ public class AbstractPage
 		return tags;
 	}
 
+	/**
+	 * getTagsAsString: Returns the tags as comma delimited String
+	 *
+	 * @return the tags as comma delimited String
+	 */
+	public String getTagsAsString()
+	{
+		return StringUtils.join(tags, ", ");
+	}
+	
+	
 	/**
 	 * setTags: Sets the tags.
 	 * 

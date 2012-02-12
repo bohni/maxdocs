@@ -24,7 +24,12 @@
 package org.maxdocs.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -32,6 +37,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
@@ -295,8 +301,17 @@ public class MaxDocsServlet extends HttpServlet
 		newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
 		newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 		newPage.setPagePath(pagePath);
-		String tags = request.getParameter(PARAMETER_NAME_TAGS);
-		// TODO: newPage.setTags(tags);
+		if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_TAGS)))
+		{
+			String tags = request.getParameter(PARAMETER_NAME_TAGS);
+			String[] tagArray = StringUtils.splitByWholeSeparator(tags, ", ");
+			Set<String> tagList = Collections.synchronizedSet(new HashSet<String>());
+			for (String tag : tagArray)
+			{
+				tagList.add(tag.trim());
+			}
+			newPage.setTags(tagList);
+		}
 		if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
 		{
 			newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
