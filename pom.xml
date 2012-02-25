@@ -316,6 +316,8 @@
 						<exclude>src/main/java/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
 						<exclude>src/main/webapp/internal/yaml/**</exclude>
 						<exclude>src/main/webapp/internal/css/**</exclude>
+						<exclude>src/main/webapp/internal/js/jquery-ui-1.8.17.custom.min.js</exclude>
+						<exclude>src/main/webapp/internal/js/jquery-1.7.1.min.js</exclude>
 						<exclude>src/site/resources/maxdocs.epf</exclude>
 						<exclude>target/**</exclude>
 						<exclude>**/delete.me</exclude>
