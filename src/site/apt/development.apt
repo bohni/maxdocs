@@ -95,16 +95,24 @@ Entwicklung
 
 	* File/New/Git/Git Repository
 	
-	* Paste Repository Path or URI: https://github.com/bohni/maxdocs.git)
+	* Paste Repository Path or URI: https://github.com/bohni/maxdocs.git
 	
 	* Git Repository View: Import projects
 	
 ** Beide
 
- 	* Maven Dependencies ins lokale Repository aufnehmen (wikitext)
+	* Maven Dependencies ins lokale Repository aufnehmen (wikitext)
 	
 		* mvn install ...
-	
+
+* Tipps und Tricks
+
+	* Auf Updates der Abhängigkeiten und Plugins prüfen: {{{http://mojo.codehaus.org/versions-maven-plugin/}Versions Maven Plugin}}
+
+		* Plguins: mvn versions:display-plugin-updates
+
+		* Abhängigkeiten: mvn versions:display-dependency-updates
+
 * nützliche Links
 
 	* {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}}
