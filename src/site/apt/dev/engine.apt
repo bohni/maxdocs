@@ -56,3 +56,10 @@ MaxDocs Engine
 	  Muessen von unserem Servlet verarbeitet werden wg. PrettyURL.\
 	  exists() darf nicht nur true, sondern muss auch den Mimetype liefern (oder  zwei Methoden)
 
+	* URLs: Anwender definiert alle von maxdocs untserstütze URLs:\
+	  maxdocs.wiki = /\
+	  maxdocs.blog = /blog\
+	  maxdocs.intern = /internal\
+	  maxdocs.gallery = /gallery\
+	  maxdocs.pluginBenötigtURL = /pluginURL\
+	  Filter liest Konfig und leitet entsprechend der URL an die entsprechende JSP
