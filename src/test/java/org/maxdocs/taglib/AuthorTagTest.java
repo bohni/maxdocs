@@ -23,13 +23,14 @@
  */
 package org.maxdocs.taglib;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,6 +68,7 @@ public class AuthorTagTest
 
 	private WebApplicationContext mockWebApplicationContext;
 
+
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
@@ -81,7 +83,7 @@ public class AuthorTagTest
 		// Then add the Spring Context to the Servlet Context
 		mockWebApplicationContext = EasyMock.createMock(WebApplicationContext.class);
 		mockServletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,
-				mockWebApplicationContext);
+			mockWebApplicationContext);
 
 		// Create the MockPageContext passing in the mock servlet context created above
 		mockPageContext = new MockPageContext(mockServletContext);
@@ -105,12 +107,16 @@ public class AuthorTagTest
 		// on the WebApplicationContext. So to avoid having to put this expect statement in every test
 		// I've included it in the setUp()
 		EasyMock.expect(mockWebApplicationContext.getServletContext()).andReturn(mockServletContext)
-		.anyTimes();
+			.anyTimes();
 	}
+
 
 	/**
 	 * testDoStartTagAuthorDefault:
-	 * Check output for type set to 'author'.
+	 * Check output for
+	 * <ul>
+	 *   <li>type = "author"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -119,24 +125,24 @@ public class AuthorTagTest
 	public void testDoStartTagAuthorDefault() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagAuthorDefault");
-		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + htmlPage.getAuthor() + "</a></span>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
+		Boolean plain = null;
+		String styleClass = null;
+		String type = "author";
+		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + htmlPage.getAuthor()
+			+ "</a></span>";
 
-		authorTag.setType("author");
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, type, expectedOutput);
 	}
+
 
 	/**
 	 * testDoStartTagAuthorWithStyle:
-	 * Check output for type set to 'author' and styleClass set to 'style'.
+	 * Check output for
+	 * <ul>
+	 *   <li>styleClass = "style"</li>
+	 *   <li>type = "author"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -145,26 +151,24 @@ public class AuthorTagTest
 	public void testDoStartTagAuthorWithStyle() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagAuthorWithStyle");
+
+		Boolean plain = null;
 		String styleClass = "style";
-		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + htmlPage.getAuthor() + "</a></span>";
+		String type = "author";
+		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + htmlPage.getAuthor()
+			+ "</a></span>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		authorTag.setType("author");
-		authorTag.setStyleClass(styleClass);
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, type, expectedOutput);
 	}
+
 
 	/**
 	 * testDoStartTagAuthorWithPlain:
-	 * Check output for type set to 'author' and plain set to 'true'.
+	 * Check output for
+	 * <ul>
+	 *   <li>plain = true</li>
+	 *   <li>type = "author"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -173,26 +177,24 @@ public class AuthorTagTest
 	public void testDoStartTagAuthorWithPlain() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagAuthorWithPlain");
-		boolean plain = true;
+
+		Boolean plain = true;
+		String styleClass = null;
+		String type = "author";
 		String expectedOutput = htmlPage.getAuthor();
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		authorTag.setType("author");
-		authorTag.setPlain(plain);
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, type, expectedOutput);
 	}
+
 
 	/**
 	 * testDoStartTagAuthorWithPlainAndStyle:
-	 * Check output for type set to 'author' and plain set to 'true'.
+	 * Check output for
+	 * <ul>
+	 *   <li>plain = true</li>
+	 *   <li>styleClass = "style"</li>
+	 *   <li>type = "author"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -201,28 +203,22 @@ public class AuthorTagTest
 	public void testDoStartTagAuthorWithPlainAndStyle() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagAuthorWithPlainAndStyle");
-		boolean plain = true;
+		Boolean plain = true;
 		String styleClass = "style";
+		String type = "author";
 		String expectedOutput = htmlPage.getAuthor();
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
+		testTag(plain, styleClass, type, expectedOutput);
 
-		authorTag.setType("author");
-		authorTag.setPlain(plain);
-		authorTag.setStyleClass(styleClass);
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
 	}
+
 
 	/**
 	 * testDoStartTagEditorDefault:
-	 * Check output for type set to 'editor'.
+	 * Check output for
+	 * <ul>
+	 *   <li>type = "editor"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -231,24 +227,24 @@ public class AuthorTagTest
 	public void testDoStartTagEditorDefault() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagEditorDefault");
-		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + htmlPage.getEditor() + "</a></span>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
+		Boolean plain = null;
+		String styleClass = null;
+		String type = "editor";
+		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + htmlPage.getEditor()
+			+ "</a></span>";
 
-		authorTag.setType("editor");
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, type, expectedOutput);
 	}
+
 
 	/**
 	 * testDoStartTagEditorWithStyle:
 	 * Check output for type set to 'editor' and styleClass set to 'style'.
+	 * <ul>
+	 *   <li>styleClass = "style"</li>
+	 *   <li>type = "editor"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -257,27 +253,24 @@ public class AuthorTagTest
 	public void testDoStartTagEditorWithStyle() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagEditorWithStyle");
+
+		Boolean plain = null;
 		String styleClass = "style";
-		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + htmlPage.getEditor() + "</a></span>";
+		String type = "editor";
+		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + htmlPage.getEditor()
+			+ "</a></span>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		authorTag.setType("editor");
-		authorTag.setStyleClass(styleClass);
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, type, expectedOutput);
 	}
+
 
 	/**
 	 * testDoStartTagEditorWithPlain:
-	 * Check output for type set to 'editor' and plain set to 'true'.
-	 * 
+	 * Check output for 
+	 * <ul>
+	 *   <li>plain = true</li>
+	 *   <li>type = "editor"</li>
+	 * </ul>
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
@@ -285,26 +278,24 @@ public class AuthorTagTest
 	public void testDoStartTagEditorWithPlain() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagEditorWithPlain");
-		boolean plain = true;
+
+		Boolean plain = true;
+		String styleClass = null;
+		String type = "editor";
 		String expectedOutput = htmlPage.getEditor();
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		authorTag.setType("editor");
-		authorTag.setPlain(plain);
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, type, expectedOutput);
 	}
+
 
 	/**
 	 * testDoStartTagEditorWithPlainAndStyle:
-	 * Check output for type set to 'editor' and plain set to 'true'.
+	 * Check output for
+	 * <ul>
+	 *   <li>plain = true</li>
+	 *   <li>styleClass = "style"</li>
+	 *   <li>type = "editor"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -313,79 +304,114 @@ public class AuthorTagTest
 	public void testDoStartTagEditorWithPlainAndStyle() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagEditorWithPlainAndStyle");
-		boolean plain = true;
+
+		Boolean plain = true;
 		String styleClass = "style";
+		String type = "editor";
 		String expectedOutput = htmlPage.getEditor();
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		authorTag.setType("editor");
-		authorTag.setPlain(plain);
-		authorTag.setStyleClass(styleClass);
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, type, expectedOutput);
 	}
 
+
 	/**
-	 * testDoStartTagWrongType:
-	 * Check output for type set to 'test'.
-	 * 
+	 * testDoStartTagWrongTypeDefault:
+	 * Check output for
+	 * <ul>
+	 *   <li>type = "test"</li>
+	 * </ul>
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagWrongType() throws JspException, UnsupportedEncodingException
+	public void testDoStartTagWrongTypeDefault() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagWrongType");
+
+		Boolean plain = null;
+		String styleClass = null;
 		String type = "test";
-		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">unsupported type '"+ type +"'</a></span>";
+		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">unsupported type '" + type
+			+ "'</a></span>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		authorTag.setType(type);
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, type, expectedOutput);
 	}
 
+
 	/**
-	 * testDoStartTagWrongTypePlain:
-	 * Check output for type set to 'editor' and plain set to 'true'.
+	 * testDoStartTagWrongTypeWithStyle:
+	 * Check output for 
+	 * <ul>
+	 *   <li>styleClass = "style"</li>
+	 *   <li>type = "test"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagWrongTypePlain() throws JspException, UnsupportedEncodingException
+	public void testDoStartTagWrongTypeWithStyle() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagWrongTypePlain");
+
+		Boolean plain = null;
+		String styleClass = "style";
 		String type = "test";
-		boolean plain = true;
-		String expectedOutput = "unsupported type '"+ type +"'";
+		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">unsupported type '" + type
+			+ "'</a></span>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
+		testTag(plain, styleClass, type, expectedOutput);
+	}
 
-		authorTag.setType(type);
-		authorTag.setPlain(plain);
-		int tagReturnValue = authorTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
+	/**
+	 * testDoStartTagWrongTypeWithPlain:
+	 * Check output for 
+	 * <ul>
+	 *   <li>plain = true</li>
+	 *   <li>type = "test"</li>
+	 * </ul>
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagWrongTypeWithPlain() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testDoStartTagWrongTypePlain");
 
-		verifyAllMocks();
+		Boolean plain = true;
+		String styleClass = null;
+		String type = "test";
+		String expectedOutput = "unsupported type '" + type + "'";
+
+		testTag(plain, styleClass, type, expectedOutput);
+	}
+
+
+	/**
+	 * testDoStartTagWrongTypeWithPlainAndStyle:
+	 * Check output for 
+	 * <ul>
+	 *   <li>plain = true</li>
+	 *   <li>styleClass = "style"</li>
+	 *   <li>type = "test"</li>
+	 * </ul>
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagWrongTypeWithPlainAndStyle() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testDoStartTagWrongTypePlain");
+
+		Boolean plain = true;
+		String styleClass = "style";
+		String type = "test";
+		String expectedOutput = "unsupported type '" + type + "'";
+
+		testTag(plain, styleClass, type, expectedOutput);
 	}
 
 
@@ -400,6 +426,7 @@ public class AuthorTagTest
 	public void testDoStartTagPageNotExists() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagPageNotExists");
+
 		String expectedOutput = "";
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
@@ -408,7 +435,7 @@ public class AuthorTagTest
 		int tagReturnValue = authorTag.doStartTag();
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		assertEquals("Tag should return 'TagSupport.SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
 		assertEquals("Output should be empty", expectedOutput, output);
 
 		verifyAllMocks();
@@ -420,8 +447,40 @@ public class AuthorTagTest
 		EasyMock.replay(mockWebApplicationContext, mockEngine);
 	}
 
+
 	private void verifyAllMocks()
 	{
 		EasyMock.verify(mockWebApplicationContext, mockEngine);
 	}
+
+
+	private void testTag(Boolean plain, String styleClass, String type, String expectedOutput)
+		throws JspException,
+		UnsupportedEncodingException
+	{
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
+		replayAllMocks();
+
+		if (plain != null)
+		{
+			authorTag.setPlain(plain.booleanValue());
+		}
+		if (StringUtils.isNotBlank(styleClass))
+		{
+			authorTag.setStyleClass(styleClass);
+		}
+		if (StringUtils.isNotBlank(type))
+		{
+			authorTag.setType(type);
+		}
+
+		int tagReturnValue = authorTag.doStartTag();
+		assertEquals("Tag should return 'TagSupport.SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
 }
