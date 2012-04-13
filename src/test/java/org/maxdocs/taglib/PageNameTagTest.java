@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
@@ -111,7 +112,7 @@ public class PageNameTagTest
 
 	/**
 	 * testDoStartTagDefault:
-	 * Check output for type set to 'author'.
+	 * Check output.
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -119,24 +120,22 @@ public class PageNameTagTest
 	@Test
 	public void testDoStartTagDefault() throws JspException, UnsupportedEncodingException
 	{
+		log.trace("testDoStartTagDefault");
+
+		Boolean plain = null;
+		String styleClass = null;
 		String expectedOutput = "<h1 class=\"maxdocsPageName\">" + htmlPage.getPageName() + "</h1>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		int tagReturnValue = pageNameTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
 	/**
 	 * testDoStartTagWithStyle:
-	 * Check output for type set to 'author' and styleClass set to 'style'.
+	 * Check output with parameters set
+	 * <ul>
+	 *   <li>styleClass = "style"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -144,26 +143,22 @@ public class PageNameTagTest
 	@Test
 	public void testDoStartTagWithStyle() throws JspException, UnsupportedEncodingException
 	{
+		log.trace("testDoStartTagWithStyle");
+
+		Boolean plain = null;
 		String styleClass = "style";
 		String expectedOutput = "<h1 class=\"" + styleClass + "\">" + htmlPage.getPageName() + "</h1>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		pageNameTag.setStyleClass(styleClass);
-		int tagReturnValue = pageNameTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
 	/**
 	 * testDoStartTagWithPlain:
-	 * Check output for type set to 'author' and plain set to 'true'.
+	 * Check output with parameters set
+	 * <ul>
+	 *   <li>plain = true</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -171,26 +166,23 @@ public class PageNameTagTest
 	@Test
 	public void testDoStartTagWithPlain() throws JspException, UnsupportedEncodingException
 	{
-		boolean plain = true;
-		String expectedOutput = "" + htmlPage.getPageName();
+		log.trace("testDoStartTagWithPlain");
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
+		Boolean plain = true;
+		String styleClass = null;
+		String expectedOutput = htmlPage.getPageName();
 
-		pageNameTag.setPlain(plain);
-		int tagReturnValue = pageNameTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
 	/**
 	 * testDoStartTagWithPlainAndStyle:
-	 * Check output for type set to 'author' and plain set to 'true'.
+	 * Check output with parameters set
+	 * <ul>
+	 *   <li>plain = true</li>
+	 *   <li>styleClass = "style"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -198,22 +190,13 @@ public class PageNameTagTest
 	@Test
 	public void testDoStartTagWithPlainAndStyle() throws JspException, UnsupportedEncodingException
 	{
-		boolean plain = true;
+		log.trace("testDoStartTagWithPlainAndStyle");
+
+		Boolean plain = true;
 		String styleClass = "style";
-		String expectedOutput = "" + htmlPage.getPageName();
+		String expectedOutput = htmlPage.getPageName();
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		pageNameTag.setPlain(plain);
-		pageNameTag.setStyleClass(styleClass);
-		int tagReturnValue = pageNameTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
@@ -238,6 +221,41 @@ public class PageNameTagTest
 
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
 		assertEquals("Output should be empty", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
+
+	/**
+	 * testTag():
+	 * Tests the output with the given parameters.
+	 * 
+	 * @param plain
+	 * @param styleClass
+	 * @param expectedOutput
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	private void testTag(Boolean plain, String styleClass, String expectedOutput) throws JspException,
+		UnsupportedEncodingException
+	{
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
+		replayAllMocks();
+
+		if (plain != null)
+		{
+			pageNameTag.setPlain(plain.booleanValue());
+		}
+		if (StringUtils.isNotBlank(styleClass))
+		{
+			pageNameTag.setStyleClass(styleClass);
+		}
+
+		int tagReturnValue = pageNameTag.doStartTag();
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
 	}

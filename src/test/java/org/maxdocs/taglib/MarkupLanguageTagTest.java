@@ -32,6 +32,7 @@ import java.util.Map;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,6 +78,7 @@ public class MarkupLanguageTagTest
 	public void setUp() throws Exception
 	{
 		log.trace("setUp");
+
 		// Create the mock servlet context
 		mockServletContext = new MockServletContext();
 
@@ -117,7 +119,7 @@ public class MarkupLanguageTagTest
 
 	/**
 	 * testDoStartTagDefault:
-	 * Check output for type set to 'author'.
+	 * Check output.
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -125,24 +127,23 @@ public class MarkupLanguageTagTest
 	@Test
 	public void testDoStartTagDefault() throws JspException, UnsupportedEncodingException
 	{
-		String expectedOutput = "<span class=\"maxdocsMarkupLanguage\">" + htmlPage.getMarkupLanguage() + "</span>";
+		log.trace("testDoStartTagDefault");
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
+		Boolean plain = null;
+		String styleClass = null;
+		String expectedOutput = "<span class=\"maxdocsMarkupLanguage\">" + htmlPage.getMarkupLanguage()
+			+ "</span>";
 
-		int tagReturnValue = markupLanguageTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
 	/**
 	 * testDoStartTagWithStyle:
-	 * Check output for type set to 'author' and styleClass set to 'style'.
+	 * Check output for with parameters set
+	 * <ul>
+	 *   <li>styleClass = "style"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -150,26 +151,23 @@ public class MarkupLanguageTagTest
 	@Test
 	public void testDoStartTagWithStyle() throws JspException, UnsupportedEncodingException
 	{
+		log.trace("testDoStartTagWithStyle");
+
+		Boolean plain = null;
 		String styleClass = "style";
-		String expectedOutput = "<span class=\"" + styleClass + "\">" + htmlPage.getMarkupLanguage() + "</span>";
+		String expectedOutput = "<span class=\"" + styleClass + "\">" + htmlPage.getMarkupLanguage()
+			+ "</span>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		markupLanguageTag.setStyleClass(styleClass);
-		int tagReturnValue = markupLanguageTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
 	/**
 	 * testDoStartTagWithPlain:
-	 * Check output for type set to 'author' and plain set to 'true'.
+	 * Check output for with parameters set
+	 * <ul>
+	 *   <li>plain = true</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -177,26 +175,23 @@ public class MarkupLanguageTagTest
 	@Test
 	public void testDoStartTagWithPlain() throws JspException, UnsupportedEncodingException
 	{
-		boolean plain = true;
+		log.trace("testDoStartTagWithPlain");
+
+		Boolean plain = true;
+		String styleClass = null;
 		String expectedOutput = htmlPage.getMarkupLanguage();
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		markupLanguageTag.setPlain(plain);
-		int tagReturnValue = markupLanguageTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
 	/**
 	 * testDoStartTagWithPlainAndStyle:
-	 * Check output for type set to 'author' and plain set to 'true'.
+	 * Check output with parameters set
+	 * <ul>
+	 *   <li>plain = true</li>
+	 *   <li>styleClass = "style"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -204,22 +199,13 @@ public class MarkupLanguageTagTest
 	@Test
 	public void testDoStartTagWithPlainAndStyle() throws JspException, UnsupportedEncodingException
 	{
-		boolean plain = true;
+		log.trace("testDoStartTagWithPlainAndStyle");
+
+		Boolean plain = true;
 		String styleClass = "style";
 		String expectedOutput = htmlPage.getMarkupLanguage();
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		markupLanguageTag.setPlain(plain);
-		markupLanguageTag.setStyleClass(styleClass);
-		int tagReturnValue = markupLanguageTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
@@ -234,6 +220,7 @@ public class MarkupLanguageTagTest
 	public void testDoStartTagPageNotExists() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagPageNotExists");
+
 		String expectedOutput = "<span class=\"maxdocsMarkupLanguage\">MediaWiki</span>";
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
@@ -244,6 +231,41 @@ public class MarkupLanguageTagTest
 
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
 		assertEquals("Output should be empty", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
+
+	/**
+	 * testTag():
+	 * Tests the output with the given parameters.
+	 * 
+	 * @param plain
+	 * @param styleClass
+	 * @param expectedOutput
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	private void testTag(Boolean plain, String styleClass, String expectedOutput) throws JspException,
+		UnsupportedEncodingException
+	{
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
+		replayAllMocks();
+
+		if (plain != null)
+		{
+			markupLanguageTag.setPlain(plain.booleanValue());
+		}
+		if (StringUtils.isNotBlank(styleClass))
+		{
+			markupLanguageTag.setStyleClass(styleClass);
+		}
+
+		int tagReturnValue = markupLanguageTag.doStartTag();
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
 	}

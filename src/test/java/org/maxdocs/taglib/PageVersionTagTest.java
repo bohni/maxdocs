@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
@@ -111,7 +112,7 @@ public class PageVersionTagTest
 
 	/**
 	 * testDoStartTagDefault:
-	 * Check output for type set to 'author'.
+	 * Check output.
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -119,24 +120,22 @@ public class PageVersionTagTest
 	@Test
 	public void testDoStartTagDefault() throws JspException, UnsupportedEncodingException
 	{
+		log.trace("testDoStartTagDefault");
+
+		Boolean plain = null;
+		String styleClass = null;
 		String expectedOutput = "<span class=\"maxdocsPageVersion\">" + htmlPage.getVersion() + "</span>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		int tagReturnValue = pageVersionTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
 	/**
 	 * testDoStartTagWithStyle:
-	 * Check output for type set to 'author' and styleClass set to 'style'.
+	 * Check output with parameters set
+	 * <ul>
+	 *   <li>styleClass = "style"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -144,26 +143,20 @@ public class PageVersionTagTest
 	@Test
 	public void testDoStartTagWithStyle() throws JspException, UnsupportedEncodingException
 	{
+		Boolean plain = null;
 		String styleClass = "style";
 		String expectedOutput = "<span class=\"" + styleClass + "\">" + htmlPage.getVersion() + "</span>";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		pageVersionTag.setStyleClass(styleClass);
-		int tagReturnValue = pageVersionTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
 	/**
 	 * testDoStartTagWithPlain:
-	 * Check output for type set to 'author' and plain set to 'true'.
+	 * Check output with parameters set
+	 * <ul>
+	 *   <li>plain = true</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -171,26 +164,21 @@ public class PageVersionTagTest
 	@Test
 	public void testDoStartTagWithPlain() throws JspException, UnsupportedEncodingException
 	{
-		boolean plain = true;
+		Boolean plain = true;
+		String styleClass = null;
 		String expectedOutput = "" + htmlPage.getVersion();
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		pageVersionTag.setPlain(plain);
-		int tagReturnValue = pageVersionTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
 	/**
 	 * testDoStartTagWithPlainAndStyle:
-	 * Check output for type set to 'author' and plain set to 'true'.
+	 * Check output with parameters set
+	 * <ul>
+	 *   <li>plain = true</li>
+	 *   <li>styleClass = "style"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -198,22 +186,11 @@ public class PageVersionTagTest
 	@Test
 	public void testDoStartTagWithPlainAndStyle() throws JspException, UnsupportedEncodingException
 	{
-		boolean plain = true;
+		Boolean plain = true;
 		String styleClass = "style";
 		String expectedOutput = "" + htmlPage.getVersion();
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
-		replayAllMocks();
-
-		pageVersionTag.setPlain(plain);
-		pageVersionTag.setStyleClass(styleClass);
-		int tagReturnValue = pageVersionTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
-
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 
@@ -238,6 +215,41 @@ public class PageVersionTagTest
 
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
 		assertEquals("Output should be empty", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
+
+	/**
+	 * testTag():
+	 * Tests the output with the given parameters.
+	 * 
+	 * @param plain
+	 * @param styleClass
+	 * @param expectedOutput
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	private void testTag(Boolean plain, String styleClass, String expectedOutput) throws JspException,
+		UnsupportedEncodingException
+	{
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
+		replayAllMocks();
+
+		if (plain != null)
+		{
+			pageVersionTag.setPlain(plain.booleanValue());
+		}
+		if (StringUtils.isNotBlank(styleClass))
+		{
+			pageVersionTag.setStyleClass(styleClass);
+		}
+
+		int tagReturnValue = pageVersionTag.doStartTag();
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
 	}

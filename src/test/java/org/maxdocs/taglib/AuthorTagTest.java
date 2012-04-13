@@ -113,7 +113,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagAuthorDefault:
-	 * Check output for
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>type = "author"</li>
 	 * </ul>
@@ -138,7 +138,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagAuthorWithStyle:
-	 * Check output for
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>styleClass = "style"</li>
 	 *   <li>type = "author"</li>
@@ -164,7 +164,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagAuthorWithPlain:
-	 * Check output for
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>plain = true</li>
 	 *   <li>type = "author"</li>
@@ -189,7 +189,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagAuthorWithPlainAndStyle:
-	 * Check output for
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>plain = true</li>
 	 *   <li>styleClass = "style"</li>
@@ -215,7 +215,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagEditorDefault:
-	 * Check output for
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>type = "editor"</li>
 	 * </ul>
@@ -240,7 +240,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagEditorWithStyle:
-	 * Check output for type set to 'editor' and styleClass set to 'style'.
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>styleClass = "style"</li>
 	 *   <li>type = "editor"</li>
@@ -266,7 +266,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagEditorWithPlain:
-	 * Check output for 
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>plain = true</li>
 	 *   <li>type = "editor"</li>
@@ -290,7 +290,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagEditorWithPlainAndStyle:
-	 * Check output for
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>plain = true</li>
 	 *   <li>styleClass = "style"</li>
@@ -316,7 +316,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagWrongTypeDefault:
-	 * Check output for
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>type = "test"</li>
 	 * </ul>
@@ -340,7 +340,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagWrongTypeWithStyle:
-	 * Check output for 
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>styleClass = "style"</li>
 	 *   <li>type = "test"</li>
@@ -366,7 +366,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagWrongTypeWithPlain:
-	 * Check output for 
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>plain = true</li>
 	 *   <li>type = "test"</li>
@@ -391,7 +391,7 @@ public class AuthorTagTest
 
 	/**
 	 * testDoStartTagWrongTypeWithPlainAndStyle:
-	 * Check output for 
+	 * Check output with parameters set
 	 * <ul>
 	 *   <li>plain = true</li>
 	 *   <li>styleClass = "style"</li>
@@ -442,18 +442,6 @@ public class AuthorTagTest
 	}
 
 
-	private void replayAllMocks()
-	{
-		EasyMock.replay(mockWebApplicationContext, mockEngine);
-	}
-
-
-	private void verifyAllMocks()
-	{
-		EasyMock.verify(mockWebApplicationContext, mockEngine);
-	}
-
-
 	private void testTag(Boolean plain, String styleClass, String type, String expectedOutput)
 		throws JspException,
 		UnsupportedEncodingException
@@ -483,4 +471,15 @@ public class AuthorTagTest
 		verifyAllMocks();
 	}
 
+
+	private void replayAllMocks()
+	{
+		EasyMock.replay(mockWebApplicationContext, mockEngine);
+	}
+
+
+	private void verifyAllMocks()
+	{
+		EasyMock.verify(mockWebApplicationContext, mockEngine);
+	}
 }
