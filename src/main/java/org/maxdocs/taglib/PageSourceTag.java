@@ -55,11 +55,13 @@ public class PageSourceTag extends TagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(
+				MaxDocsConstants.MAXDOCS_ENGINE);
+			String pageName = (String) pageContext.getRequest().getAttribute(
+				MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			MarkupPage markupPage = engine.getMarkupPage(pageName);
 
-			if(markupPage != null)
+			if (markupPage != null)
 			{
 				pageContext.getOut().write(markupPage.getContent());
 			}
@@ -69,16 +71,5 @@ public class PageSourceTag extends TagSupport
 			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
-	}
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException
-	{
-		log.trace("doEndTag()");
-		return EVAL_PAGE;
 	}
 }

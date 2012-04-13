@@ -55,7 +55,7 @@ public class DateTagTEI extends AbstractMaxDocsTagTEI
 		List<ValidationMessage> msgs = new ArrayList<ValidationMessage>();
 
 		ValidationMessage[] supermsgs = super.validate(data);
-		if(supermsgs != null)
+		if (supermsgs != null)
 		{
 			msgs.addAll(Arrays.asList(supermsgs));
 		}
@@ -77,14 +77,14 @@ public class DateTagTEI extends AbstractMaxDocsTagTEI
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
 			if (!((String) o).toLowerCase().equals("creation") &&
-					!((String) o).toLowerCase().equals("lastchange"))
+				!((String) o).toLowerCase().equals("lastchange"))
 			{
 				msgs.add(new ValidationMessage(data.getId(),
-						"Invalid value for type. Only 'creation' or 'lastChange' supported."));
+					"Invalid value for type. Only 'creation' or 'lastChange' supported."));
 			}
 		}
 
-		if(msgs.size() == 0)
+		if (msgs.size() == 0)
 		{
 			return null;
 		}

@@ -57,7 +57,6 @@ public class TagCloudTag extends TagSupport
 
 	private int size = 0;
 
-
 	/* (non-Javadoc)
 	 *
 	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
@@ -68,24 +67,26 @@ public class TagCloudTag extends TagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(
+				MaxDocsConstants.MAXDOCS_ENGINE);
 			Map<String, Integer> tagCloudMap = engine.getTagCloud();
 
-			if(tagCloudMap != null)
+			if (tagCloudMap != null)
 			{
 				StringBuffer tagCloud = new StringBuffer();
 				List<String> list = new ArrayList<String>();
-				if(size==0)
+				if (size == 0)
 				{
 					list.addAll(tagCloudMap.keySet());
 				}
 				else
 				{
 					int count = 0;
-					for (Iterator<String> iterator = tagCloudMap.keySet().iterator(); iterator.hasNext() && count < size;)
+					for (Iterator<String> iterator = tagCloudMap.keySet().iterator(); iterator.hasNext()
+						&& count < size;)
 					{
 						String string = (String) iterator.next();
-						count ++;
+						count++;
 						list.add(string);
 					}
 				}
@@ -96,7 +97,7 @@ public class TagCloudTag extends TagSupport
 						return o1.compareToIgnoreCase(o2);
 					}
 				});
-	
+
 				for (Iterator<String> iterator = list.iterator(); iterator.hasNext();)
 				{
 					String tagName = iterator.next();
@@ -104,7 +105,7 @@ public class TagCloudTag extends TagSupport
 					tagCloud.append(tagName);
 					tagCloud.append("</span> ");
 				}
-	
+
 				pageContext.getOut().write("<div class=\"" + styleClass + "\">" + tagCloud + "</div>");
 			}
 		}
@@ -114,18 +115,6 @@ public class TagCloudTag extends TagSupport
 		}
 		return SKIP_BODY;
 	}
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException
-	{
-		log.trace("doEndTag");
-		return EVAL_PAGE;
-	}
-
 
 	/**
 	 * getStyleClass: Returns the styleClass.
@@ -147,7 +136,6 @@ public class TagCloudTag extends TagSupport
 	{
 		this.styleClass = styleClass;
 	}
-
 
 	/**
 	 * getSize: Returns the size.

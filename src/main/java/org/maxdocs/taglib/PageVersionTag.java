@@ -47,7 +47,6 @@ public class PageVersionTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(PageVersionTag.class);
 
-
 	/**
 	 * Constructor.
 	 *
@@ -57,7 +56,6 @@ public class PageVersionTag extends AbstractMaxDocsTagSupport
 		super();
 		setStyleClass("maxdocsPageVersion");
 	}
-
 
 	/* (non-Javadoc)
 	 *
@@ -69,14 +67,16 @@ public class PageVersionTag extends AbstractMaxDocsTagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pagePath = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(
+				MaxDocsConstants.MAXDOCS_ENGINE);
+			String pagePath = (String) pageContext.getRequest().getAttribute(
+				MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
 
-			if(htmlPage != null)
+			if (htmlPage != null)
 			{
 				String pageVersion = "" + htmlPage.getVersion();
-	
+
 				if (isPlain())
 				{
 					pageContext.getOut().write(pageVersion);
@@ -84,27 +84,14 @@ public class PageVersionTag extends AbstractMaxDocsTagSupport
 				else
 				{
 					pageContext.getOut()
-					.write("<span class=\"" + getStyleClass() + "\">" + pageVersion + "</span>");
+						.write("<span class=\"" + getStyleClass() + "\">" + pageVersion + "</span>");
 				}
 			}
 		}
 		catch (IOException e)
 		{
-			log.error( e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}
-
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException
-	{
-		log.trace("doEndTag");
-		return EVAL_PAGE;
-	}
-
 }

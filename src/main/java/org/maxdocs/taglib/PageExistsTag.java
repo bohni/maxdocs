@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
 public class PageExistsTag extends BodyTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(PageExistsTag.class);
-	
+
 	private String page;
 
 	/* (non-Javadoc)
@@ -52,9 +52,10 @@ public class PageExistsTag extends BodyTagSupport
 	public int doStartTag() throws JspException
 	{
 		log.trace("doStartTag()");
-		MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+		MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(
+			MaxDocsConstants.MAXDOCS_ENGINE);
 		String pagePath;
-		if(StringUtils.isBlank(page))
+		if (StringUtils.isBlank(page))
 		{
 			pagePath = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 		}
@@ -63,7 +64,7 @@ public class PageExistsTag extends BodyTagSupport
 			pagePath = "/" + page;
 		}
 
-		if(engine.exists(pagePath))
+		if (engine.exists(pagePath))
 		{
 			return EVAL_BODY_INCLUDE;
 		}

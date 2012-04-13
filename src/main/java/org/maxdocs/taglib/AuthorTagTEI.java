@@ -43,7 +43,6 @@ public class AuthorTagTEI extends AbstractMaxDocsTagTEI
 {
 	private static Logger log = LoggerFactory.getLogger(AuthorTagTEI.class);
 
-
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagExtraInfo#validate(javax.servlet.jsp.tagext.TagData)
 	 */
@@ -54,7 +53,7 @@ public class AuthorTagTEI extends AbstractMaxDocsTagTEI
 		List<ValidationMessage> msgs = new ArrayList<ValidationMessage>();
 
 		ValidationMessage[] supermsgs = super.validate(data);
-		if(supermsgs != null)
+		if (supermsgs != null)
 		{
 			msgs.addAll(Arrays.asList(supermsgs));
 		}
@@ -63,14 +62,14 @@ public class AuthorTagTEI extends AbstractMaxDocsTagTEI
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
 			if (!((String) o).toLowerCase().equals("author") &&
-					!((String) o).toLowerCase().equals("editor"))
+				!((String) o).toLowerCase().equals("editor"))
 			{
 				msgs.add(new ValidationMessage(data.getId(),
-						"Invalid value for type. Only 'author' or 'editor' supported."));
+					"Invalid value for type. Only 'author' or 'editor' supported."));
 			}
 		}
 
-		if(msgs.size() == 0)
+		if (msgs.size() == 0)
 		{
 			return null;
 		}

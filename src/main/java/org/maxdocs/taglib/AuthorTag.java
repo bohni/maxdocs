@@ -60,29 +60,6 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 		setStyleClass("maxdocsAuthor");
 	}
 
-
-	/**
-	 * getType() returns the type
-	 *
-	 * @return the type
-	 */
-	public String getType()
-	{
-		return type;
-	}
-
-
-	/**
-	 * setType() sets the type
-	 *
-	 * @param type the type to set
-	 */
-	public void setType(String type)
-	{
-		this.type = type;
-	}
-
-
 	/* (non-Javadoc)
 	 *
 	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
@@ -93,19 +70,21 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(
+				MaxDocsConstants.MAXDOCS_ENGINE);
+			String pageName = (String) pageContext.getRequest().getAttribute(
+				MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
 
-			if(htmlPage != null)
+			if (htmlPage != null)
 			{
-	
+
 				String author;
-				if(StringUtils.equals(type, "author"))
+				if (StringUtils.equals(type, "author"))
 				{
 					author = htmlPage.getAuthor();
 				}
-				else if(StringUtils.equals(type, "editor"))
+				else if (StringUtils.equals(type, "editor"))
 				{
 					author = htmlPage.getEditor();
 				}
@@ -113,7 +92,7 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 				{
 					author = "unsupported type '" + type + "'";
 				}
-	
+
 				if (isPlain())
 				{
 					pageContext.getOut().write(author);
@@ -125,7 +104,7 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 					author = "<a href=\"#\">" + author + "</a>";
 					// }
 					pageContext.getOut().write(
-							"<span class=\"" + getStyleClass() + "\">" + author + "</span>");
+						"<span class=\"" + getStyleClass() + "\">" + author + "</span>");
 				}
 			}
 		}
@@ -136,16 +115,23 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 		return SKIP_BODY;
 	}
 
-
-	/* (non-Javadoc)
+	/**
+	 * getType() returns the type
 	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
+	 * @return the type
 	 */
-	@Override
-	public int doEndTag() throws JspException
+	public String getType()
 	{
-		log.trace("doEndTag");
-		return EVAL_PAGE;
+		return type;
 	}
 
+	/**
+	 * setType() sets the type
+	 *
+	 * @param type the type to set
+	 */
+	public void setType(String type)
+	{
+		this.type = type;
+	}
 }

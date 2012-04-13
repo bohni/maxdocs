@@ -53,6 +53,33 @@ public class InsertPageTag extends TagSupport
 
 	private String name = "";
 
+	/* (non-Javadoc)
+	 *
+	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
+	 */
+	@Override
+	public int doStartTag() throws JspException
+	{
+		log.trace("doStartTag()");
+		try
+		{
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(
+				MaxDocsConstants.MAXDOCS_ENGINE);
+			HtmlPage htmlPage = engine.getHtmlPage(name);
+
+			if (htmlPage != null)
+			{
+				pageContext.getOut().write(
+					"<div class=\"" + styleClass + "\">" + htmlPage.getContent() + "</div>");
+			}
+		}
+		catch (IOException e)
+		{
+			log.error(e.getMessage(), e);
+		}
+		return SKIP_BODY;
+	}
+
 	/**
 	 * getStyleClass: Returns the styleClass.
 	 * 
@@ -92,7 +119,7 @@ public class InsertPageTag extends TagSupport
 	 */
 	public void setName(String name)
 	{
-		if(StringUtils.startsWith("/", name))
+		if (StringUtils.startsWith("/", name))
 		{
 			this.name = name;
 		}
@@ -101,42 +128,4 @@ public class InsertPageTag extends TagSupport
 			this.name = "/" + name;
 		}
 	}
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
-	 */
-	@Override
-	public int doStartTag() throws JspException
-	{
-		log.trace("doStartTag()");
-		try
-		{
-			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			HtmlPage htmlPage = engine.getHtmlPage(name);
-			
-			if(htmlPage != null)
-			{
-				pageContext.getOut().write("<div class=\"" + styleClass + "\">" + htmlPage.getContent() + "</div>");
-			}
-		}
-		catch (IOException e)
-		{
-			log.error(e.getMessage(), e);
-		}
-		return SKIP_BODY;
-	}
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException
-	{
-		log.trace("doEndTag");
-		return EVAL_PAGE;
-	}
-
-
 }
