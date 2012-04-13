@@ -68,7 +68,6 @@ public class PageNameTagTest
 
 	private WebApplicationContext mockWebApplicationContext;
 
-
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
@@ -109,7 +108,6 @@ public class PageNameTagTest
 			.anyTimes();
 	}
 
-
 	/**
 	 * testDoStartTagDefault:
 	 * Check output.
@@ -128,7 +126,6 @@ public class PageNameTagTest
 
 		testTag(plain, styleClass, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagWithStyle:
@@ -152,7 +149,6 @@ public class PageNameTagTest
 		testTag(plain, styleClass, expectedOutput);
 	}
 
-
 	/**
 	 * testDoStartTagWithPlain:
 	 * Check output with parameters set
@@ -174,7 +170,6 @@ public class PageNameTagTest
 
 		testTag(plain, styleClass, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagWithPlainAndStyle:
@@ -198,7 +193,6 @@ public class PageNameTagTest
 
 		testTag(plain, styleClass, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagPageNotExists:
@@ -224,7 +218,6 @@ public class PageNameTagTest
 
 		verifyAllMocks();
 	}
-
 
 	/**
 	 * testTag():
@@ -260,12 +253,10 @@ public class PageNameTagTest
 		verifyAllMocks();
 	}
 
-
 	private void replayAllMocks()
 	{
 		EasyMock.replay(mockWebApplicationContext, mockEngine);
 	}
-
 
 	private void verifyAllMocks()
 	{

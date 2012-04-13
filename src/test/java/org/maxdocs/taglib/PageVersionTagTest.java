@@ -68,7 +68,6 @@ public class PageVersionTagTest
 
 	private WebApplicationContext mockWebApplicationContext;
 
-
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
@@ -109,7 +108,6 @@ public class PageVersionTagTest
 			.anyTimes();
 	}
 
-
 	/**
 	 * testDoStartTagDefault:
 	 * Check output.
@@ -128,7 +126,6 @@ public class PageVersionTagTest
 
 		testTag(plain, styleClass, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagWithStyle:
@@ -150,7 +147,6 @@ public class PageVersionTagTest
 		testTag(plain, styleClass, expectedOutput);
 	}
 
-
 	/**
 	 * testDoStartTagWithPlain:
 	 * Check output with parameters set
@@ -170,7 +166,6 @@ public class PageVersionTagTest
 
 		testTag(plain, styleClass, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagWithPlainAndStyle:
@@ -192,7 +187,6 @@ public class PageVersionTagTest
 
 		testTag(plain, styleClass, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagPageNotExists:
@@ -218,7 +212,6 @@ public class PageVersionTagTest
 
 		verifyAllMocks();
 	}
-
 
 	/**
 	 * testTag():
@@ -254,12 +247,10 @@ public class PageVersionTagTest
 		verifyAllMocks();
 	}
 
-
 	private void replayAllMocks()
 	{
 		EasyMock.replay(mockWebApplicationContext, mockEngine);
 	}
-
 
 	private void verifyAllMocks()
 	{

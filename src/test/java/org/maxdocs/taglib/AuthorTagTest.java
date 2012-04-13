@@ -68,7 +68,6 @@ public class AuthorTagTest
 
 	private WebApplicationContext mockWebApplicationContext;
 
-
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
@@ -110,7 +109,6 @@ public class AuthorTagTest
 			.anyTimes();
 	}
 
-
 	/**
 	 * testDoStartTagAuthorDefault:
 	 * Check output with parameters set
@@ -134,7 +132,6 @@ public class AuthorTagTest
 
 		testTag(plain, styleClass, type, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagAuthorWithStyle:
@@ -161,7 +158,6 @@ public class AuthorTagTest
 		testTag(plain, styleClass, type, expectedOutput);
 	}
 
-
 	/**
 	 * testDoStartTagAuthorWithPlain:
 	 * Check output with parameters set
@@ -185,7 +181,6 @@ public class AuthorTagTest
 
 		testTag(plain, styleClass, type, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagAuthorWithPlainAndStyle:
@@ -212,7 +207,6 @@ public class AuthorTagTest
 
 	}
 
-
 	/**
 	 * testDoStartTagEditorDefault:
 	 * Check output with parameters set
@@ -236,7 +230,6 @@ public class AuthorTagTest
 
 		testTag(plain, styleClass, type, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagEditorWithStyle:
@@ -263,7 +256,6 @@ public class AuthorTagTest
 		testTag(plain, styleClass, type, expectedOutput);
 	}
 
-
 	/**
 	 * testDoStartTagEditorWithPlain:
 	 * Check output with parameters set
@@ -286,7 +278,6 @@ public class AuthorTagTest
 
 		testTag(plain, styleClass, type, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagEditorWithPlainAndStyle:
@@ -313,7 +304,6 @@ public class AuthorTagTest
 		testTag(plain, styleClass, type, expectedOutput);
 	}
 
-
 	/**
 	 * testDoStartTagWrongTypeDefault:
 	 * Check output with parameters set
@@ -336,7 +326,6 @@ public class AuthorTagTest
 
 		testTag(plain, styleClass, type, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagWrongTypeWithStyle:
@@ -363,7 +352,6 @@ public class AuthorTagTest
 		testTag(plain, styleClass, type, expectedOutput);
 	}
 
-
 	/**
 	 * testDoStartTagWrongTypeWithPlain:
 	 * Check output with parameters set
@@ -387,7 +375,6 @@ public class AuthorTagTest
 
 		testTag(plain, styleClass, type, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagWrongTypeWithPlainAndStyle:
@@ -414,7 +401,6 @@ public class AuthorTagTest
 		testTag(plain, styleClass, type, expectedOutput);
 	}
 
-
 	/**
 	 * testDoStartTagPageNotExists:
 	 * Check output for non existing page.
@@ -440,7 +426,6 @@ public class AuthorTagTest
 
 		verifyAllMocks();
 	}
-
 
 	private void testTag(Boolean plain, String styleClass, String type, String expectedOutput)
 		throws JspException,
@@ -471,12 +456,10 @@ public class AuthorTagTest
 		verifyAllMocks();
 	}
 
-
 	private void replayAllMocks()
 	{
 		EasyMock.replay(mockWebApplicationContext, mockEngine);
 	}
-
 
 	private void verifyAllMocks()
 	{

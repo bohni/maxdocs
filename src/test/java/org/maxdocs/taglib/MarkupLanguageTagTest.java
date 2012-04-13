@@ -70,7 +70,6 @@ public class MarkupLanguageTagTest
 
 	private WebApplicationContext mockWebApplicationContext;
 
-
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
@@ -116,7 +115,6 @@ public class MarkupLanguageTagTest
 			.anyTimes();
 	}
 
-
 	/**
 	 * testDoStartTagDefault:
 	 * Check output.
@@ -136,7 +134,6 @@ public class MarkupLanguageTagTest
 
 		testTag(plain, styleClass, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagWithStyle:
@@ -161,7 +158,6 @@ public class MarkupLanguageTagTest
 		testTag(plain, styleClass, expectedOutput);
 	}
 
-
 	/**
 	 * testDoStartTagWithPlain:
 	 * Check output for with parameters set
@@ -183,7 +179,6 @@ public class MarkupLanguageTagTest
 
 		testTag(plain, styleClass, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagWithPlainAndStyle:
@@ -207,7 +202,6 @@ public class MarkupLanguageTagTest
 
 		testTag(plain, styleClass, expectedOutput);
 	}
-
 
 	/**
 	 * testDoStartTagPageNotExists:
@@ -234,7 +228,6 @@ public class MarkupLanguageTagTest
 
 		verifyAllMocks();
 	}
-
 
 	/**
 	 * testTag():
@@ -263,19 +256,17 @@ public class MarkupLanguageTagTest
 
 		int tagReturnValue = markupLanguageTag.doStartTag();
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		
+
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
 	}
 
-
 	private void replayAllMocks()
 	{
 		EasyMock.replay(mockWebApplicationContext, mockEngine);
 	}
-
 
 	private void verifyAllMocks()
 	{
