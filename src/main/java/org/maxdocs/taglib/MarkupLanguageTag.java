@@ -50,8 +50,9 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 	private static Logger log = LoggerFactory.getLogger(MarkupLanguageTag.class);
 
 	private String type = "output";
-	
+
 	private int size = 1;
+
 
 	/**
 	 * Constructor.
@@ -74,17 +75,19 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pageName = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(
+				MaxDocsConstants.MAXDOCS_ENGINE);
+			String pageName = (String) pageContext.getRequest().getAttribute(
+				MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
 			Map<String, String> markupLanguages = engine.getMarkupLangages();
-			
+
 			String markupLanguage = engine.getDefaultMarkupLangage();
-			if(htmlPage != null)
+			if (htmlPage != null)
 			{
 				markupLanguage = htmlPage.getMarkupLanguage();
 			}
-			if(StringUtils.equalsIgnoreCase(getType(), "output"))
+			if (StringUtils.equalsIgnoreCase(getType(), "output"))
 			{
 				if (isPlain())
 				{
@@ -93,16 +96,18 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 				else
 				{
 					pageContext.getOut().write(
-							"<span class=\"" + getStyleClass() + "\">" + markupLanguage + "</span>");
+						"<span class=\"" + getStyleClass() + "\">" + markupLanguage + "</span>");
 				}
 			}
 			else
 			{
-				pageContext.getOut().write("<select class=\"" + getStyleClass() +  "\" name=\"markupLanguage\" size=\"" + size + "\">");
+				pageContext.getOut().write(
+					"<select class=\"" + getStyleClass() + "\" name=\"markupLanguage\" size=\"" + size
+						+ "\">");
 				for (String key : markupLanguages.keySet())
 				{
-					pageContext.getOut().write("<option value=\"" + key +"\" ");
-					if(StringUtils.equals(markupLanguage, key))
+					pageContext.getOut().write("<option value=\"" + key + "\" ");
+					if (StringUtils.equals(markupLanguage, key))
 					{
 						pageContext.getOut().write("selected=\"selected\"");
 					}
@@ -117,18 +122,6 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
-	}
-
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException
-	{
-		log.trace("doEndTag");
-		return EVAL_PAGE;
 	}
 
 

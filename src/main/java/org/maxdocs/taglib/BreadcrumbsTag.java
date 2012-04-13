@@ -49,13 +49,11 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(BreadcrumbsTag.class);
 
-
 	public BreadcrumbsTag()
 	{
 		super();
 		setStyleClass("maxdocsBreadcrumbs");
 	}
-
 
 	/* (non-Javadoc)
 	 *
@@ -68,34 +66,36 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 		try
 		{
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-			
+
 			// TODO: why can't this be read from the session? Why returns pageContext.getSession() always null?
-			CircularFifoBuffer breadcrumbsMap = (CircularFifoBuffer) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS);
-			if(breadcrumbsMap != null)
+			CircularFifoBuffer breadcrumbsMap = (CircularFifoBuffer) pageContext.getRequest().getAttribute(
+				MaxDocsConstants.MAXDOCS_BREADCRUMBS);
+			if (breadcrumbsMap != null)
 			{
 				StringBuffer breadcrumbs = new StringBuffer();
 
-				
 				@SuppressWarnings("rawtypes")
 				Iterator iter = breadcrumbsMap.iterator();
-				
-				while(iter.hasNext())
+
+				while (iter.hasNext())
 				{
-					if(breadcrumbs.length() > 0)
+					if (breadcrumbs.length() > 0)
 					{
 						breadcrumbs.append(" &gt; ");
 					}
 					String breadcrumb = (String) iter.next();
-					breadcrumbs.append("<a href=\"" + request.getContextPath() +  breadcrumb + "\" title=\""+ breadcrumb + "\">" + StringUtils.substringAfterLast(breadcrumb,"/") + "</a>");
+					breadcrumbs.append("<a href=\"" + request.getContextPath() + breadcrumb + "\" title=\""
+						+ breadcrumb + "\">" + StringUtils.substringAfterLast(breadcrumb, "/") + "</a>");
 				}
-	
-				if(isPlain())
+
+				if (isPlain())
 				{
 					pageContext.getOut().write(breadcrumbs.toString());
 				}
 				else
 				{
-					pageContext.getOut().write("<span class=\"" + getStyleClass() + "\">" + breadcrumbs.toString() + "</span>");
+					pageContext.getOut().write(
+						"<span class=\"" + getStyleClass() + "\">" + breadcrumbs.toString() + "</span>");
 				}
 			}
 		}
@@ -105,17 +105,4 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 		}
 		return SKIP_BODY;
 	}
-
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException
-	{
-		log.trace("doEndTag");
-		return EVAL_PAGE;
-	}
-
 }

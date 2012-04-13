@@ -53,12 +53,12 @@ public class PageVersionTagTEI extends AbstractMaxDocsTagTEI
 		List<ValidationMessage> msgs = new ArrayList<ValidationMessage>();
 
 		ValidationMessage[] supermsgs = super.validate(data);
-		if(supermsgs != null)
+		if (supermsgs != null)
 		{
 			msgs.addAll(Arrays.asList(supermsgs));
 		}
 
-		if(msgs.size() == 0)
+		if (msgs.size() == 0)
 		{
 			return null;
 		}

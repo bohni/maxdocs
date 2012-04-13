@@ -63,6 +63,59 @@ public class DateTag extends AbstractMaxDocsTagSupport
 		setStyleClass("maxdocsDate");
 	}
 
+	/* (non-Javadoc)
+	 *
+	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
+	 */
+	@Override
+	public int doStartTag() throws JspException
+	{
+		log.trace("doStartTag()");
+		try
+		{
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(
+				MaxDocsConstants.MAXDOCS_ENGINE);
+			String pagePath = (String) pageContext.getRequest().getAttribute(
+				MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
+
+			if (htmlPage != null)
+			{
+				if (StringUtils.isBlank(format))
+				{
+					format = "yyyy-MM-dd HH:mm";
+					//((SimpleDateFormat)DateFormat.getDateTimeInstance(
+					//DateFormat.SHORT, DateFormat.SHORT, pageContext.getRequest().getLocale())).toPattern();
+				}
+				SimpleDateFormat sdf = new SimpleDateFormat(format);
+
+				String date;
+				if (StringUtils.equals(type, "creation"))
+				{
+					date = sdf.format(htmlPage.getFirstVersionCreationDate());
+				}
+				else
+				{
+					date = sdf.format(htmlPage.getCurrentVersionCreationDate());
+				}
+
+				if (isPlain())
+				{
+					pageContext.getOut().write(date);
+				}
+				else
+				{
+					pageContext.getOut().write(
+						"<span class=\"" + getStyleClass() + "\">" + date + "</span>");
+				}
+			}
+		}
+		catch (IOException e)
+		{
+			log.error(e.getMessage(), e);
+		}
+		return SKIP_BODY;
+	}
 
 	/**
 	 * getFormat() returns the format
@@ -74,7 +127,6 @@ public class DateTag extends AbstractMaxDocsTagSupport
 		return format;
 	}
 
-
 	/**
 	 * setFormat() sets the format
 	 *
@@ -84,7 +136,6 @@ public class DateTag extends AbstractMaxDocsTagSupport
 	{
 		this.format = format;
 	}
-
 
 	/**
 	 * getType() returns the type
@@ -96,7 +147,6 @@ public class DateTag extends AbstractMaxDocsTagSupport
 		return type;
 	}
 
-
 	/**
 	 * setType() sets the type
 	 *
@@ -106,70 +156,4 @@ public class DateTag extends AbstractMaxDocsTagSupport
 	{
 		this.type = type;
 	}
-
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
-	 */
-	@Override
-	public int doStartTag() throws JspException
-	{
-		log.trace("doStartTag()");
-		try
-		{
-			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pagePath = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
-			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
-
-			if(htmlPage != null)
-			{
-				if(StringUtils.isBlank(format))
-				{
-					format = "yyyy-MM-dd HH:mm"; 
-						//((SimpleDateFormat)DateFormat.getDateTimeInstance(
-						//DateFormat.SHORT, DateFormat.SHORT, pageContext.getRequest().getLocale())).toPattern();
-				}
-				SimpleDateFormat sdf = new SimpleDateFormat(format);
-	
-				String date;
-				if(StringUtils.equals(type, "creation"))
-				{
-					date = sdf.format(htmlPage.getFirstVersionCreationDate());
-				}
-				else
-				{
-					date = sdf.format(htmlPage.getCurrentVersionCreationDate());
-				}
-	
-				if (isPlain())
-				{
-					pageContext.getOut().write(date);
-				}
-				else
-				{
-					pageContext.getOut().write(
-							"<span class=\"" + getStyleClass() + "\">" + date + "</span>");
-				}
-			}
-		}
-		catch (IOException e)
-		{
-			log.error(e.getMessage(), e);
-		}
-		return SKIP_BODY;
-	}
-
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException
-	{
-		log.trace("doEndTag");
-		return EVAL_PAGE;
-	}
-
 }

@@ -53,7 +53,7 @@ public class MarkupLanguageTagTEI extends AbstractMaxDocsTagTEI
 		List<ValidationMessage> msgs = new ArrayList<ValidationMessage>();
 
 		ValidationMessage[] supermsgs = super.validate(data);
-		if(supermsgs != null)
+		if (supermsgs != null)
 		{
 			msgs.addAll(Arrays.asList(supermsgs));
 		}
@@ -62,10 +62,10 @@ public class MarkupLanguageTagTEI extends AbstractMaxDocsTagTEI
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
 			if (!((String) o).toLowerCase().equals("input") &&
-					!((String) o).toLowerCase().equals("output"))
+				!((String) o).toLowerCase().equals("output"))
 			{
 				msgs.add(new ValidationMessage(data.getId(),
-						"Invalid value for type. Only 'input' or 'output' supported."));
+					"Invalid value for type. Only 'input' or 'output' supported."));
 			}
 		}
 
@@ -81,8 +81,8 @@ public class MarkupLanguageTagTEI extends AbstractMaxDocsTagTEI
 				msgs.add(new ValidationMessage(data.getId(), "Invalid integer value."));
 			}
 		}
-		
-		if(msgs.size() == 0)
+
+		if (msgs.size() == 0)
 		{
 			return null;
 		}

@@ -45,7 +45,6 @@ public abstract class AbstractMaxDocsTagTEI extends TagExtraInfo
 {
 	private static Logger log = LoggerFactory.getLogger(AbstractMaxDocsTagTEI.class);
 
-
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagExtraInfo#validate(javax.servlet.jsp.tagext.TagData)
 	 */
@@ -60,15 +59,15 @@ public abstract class AbstractMaxDocsTagTEI extends TagExtraInfo
 		{
 			if (!((String) o).toLowerCase().equals("true") &&
 				!((String) o).toLowerCase().equals("false"))
-				{
-					msgs.add(new ValidationMessage(data.getId(), "Invalid boolean value."));
-				}
+			{
+				msgs.add(new ValidationMessage(data.getId(), "Invalid boolean value."));
+			}
 		}
-		if(msgs.size() == 0)
+		if (msgs.size() == 0)
 		{
 			return null;
 		}
-		ValidationMessage[] msgArray = msgs.toArray(new ValidationMessage[msgs.size()]); 
+		ValidationMessage[] msgArray = msgs.toArray(new ValidationMessage[msgs.size()]);
 		return msgArray;
 	}
 }

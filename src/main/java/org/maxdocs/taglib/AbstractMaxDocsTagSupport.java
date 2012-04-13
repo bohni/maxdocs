@@ -78,5 +78,4 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 	{
 		this.plain = plain;
 	}
-
 }

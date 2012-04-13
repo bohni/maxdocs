@@ -47,7 +47,6 @@ public class PageNameTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(PageNameTag.class);
 
-
 	/**
 	 * Constructor.
 	 *
@@ -57,7 +56,6 @@ public class PageNameTag extends AbstractMaxDocsTagSupport
 		super();
 		setStyleClass("maxdocsPageName");
 	}
-
 
 	/* (non-Javadoc)
 	 *
@@ -69,14 +67,16 @@ public class PageNameTag extends AbstractMaxDocsTagSupport
 		log.trace("doStartTag()");
 		try
 		{
-			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pagePath = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(
+				MaxDocsConstants.MAXDOCS_ENGINE);
+			String pagePath = (String) pageContext.getRequest().getAttribute(
+				MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
 
-			if(htmlPage != null)
+			if (htmlPage != null)
 			{
 				String pageName = htmlPage.getPageName();
-	
+
 				if (isPlain())
 				{
 					pageContext.getOut().write(pageName);
@@ -84,27 +84,14 @@ public class PageNameTag extends AbstractMaxDocsTagSupport
 				else
 				{
 					pageContext.getOut()
-					.write("<h1 class=\"" + getStyleClass() + "\">" + pageName + "</h1>");
+						.write("<h1 class=\"" + getStyleClass() + "\">" + pageName + "</h1>");
 				}
 			}
 		}
 		catch (IOException e)
 		{
-			log.error( e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
 	}
-
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException
-	{
-		log.trace("doEndTag");
-		return EVAL_PAGE;
-	}
-
 }

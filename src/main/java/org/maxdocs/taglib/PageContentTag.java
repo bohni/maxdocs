@@ -50,6 +50,58 @@ public class PageContentTag extends TagSupport
 
 	private String styleClass = "maxdocsContent";
 
+	/* (non-Javadoc)
+	 *
+	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
+	 */
+	@Override
+	public int doStartTag() throws JspException
+	{
+		log.trace("doStartTag()");
+		try
+		{
+			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(
+				MaxDocsConstants.MAXDOCS_ENGINE);
+			String pagePath = (String) pageContext.getRequest().getAttribute(
+				MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
+
+			if (htmlPage != null)
+			{
+				pageContext.getOut().write(
+					"<div class=\"" + styleClass + "\">" + htmlPage.getContent() + "</div>");
+			}
+			else
+			{
+				HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+				String query = request.getQueryString();
+				String contextPath = request.getContextPath();
+				UrlEncodedQueryString queryString = UrlEncodedQueryString.parse(query);
+				queryString.set("action", "edit");
+				pageContext.getOut().write(
+					"<div class=\"" + styleClass + "\"><p>Die Seite <strong>" + pagePath
+						+ "</strong> existiert nicht. <a href=\"" + contextPath + pagePath + "?"
+						+ queryString.toString() + "\">Erstelle</a> sie doch einfach.</p></div>");
+			}
+		}
+		catch (IOException e)
+		{
+			log.error(e.getMessage(), e);
+		}
+		return SKIP_BODY;
+	}
+
+	/* (non-Javadoc)
+	 *
+	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
+	 */
+	@Override
+	public int doEndTag() throws JspException
+	{
+		log.trace("doEndTag()");
+		return EVAL_PAGE;
+	}
+
 	/**
 	 * getStyleClass: Returns the styleClass.
 	 * 
@@ -69,51 +121,5 @@ public class PageContentTag extends TagSupport
 	public void setStyleClass(String styleClass)
 	{
 		this.styleClass = styleClass;
-	}
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
-	 */
-	@Override
-	public int doStartTag() throws JspException
-	{
-		log.trace("doStartTag()");
-		try
-		{
-			MaxDocs engine = (MaxDocs) pageContext.getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			String pagePath = (String) pageContext.getRequest().getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
-			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
-
-			if(htmlPage != null)
-			{
-				pageContext.getOut().write("<div class=\"" + styleClass + "\">" + htmlPage.getContent() + "</div>");
-			}
-			else
-			{
-				HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-				String query = request.getQueryString();
-				String contextPath = request.getContextPath();
-				UrlEncodedQueryString queryString = UrlEncodedQueryString.parse(query);
-				queryString.set("action", "edit");
-				pageContext.getOut().write("<div class=\"" + styleClass + "\"><p>Die Seite <strong>" + pagePath + "</strong> existiert nicht. <a href=\""+ contextPath + pagePath + "?" + queryString.toString() +"\">Erstelle</a> sie doch einfach.</p></div>");
-			}
-		}
-		catch (IOException e)
-		{
-			log.error(e.getMessage(), e);
-		}
-		return SKIP_BODY;
-	}
-
-	/* (non-Javadoc)
-	 *
-	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException
-	{
-		log.trace("doEndTag()");
-		return EVAL_PAGE;
 	}
 }
