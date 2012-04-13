@@ -78,6 +78,15 @@ public class MaxDocsFilter implements Filter
 		if (servletPath.startsWith("/internal")) 
 		{
 			log.debug("/internal -> to default servlet");
+			/* Plugins
+				/internal/plugin/PluginName
+			
+				if(pluginList.contains(PluginName))
+				{
+					PluginName.forward(request, response); // AbstractPlugin -> liefert 404
+				}
+				
+			*/
 		    chain.doFilter(request, response); // Goes to default servlet.
 		} 
 		else 
