@@ -23,6 +23,11 @@
  */
 package org.maxdocs.plugin;
 
+import java.io.IOException;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 /**
  * MaxDocsPlugin:
  * Interface for plugins of MaxDocs.
@@ -32,4 +37,14 @@ package org.maxdocs.plugin;
 public interface MaxDocsPlugin
 {
 
+	/**
+	 * forward()
+	 * The plugin has to handle the forward 
+	 *
+	 * @param request a ServletRequest object that represents the request the client makes of the servlet
+	 * @param response a ServletResponse object that represents the response the servlet returns to the client
+	 * @throws IOException If an input or output exception occurs
+	 * @throws IllegalStateException If the response was committed before this method call
+	 */
+	public void forward(ServletRequest request, ServletResponse response) throws IOException, IllegalStateException;
 }
