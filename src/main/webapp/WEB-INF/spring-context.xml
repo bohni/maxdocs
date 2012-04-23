@@ -68,6 +68,10 @@
 		<property name="parser" ref="parserImpl" />
 	</bean>
 
+	<bean id="templateName" class="java.lang.String" scope="session">
+		<constructor-arg value="${maxdocs.templateName}" />
+	</bean>
+
 	<!-- Security -->
 	<security:http auto-config="true">
 		<!-- the most specific matches at the top -->

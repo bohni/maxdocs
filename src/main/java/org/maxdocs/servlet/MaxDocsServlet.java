@@ -24,11 +24,9 @@
 package org.maxdocs.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -37,7 +35,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
@@ -47,6 +44,7 @@ import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -65,17 +63,16 @@ public class MaxDocsServlet extends HttpServlet
 	private static final String ACTION_SAVE = "save";
 	private static final String ACTION_SHOW = "show";
 	private static final String ACTION_SOURCE = "source";
-	
+
 	private static final String DEFAULT_PAGE_NAME = "Main";
 
 	private static final String PARAMETER_NAME_ACTION = "action";
 	private static final String PARAMETER_NAME_CONTENT = "content";
 	private static final String PARAMETER_NAME_VERSION = "version";
 	private static final String PARAMETER_NAME_MARKUP = "markupLanguage";
-	private static final String PARAMETER_NAME_TAGS= "tags";
+	private static final String PARAMETER_NAME_TAGS = "tags";
 
 	private static Logger log = LoggerFactory.getLogger(MaxDocsServlet.class);
-
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.GenericServlet#init()
@@ -90,7 +87,6 @@ public class MaxDocsServlet extends HttpServlet
 			.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, webApplicationContext.getBean("maxDocs"));
 	}
 
-
 	/* (non-Javadoc)
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
@@ -101,7 +97,6 @@ public class MaxDocsServlet extends HttpServlet
 		doService(request, response);
 	}
 
-
 	/* (non-Javadoc)
 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
@@ -111,7 +106,6 @@ public class MaxDocsServlet extends HttpServlet
 	{
 		doService(request, response);
 	}
-
 
 	protected void doService(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
@@ -176,7 +170,6 @@ public class MaxDocsServlet extends HttpServlet
 		response.setCharacterEncoding("UTF-8");
 	}
 
-
 	/**
 	 * buildBreadcrumbs:
 	 * Build the breadcrumbs
@@ -210,7 +203,6 @@ public class MaxDocsServlet extends HttpServlet
 		request.setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
 	}
 
-
 	/**
 	 * actionDelete:
 	 * Delete a page
@@ -227,13 +219,12 @@ public class MaxDocsServlet extends HttpServlet
 		// TODO, 03.02.2012: check user role
 		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		if(! maxDocs.delete(pagePath))
+		if (!maxDocs.delete(pagePath))
 		{
 			// TODO, 03.02.2012: show error message
 		}
 		actionShow(request, response);
 	}
-
 
 	/**
 	 * actionEdit:
@@ -253,9 +244,9 @@ public class MaxDocsServlet extends HttpServlet
 		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 		MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
 		request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
-		request.getRequestDispatcher("/WEB-INF/templates/" +  getTemplate() + "/edit.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/edit.jsp").forward(request,
+			response);
 	}
-
 
 	/**
 	 * actionRename:
@@ -276,7 +267,6 @@ public class MaxDocsServlet extends HttpServlet
 		// maxDocs.rename(pagePath, newPagePath);
 		actionShow(request, response);
 	}
-
 
 	/**
 	 * actionSave:
@@ -340,7 +330,6 @@ public class MaxDocsServlet extends HttpServlet
 		actionShow(request, response);
 	}
 
-
 	/**
 	 * actionShow:
 	 * Show a page
@@ -355,9 +344,9 @@ public class MaxDocsServlet extends HttpServlet
 	{
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		// TODO, 03.02.2012: check user role
-		request.getRequestDispatcher("/WEB-INF/templates/" +  getTemplate() + "/show.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/show.jsp").forward(request,
+			response);
 	}
-
 
 	/**
 	 * actionSource:
@@ -373,9 +362,9 @@ public class MaxDocsServlet extends HttpServlet
 	{
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		// TODO, 03.02.2012: check user role
-		request.getRequestDispatcher("/WEB-INF/templates/" +  getTemplate() + "/source.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/source.jsp").forward(request,
+			response);
 	}
-
 
 	/**
 	 * getTemplate:
@@ -385,8 +374,9 @@ public class MaxDocsServlet extends HttpServlet
 	 */
 	private String getTemplate()
 	{
-		// TODO: get template name from configuration 
-		String templateName = "default";
+		ApplicationContext context = WebApplicationContextUtils
+			.getRequiredWebApplicationContext(getServletContext());
+		String templateName = (String) context.getBean("templateName");
 		log.debug("templateName={}", templateName);
 		return templateName;
 	}
