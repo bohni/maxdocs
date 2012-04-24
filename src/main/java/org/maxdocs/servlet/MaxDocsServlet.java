@@ -183,7 +183,13 @@ public class MaxDocsServlet extends HttpServlet
 			MaxDocsConstants.MAXDOCS_BREADCRUMBS);
 		if (breadcrumbs == null)
 		{
-			breadcrumbs = new CircularFifoBuffer(5); // TODO: Length configurable?
+			ApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+			Integer count= (Integer) context.getBean("breadcrumbsCount");
+			if(count == null)
+			{
+				count = Integer.valueOf(5);
+			}
+			breadcrumbs = new CircularFifoBuffer(count.intValue());
 		}
 		String lastPagePath = "";
 		@SuppressWarnings("rawtypes")

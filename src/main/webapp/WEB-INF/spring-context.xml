@@ -68,10 +68,15 @@
 		<property name="parser" ref="parserImpl" />
 	</bean>
 
+	<!--  Template -->
 	<bean id="templateName" class="java.lang.String" scope="session">
 		<constructor-arg value="${maxdocs.templateName}" />
 	</bean>
 
+	<bean id="breadcrumbsCount" scope="singleton" class="java.lang.Integer">
+		<constructor-arg value="${maxdocs.breadcrumbsCount}"/>
+	</bean>
+	
 	<!-- Security -->
 	<security:http auto-config="true">
 		<!-- the most specific matches at the top -->
