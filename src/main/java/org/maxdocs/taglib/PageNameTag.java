@@ -53,8 +53,7 @@ public class PageNameTag extends AbstractMaxDocsTagSupport
 	 */
 	public PageNameTag()
 	{
-		super();
-		setStyleClass("maxdocsPageName");
+		super("maxdocsPageName");
 	}
 
 	/* (non-Javadoc)

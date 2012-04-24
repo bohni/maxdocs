@@ -56,8 +56,7 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 	 */
 	public AuthorTag()
 	{
-		super();
-		setStyleClass("maxdocsAuthor");
+		super("maxdocsAuthor");
 	}
 
 	/* (non-Javadoc)
