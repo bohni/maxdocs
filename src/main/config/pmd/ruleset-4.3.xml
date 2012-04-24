@@ -32,11 +32,11 @@
 
 
 	<!-- rulesets/android.xml -->
-	<!-- exclude rule ref="rulesets/android.xml/CallSuperFirst"/--><!-- 4.2.5-->
-	<!-- exclude rule ref="rulesets/android.xml/CallSuperLast"/--><!-- 4.2.5-->
-	<!-- exclude rule ref="rulesets/android.xml/ProtectLogD"/--><!-- 4.2.5-->
-	<!-- exclude rule ref="rulesets/android.xml/ProtectLogV"/--><!-- 4.2.5-->
-	<!-- exclude rule ref="rulesets/android.xml/DoNotHardCodeSDCard"/--><!-- 4.2.6-->
+	<!-- exclude rule ref="rulesets/android.xml/CallSuperFirst" /--><!-- 4.2.5-->
+	<!-- exclude rule ref="rulesets/android.xml/CallSuperLast" /--><!-- 4.2.5-->
+	<!-- exclude rule ref="rulesets/android.xml/ProtectLogD" /--><!-- 4.2.5-->
+	<!-- exclude rule ref="rulesets/android.xml/ProtectLogV" /--><!-- 4.2.5-->
+	<!-- exclude rule ref="rulesets/android.xml/DoNotHardCodeSDCard" /--><!-- 4.2.6-->
 
 
 	<!-- rulesets/basic.xml -->
@@ -48,7 +48,7 @@
 	<rule ref="rulesets/basic.xml/EmptySwitchStatements" /><!-- 1.0rc1 -->
 	<rule ref="rulesets/basic.xml/JumbledIncrementer" /><!-- 1.0rc3 -->
 	<rule ref="rulesets/basic.xml/ForLoopShouldBeWhileLoop" /><!-- 1.02 -->
-	<rule ref="rulesets/basic.xml/UnnecessaryConversionTemporary"> 
+	<rule ref="rulesets/basic.xml/UnnecessaryConversionTemporary" /> 
 	<rule ref="rulesets/basic.xml/OverrideBothEqualsAndHashcode" /><!-- 0.4 -->
 	<rule ref="rulesets/basic.xml/DoubleCheckedLocking" /><!-- 1.04 -->
 	<rule ref="rulesets/basic.xml/ReturnFromFinallyBlock" /><!-- 1.05 -->
@@ -68,13 +68,13 @@
 	<rule ref="rulesets/basic.xml/UnusedNullCheckInEquals" /><!-- 3.5 -->
 	<rule ref="rulesets/basic.xml/AvoidThreadGroup" /><!-- 3.6 -->
 	<rule ref="rulesets/basic.xml/BrokenNullCheck" /><!-- 3.8 -->
-	<!-- exclude rule ref="rulesets/basic.xml/BigIntegerInstantiation" --><!-- 3.9 -->
-	<!-- exclude rule ref="rulesets/basic.xml/AvoidUsingOctalValues" --><!-- 3.9 -->
-	<!-- exclude rule ref="rulesets/basic.xml/AvoidUsingHardCodedIP" --><!-- 4.1rc1 -->
-	<!-- exclude rule ref="rulesets/basic.xml/CheckResultSet" --><!-- 4.1rc1 -->
-	<!-- exclude rule ref="rulesets/basic.xml/AvoidMultipleUnaryOperators" --><!-- 4.2rc1 -->
-	<!-- exclude rule ref="rulesets/basic.xml/EmptyInitializer" --><!-- 4.2.3 -->
-	<!-- exclude rule ref="rulesets/basic.xml/DontCallThreadRun" --><!-- 4.3 -->
+	<rule ref="rulesets/basic.xml/BigIntegerInstantiation" /><!-- 3.9 -->
+	<rule ref="rulesets/basic.xml/AvoidUsingOctalValues" /><!-- 3.9 -->
+	<rule ref="rulesets/basic.xml/AvoidUsingHardCodedIP" /><!-- 4.1rc1 -->
+	<rule ref="rulesets/basic.xml/CheckResultSet" /><!-- 4.1rc1 -->
+	<rule ref="rulesets/basic.xml/AvoidMultipleUnaryOperators" /><!-- 4.2rc1 -->
+	<!-- exclude rule ref="rulesets/basic.xml/EmptyInitializer" /--><!-- 4.2.3 -->
+	<!-- exclude rule ref="rulesets/basic.xml/DontCallThreadRun" /--><!-- 4.3 -->
 
 
 	<!-- rulesets/braces.xml -->
@@ -91,11 +91,11 @@
 	<rule ref="rulesets/codesize.xml/CyclomaticComplexity" /><!-- 1.03 -->
 	<rule ref="rulesets/codesize.xml/ExcessivePublicCount" /><!-- 1.04 -->
 	<rule ref="rulesets/codesize.xml/TooManyFields" /><!-- 3.0 -->
-	<!-- exclude rule ref="rulesets/codesize.xml/NPathComplexity"--><!-- 3.9 -->
-	<!-- exclude rule ref="rulesets/codesize.xml/NcssTypeCount"--><!-- 3.9 -->
-	<!-- exclude rule ref="rulesets/codesize.xml/NcssMethodCount"--><!-- 3.9 -->
-	<!-- exclude rule ref="rulesets/codesize.xml/NcssConstructorCount"--><!-- 3.9 -->
-	<!-- exclude rule ref="rulesets/codesize.xml/TooManyMethods"--><!-- 4.2rc1 -->
+	<rule ref="rulesets/codesize.xml/NPathComplexity" /><!-- 3.9 -->
+	<rule ref="rulesets/codesize.xml/NcssTypeCount" /><!-- 3.9 -->
+	<rule ref="rulesets/codesize.xml/NcssMethodCount" /><!-- 3.9 -->
+	<rule ref="rulesets/codesize.xml/NcssConstructorCount" /><!-- 3.9 -->
+	<rule ref="rulesets/codesize.xml/TooManyMethods" /><!-- 4.2rc1 -->
 
 
 	<!-- rulesets/clone.xml -->
@@ -106,37 +106,37 @@
 
 	<!-- rulesets/controversial.xml -->
 	<rule ref="rulesets/controversial.xml/UnnecessaryConstructor" /><!-- 1.0 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/NullAssignment"/--><!-- 1.02 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/NullAssignment" /--><!-- 1.02 -->
 	<rule ref="rulesets/controversial.xml/OnlyOneReturn" /><!-- 1.0rc3 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/UnusedModifier"/--><!-- 1.02 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/UnusedModifier" /--><!-- 1.02 -->
 	<rule ref="rulesets/controversial.xml/AssignmentInOperand" /><!-- 1.03 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/AtLeastOneConstructor"/--><!-- 1.04-->
+	<!-- exclude rule ref="rulesets/controversial.xml/AtLeastOneConstructor" /--><!-- 1.04-->
 	<rule ref="rulesets/controversial.xml/DontImportSun" /><!-- 1.5 -->
 	<rule ref="rulesets/controversial.xml/SuspiciousOctalEscape" /><!-- 1.5 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/CallSuperInConstructor"/--><!-- 3.0 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/UnnecessaryParentheses"--><!-- 3.1 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/SingularField"/--><!-- 3.1 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/CallSuperInConstructor" /--><!-- 3.0 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/UnnecessaryParentheses" /--><!-- 3.1 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/SingularField" /--><!-- 3.1 -->
 	<rule ref="rulesets/controversial.xml/DefaultPackage" /><!-- 3.4 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/BooleanInversion" --><!-- 3.5 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/AvoidFinalLocalVariable"/--><!-- 4.1rc1 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/AvoidUsingShortType"/--><!-- 4.1rc1 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/AvoidUsingVolatile"/--><!-- 4.1rc1 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/AvoidUsingNativeCode"/--><!-- 4.1rc1 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/AvoidAccessibilityAlteration"/--><!-- 4.1rc1 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/DoNotCallGarbageCollectionExplicitly"/--><!-- 4.2rc1 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/DAvoidLiteralsInIfCondition"/--><!-- 4.2.6 -->
-	<!-- exclude rule ref="rulesets/controversial.xml/UseConcurrentHashMap"/--><!-- 4.2.6 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/BooleanInversion" /--><!-- 3.5 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/AvoidFinalLocalVariable" /--><!-- 4.1rc1 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/AvoidUsingShortType" /--><!-- 4.1rc1 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/AvoidUsingVolatile" /--><!-- 4.1rc1 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/AvoidUsingNativeCode" /--><!-- 4.1rc1 -->
+	<!-- exclude rule ref="rulesets/controversial.xml/AvoidAccessibilityAlteration" /--><!-- 4.1rc1 -->
+	<rule ref="rulesets/controversial.xml/DoNotCallGarbageCollectionExplicitly"/><!-- 4.2rc1 -->
+	<rule ref="rulesets/controversial.xml/AvoidLiteralsInIfCondition"/><!-- 4.2.6 -->
+	<rule ref="rulesets/controversial.xml/UseConcurrentHashMap" /><!-- 4.2.6 -->
 
 
 	<!-- rulesets/coupling.xml -->
-	<!-- exclude rule ref="rulesets/coupling.xml/CouplingBetweenObjects"/--><!-- 0.1 -->
-	<!-- exclude rule ref="rulesets/coupling.xml/ExcessiveImports"/--><!-- 0.1 -->
+	<!-- exclude rule ref="rulesets/coupling.xml/CouplingBetweenObjects" /--><!-- 0.1 -->
+	<!-- exclude rule ref="rulesets/coupling.xml/ExcessiveImports" /--><!-- 0.1 -->
 	<rule ref="rulesets/coupling.xml/LooseCoupling" /><!-- 0.7 -->
 
 
 	<!-- rulesets/design.xml -->
 	<rule ref="rulesets/design.xml/UseSingleton" /><!-- 0.3 -->
-	<!-- exclude rule ref="rulesets/design.xml/SimplifyBooleanReturns"/--><!-- 0.9-->
+	<rule ref="rulesets/design.xml/SimplifyBooleanReturns"/><!-- 0.9-->
 	<rule ref="rulesets/design.xml/SimplifyBooleanExpressions" /><!-- 1.05 -->
 	<rule ref="rulesets/design.xml/SwitchStmtsShouldHaveDefault" /><!-- 1.0rc1 -->
 	<rule ref="rulesets/design.xml/AvoidDeeplyNestedIfStmts" /><!-- 1.0rc3 / moved from  braces to design in 1.0 -->
@@ -145,7 +145,7 @@
         </properties>
 	<rule ref="rulesets/design.xml/AvoidReassigningParameters" /><!-- 1.0 -->
 	<rule ref="rulesets/design.xml/SwitchDensity" /><!-- 1.02 -->
-	<!-- exclude rule ref="rulesets/design.xml/ConstructorCallsOverridableMethod"/--><!-- 1.04 --><!-- Gute Regel, aber workaround schwer -->
+	<!-- exclude rule ref="rulesets/design.xml/ConstructorCallsOverridableMethod" /--><!-- 1.04 --><!-- Gute Regel, aber workaround schwer -->
 	<rule ref="rulesets/design.xml/AccessorClassGeneration" /><!-- 1.04 -->
 	<rule ref="rulesets/design.xml/FinalFieldCouldBeStatic" /><!-- 1.1 -->
 	<rule ref="rulesets/design.xml/CloseResource" /><!-- 1.2.2 umbenannt in 3.4 (CloseConnection)-->
@@ -155,20 +155,19 @@
 	<rule ref="rulesets/design.xml/OptimizableToArrayCall" /><!-- 1.8 -->
 	<rule ref="rulesets/design.xml/BadComparison" /><!-- 1.8 -->
 	<rule ref="rulesets/design.xml/EqualsNull" /><!-- 1.9 -->
-	</rule>		
-	<!-- exclude rule ref="rulesets/design.xml/ConfusingTernary"/--><!-- 1.9 -->
+	<!-- exclude rule ref="rulesets/design.xml/ConfusingTernary" /--><!-- 1.9 -->
 	<rule ref="rulesets/design.xml/InstantiationToGetClass" /><!-- 2.0 -->
 	<rule ref="rulesets/design.xml/IdempotentOperations" /><!-- 2.0 -->
-	<!-- exclude rule ref="rulesets/design.xml/SimpleDateFormatNeedsLocale" --><!-- 2.0 -->
+	<rule ref="rulesets/design.xml/SimpleDateFormatNeedsLocale" /><!-- 2.0 -->
 	<rule ref="rulesets/design.xml/ImmutableField" /><!-- 2.0 -->
-	<!-- exclude rule ref="rulesets/design.xml/UseLocaleWithCaseConversions"--><!-- 2.0 -->
+	<rule ref="rulesets/design.xml/UseLocaleWithCaseConversions" /><!-- 2.0 -->
 	<rule ref="rulesets/design.xml/AvoidProtectedFieldInFinalClass" /><!-- 2.1 -->
 	<rule ref="rulesets/design.xml/AssignmentToNonFinalStatic" /><!-- 2.2 -->
 	<rule ref="rulesets/design.xml/MissingStaticMethodInNonInstantiatableClass" /><!-- 3.0 -->
-	<!-- exclude rule ref="rulesets/design.xml/AvoidSynchronizedAtMethodLevel"/--><!-- 3.0 -->
-	<!-- exclude rule ref="rulesets/design.xml/MissingBreakInSwitch"/--><!-- 3.0 -->
-	<!-- exclude rule ref="rulesets/design.xml/UseNotifyAllInsteadOfNotify"/--><!-- 3.0 -->
-	<!-- exclude rule ref="rulesets/design.xml/AvoidInstanceofChecksInCatchClause"/--><!-- 3.0 -->
+	<rule ref="rulesets/design.xml/AvoidSynchronizedAtMethodLevel"/><!-- 3.0 -->
+	<rule ref="rulesets/design.xml/MissingBreakInSwitch"/><!-- 3.0 -->
+	<rule ref="rulesets/design.xml/UseNotifyAllInsteadOfNotify"/><!-- 3.0 -->
+	<rule ref="rulesets/design.xml/AvoidInstanceofChecksInCatchClause"/><!-- 3.0 -->
 	<rule ref="rulesets/design.xml/AbstractClassWithoutAbstractMethod" /><!-- 3.0 -->
 	<rule ref="rulesets/design.xml/SimplifyConditional" /><!-- 3.1 -->
 	<rule ref="rulesets/design.xml/CompareObjectsWithEquals" /><!-- 3.2 -->
@@ -180,10 +179,10 @@
 	<rule ref="rulesets/design.xml/AvoidConstantsInterface" /><!-- 3.5 -->
 	<rule ref="rulesets/design.xml/UnsynchronizedStaticDateFormatter" /><!-- 3.6 -->
 	<rule ref="rulesets/design.xml/PreserveStackTrace" /><!-- 3.7 -->
-	<!-- exclude rule ref="rulesets/design.xml/UseCollectionIsEmpty"/--><!-- 3.9 -->
-	<!-- exclude rule ref="rulesets/design.xml/ReturnEmptyArrayRatherThanNull"/--><!-- 4.2rc1 -->
-	<!-- exclude rule ref="rulesets/design.xml/TooFewBranchesForASwitchStatement"/--><!-- 4.2rc1 -->
-	<!-- exclude rule ref="rulesets/design.xml/AbstractClassWithoutAnyMethod"/--><!-- 4.2rc1 -->
+	<rule ref="rulesets/design.xml/UseCollectionIsEmpty" /><!-- 3.9 -->
+	<rule ref="rulesets/design.xml/ReturnEmptyArrayRatherThanNull" /><!-- 4.2rc1 -->
+	<rule ref="rulesets/design.xml/TooFewBranchesForASwitchStatement"/><!-- 4.2rc1 -->
+	<rule ref="rulesets/design.xml/AbstractClassWithoutAnyMethod"/><!-- 4.2rc1 -->
 
 
 	<!-- rulesets/finalizers.xml -->
@@ -200,24 +199,24 @@
 	<rule ref="rulesets/imports.xml/DontImportJavaLang" /><!-- 0.5 -->
 	<rule ref="rulesets/imports.xml/UnusedImports" /><!-- 1.0rc1 -->
 	<rule ref="rulesets/imports.xml/ImportFromSamePackage" /><!-- 1.02 -->
-	<!-- exclude rule ref="rulesets/imports.xml/TooManyStaticImports"/--><!-- 4.1rc1 -->
+	<!-- exclude rule ref="rulesets/imports.xml/TooManyStaticImports" /--><!-- 4.1rc1 -->
 
 
 	<!-- rulesets/j2ee.xm> -->
 	<rule ref="rulesets/j2ee.xml/UseProperClassLoader" /><!-- 3.7 -->
-	<!-- exclude rule ref="rulesets/j2ee.xml/MDBAndSessionBeanNamingConvention"/--><!-- 4.0rc1 -->
-	<!-- exclude rule ref="rulesets/j2ee.xml/RemoteSessionInterfaceNamingConvention"/--><!-- 4.0rc1 -->
-	<!-- exclude rule ref="rulesets/j2ee.xml/LocalInterfaceSessionNamingConvention"/--><!-- 4.0rc1 -->
-	<!-- exclude rule ref="rulesets/j2ee.xml/LocalHomeNamingConvention"/--><!-- 4.0rc1 -->
-	<!-- exclude rule ref="rulesets/j2ee.xml/RemoteInterfaceNamingConvention"/--><!-- 4.0rc1 -->
-	<!-- exclude rule ref="rulesets/j2ee.xml/DoNotCallSystemExit"/--><!-- 4.1rc1 -->
-	<!-- exclude rule ref="rulesets/j2ee.xml/StaticEJBFieldShouldBeFinal"/--><!-- 4.1rc1 -->
-	<!-- exclude rule ref="rulesets/j2ee.xml/DoNotUseThreads"/--><!-- 4.1rc1 -->
+	<!-- exclude rule ref="rulesets/j2ee.xml/MDBAndSessionBeanNamingConvention" /--><!-- 4.0rc1 -->
+	<!-- exclude rule ref="rulesets/j2ee.xml/RemoteSessionInterfaceNamingConvention" /--><!-- 4.0rc1 -->
+	<!-- exclude rule ref="rulesets/j2ee.xml/LocalInterfaceSessionNamingConvention" /--><!-- 4.0rc1 -->
+	<!-- exclude rule ref="rulesets/j2ee.xml/LocalHomeNamingConvention" /--><!-- 4.0rc1 -->
+	<!-- exclude rule ref="rulesets/j2ee.xml/RemoteInterfaceNamingConvention" /--><!-- 4.0rc1 -->
+	<rule ref="rulesets/j2ee.xml/DoNotCallSystemExit"/><!-- 4.1rc1 -->
+	<!-- exclude rule ref="rulesets/j2ee.xml/StaticEJBFieldShouldBeFinal" /--><!-- 4.1rc1 -->
+	<rule ref="rulesets/j2ee.xml/DoNotUseThreads"/><!-- 4.1rc1 -->
 
 
 	<!-- rulesets/javabeans.xml -->
-	<!-- exclude rule ref="rulesets/javabeans.xml/BeanMembersShouldSerialize"/--><!-- 1.1 -->
-	<!-- exclude rule ref="rulesets/javabeans.xml/MissingSerialVersionUID"/--><!-- 3.0 -->
+	<!-- exclude rule ref="rulesets/javabeans.xml/BeanMembersShouldSerialize" /--><!-- 1.1 -->
+	<!-- exclude rule ref="rulesets/javabeans.xml/MissingSerialVersionUID" /--><!-- 3.0 -->
 
 
 	<!-- rulesets/junit.xml --> 
@@ -234,16 +233,16 @@
 
 
 	<!-- rulesets/logging-java.xml -->
-	<!-- exclude rule ref="rulesets/logging-java.xml/MoreThanOneLogger"/--><!-- 2.0 --><!-- Teilweise sinnvoll (Timelogger bei BOB) -->
-	<!-- exclude rule ref="rulesets/logging-java.xml/LoggerIsNotStaticFinal"/--><!-- 2.0 --><!-- exlude, da final nicht gewuenscht ist -->
+	<!-- exclude rule ref="rulesets/logging-java.xml/MoreThanOneLogger" /--><!-- 2.0 --><!-- Teilweise sinnvoll (Timelogger bei BOB) -->
+	<!-- exclude rule ref="rulesets/logging-java.xml/LoggerIsNotStaticFinal" /--><!-- 2.0 --><!-- exlude, da final nicht gewuenscht ist -->
 	<rule ref="rulesets/logging-java.xml/SystemPrintln" /><!-- 2.1 -->
 	<rule ref="rulesets/logging-java.xml/AvoidPrintStackTrace" /><!-- 3.2 -->
 
 
 	<!-- rulesets/logging-jakarta-commons.xml -->
 	<rule ref="rulesets/logging-jakarta-commons.xml/UseCorrectExceptionLogging" /><!-- 3.2 -->
-	<!-- exclude rule ref="rulesets/logging-jakarta-commons.xml/ProperLogger"/--><!-- 3.3 --><!-- exclude, da final nicht gewuenscht ist, siehe eigene Regel unten -->
-	<!-- exclude rule ref="rulesets/logging-jakarta-commons.xml/GuardDebugLogging"/--><!-- 4.3 -->
+	<!-- exclude rule ref="rulesets/logging-jakarta-commons.xml/ProperLogger" /--><!-- 3.3 --><!-- exclude, da final nicht gewuenscht ist, siehe eigene Regel unten -->
+	<!-- exclude rule ref="rulesets/logging-jakarta-commons.xml/GuardDebugLogging" /--><!-- 4.3 -->
 
 
 	<!-- rulesets/migrating.xml -->
@@ -252,13 +251,13 @@
 	<rule ref="rulesets/migrating.xml/ReplaceEnumerationWithIterator" /><!-- 3.4 -->
 	<rule ref="rulesets/migrating.xml/AvoidEnumAsIdentifier" /><!-- 3.4 -->
 	<rule ref="rulesets/migrating.xml/AvoidAssertAsIdentifier" /><!-- 3.4 -->
-	<!-- exclude rule ref="rulesets/migrating.xml/IntegerInstantiation"/--><!-- 3.5 -->
+	<rule ref="rulesets/migrating.xml/IntegerInstantiation" /><!-- 3.5 -->
 
 
 	<!-- rulesets/naming.xml -->
-	<!-- exclude rule ref="rulesets/naming.xml/ShortVariable"/--><!-- 0.3 -->
-	<!-- exclude rule ref="rulesets/naming.xml/LongVariable"/--><!-- 0.3 -->
-	<!-- exclude rule ref="rulesets/naming.xml/ShortMethodName"/--><!-- 0.3 -->
+	<!-- exclude rule ref="rulesets/naming.xml/ShortVariable" /--><!-- 0.3 -->
+	<!-- exclude rule ref="rulesets/naming.xml/LongVariable" /--><!-- 0.3 -->
+	<!-- exclude rule ref="rulesets/naming.xml/ShortMethodName" /--><!-- 0.3 -->
 	<rule ref="rulesets/naming.xml/VariableNamingConventions" /><!-- 1.2 -->
 	<rule ref="rulesets/naming.xml/MethodNamingConventions" /><!-- 1.2 -->
 	<rule ref="rulesets/naming.xml/ClassNamingConventions" /><!-- 1.2 -->
@@ -268,46 +267,46 @@
 	<rule ref="rulesets/naming.xml/SuspiciousHashcodeMethodName" /><!-- 1.5 -->
 	<rule ref="rulesets/naming.xml/SuspiciousConstantFieldName" /><!-- 2.0 -->
 	<rule ref="rulesets/naming.xml/SuspiciousEqualsMethodName" /><!-- 2.0 -->
-	<!-- exclude rule ref="rulesets/naming.xml/AvoidFieldNameMatchingTypeName"/--><!-- 3.0 -->
-	<!-- exclude rule ref="rulesets/naming.xml/AvoidFieldNameMatchingMethodName"/--><!-- 3.0 -->
+	<!-- exclude rule ref="rulesets/naming.xml/AvoidFieldNameMatchingTypeName" /--><!-- 3.0 -->
+	<!-- exclude rule ref="rulesets/naming.xml/AvoidFieldNameMatchingMethodName" /--><!-- 3.0 -->
 	<rule ref="rulesets/naming.xml/NoPackage" /><!-- 3.3 -->
 	<rule ref="rulesets/naming.xml/PackageCase" /><!-- 3.3 -->
 	<rule ref="rulesets/naming.xml/MisleadingVariableName" /><!-- 3.4 -->
-	<!-- exclude rule ref="rulesets/naming.xml/BooleanGetMethodName"/--><!-- 4.0rc1 -->
-	<!-- exclude rule ref="rulesets/naming.xml/GenericsNaming"/--><!-- 4.2.6 -->
+	<rule ref="rulesets/naming.xml/BooleanGetMethodName" /><!-- 4.0rc1 -->
+	<!-- exclude rule ref="rulesets/naming.xml/GenericsNaming" /--><!-- 4.2.6 -->
 
 
 	<!-- rulesets/optimizations.xml -->
-	<!-- exclude rule ref="rulesets/optimizations.xml/LocalVariableCouldBeFinal"/--><!-- 2.2 -->
-	<!-- exclude rule ref="rulesets/optimizations.xml/MethodArgumentCouldBeFinal"/--><!-- 2.2 -->
-	<!-- exclude rule ref="rulesets/optimizations.xml/AvoidInstantiatingObjectsInLoops"--><!-- 2.2 -->
-	<!-- exclude rule ref="rulesets/optimizations.xml/UseArrayListInsteadOfVector"/--><!-- 3.0 -->
-	<!-- exclude rule ref="rulesets/optimizations.xml/SimplifyStartsWith"/--><!-- 3.1 -->
-	<!-- exclude rule ref="rulesets/optimizations.xml/UseStringBufferForStringAppends"/--><!-- 3.1 -->
+	<!-- exclude rule ref="rulesets/optimizations.xml/LocalVariableCouldBeFinal" /--><!-- 2.2 -->
+	<!-- exclude rule ref="rulesets/optimizations.xml/MethodArgumentCouldBeFinal" /--><!-- 2.2 -->
+	<!-- exclude rule ref="rulesets/optimizations.xml/AvoidInstantiatingObjectsInLoops" /--><!-- 2.2 -->
+	<!-- exclude rule ref="rulesets/optimizations.xml/UseArrayListInsteadOfVector" /--><!-- 3.0 -->
+	<!-- exclude rule ref="rulesets/optimizations.xml/SimplifyStartsWith" /--><!-- 3.1 -->
+	<!-- exclude rule ref="rulesets/optimizations.xml/UseStringBufferForStringAppends" /--><!-- 3.1 -->
 	<rule ref="rulesets/optimizations.xml/UseArraysAsList" /><!-- 3.5 -->
 	<rule ref="rulesets/optimizations.xml/AvoidArrayLoops" /><!-- 3.5 -->
 	<rule ref="rulesets/optimizations.xml/UnnecessaryWrapperObjectCreation" /><!-- 3.8 -->
-	<!-- exclude rule ref="rulesets/optimizations.xml/AddEmptyString"/--><!-- 4.0rc1 -->
+	<rule ref="rulesets/optimizations.xml/AddEmptyString" /><!-- 4.0rc1 -->
 
 
 	<!-- rulesets/strictexception.xml -->
 	<rule ref="rulesets/strictexception.xml/AvoidCatchingThrowable" /><!-- 1.2 -->
 	<rule ref="rulesets/strictexception.xml/SignatureDeclareThrowsException" /><!-- 1.2 -->
 	<rule ref="rulesets/strictexception.xml/ExceptionAsFlowControl" /><!-- 1.8 -->
-	<!-- exclude rule ref="rulesets/strictexception.xml/AvoidCatchingNPE"/--><!-- 1.8 -->
+	<rule ref="rulesets/strictexception.xml/AvoidCatchingNPE" /><!-- 1.8 -->
 	<rule ref="rulesets/strictexception.xml/AvoidThrowingRawExceptionTypes" /><!-- 3.2 -->
 	<rule ref="rulesets/strictexception.xml/AvoidThrowingNullPointerException" /><!-- 3.2 -->
 	<rule ref="rulesets/strictexception.xml/AvoidRethrowingException" /><!-- 3.8 -->
-	<!-- exclude rule ref="rulesets/strictexception.xml/DoNotExtendJavaLangError"/--><!-- 4.0rc1 -->
-	<!-- exclude rule ref="rulesets/strictexception.xml/DoNotThrowExceptionInFinally"/--><!-- 4.2rc1 -->
-	<!-- exclude rule ref="rulesets/strictexception.xml/AvoidThrowingNewInstanceOfSameException"/--><!-- 4.2.5 -->
-	<!-- exclude rule ref="rulesets/strictexception.xml/AvoidCatchingGenericException"/--><!-- 4.2.6 -->
-	<!-- exclude rule ref="rulesets/strictexception.xml/AvoidLosingExceptionInformation"/--><!-- 4.2.6 -->
+	<rule ref="rulesets/strictexception.xml/DoNotExtendJavaLangError" /><!-- 4.0rc1 -->
+	<rule ref="rulesets/strictexception.xml/DoNotThrowExceptionInFinally" /><!-- 4.2rc1 -->
+	<rule ref="rulesets/strictexception.xml/AvoidThrowingNewInstanceOfSameException" /><!-- 4.2.5 -->
+	<rule ref="rulesets/strictexception.xml/AvoidCatchingGenericException" /><!-- 4.2.6 -->
+	<rule ref="rulesets/strictexception.xml/AvoidLosingExceptionInformation" /><!-- 4.2.6 -->
 
 
 	<!-- rulesets/strings.xml -->
-	<!-- exclude rule ref="rulesets/strings.xml/AvoidDuplicateLiterals"/--><!-- 1.0 / renamed in 1.01 (AvoidStringLiterals)-->
-	<!-- exclude rule ref="rulesets/strings.xml/StringInstantiation"/--><!-- 1.0rc2 --><!-- siehe Timon Oesterle, Stringproblem z.B. bei Konstanten -->
+	<!-- exclude rule ref="rulesets/strings.xml/AvoidDuplicateLiterals" /--><!-- 1.0 / renamed in 1.01 (AvoidStringLiterals)-->
+	<!-- exclude rule ref="rulesets/strings.xml/StringInstantiation" /--><!-- 1.0rc2 --><!-- siehe Timon Oesterle, Stringproblem z.B. bei Konstanten -->
 	<rule ref="rulesets/strings.xml/StringToString" /><!-- 1.0 -->
 	<rule ref="rulesets/strings.xml/InefficientStringBuffering" /><!-- 2.2 umbenannt in 3.4 (AvoidConcatenatingNonLiteralsInStringBuffer)-->
 	<rule ref="rulesets/strings.xml/UnnecessaryCaseChange" /><!-- 3.3 -->
@@ -321,9 +320,9 @@
 	<rule ref="rulesets/strings.xml/InefficientEmptyStringCheck" /><!-- 3.6 -->
 	<rule ref="rulesets/strings.xml/InsufficientStringBufferDeclaration" /><!-- 3.6 -->
 	<rule ref="rulesets/strings.xml/UselessStringValueOf" /><!-- 3.8 -->
-	<!-- exclude rule ref="rulesets/strings.xml/StringBufferInstantiationWithChar"--><!-- 3.9 -->
-	<!-- exclude rule ref="rulesets/strings.xml/UseEqualsToCompareStrings"--><!-- 4.1rc1 -->
-	<!-- exclude rule ref="rulesets/strings.xml/AvoidStringBufferField"--><!-- 4.2rc1 -->
+	<rule ref="rulesets/strings.xml/StringBufferInstantiationWithChar" /><!-- 3.9 -->
+	<rule ref="rulesets/strings.xml/UseEqualsToCompareStrings" /><!-- 4.1rc1 -->
+	<rule ref="rulesets/strings.xml/AvoidStringBufferField" /><!-- 4.2rc1 -->
 
 
 	<!-- rulesets/sunsecure.xml -->
@@ -332,34 +331,34 @@
 
 
 	<!-- rulesets/unusedcode.xml -->
-	<!-- exclude rule ref="rulesets/unusedcode.xml/UnusedPrivateField"/--><!-- 0.1 --><!-- wegen Logger -->
+	<!-- exclude rule ref="rulesets/unusedcode.xml/UnusedPrivateField" /--><!-- 0.1 --><!-- wegen Logger -->
 	<rule ref="rulesets/unusedcode.xml/UnusedLocalVariable" /><!-- 0.1 -->
-	<!-- exclude rule ref="rulesets/unusedcode.xml/UnusedPrivateMethod"/--><!-- 0.7 --><!-- wegen JBF-Methoden, die nur XML in Kommentaren enthalten -->
-	<!-- exclude rule ref="rulesets/unusedcode.xml/UnusedFormalParameter"/--><!-- 0.8 -->
+	<!-- exclude rule ref="rulesets/unusedcode.xml/UnusedPrivateMethod" /--><!-- 0.7 --><!-- wegen JBF-Methoden, die nur XML in Kommentaren enthalten -->
+	<!-- exclude rule ref="rulesets/unusedcode.xml/UnusedFormalParameter" /--><!-- 0.8 -->
 
 
 	<!-- rulesets/basic-jsp.xml -->
-	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoLongScripts"/--><!-- 3.6 -->
-	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoScriptlets"/--><!-- 3.6 -->
-	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoInlineStyleInformation"/--><!-- 3.6 -->
-	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoClassAttribute"/--><!-- 3.6 -->
-	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoJspForward"/--><!-- 3.6 -->
-	<!-- exclude rule ref="rulesets/basic-jsp.xml/IframeMissingSrcAttribute"/--><!-- 3.6 -->
-	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoHtmlComments"/--><!-- 3.6 -->
-	<!-- exclude rule ref="rulesets/basic-jsp.xml/DuplicateJspImport"/--><!-- 3.7 -->
-	<!-- exclude rule ref="rulesets/basic-jsp.xml/JspEncoding"/--><!-- 4.0rc1 -->
-	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoInlineScript"/--><!-- 4.2.6 -->
+	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoLongScripts" /--><!-- 3.6 -->
+	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoScriptlets" /--><!-- 3.6 -->
+	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoInlineStyleInformation" /--><!-- 3.6 -->
+	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoClassAttribute" /--><!-- 3.6 -->
+	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoJspForward" /--><!-- 3.6 -->
+	<!-- exclude rule ref="rulesets/basic-jsp.xml/IframeMissingSrcAttribute" /--><!-- 3.6 -->
+	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoHtmlComments" /--><!-- 3.6 -->
+	<!-- exclude rule ref="rulesets/basic-jsp.xml/DuplicateJspImports" /--><!-- 3.7 -->
+	<!-- exclude rule ref="rulesets/basic-jsp.xml/JspEncoding" /--><!-- 4.0rc1 -->
+	<!-- exclude rule ref="rulesets/basic-jsp.xml/NoInlineScript" /--><!-- 4.2.6 -->
 
 
 	<!-- rulesets/basic-jsf.xml -->
-	<!-- exclude rule ref="rulesets/basic-jsf.xml/DontNestJsfInJstlIteration"/--><!-- 3.6 -->
+	<!-- exclude rule ref="rulesets/basic-jsf.xml/DontNestJsfInJstlIteration" /--><!-- 3.6 -->
 
 
 	<!-- rulesets/typeresolution.xml -->
-	<!-- exclude rule ref="rulesets/typeresolution.xml/SignatureDeclareThrowsException"/--><!-- 4.0rc2 (kann Regel aus strictexception ersetzen)-->
+	<rule ref="rulesets/typeresolution.xml/SignatureDeclareThrowsException" /><!-- 4.0rc2 (kann Regel aus strictexception ersetzen)-->
 
 
-	<!-- Kreditwerk-Rules -->
+	<!-- Logger-Rules -->
 	<rule class="net.sourceforge.pmd.rules.XPathRule" message="Logger should be defined private static and have the correct class" name="KreditwerkProperLogger">
 		<description>
  			Logger should normally be defined private static and have the correct class.
@@ -379,7 +378,7 @@
             <property name="xpath">
                 <value>
                 	<![CDATA[
- //ClassOrInterfaceBodyDeclaration[(FieldDeclaration//ClassOrInterfaceType[@Image='Log'] or FieldDeclaration//ClassOrInterfaceType[@Image='BobLog'])
+ //ClassOrInterfaceBodyDeclaration[(FieldDeclaration//ClassOrInterfaceType[@Image='Logger'])
  and
  not(FieldDeclaration[@Final='false'][@Static='true'][@Private='true'][//VariableDeclaratorId[@Image=$staticLoggerName]]
  //ArgumentList//ClassOrInterfaceType/@Image = ancestor::ClassOrInterfaceDeclaration/@Image)
