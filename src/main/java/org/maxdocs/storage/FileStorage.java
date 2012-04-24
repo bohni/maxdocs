@@ -66,7 +66,6 @@ import org.slf4j.LoggerFactory;
 public class FileStorage implements Storage
 {
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
 	private Map<String, String> files;
 	private Map<String, List<String>> links2me;
 	private String storagePath;
@@ -427,6 +426,7 @@ public class FileStorage implements Storage
 				String line;
 				StringBuilder content = new StringBuilder();
 				int count = 0;
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
 				while (scanner.hasNextLine())
 				{
 					line = scanner.nextLine();
@@ -611,6 +611,7 @@ public class FileStorage implements Storage
 		boolean success = false;
 		String lineSeperator = "\n";
 		Writer writer = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
 		try
 		{
 			writer = new OutputStreamWriter(new FileOutputStream(new File(filename)), "UTF-8");
