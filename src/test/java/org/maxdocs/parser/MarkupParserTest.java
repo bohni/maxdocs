@@ -23,13 +23,10 @@
  */
 package org.maxdocs.parser;
 
-import static org.junit.Assert.fail;
-
 import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 import org.slf4j.Logger;

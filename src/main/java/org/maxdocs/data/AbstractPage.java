@@ -23,11 +23,9 @@
  */
 package org.maxdocs.data;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +33,7 @@ import org.springframework.beans.BeanUtils;
 
 /**
  * AbstractPage:
- *  TODO - Stefan, 20.12.2011: documentation
+ * Super class with common properties
  *
  * @author Team maxdocs.org
  *
