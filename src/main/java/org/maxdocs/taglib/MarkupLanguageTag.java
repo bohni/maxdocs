@@ -60,8 +60,7 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 	 */
 	public MarkupLanguageTag()
 	{
-		super();
-		setStyleClass("maxdocsMarkupLanguage");
+		super("maxdocsMarkupLanguage");
 	}
 
 

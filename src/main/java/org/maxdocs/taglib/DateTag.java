@@ -59,8 +59,7 @@ public class DateTag extends AbstractMaxDocsTagSupport
 	 */
 	public DateTag()
 	{
-		super();
-		setStyleClass("maxdocsDate");
+		super("maxdocsDate");
 	}
 
 	/* (non-Javadoc)

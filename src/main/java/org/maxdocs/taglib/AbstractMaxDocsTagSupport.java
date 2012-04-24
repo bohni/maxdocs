@@ -39,6 +39,31 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 
 	private boolean plain = false;
 
+	
+	public AbstractMaxDocsTagSupport()
+	{
+		this("", false);
+	}
+
+	/**
+	 * @param styleClass
+	 */
+	public AbstractMaxDocsTagSupport(String styleClass)
+	{
+		this(styleClass, false);
+	}
+
+	/**
+	 * @param styleClass
+	 * @param plain
+	 */
+	public AbstractMaxDocsTagSupport(String styleClass, boolean plain)
+	{
+		super();
+		this.styleClass = styleClass;
+		this.plain = plain;
+	}
+
 	/**
 	 * getStyleClass() returns the styleClass
 	 *

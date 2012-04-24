@@ -53,8 +53,7 @@ public class PageVersionTag extends AbstractMaxDocsTagSupport
 	 */
 	public PageVersionTag()
 	{
-		super();
-		setStyleClass("maxdocsPageVersion");
+		super("maxdocsPageVersion");
 	}
 
 	/* (non-Javadoc)

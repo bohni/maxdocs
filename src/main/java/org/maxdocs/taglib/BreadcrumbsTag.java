@@ -51,8 +51,7 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 
 	public BreadcrumbsTag()
 	{
-		super();
-		setStyleClass("maxdocsBreadcrumbs");
+		super("maxdocsBreadcrumbs");
 	}
 
 	/* (non-Javadoc)
