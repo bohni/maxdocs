@@ -71,7 +71,7 @@ Entwicklung
 		
 		* Mac/Unix : git config --global core.autocrlf input
 	
-	* mvn installieren
+	* Maven installieren
 	
 	* Eclipse installieren
 	
@@ -112,6 +112,12 @@ Entwicklung
 		* Plguins: mvn versions:display-plugin-updates
 
 		* Abhängigkeiten: mvn versions:display-dependency-updates
+
+	* License header in Dateien
+
+		* prüfen: mvn validate license:check
+
+		* generieren: mvn validate license:format
 
 * nützliche Links
 
