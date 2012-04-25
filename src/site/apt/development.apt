@@ -28,9 +28,9 @@
  Team maxdocs.org
  ------
  2011-12-30
- 
+
 ~~ Auf dieser Seite soll der Entwicklungsprozess dargestellt werden.
- 
+
 Entwicklung
 
 * Allgemeines
@@ -47,62 +47,86 @@ Entwicklung
 
 ** Eclipse
 
- Bei der Entwicklung kommt die  {{http://www.eclipse.org/downloads/}Eclipse IDE for Java EE Developers}}
- zum Einsatz. Zusätzlich werden noch die Plugins von Maven (m2e) und Git (EGit) benötigt. Diese können 
- über den Eclipse Marketplace direkt in der IDE installiert werden.
+ Bei der Entwicklung kommt die {{{http://www.eclipse.org/downloads/}Eclipse IDE for Java EE Developers}}
+ zum Einsatz. Zusätzlich werden noch die folgenden Plugins benötigt,  die über den Eclipse Marketplace 
+ direkt in der IDE installiert werden können:
+
+	* Maven Integration for Eclipse WTP
+
+	* EGit - Git Team Provider
+
+	* Github Mylyn Connector
+
+	* optional: EasyShell
+
+	* optional: SpringIDE
+
+	* optional: {{{http://apteditor.sourceforge.net/}APT Editor}} (Dieses Plugin muss manuell installiert werden. 
+	  Einfach das JAR-file in das dropins-Verzeichnis von Eclipse kopieren)
+
+ Damit der Sourcecode ein einheitliches Format hat, müssen in Eclipse folgende Preferences zwingend
+ angepasst werden:
+
+	* General > Editors > Text Editors
+
+		* Insert spaces for tabs: muss deaktiviert werden
+
+		* Java > Code Style > Code Templates: {{MaxDocsCodeTemplates.xml}} muss importiert werden
+
+		* Java > Code Style > Formatter: {{MaxDocsFormatter.xml}} muss importiert werden
 
 ** Maven
 
- Für den Standbau verrwendet MaxDocs {{{http://maven.apache.org}apache Maven}}.
- 
+ Für den Standbau kommt bei MaxDocs {{{http://maven.apache.org}Apache Maven}} zum Einsatz.
+
 ** Git
 
  Die Versionierung erfolgt mit {{{http://www.git-scm.org}Git}} auf {{{http://www.github.com/bohni/maxdocs}github.com}}.
- 
+
 * Getting started
 
 	* git installieren
-	
+
 		* git config --global user.name "John Doe"
-		
+
 		* git config --global user.email johndoe@example.com
-		
+
 		* Windows: git config --global core.autocrlf true
-		
+
 		* Mac/Unix : git config --global core.autocrlf input
-	
+
 	* Maven installieren
-	
+
 	* Eclipse installieren
-	
+
 		* Maven-Plugin m2e 
-		
+
 		* EGit
-		
+
 		* Preferences einstellen (alle "Muss" Einstellungen (UTF8, Linelength, etc.)
 
 ** Command line
 
 	* Verzeichnis anlegen
-	
+
 	* git clone https://github.com/bohni/maxdocs.git (read-only)
 
 	* git clone https://<user>@github.com/bohni/maxdocs.git (writable)
-	
+
 	* Eclipse: Import existing project
 
 ** Eclipse
 
 	* File/New/Git/Git Repository
-	
+
 	* Paste Repository Path or URI: https://github.com/bohni/maxdocs.git
-	
+
 	* Git Repository View: Import projects
-	
+
 ** Beide
 
 	* Maven Dependencies ins lokale Repository aufnehmen (wikitext)
-	
+
 		* mvn install ...
 
 * Tipps und Tricks
