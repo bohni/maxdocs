@@ -57,53 +57,65 @@ import org.slf4j.LoggerFactory;
  * FileStorage
  * This storage persists the data in files on a hard disk.
  * <br />
- * Files are saved with as &lt;number&gt;.txt where number is an increasing number.<br />
- * Old versions are saved with filename &lt;contentPath&gt;/versions/&lt;number&gt;/&lt;version&gt;.txt.
+ * Files are saved with as <code>&lt;contentPath&gt;/&lt;number&gt;.txt</code> where number is an increasing number.<br />
+ * Old versions are saved with filename <code>&lt;contentPath&gt;/&lt;versionFolder&gt;/&lt;number&gt;/&lt;version&gt;.txt</code>.
  * 
  * @author Team maxdocs.org
  *
  */
 public class FileStorage implements Storage
 {
+	/**
+	 * 
+	 */
+	private static final String DEFAULT_VERSION_FOLDER = "versions";
+	/**
+	 * 
+	 */
+	private static final String DEFAULT_CONTENT_PATH = "content/";
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
+	private String contentPath;
+	private String versionPath;
 	private Map<String, String> files;
 	private Map<String, List<String>> links2me;
-	private String contentPath;
 	private Map<String, TagCloudEntry> tagMap;
-	private String versionPath;
+
+
 	/**
 	 * Default constructor.
 	 * Creates a FileStorage object.
-	 * 
-	 * The contentPath is set to "content/".
-	 * The versionFolder is set to "content/versions/".
+	 * <br />
+	 * The contentPath is set to <code>content/</code>.<br />
+	 * The versionPath is set to <code>content/versions/</code>.
 	 *
 	 */
 	public FileStorage()
 	{
-		this("content/");
+		this(DEFAULT_CONTENT_PATH);
 	}
 
 
 	/**
 	 * Minimal constructor. Contains required fields.
 	 * Creates a FileStorage object with the given parameters.
-	 * 
-	 * The versionFolder is set to "&lt;contentPath&gt;/versions/".
+	 * <br />
+	 * The contentPath is set to <code>&lt;contentPath&gt;/</code>.<br />
+	 * The versionPath is set to <code>&lt;contentPath&gt;/versions/</code>.
 	 *
 	 * @param contentPath the path to the folder for storing the page source files.
 	 */
 	public FileStorage(String contentPath)
 	{
-		this(contentPath, "versions/");
+		this(contentPath, DEFAULT_VERSION_FOLDER);
 	}
 
 
 	/**
 	 * Full constructor. Contains required and optional fields.
 	 * Creates a {@link FileStorage} object with the given parameters.
-	 *
-	 * The versionFolder is set to "&lt;contentPath&gt;/&lt;versionFolder&gt;/".
+	 * <br />
+	 * The contentPath is set to <code>&lt;contentPath&gt;/</code>.<br />
+	 * The versionPath is set to <code>&lt;contentPath&gt;/&lt;versionFolder&gt;/</code>.
 	 * 
 	 * @param contentPath the path to the folder for storing the page source files.
 	 * @param versionFolder the name of the sub folder for storing old versions of the page source files.
@@ -112,12 +124,28 @@ public class FileStorage implements Storage
 	{
 		log.trace("FileStorage({}, {})", contentPath, versionFolder);
 
+		createContentPath(contentPath);
+
+		createVersionPath(versionFolder);
+
+		buildIndexes();
+	}
+
+
+	/**
+	 * createContentPath:
+	 * Creates the folder to store current versions.
+	 * 
+	 * @param contentPath the path to the folder for storing the page source files.
+	 */
+	private void createContentPath(String contentPath)
+	{
 		String fileSeparator = System.getProperty("file.separator");
 
 		if (StringUtils.isBlank(contentPath))
 		{
-			log.warn("Parameter contentPath is not set. Using default value 'content/'");
-			this.contentPath = "content/";
+			this.contentPath = DEFAULT_CONTENT_PATH;
+			log.warn("Parameter contentPath is not set. Using default value '{}'", this.contentPath);
 		}
 
 		if (StringUtils.endsWith(contentPath, fileSeparator))
@@ -132,17 +160,25 @@ public class FileStorage implements Storage
 		File storage = new File(this.contentPath);
 		log.debug("Using content folder '{}'", storage.getAbsolutePath());
 
-		if (!storage.exists())
+		createDir(storage);
+	}
+
+
+	/**
+	 * createVersionPath:
+	 * Creates the folder to store old versions.
+	 * 
+	 * @param versionFolder the name of the sub folder for storing old versions of the page source files.
+	 */
+	private void createVersionPath(String versionFolder)
+	{
+		String fileSeparator = System.getProperty("file.separator");
+		if (StringUtils.isBlank(versionFolder))
 		{
-			if (storage.mkdirs())
-			{
-				log.info("Created content folder '{}'", storage.getAbsolutePath());
-			}
-			else
-			{
-				throw new RuntimeException("Error creating content folder.");
-			}
+			versionFolder = DEFAULT_VERSION_FOLDER;
+			log.warn("Parameter versionFolder is not set. Using default value '{}'", versionFolder);
 		}
+
 		if (StringUtils.startsWith(versionFolder, fileSeparator))
 		{
 			this.versionPath = this.contentPath + versionFolder.substring(1);
@@ -158,18 +194,29 @@ public class FileStorage implements Storage
 
 		File versions = new File(this.versionPath);
 		log.debug("Using versions folder '{}'", versions.getAbsolutePath());
-		if (!versions.exists())
+		createDir(versions);
+	}
+
+
+	/**
+	 * createDir:
+	 * Creates the given directory.
+	 * 
+	 * @param directory the directory to create.
+	 */
+	private void createDir(File directory)
+	{
+		if (!directory.exists())
 		{
-			if (versions.mkdirs())
+			if (directory.mkdirs())
 			{
-				log.info("Created versions folder '{}'", versions.getAbsolutePath());
+				log.info("Created folder '{}'", directory.getAbsolutePath());
 			}
 			else
 			{
-				throw new RuntimeException("Error creating versions folder.");
+				throw new RuntimeException("Error creating folder '" + directory.getAbsolutePath() + "'.");
 			}
 		}
-		buildIndexes();
 	}
 
 
@@ -209,7 +256,7 @@ public class FileStorage implements Storage
 					if (StringUtils.startsWith(line, "pagePath"))
 					{
 						pagePath = StringUtils.substringAfterLast(line, "=");
-						files.put(StringUtils.substringAfterLast(line, "="), child.getName());
+						files.put(pagePath, child.getName());
 					}
 					if (StringUtils.startsWith(line, "tags"))
 					{
@@ -238,10 +285,13 @@ public class FileStorage implements Storage
 
 	/**
 	 * updateTagMap:
-	 * TODO: Documentation
-	 *
-	 * @param pagePath
-	 * @param tagsString
+	 * 
+	 * All references from the given page to its former tags are deleted,
+	 * if a tag has no more references, the tag is also deleted. 
+	 * Then the references are build again with the given new tags.
+	 * 
+	 * @param pagePath the pagePath to add references to tags 
+	 * @param tagsString the tags to reference to
 	 */
 	private void updateTagMap(String pagePath, String tagsString)
 	{
@@ -250,10 +300,10 @@ public class FileStorage implements Storage
 		for (String tag : tagMap.keySet())
 		{
 			TagCloudEntry tagCloudEntry = tagMap.get(tag);
-			if(tagCloudEntry.getPages().contains(pagePath))
+			if (tagCloudEntry.getPages().contains(pagePath))
 			{
 				tagCloudEntry.getPages().remove(pagePath);
-				if(tagCloudEntry.getCount() == 0)
+				if (tagCloudEntry.getCount() == 0)
 				{
 					tagsToRemove.add(tag);
 				}
@@ -316,7 +366,9 @@ public class FileStorage implements Storage
 					{
 						if (!deleteRecursive(f))
 						{
-							log.error("File '{}' deleted, but version folder '{}' could not be deleted. Manual deletion necessary.", fileName, fileVersionPath);
+							log.error(
+								"File '{}' deleted, but version folder '{}' could not be deleted. Manual deletion necessary.",
+								fileName, fileVersionPath);
 						}
 					}
 				}
@@ -461,7 +513,7 @@ public class FileStorage implements Storage
 					{
 						String tags = StringUtils.substringAfterLast(line, "=");
 						Set<String> taglist = Collections.synchronizedSet(new HashSet<String>());
-						String[] stringarr =StringUtils.splitByWholeSeparator(tags, ", ");
+						String[] stringarr = StringUtils.splitByWholeSeparator(tags, ", ");
 						CollectionUtils.addAll(taglist, stringarr);
 						markupPage.setTags(taglist);
 					}
@@ -517,11 +569,11 @@ public class FileStorage implements Storage
 		MarkupPage page = load(pagePath);
 		page.setPagePath(newPagePath);
 		page.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
-		boolean success = false; 
+		boolean success = false;
 		try
 		{
 			success = save(page);
-			if(success)
+			if (success)
 			{
 				files.put(newPagePath, files.get(pagePath));
 				files.remove(pagePath);
@@ -624,7 +676,7 @@ public class FileStorage implements Storage
 				+ lineSeperator);
 			writer.append("contentType=" + page.getMarkupLanguage() + lineSeperator);
 			writer.append("version=" + page.getVersion() + lineSeperator);
-			writer.append("tags=" + page.getTagsAsString()  + lineSeperator);
+			writer.append("tags=" + page.getTagsAsString() + lineSeperator);
 			updateTagMap(page.getPagePath(), page.getTagsAsString());
 			writer.append(lineSeperator);
 			writer.append(page.getContent());
