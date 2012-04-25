@@ -55,13 +55,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * FileStorage
- * This storage persists the data in files on a hard disk.
- * <br />
- * Files are saved with as <code>&lt;contentPath&gt;/&lt;number&gt;.txt</code> where number is an increasing number.<br />
- * Old versions are saved with filename <code>&lt;contentPath&gt;/&lt;versionFolder&gt;/&lt;number&gt;/&lt;version&gt;.txt</code>.
+ * This storage persists the data in files on a hard disk. <br />
+ * Files are saved with as <code>&lt;contentPath&gt;/&lt;number&gt;.txt</code> where number is an increasing  
+ * number.<br />
+ * Old versions are saved with filename
+ * <code>&lt;contentPath&gt;/&lt;versionFolder&gt;/&lt;number&gt;/&lt;version&gt;.txt</code>.
  * 
  * @author Team maxdocs.org
- *
  */
 public class FileStorage implements Storage
 {
@@ -83,11 +83,9 @@ public class FileStorage implements Storage
 
 	/**
 	 * Default constructor.
-	 * Creates a FileStorage object.
-	 * <br />
+	 * Creates a FileStorage object. <br />
 	 * The contentPath is set to <code>content/</code>.<br />
 	 * The versionPath is set to <code>content/versions/</code>.
-	 *
 	 */
 	public FileStorage()
 	{
@@ -97,11 +95,10 @@ public class FileStorage implements Storage
 
 	/**
 	 * Minimal constructor. Contains required fields.
-	 * Creates a FileStorage object with the given parameters.
-	 * <br />
+	 * Creates a FileStorage object with the given parameters. <br />
 	 * The contentPath is set to <code>&lt;contentPath&gt;/</code>.<br />
 	 * The versionPath is set to <code>&lt;contentPath&gt;/versions/</code>.
-	 *
+	 * 
 	 * @param contentPath the path to the folder for storing the page source files.
 	 */
 	public FileStorage(String contentPath)
@@ -112,8 +109,7 @@ public class FileStorage implements Storage
 
 	/**
 	 * Full constructor. Contains required and optional fields.
-	 * Creates a {@link FileStorage} object with the given parameters.
-	 * <br />
+	 * Creates a {@link FileStorage} object with the given parameters. <br />
 	 * The contentPath is set to <code>&lt;contentPath&gt;/</code>.<br />
 	 * The versionPath is set to <code>&lt;contentPath&gt;/&lt;versionFolder&gt;/</code>.
 	 * 
@@ -228,7 +224,7 @@ public class FileStorage implements Storage
 	 * <li>link2me - stores to a page all pages that link to it</li>
 	 * <li>tagMap - stores to each tag its count</li>
 	 * </ul>
-	 *
+	 * 
 	 * @param storage
 	 */
 	private void buildIndexes()
@@ -285,12 +281,11 @@ public class FileStorage implements Storage
 
 	/**
 	 * updateTagMap:
-	 * 
 	 * All references from the given page to its former tags are deleted,
-	 * if a tag has no more references, the tag is also deleted. 
+	 * if a tag has no more references, the tag is also deleted.
 	 * Then the references are build again with the given new tags.
 	 * 
-	 * @param pagePath the pagePath to add references to tags 
+	 * @param pagePath the pagePath to add references to tags
 	 * @param tagsString the tags to reference to
 	 */
 	private void updateTagMap(String pagePath, String tagsString)
@@ -382,8 +377,10 @@ public class FileStorage implements Storage
 	 * deleteRecursive:
 	 * Deletes the file or directory denoted by this abstract pathname.
 	 * Works recursively to delete non empty directories as well.
+	 * 
 	 * @param path file or directory to be deleted
-	 * @return <code>true</code> if and only if the file or directory is successfully deleted; <code>false</code> otherwise
+	 * @return <code>true</code> if and only if the file or directory is successfully deleted;
+	 *         <code>false</code> otherwise
 	 */
 	private boolean deleteRecursive(File path)
 	{
@@ -417,7 +414,7 @@ public class FileStorage implements Storage
 	/**
 	 * getNextPageNumber:
 	 * Return the next free number for saving a page.
-	 *
+	 * 
 	 * @return the next free number
 	 */
 	private synchronized int getNextPageNumber()
@@ -653,7 +650,7 @@ public class FileStorage implements Storage
 	/**
 	 * writePage:
 	 * Saves the given markup page to a file with the given filename.
-	 *
+	 * 
 	 * @param page the markup page to save
 	 * @param filename the filename
 	 * @return <code>true</code>, if and only if the page is successfully saved; <code>false</code> otherwise
