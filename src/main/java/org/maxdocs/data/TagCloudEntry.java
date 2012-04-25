@@ -95,7 +95,7 @@ public class TagCloudEntry
 	@Override
 	public String toString()
 	{
-		return "[" + tagName + ":" + pages.size() + ":" + pages;
+		return "[" + tagName + ":" + pages.size() + ":" + pages + "]";
 		
 	}
 }

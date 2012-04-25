@@ -38,7 +38,7 @@ public class MarkupPage extends AbstractPage
 
 	/**
 	 * Default constructor.
-	 * Creates a(n) {@link MarkupPage} object.
+	 * Creates a {@link MarkupPage} object.
 	 */
 	public MarkupPage()
 	{
