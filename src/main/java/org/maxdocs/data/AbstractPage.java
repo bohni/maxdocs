@@ -58,6 +58,14 @@ public class AbstractPage
 
 	private Set<String> tags = Collections.synchronizedSet(new HashSet<String>());
 
+
+	/**
+	 * Default constructor.
+	 * Creates an {@link AbstractPage} object.
+	 *
+	 * version is set to 0.
+	 * currentVersionCreationDate, firstVersionCreationDate are set to current date.
+	 */
 	public AbstractPage()
 	{
 		this.version = 0;
@@ -66,6 +74,14 @@ public class AbstractPage
 		this.firstVersionCreationDate = date;
 	}
 	
+	/**
+	 * Full constructor. Contains required and optional fields.
+	 * Creates an {@link AbstractPage} object with the given parameters.
+	 *
+	 * currentVersionCreationDate is set to current date.
+	 * 
+	 * @param page all properties from page are copied to the new object.
+	 */
 	public AbstractPage(AbstractPage page)
 	{
 		this();

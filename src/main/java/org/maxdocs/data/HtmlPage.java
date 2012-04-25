@@ -42,7 +42,7 @@ public class HtmlPage extends AbstractPage
 
 	public HtmlPage()
 	{
-
+		super();
 	}
 
 
