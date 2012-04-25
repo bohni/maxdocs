@@ -42,8 +42,8 @@
 	
 	<!-- Storage -->
 	<bean id="storageImpl" class="org.maxdocs.storage.FileStorage">
-		<constructor-arg value="${maxdocs.content-path}"/>
-		<constructor-arg value="${maxdocs.version-folder}"/>
+		<constructor-arg value="${maxdocs.contentPath}"/>
+		<constructor-arg value="${maxdocs.versionFolder}"/>
 	</bean>
 
 	<!-- Markup parser -->

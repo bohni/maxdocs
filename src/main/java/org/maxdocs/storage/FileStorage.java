@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * This storage persists the data in files on a hard disk.
  * <br />
  * Files are saved with as &lt;number&gt;.txt where number is an increasing number.<br />
- * Old versions are saved with filename &lt;storagePath&gt;/versions/&lt;number&gt;/&lt;version&gt;.txt.
+ * Old versions are saved with filename &lt;contentPath&gt;/versions/&lt;number&gt;/&lt;version&gt;.txt.
  * 
  * @author Team maxdocs.org
  *
@@ -68,15 +68,15 @@ public class FileStorage implements Storage
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
 	private Map<String, String> files;
 	private Map<String, List<String>> links2me;
-	private String storagePath;
+	private String contentPath;
 	private Map<String, TagCloudEntry> tagMap;
 	private String versionPath;
 	/**
 	 * Default constructor.
 	 * Creates a FileStorage object.
 	 * 
-	 * The storagePath is set to "content/".
-	 * The versionsFolder is set to "content/versions/".
+	 * The contentPath is set to "content/".
+	 * The versionFolder is set to "content/versions/".
 	 *
 	 */
 	public FileStorage()
@@ -89,13 +89,13 @@ public class FileStorage implements Storage
 	 * Minimal constructor. Contains required fields.
 	 * Creates a FileStorage object with the given parameters.
 	 * 
-	 * The versionsFolder is set to "&lt;storagePath&gt;/versions/".
+	 * The versionFolder is set to "&lt;contentPath&gt;/versions/".
 	 *
-	 * @param storagePath the path to the folder for storing the page source files.
+	 * @param contentPath the path to the folder for storing the page source files.
 	 */
-	public FileStorage(String storagePath)
+	public FileStorage(String contentPath)
 	{
-		this("content/", "versions/");
+		this(contentPath, "versions/");
 	}
 
 
@@ -103,33 +103,33 @@ public class FileStorage implements Storage
 	 * Full constructor. Contains required and optional fields.
 	 * Creates a {@link FileStorage} object with the given parameters.
 	 *
-	 * The versionsFolder is set to "&lt;storagePath&gt;/&lt;versionsFolder&gt;/".
+	 * The versionFolder is set to "&lt;contentPath&gt;/&lt;versionFolder&gt;/".
 	 * 
-	 * @param storagePath the path to the folder for storing the page source files.
-	 * @param versionsFolder the name of the sub folder for storing old versions of the page source files.
+	 * @param contentPath the path to the folder for storing the page source files.
+	 * @param versionFolder the name of the sub folder for storing old versions of the page source files.
 	 */
-	public FileStorage(String storagePath, String versionsFolder)
+	public FileStorage(String contentPath, String versionFolder)
 	{
-		log.trace("FileStorage({}, {})", storagePath, versionsFolder);
+		log.trace("FileStorage({}, {})", contentPath, versionFolder);
 
 		String fileSeparator = System.getProperty("file.separator");
 
-		if (StringUtils.isBlank(storagePath))
+		if (StringUtils.isBlank(contentPath))
 		{
-			log.warn("Parameter storagePath is not set. Using default value 'content/'");
-			this.storagePath = "content/";
+			log.warn("Parameter contentPath is not set. Using default value 'content/'");
+			this.contentPath = "content/";
 		}
 
-		if (StringUtils.endsWith(storagePath, fileSeparator))
+		if (StringUtils.endsWith(contentPath, fileSeparator))
 		{
-			this.storagePath = storagePath;
+			this.contentPath = contentPath;
 		}
 		else
 		{
-			this.storagePath = storagePath + fileSeparator;
+			this.contentPath = contentPath + fileSeparator;
 		}
 
-		File storage = new File(this.storagePath);
+		File storage = new File(this.contentPath);
 		log.debug("Using content folder '{}'", storage.getAbsolutePath());
 
 		if (!storage.exists())
@@ -143,13 +143,13 @@ public class FileStorage implements Storage
 				throw new RuntimeException("Error creating content folder.");
 			}
 		}
-		if (StringUtils.startsWith(versionsFolder, fileSeparator))
+		if (StringUtils.startsWith(versionFolder, fileSeparator))
 		{
-			this.versionPath = this.storagePath + versionsFolder.substring(1);
+			this.versionPath = this.contentPath + versionFolder.substring(1);
 		}
 		else
 		{
-			this.versionPath = this.storagePath + versionsFolder;
+			this.versionPath = this.contentPath + versionFolder;
 		}
 		if (!StringUtils.endsWith(this.versionPath, fileSeparator))
 		{
@@ -186,7 +186,7 @@ public class FileStorage implements Storage
 	 */
 	private void buildIndexes()
 	{
-		File storage = new File(storagePath);
+		File storage = new File(contentPath);
 		files = new HashMap<String, String>();
 		links2me = new HashMap<String, List<String>>();
 		tagMap = new HashMap<String, TagCloudEntry>();
@@ -297,7 +297,7 @@ public class FileStorage implements Storage
 		boolean success = true;
 		if (exists(pagePath))
 		{
-			String fileName = storagePath + files.get(pagePath);
+			String fileName = contentPath + files.get(pagePath);
 
 			// delete current version
 			File f = new File(fileName);
@@ -411,7 +411,7 @@ public class FileStorage implements Storage
 	public MarkupPage load(String pagePath)
 	{
 		log.trace("load({})", pagePath);
-		String pathname = storagePath + files.get(pagePath);
+		String pathname = contentPath + files.get(pagePath);
 		MarkupPage markupPage = null;
 		File file = new File(pathname);
 		if (file.exists())
@@ -576,12 +576,12 @@ public class FileStorage implements Storage
 				folder.mkdirs();
 			}
 			success = writePage(oldPage, path + "/" + oldPage.getVersion() + ".txt");
-			filenameNew = storagePath + files.get(oldPage.getPagePath());
+			filenameNew = contentPath + files.get(oldPage.getPagePath());
 		}
 		else
 		{
 			int max = getNextPageNumber();
-			filenameNew = storagePath + max + ".txt";
+			filenameNew = contentPath + max + ".txt";
 		}
 
 		if (success)
@@ -590,7 +590,7 @@ public class FileStorage implements Storage
 			success = writePage(newPage, filenameNew);
 			if (success)
 			{
-				files.put(newPage.getPagePath(), StringUtils.substringAfterLast(filenameNew, storagePath));
+				files.put(newPage.getPagePath(), StringUtils.substringAfterLast(filenameNew, contentPath));
 			}
 		}
 
@@ -636,7 +636,7 @@ public class FileStorage implements Storage
 		{
 			log.error(e.getMessage(), e);
 			success = false;
-			throw new RuntimeException("Error while saving files!"); //TODO: checked exceptions?
+			throw new RuntimeException("Error while saving file " + filename); //TODO: checked exceptions?
 		}
 		finally
 		{
