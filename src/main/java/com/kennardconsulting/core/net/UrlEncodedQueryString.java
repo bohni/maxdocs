@@ -122,7 +122,7 @@ import java.util.StringTokenizer;
  * @author Richard Kennard
  * @version 1.2
  */
-@SuppressWarnings("PMD")
+@SuppressWarnings("PMD") // added for MaxDocs
 public class UrlEncodedQueryString {
 
 	//
