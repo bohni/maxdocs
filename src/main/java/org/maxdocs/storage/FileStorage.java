@@ -510,13 +510,17 @@ public class FileStorage implements Storage
 						CollectionUtils.addAll(taglist, stringarr);
 						markupPage.setTags(taglist);
 					}
-					else if (StringUtils.isBlank(line) && count == 0)
+					else if (StringUtils.isBlank(line))
 					{
-						count = 1;
-					}
-					else if (count > 0)
-					{
-						content.append(line + System.getProperty("line.separator"));
+						if(count == 0)
+						{
+							// First empty line separates meta data and content 
+							count = 1;
+						}
+						else if (count > 0)
+						{
+							content.append(line + System.getProperty("line.separator"));
+						}
 					}
 				}
 				markupPage.setContent(content.toString());
