@@ -137,25 +137,21 @@ public class FileStorage implements Storage
 	private void createContentPath(String contentPath)
 	{
 		String fileSeparator = System.getProperty("file.separator");
+		this.contentPath = contentPath;
 
-		if (StringUtils.isBlank(contentPath))
+		if (StringUtils.isBlank(this.contentPath))
 		{
 			this.contentPath = DEFAULT_CONTENT_PATH;
 			log.warn("Parameter contentPath is not set. Using default value '{}'", this.contentPath);
 		}
 
-		if (StringUtils.endsWith(contentPath, fileSeparator))
+		if (!StringUtils.endsWith(this.contentPath, fileSeparator))
 		{
-			this.contentPath = contentPath;
-		}
-		else
-		{
-			this.contentPath = contentPath + fileSeparator;
+			this.contentPath = this.contentPath + fileSeparator;
 		}
 
 		File storage = new File(this.contentPath);
 		log.debug("Using content folder '{}'", storage.getAbsolutePath());
-
 		createDir(storage);
 	}
 
