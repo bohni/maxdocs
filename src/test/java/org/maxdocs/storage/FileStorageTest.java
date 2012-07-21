@@ -23,14 +23,17 @@
  */
 package org.maxdocs.storage;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.exceptions.ConcurrentEditException;
+import org.maxdocs.exceptions.EditWithoutChangesException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 /**
  * FileStorageTest
  * Test for {@link FileStorage}.
@@ -88,12 +91,31 @@ public class FileStorageTest
 	}
 
 	@Test
-	public void testCreatePage()
+	public void testSave()
 	{
 		MarkupPage page = new MarkupPage();
 		page.setAuthor("Author");
+		page.setMarkupLanguage("mediawiki");
 		page.setContent("Content");
+		page.setPagePath("/Main");
 		
+		try
+		{
+			boolean success = storage.save(page);
+			assertTrue("save failed", success);
+		}
+		catch (ConcurrentEditException e)
+		{
+			// TODO Auto-generated catch block
+			// log.error(e.getMessage(), e);
+			e.printStackTrace();
+		}
+		catch (EditWithoutChangesException e)
+		{
+			// TODO Auto-generated catch block
+			// log.error(e.getMessage(), e);
+			e.printStackTrace();
+		}
 	}
 
 }
