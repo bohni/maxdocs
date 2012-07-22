@@ -46,7 +46,7 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<description>The plain attribute controls whether the tag should be rendered as plain text or within a span tag. Default is false.</description>
 			<name>plain</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
@@ -72,13 +72,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<description>The plain attribute controls whether the tag should be rendered as plain text or within a span tag. Default is false.</description>
 			<name>plain</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The type attribut sets which date should be rendered. 'creation' and 'lastChange'. Default is 'lastChange'.</description>
+			<description>The type attribute sets which date should be rendered. 'creation' and 'lastChange'. Default is 'lastChange'.</description>
 			<name>type</name>
 			<required>true</required>
 			<rtexprvalue>false</rtexprvalue>
@@ -92,7 +92,7 @@
 	</tag>
 
 	<tag>
-		<description>Displays the content type</description>
+		<description>Displays the markup language</description>
 		<name>markupLanguage</name>
 		<tag-class>org.maxdocs.taglib.MarkupLanguageTag</tag-class>
 		<tei-class>org.maxdocs.taglib.MarkupLanguageTagTEI</tei-class>
@@ -104,7 +104,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<description>The plain attribute controls whether the tag should be rendered as plain text or within a span tag. Default is false.</description>
 			<name>plain</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
@@ -136,7 +136,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<description>The plain attribute controls whether the tag should be rendered as plain text or within a span tag. Default is false.</description>
 			<name>plain</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
@@ -156,7 +156,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<description>The plain attribute controls whether the tag should be rendered as plain text or within a span tag. Default is false.</description>
 			<name>plain</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
@@ -164,7 +164,7 @@
 	</tag>
 
 	<tag>
-		<description>Displays the content</description>
+		<description>Displays the page content</description>
 		<name>pageContent</name>
 		<tag-class>org.maxdocs.taglib.PageContentTag</tag-class>
 		<body-content>empty</body-content>
@@ -177,7 +177,7 @@
 	</tag>
 
 	<tag>
-		<description>Displays the content</description>
+		<description>Displays the page source</description>
 		<name>pageSource</name>
 		<tag-class>org.maxdocs.taglib.PageSourceTag</tag-class>
 		<body-content>empty</body-content>
@@ -248,7 +248,7 @@
 	</tag>
 
 	<tag>
-		<description>Displays the breadcrumbs</description>
+		<description>Displays the bread crumbs</description>
 		<name>breadcrumbs</name>
 		<tag-class>org.maxdocs.taglib.BreadcrumbsTag</tag-class>
 		<body-content>empty</body-content>
@@ -259,7 +259,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The plain attribute controls wether the tag should be rendered as plain text or within a span tag. Default is false.</description>
+			<description>The plain attribute controls whether the tag should be rendered as plain text or within a span tag. Default is false.</description>
 			<name>plain</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
