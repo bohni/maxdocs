@@ -150,4 +150,6 @@ Entwicklung
 	* {{{http://blog.code-adept.com/2008/01/25/unit-testing-jsp-custom-tags/}Unit Testing Custom Tags}}
 
 	* {{{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}UTF-8 encoding mit Apache Tomcat}}
+	
+	* {{{http://ahoehma.wordpress.com/2010/05/25/export-maven-war-artifact-as-runnable-jetty-package/}Assembly als Standalone}}
  

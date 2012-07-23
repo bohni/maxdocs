@@ -453,17 +453,17 @@
 	
 	<profiles>
    <profile>
-      <id>maxdocs-standalone</id>
+      <id>standalone</id>
       <build>
         <plugins>
           <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <version>2.3</version>
             <configuration>
-              <finalName>maxdocs-webapp-${project.version}</finalName>
+<!--               <finalName>maxdocs-webapp-${project.version}</finalName> -->
               <attach>false</attach>
               <descriptors>
-                <descriptor>src/main/assembly/maxdocs-standalone.xml</descriptor>
+                <descriptor>src/main/assembly/standalone.xml</descriptor>
               </descriptors>
             </configuration>
             <executions>
