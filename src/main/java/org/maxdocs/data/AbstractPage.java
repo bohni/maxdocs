@@ -52,8 +52,6 @@ public class AbstractPage
 
 	private String markupLanguage;
 
-	private String pageName;
-
 	private String pagePath;
 
 	private Set<String> tags = Collections.synchronizedSet(new HashSet<String>());
@@ -219,17 +217,7 @@ public class AbstractPage
 	 */
 	public String getPageName()
 	{
-		return this.pageName;
-	}
-
-	/**
-	 * setPageName: Sets the pageName.
-	 *
-	 * @param pageName the pageName to set
-	 */
-	public void setPageName(String pageName)
-	{
-		this.pageName = pageName;
+		return StringUtils.substringAfterLast(this.pagePath, "/");
 	}
 
 	/**

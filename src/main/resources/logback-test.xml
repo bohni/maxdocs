@@ -40,6 +40,10 @@
 		level="trace" />
 
 	<logger
+		name="org.mortbay.log"
+		level="off" />
+
+	<logger
 		name="org.springframework"
 		level="off" />
 

@@ -23,10 +23,17 @@
  */
 package org.maxdocs.storage;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.maxdocs.data.MarkupPage;
@@ -44,24 +51,21 @@ import org.slf4j.LoggerFactory;
 public class FileStorageTest
 {
 	private static Logger log = LoggerFactory.getLogger(FileStorageTest.class);
-	private Storage storage;	
-
+	private FileStorage storage;	
+	private File tempDir;
 	@Before
-	public void setUp()
+	public void setUp() throws IOException
 	{
-		String tempDir = System.getProperty("java.io.tmpdir");
-		String fileSeperator = System.getProperty("file.separator");
-		if(tempDir != null)
-		{
-			String contentDir = tempDir + fileSeperator + "content";
-			File f = new File(contentDir);
-			if(f.exists())
-			{
-				remove(f);
-			}
-			storage = new FileStorage(contentDir);	
-		}
-
+		log.trace("setUp()");
+		tempDir = Files.createTempDirectory("maxdocs").toFile();
+		storage = new FileStorage(tempDir.getAbsolutePath());	
+	}
+	
+	@After
+	public void shutdown()
+	{
+		log.trace("shutdown()");
+		remove(tempDir);
 	}
 	
 	/**
@@ -93,6 +97,7 @@ public class FileStorageTest
 	@Test
 	public void testSave()
 	{
+		log.trace("testSave");
 		MarkupPage page = new MarkupPage();
 		page.setAuthor("Author");
 		page.setMarkupLanguage("mediawiki");
@@ -106,16 +111,34 @@ public class FileStorageTest
 		}
 		catch (ConcurrentEditException e)
 		{
-			// TODO Auto-generated catch block
-			// log.error(e.getMessage(), e);
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 		catch (EditWithoutChangesException e)
 		{
-			// TODO Auto-generated catch block
-			// log.error(e.getMessage(), e);
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
+	}
+
+	@Test
+	public void testPageToString()
+	{
+		log.trace("testPageToString");
+		MarkupPage page = new MarkupPage();
+		Date date = new Date();
+		page.setAuthor("Author");
+		page.setContent("Content");
+		page.setCurrentVersionCreationDate(date);
+		page.setFirstVersionCreationDate(date);
+		page.setMarkupLanguage("mediawiki");
+		page.setPagePath("/Main");
+		page.addTag("Tag1");
+		page.addTag("Tag2");
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
+		String expected = "pagePath=/Main\nauthor=Author\neditor=null\ncreationDateFirst=" + sdf.format(date)
+						+ "\ncreationDateThis=" + sdf.format(date)
+						+ "\ncontentType=mediawiki\nversion=0\ntags=Tag2, Tag1\n\nContent";
+		assertEquals("Output not equal!", expected, storage.pageToString(page));
 	}
 
 }

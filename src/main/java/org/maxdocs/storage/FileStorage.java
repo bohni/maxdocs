@@ -29,6 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,13 +66,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FileStorage implements Storage
 {
-	/**
-	 * 
-	 */
 	private static final String DEFAULT_VERSION_FOLDER = "versions";
-	/**
-	 * 
-	 */
 	private static final String DEFAULT_CONTENT_PATH = "content/";
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
 	private String contentPath;
@@ -333,7 +328,7 @@ public class FileStorage implements Storage
 	@Override
 	public boolean delete(String pagePath)
 	{
-		log.trace("delete()");
+		log.trace("delete({})", pagePath);
 
 		boolean success = true;
 		if (exists(pagePath))
@@ -403,6 +398,7 @@ public class FileStorage implements Storage
 	@Override
 	public boolean exists(String pagePath)
 	{
+		log.trace("exists({})", pagePath);
 		return files.containsKey(pagePath);
 	}
 
@@ -415,6 +411,7 @@ public class FileStorage implements Storage
 	 */
 	private synchronized int getNextPageNumber()
 	{
+		log.trace("getNextPageNumber()");
 		int max = 0;
 		for (String key : files.keySet())
 		{
@@ -425,6 +422,7 @@ public class FileStorage implements Storage
 			}
 		}
 		max++;
+		log.debug("nextPageNumber: {}", max);
 		return max;
 	}
 
@@ -463,7 +461,6 @@ public class FileStorage implements Storage
 		{
 			markupPage = new MarkupPage();
 			markupPage.setPagePath(pagePath);
-			markupPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 			Scanner scanner = null;
 			try
 			{
@@ -520,6 +517,7 @@ public class FileStorage implements Storage
 					}
 				}
 				markupPage.setContent(content.toString());
+				log.debug("page {} loaded", markupPage.getPagePath());
 			}
 			catch (FileNotFoundException e)
 			{
@@ -559,9 +557,9 @@ public class FileStorage implements Storage
 	@Override
 	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException
 	{
+		log.trace("rename({}, {})", pagePath, newPagePath);
 		MarkupPage page = load(pagePath);
 		page.setPagePath(newPagePath);
-		page.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 		boolean success = false;
 		try
 		{
@@ -574,8 +572,9 @@ public class FileStorage implements Storage
 		}
 		catch (EditWithoutChangesException e)
 		{
-			log.error("This exception should never been thrown, because rename does a change.");
+			log.error("This EditWithoutChangesException should never be thrown, because rename does a change.");
 		}
+		log.debug("renamed {} to {}", pagePath, newPagePath);
 		return success;
 	}
 
@@ -642,6 +641,27 @@ public class FileStorage implements Storage
 		return success;
 	}
 
+	protected String pageToString(MarkupPage page)
+	{
+		log.trace("pageToString({})", page.getPagePath());
+		String lineSeperator = "\n";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
+		StringBuilder content = new StringBuilder();
+		content.append("pagePath=" + page.getPagePath() + lineSeperator);
+		content.append("author=" + page.getAuthor() + lineSeperator);
+		content.append("editor=" + page.getEditor() + lineSeperator);
+		content.append("creationDateFirst=" + sdf.format(page.getFirstVersionCreationDate())
+			+ lineSeperator);
+		content.append("creationDateThis=" + sdf.format(page.getCurrentVersionCreationDate())
+			+ lineSeperator);
+		content.append("contentType=" + page.getMarkupLanguage() + lineSeperator);
+		content.append("version=" + page.getVersion() + lineSeperator);
+		content.append("tags=" + page.getTagsAsString() + lineSeperator);
+		updateTagMap(page.getPagePath(), page.getTagsAsString());
+		content.append(lineSeperator);
+		content.append(page.getContent());
+		return content.toString();
+	}
 
 	/**
 	 * writePage:
@@ -653,27 +673,13 @@ public class FileStorage implements Storage
 	 */
 	private boolean writePage(MarkupPage page, String filename)
 	{
+		log.trace("writePage({}, {})", page.getPagePath(), filename);
 		boolean success = false;
-		String lineSeperator = "\n";
 		Writer writer = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
 		try
 		{
 			writer = new OutputStreamWriter(new FileOutputStream(new File(filename)), "UTF-8");
-			writer.append("pagePath=" + page.getPagePath() + lineSeperator);
-			writer.append("author=" + page.getAuthor() + lineSeperator);
-			writer.append("editor=" + page.getEditor() + lineSeperator);
-			writer.append("creationDateFirst=" + sdf.format(page.getFirstVersionCreationDate())
-				+ lineSeperator);
-			writer.append("creationDateThis=" + sdf.format(page.getCurrentVersionCreationDate())
-				+ lineSeperator);
-			writer.append("contentType=" + page.getMarkupLanguage() + lineSeperator);
-			writer.append("version=" + page.getVersion() + lineSeperator);
-			writer.append("tags=" + page.getTagsAsString() + lineSeperator);
-			updateTagMap(page.getPagePath(), page.getTagsAsString());
-			writer.append(lineSeperator);
-			writer.append(page.getContent());
-
+			writer.append(pageToString(page));
 			writer.close();
 			success = true;
 		}
@@ -697,6 +703,7 @@ public class FileStorage implements Storage
 				}
 			}
 		}
+		log.debug("writePage: page {} saved as {}", page.getPagePath(), filename);
 		return success;
 	}
 }

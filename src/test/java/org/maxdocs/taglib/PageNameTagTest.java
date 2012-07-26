@@ -89,7 +89,7 @@ public class PageNameTagTest
 
 		// Test data
 		htmlPage = new HtmlPage();
-		htmlPage.setPageName(pagePath.substring(pagePath.lastIndexOf("/") + 1));
+		htmlPage.setPagePath(pagePath);
 
 		// Create the mocked MaxDocs engine
 		mockEngine = EasyMock.createMock(MaxDocs.class);

@@ -72,7 +72,6 @@ public class MaxDocsImplTest
 
 		htmlPage = new HtmlPage();
 		htmlPage.setPagePath(pagePath);
-		htmlPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 		htmlPage.setContent("<p>Content</p>");
 
 		markupPage = new MarkupPage();
