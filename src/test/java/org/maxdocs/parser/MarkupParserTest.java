@@ -61,7 +61,6 @@ public class MarkupParserTest
 		MarkupPage markupPage = new MarkupPage();
 		markupPage.setContent("=== Heading ===\nHier normaler Text mit ''italic'' und '''bold'''.");
 		markupPage.setPagePath("/Foo");
-		markupPage.setPageName("Foo");
 		markupPage.setMarkupLanguage("MediaWiki");
 		markupPage.setVersion(1);
 		markupPage.setAuthor("Karl Klämmerle");

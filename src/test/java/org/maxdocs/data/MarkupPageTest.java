@@ -56,7 +56,7 @@ public class MarkupPageTest
 		String editor = "editor";
 		Date firstVersionCreationDate = new Date();
 		String pageName = "PageName";
-		String pagePath = "/PagName";
+		String pagePath = "/PageName";
 		Set<String> tags = new HashSet<String>();
 		int version = 1;
 		
@@ -67,7 +67,6 @@ public class MarkupPageTest
 		page1.setCurrentVersionCreationDate(currentVersionCreationDate);
 		page1.setEditor(editor);
 		page1.setFirstVersionCreationDate(firstVersionCreationDate);
-		page1.setPageName(pageName);
 		page1.setPagePath(pagePath);
 		page1.setTags(tags);
 		page1.setVersion(version);

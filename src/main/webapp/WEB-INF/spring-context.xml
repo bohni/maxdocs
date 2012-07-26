@@ -41,9 +41,11 @@
 	<context:property-placeholder location="classpath:maxdocs.properties"/>
 	
 	<!-- Storage -->
+	<bean id="writerUtil" class="org.maxdocs.storage.WriterUtil" />
 	<bean id="storageImpl" class="org.maxdocs.storage.FileStorage">
 		<constructor-arg value="${maxdocs.contentPath}"/>
 		<constructor-arg value="${maxdocs.versionFolder}"/>
+		<property name="writerUtil" ref="writerUtil"/>
 	</bean>
 
 	<!-- Markup parser -->

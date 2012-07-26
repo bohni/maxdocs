@@ -295,7 +295,6 @@ public class MaxDocsServlet extends HttpServlet
 		newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
 		newPage.setEditor(username);
 		newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
-		newPage.setPageName(StringUtils.substringAfterLast(pagePath, "/"));
 		newPage.setPagePath(pagePath);
 		if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_TAGS)))
 		{
