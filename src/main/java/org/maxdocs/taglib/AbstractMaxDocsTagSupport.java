@@ -39,13 +39,20 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 
 	private boolean plain = false;
 
-	
+
+	/**
+	 * Default constructor.
+	 * Creates an {@link ${AbstractMaxDocsTagSupport}} object.
+	 */
 	public AbstractMaxDocsTagSupport()
 	{
 		this("", false);
 	}
 
+
 	/**
+	 * Minimal constructor. Contains required fields.
+	 * Creates an {@link AbstractMaxDocsTagSupport} object with the given parameters.
 	 * @param styleClass
 	 */
 	public AbstractMaxDocsTagSupport(String styleClass)
@@ -53,7 +60,10 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 		this(styleClass, false);
 	}
 
+
 	/**
+	 * Full constructor. Contains required and optional fields.
+	 * Creates an {@link AbstractMaxDocsTagSupport} object with the given parameters.
 	 * @param styleClass
 	 * @param plain
 	 */
@@ -63,6 +73,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 		this.styleClass = styleClass;
 		this.plain = plain;
 	}
+
 
 	/**
 	 * getStyleClass() returns the styleClass
@@ -74,6 +85,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 		return styleClass;
 	}
 
+
 	/**
 	 * setStyleClass() sets the styleClass
 	 *
@@ -84,6 +96,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 		this.styleClass = styleClass;
 	}
 
+
 	/**
 	 * isPlain() returns the plain
 	 *
@@ -93,6 +106,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 	{
 		return plain;
 	}
+
 
 	/**
 	 * setPlain() sets the plain
