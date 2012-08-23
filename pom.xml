@@ -326,10 +326,10 @@
 						<exclude>src/main/config/license/LICENSE.txt</exclude>
 						<exclude>src/main/java/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
 						<exclude>src/main/java/org/maxdocs/apache/catalina/filters/SetCharacterEncodingFilter.java</exclude>
-						<exclude>src/main/webapp/internal/yaml/**</exclude>
-						<exclude>src/main/webapp/internal/css/**</exclude>
-						<exclude>src/main/webapp/internal/js/jquery-ui-1.8.17.custom.min.js</exclude>
-						<exclude>src/main/webapp/internal/js/jquery-1.7.1.min.js</exclude>
+						<exclude>src/main/webapp/internal/templates/default/yaml/**</exclude>
+						<exclude>src/main/webapp/internal/templates/default/css/**</exclude>
+						<exclude>src/main/webapp/internal/templates/default/js/jquery-ui-1.8.17.custom.min.js</exclude>
+						<exclude>src/main/webapp/internal/templates/default/js/jquery-1.7.1.min.js</exclude>
 						<exclude>src/test/resources/filestorage/**</exclude>
 						<exclude>src/site/resources/maxdocs.epf</exclude>
 						<exclude>src/site/resources/*.pdf</exclude>
