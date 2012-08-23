@@ -47,10 +47,10 @@
 <c:set var="author"><fmt:message key="author" bundle="${maxdocs}" /></c:set>
 <meta name="description" content="${description}"/>
 <meta name="author" content="${author}"/>
-<link href="<%=request.getContextPath()%>/internal/css/maxdocs.css"
+<link href="<%=request.getContextPath()%>/internal/templates/default/css/maxdocs.css"
 	rel="stylesheet" type="text/css" />
 <!--[if lte IE 7]>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/internal/yaml/core/iehacks.min.css" type="text/css"/>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/internal/templates/default/yaml/core/iehacks.min.css" type="text/css"/>
 <![endif]-->
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,7 +72,7 @@
 						<a href="#">Imprint</a>
 					</span>
 				</div>
-				<h2><img src="<%=request.getContextPath()%>/internal/images/maxdocs-klein.png" alt="MaxDocs" /><br/>
+				<h2><img src="<%=request.getContextPath()%>/internal/templates/default/images/maxdocs-klein.png" alt="MaxDocs" /><br/>
 				<fmt:message key="show.heading" bundle="${template}" /></h2>
 			</header>
 			<div id="breadcrumbs">
@@ -152,6 +152,6 @@
 	</div>
 		<!-- end: #footer -->
 	<!-- full skiplink functionality in webkit browsers -->
-	<script src="<%=request.getContextPath()%>/internal/yaml/core/js/yaml-focusfix.js" type="text/javascript" />
+	<script src="<%=request.getContextPath()%>/internal/templates/default/yaml/core/js/yaml-focusfix.js" type="text/javascript" />
 </body>
 </html>

@@ -47,16 +47,16 @@
 <c:set var="author"><fmt:message key="author" bundle="${maxdocs}" /></c:set>
 <meta name="description" content="${description}"/>
 <meta name="author" content="${author}"/>
-<link href="<%=request.getContextPath()%>/internal/css/maxdocs.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/internal/css/smoothness/jquery-ui-1.8.17.custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<%=request.getContextPath()%>/internal/js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/internal/js/jquery-ui-1.8.17.custom.min.js"></script>
+<link href="<%=request.getContextPath()%>/internal/templates/default/css/maxdocs.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/internal/templates/default/css/smoothness/jquery-ui-1.8.17.custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/internal/templates/default/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/internal/templates/default/js/jquery-ui-1.8.17.custom.min.js"></script>
 <script type="text/javascript">
 var contextPath = "<%=request.getContextPath()%>";
 </script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/internal/js/maxdocs.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/internal/templates/default/js/maxdocs.js"></script>
 <!--[if lte IE 7]>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/internal/yaml/core/iehacks.min.css" type="text/css"/>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/internal/templates/default/yaml/core/iehacks.min.css" type="text/css"/>
 <![endif]-->
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -78,7 +78,7 @@ var contextPath = "<%=request.getContextPath()%>";
 						<a href="#">Imprint</a>
 					</span>
 				</div>
-				<h2><img src="<%=request.getContextPath()%>/internal/images/maxdocs-klein.png" alt="MaxDocs" /><br/>
+				<h2><img src="<%=request.getContextPath()%>/internal/templates/default/images/maxdocs-klein.png" alt="MaxDocs" /><br/>
 				<fmt:message key="show.heading" bundle="${template}" /></h2>
 			</header>
 			<div id="breadcrumbs">
@@ -167,6 +167,6 @@ var contextPath = "<%=request.getContextPath()%>";
 	</div>
 		<!-- end: #footer -->
 	<!-- full skiplink functionality in webkit browsers -->
-	<script src="<%=request.getContextPath()%>/internal/yaml/core/js/yaml-focusfix.js" type="text/javascript" />
+	<script src="<%=request.getContextPath()%>/internal/templates/default/yaml/core/js/yaml-focusfix.js" type="text/javascript" />
 </body>
 </html>
