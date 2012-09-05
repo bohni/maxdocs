@@ -118,7 +118,7 @@ public class FileStorage implements Storage
 
 		createVersionPath(versionFolder);
 
-		buildIndexes();
+		buildIndexes(false);
 	}
 
 
@@ -145,7 +145,7 @@ public class FileStorage implements Storage
 		}
 
 		File storage = new File(this.contentPath);
-		log.debug("Using content folder '{}'", storage.getAbsolutePath());
+		log.info("Using content folder '{}'", storage.getAbsolutePath());
 		createDir(storage);
 	}
 
@@ -179,14 +179,14 @@ public class FileStorage implements Storage
 		}
 
 		File versions = new File(this.versionPath);
-		log.debug("Using versions folder '{}'", versions.getAbsolutePath());
+		log.info("Using versions folder '{}'", versions.getAbsolutePath());
 		createDir(versions);
 	}
 
 
 	/**
 	 * createDir:
-	 * Creates the given directory.
+	 * Creates the given directory, including any necessary but nonexistent parent directories.
 	 * 
 	 * @param directory the directory to create.
 	 */
@@ -196,11 +196,11 @@ public class FileStorage implements Storage
 		{
 			if (directory.mkdirs())
 			{
-				log.info("Created folder '{}'", directory.getAbsolutePath());
+				log.debug("Created folder '{}'", directory.getAbsolutePath());
 			}
 			else
 			{
-				throw new RuntimeException("Error creating folder '" + directory.getAbsolutePath() + "'.");
+				throw new RuntimeException("Error creating folder '" + directory.getAbsolutePath() + "'."); // TODO: checked exceptions?
 			}
 		}
 	}
@@ -215,10 +215,18 @@ public class FileStorage implements Storage
 	 * <li>tagMap - stores to each tag its count</li>
 	 * </ul>
 	 * 
-	 * @param storage
+	 * The indexes are cached on disk. If the cached indexes are not up to date, the parameter
+	 * rebuild could be used to force a rebuild.   
+	 * 
+	 * @param rebuild if set to <code>true</code>, the indexes are build from scratch.
 	 */
-	private void buildIndexes()
+	private void buildIndexes(boolean rebuild)
 	{
+		// TODO:
+		// Indexes must be cached on disk. How?
+		// Read from disk or build them
+		// Possibility to force rebuild of indexes (after crash, bug ...).
+
 		File storage = new File(contentPath);
 		files = new HashMap<String, String>();
 		links2me = new HashMap<String, List<String>>();

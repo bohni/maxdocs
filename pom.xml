@@ -231,7 +231,8 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.12</version>
 					<configuration>
-						<argLine>-XX:-UseSplitVerifier</argLine><!-- JDK 1.7 and cobertura plugin -->
+						<!-- JDK 1.7 and cobertura plugin -->
+						<argLine>-XX:-UseSplitVerifier</argLine>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -322,7 +323,8 @@
 					<quiet>false</quiet>
 					<strictCheck>true</strictCheck>
 					<excludes>
-						<!-- Bei folgenden Dateien nicht pruefen/eintragen (Licenzvorlage, third party, ...)-->
+						<!-- Bei folgenden Dateien nicht pruefen/eintragen (Lizenzvorlage, 
+							third party, ...) -->
 						<exclude>src/main/config/license/LICENSE.txt</exclude>
 						<exclude>src/main/java/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
 						<exclude>src/main/java/org/maxdocs/apache/catalina/filters/SetCharacterEncodingFilter.java</exclude>
@@ -450,78 +452,78 @@
 			</plugin>
 		</plugins>
 	</reporting>
-	
+
 	<profiles>
-   <profile>
-      <id>standalone</id>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <version>2.3</version>
-            <configuration>
-<!--               <finalName>maxdocs-webapp-${project.version}</finalName> -->
-              <attach>false</attach>
-              <descriptors>
-                <descriptor>src/main/assembly/standalone.xml</descriptor>
-              </descriptors>
-            </configuration>
-            <executions>
-              <execution>
-                <id>make-assembly</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-      <dependencies>
-        <!-- logging ... -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.6.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.6.6</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.0.6</version>
-		</dependency>
-        <!-- embedded jetty -->
-        <dependency>
-          <groupId>org.mortbay.jetty</groupId>
-          <artifactId>jetty</artifactId>
-          <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.mortbay.jetty</groupId>
-          <artifactId>start</artifactId>
-          <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.mortbay.jetty</groupId>
-          <artifactId>jetty-util</artifactId>
-          <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.mortbay.jetty</groupId>
-          <artifactId>jsp-2.1-jetty</artifactId>
-          <version>${jetty.version}</version>
-        </dependency>
-      </dependencies>
-      <properties>
-          <jetty.version>6.1.26</jetty.version>
-      </properties>
-    </profile>
-</profiles>
+		<profile>
+			<id>standalone</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<version>2.3</version>
+						<configuration>
+							<!-- <finalName>maxdocs-webapp-${project.version}</finalName> -->
+							<attach>false</attach>
+							<descriptors>
+								<descriptor>src/main/assembly/standalone.xml</descriptor>
+							</descriptors>
+						</configuration>
+						<executions>
+							<execution>
+								<id>make-assembly</id>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<dependencies>
+				<!-- logging ... -->
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+					<version>1.6.6</version>
+				</dependency>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>jcl-over-slf4j</artifactId>
+					<version>1.6.6</version>
+				</dependency>
+				<dependency>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+					<version>1.0.6</version>
+				</dependency>
+				<!-- embedded jetty -->
+				<dependency>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty</artifactId>
+					<version>${jetty.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>start</artifactId>
+					<version>${jetty.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-util</artifactId>
+					<version>${jetty.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jsp-2.1-jetty</artifactId>
+					<version>${jetty.version}</version>
+				</dependency>
+			</dependencies>
+			<properties>
+				<jetty.version>6.1.26</jetty.version>
+			</properties>
+		</profile>
+	</profiles>
 
 
 </project>

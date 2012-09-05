@@ -205,9 +205,9 @@ public class AbstractPage
 	 *
 	 * @param markupLanguage the markupLanguage to set
 	 */
-	public void setMarkupLanguage(String contentType)
+	public void setMarkupLanguage(String markupLanguage)
 	{
-		this.markupLanguage = contentType;
+		this.markupLanguage = markupLanguage;
 	}
 
 	/**

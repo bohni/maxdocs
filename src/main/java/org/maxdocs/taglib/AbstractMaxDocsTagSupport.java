@@ -42,7 +42,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 
 	/**
 	 * Default constructor.
-	 * Creates an {@link ${AbstractMaxDocsTagSupport}} object.
+	 * Creates an {@link AbstractMaxDocsTagSupport} object.
 	 */
 	public AbstractMaxDocsTagSupport()
 	{

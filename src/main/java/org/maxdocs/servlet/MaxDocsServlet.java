@@ -80,6 +80,7 @@ public class MaxDocsServlet extends HttpServlet
 	@Override
 	public void init() throws ServletException
 	{
+		log.trace("init()");
 		ServletContext servletContext = getServletContext();
 		WebApplicationContext webApplicationContext = WebApplicationContextUtils
 			.getWebApplicationContext(servletContext);
