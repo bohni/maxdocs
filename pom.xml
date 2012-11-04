@@ -86,7 +86,7 @@
 	</scm>
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/bohni/maxdocs/issues</url>
+		<url>https://github.com/bohni/maxdocs/issues/</url>
 	</issueManagement>
 
 	<properties>
@@ -456,6 +456,25 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changelog-plugin</artifactId>
 				<version>2.2</version>
+				<configuration>
+					<type>date</type>
+					<dates>
+						<date implementation="java.lang.String">2011-12-09</date>
+					</dates>
+					<dateFormat>yyyy-MM-dd</dateFormat>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+				<version>2.8</version>
+				<configuration>
+					<githubAPIScheme>https</githubAPIScheme>
+					<githubAPIPort>443</githubAPIPort>
+					<includeOpenIssues>true</includeOpenIssues>
+					<onlyMilestoneIssues>false</onlyMilestoneIssues>
+					<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
+				</configuration>
 			</plugin>
 		</plugins>
 	</reporting>
