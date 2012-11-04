@@ -1,0 +1,10 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+*.java   text diff=java
+*.html   text diff=html
+*.xml    text 
+*.css    text
+*.js     text
+*.sql    text
+*.cmd    eol=crlf
