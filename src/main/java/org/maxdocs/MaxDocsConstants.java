@@ -53,6 +53,11 @@ public final class MaxDocsConstants
 	 * Key for storing the markup page
 	 */
 	public static final String MAXDOCS_MARKUP_PAGE = "MAXDOCS_MARKUP_PAGE";
+
+	/**
+	 * Key for storing the messages
+	 */
+	public static final String MAXDOCS_MESSAGES = "MAXDOCS_MESSAGES";
 	
 	private MaxDocsConstants()
 	{

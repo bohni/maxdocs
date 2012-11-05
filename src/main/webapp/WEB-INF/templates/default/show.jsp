@@ -130,6 +130,7 @@
 				<!-- begin: #col3 static column -->
 				<div class="ym-col3">
 					<div class="ym-cbox">
+						<div id="errors"><max:messages /></div>
 						<h2><max:pageName plain="true" /></h2>
 						<max:pageContent />
 					</div>
