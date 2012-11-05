@@ -24,9 +24,11 @@
 package org.maxdocs.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -247,6 +249,18 @@ public class MaxDocsServlet extends HttpServlet
 	{
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		// TODO, 03.02.2012: check user role
+		if(!SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_USER"))
+		{
+			log.debug("Missing edit permission");
+			List<String> messages = (List<String>) request.getAttribute(MaxDocsConstants.MAXDOCS_MESSAGES);
+			if(messages == null)
+			{
+				messages = new ArrayList<String>();
+			}
+			messages.add("Missing edit permission");
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+			actionShow(request, response);
+		}
 		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 		MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);

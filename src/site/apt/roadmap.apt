@@ -68,6 +68,10 @@ Roadmap
 
  Welche Rechte werden benötigt (View, Edit, Rename, Delete, Upload, etc.)
 
+ Wie können Rechte und Rollen getrennt werden? 
+ {{{http://stackoverflow.com/questions/6357579/spring-security-with-roles-and-permissions}Spring Security 1}}
+ {{{http://www.javabeat.net/2011/04/separating-roles-and-permissions-in-spring-security/}Spring Security 2}}
+
  Wie wird Security konfiguriert?
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
