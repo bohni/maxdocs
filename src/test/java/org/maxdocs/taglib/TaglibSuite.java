@@ -38,7 +38,8 @@ import org.junit.runners.Suite;
 	AuthorTagTest.class,
 	MarkupLanguageTagTest.class,
 	PageNameTagTest.class,
-	PageVersionTagTest.class
+	PageVersionTagTest.class,
+	MessagesTagTest.class
 })
 public class TaglibSuite
 {
