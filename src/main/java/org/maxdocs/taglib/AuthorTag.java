@@ -51,8 +51,8 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 	private String type = "author";
 
 	/**
-	 * Constructor.
-	 *
+	 * Default constructor.
+	 * Creates an {@link AuthorTag} object.
 	 */
 	public AuthorTag()
 	{
