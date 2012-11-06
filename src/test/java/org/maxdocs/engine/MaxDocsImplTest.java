@@ -101,7 +101,7 @@ public class MaxDocsImplTest
 	public void testGetHtmlPage()
 	{
 		EasyMock.expect(storage.exists(pagePath)).andReturn(true);
-		EasyMock.expectLastCall().times(2); // one call in this test, one in getHtmlPage
+		EasyMock.expectLastCall().times(2); // one direct call, one call in getHtmlPage
 		EasyMock.expect(storage.load(pagePath)).andReturn(markupPage);
 		EasyMock.expectLastCall().times(1);
 		EasyMock.expect(parser.parseToHtml(markupPage)).andReturn(htmlPage);
