@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * MessagesTag
- * TODO, 05.11.2012: Documentation
+ * Tag, that displays messages of the request.
  * 
  * @author Team maxdocs.org
  */
@@ -43,6 +43,14 @@ public class MessagesTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(MessagesTag.class);
 
+	/**
+	 * Default constructor.
+	 * Creates a {@link MessagesTag} object.
+	 */
+	public MessagesTag()
+	{
+		super("maxdocsMessages");
+	}
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
