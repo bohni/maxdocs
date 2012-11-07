@@ -68,8 +68,11 @@ public class AuthorTagTest
 
 	private WebApplicationContext mockWebApplicationContext;
 
-	/* (non-Javadoc)
+	/**
+	 * setUp:
+	 * 
 	 * @see junit.framework.TestCase#setUp()
+	 * @throws Exception
 	 */
 	@Before
 	public void setUp() throws Exception
@@ -174,7 +177,7 @@ public class AuthorTagTest
 	{
 		log.trace("testDoStartTagAuthorWithPlain");
 
-		Boolean plain = true;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = null;
 		String type = "author";
 		String expectedOutput = htmlPage.getAuthor();
@@ -198,7 +201,7 @@ public class AuthorTagTest
 	public void testDoStartTagAuthorWithPlainAndStyle() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagAuthorWithPlainAndStyle");
-		Boolean plain = true;
+		Boolean plain =  Boolean.TRUE;
 		String styleClass = "style";
 		String type = "author";
 		String expectedOutput = htmlPage.getAuthor();
@@ -271,7 +274,7 @@ public class AuthorTagTest
 	{
 		log.trace("testDoStartTagEditorWithPlain");
 
-		Boolean plain = true;
+		Boolean plain =  Boolean.TRUE;
 		String styleClass = null;
 		String type = "editor";
 		String expectedOutput = htmlPage.getEditor();
@@ -296,7 +299,7 @@ public class AuthorTagTest
 	{
 		log.trace("testDoStartTagEditorWithPlainAndStyle");
 
-		Boolean plain = true;
+		Boolean plain =  Boolean.TRUE;
 		String styleClass = "style";
 		String type = "editor";
 		String expectedOutput = htmlPage.getEditor();
@@ -368,7 +371,7 @@ public class AuthorTagTest
 	{
 		log.trace("testDoStartTagWrongTypePlain");
 
-		Boolean plain = true;
+		Boolean plain =  Boolean.TRUE;
 		String styleClass = null;
 		String type = "test";
 		String expectedOutput = "unsupported type '" + type + "'";
@@ -393,7 +396,7 @@ public class AuthorTagTest
 	{
 		log.trace("testDoStartTagWrongTypePlain");
 
-		Boolean plain = true;
+		Boolean plain =  Boolean.TRUE;
 		String styleClass = "style";
 		String type = "test";
 		String expectedOutput = "unsupported type '" + type + "'";

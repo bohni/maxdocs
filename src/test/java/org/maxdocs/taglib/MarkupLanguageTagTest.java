@@ -70,8 +70,11 @@ public class MarkupLanguageTagTest
 
 	private WebApplicationContext mockWebApplicationContext;
 
-	/* (non-Javadoc)
+	/**
+	 * setUp:
+	 * 
 	 * @see junit.framework.TestCase#setUp()
+	 * @throws Exception
 	 */
 	@Before
 	public void setUp() throws Exception
@@ -173,7 +176,7 @@ public class MarkupLanguageTagTest
 	{
 		log.trace("testDoStartTagWithPlain");
 
-		Boolean plain = true;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = null;
 		String expectedOutput = htmlPage.getMarkupLanguage();
 
@@ -196,7 +199,7 @@ public class MarkupLanguageTagTest
 	{
 		log.trace("testDoStartTagWithPlainAndStyle");
 
-		Boolean plain = true;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = "style";
 		String expectedOutput = htmlPage.getMarkupLanguage();
 

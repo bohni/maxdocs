@@ -25,6 +25,10 @@ package org.maxdocs.taglib;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.maxdocs.data.MarkupPageTest;
+import org.maxdocs.engine.MaxDocsImplTest;
+import org.maxdocs.parser.MarkupParserTest;
+import org.maxdocs.storage.FileStorageTest;
 
 /**
  * TaglibSuite:
@@ -39,7 +43,11 @@ import org.junit.runners.Suite;
 	MarkupLanguageTagTest.class,
 	PageNameTagTest.class,
 	PageVersionTagTest.class,
-	MessagesTagTest.class
+	MessagesTagTest.class,
+	FileStorageTest.class,
+	MarkupParserTest.class,
+	MaxDocsImplTest.class,
+	MarkupPageTest.class
 })
 public class TaglibSuite
 {

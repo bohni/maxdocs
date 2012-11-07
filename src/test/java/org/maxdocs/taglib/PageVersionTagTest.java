@@ -68,8 +68,11 @@ public class PageVersionTagTest
 
 	private WebApplicationContext mockWebApplicationContext;
 
-	/* (non-Javadoc)
+	/**
+	 * setUp:
+	 * 
 	 * @see junit.framework.TestCase#setUp()
+	 * @throws Exception
 	 */
 	@Before
 	public void setUp() throws Exception
@@ -160,7 +163,7 @@ public class PageVersionTagTest
 	@Test
 	public void testDoStartTagWithPlain() throws JspException, UnsupportedEncodingException
 	{
-		Boolean plain = true;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = null;
 		String expectedOutput = "" + htmlPage.getVersion();
 
@@ -181,7 +184,7 @@ public class PageVersionTagTest
 	@Test
 	public void testDoStartTagWithPlainAndStyle() throws JspException, UnsupportedEncodingException
 	{
-		Boolean plain = true;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = "style";
 		String expectedOutput = "" + htmlPage.getVersion();
 

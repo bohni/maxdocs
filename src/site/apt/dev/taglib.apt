@@ -58,6 +58,8 @@ MaxDocs Taglib
 
 		* insertPage: Liefert den übersetzten Inhalt der angegebenen Seite
 
+		* messagesTag: Gibt Meldungen aus
+
 		* noSuchPage: Zeigt den Body des Tags an, wenn die Seite nicht existiert
 
 		* pageExists: Zeigt den Body des Tags an, wenn die Sete existiert

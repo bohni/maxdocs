@@ -24,6 +24,7 @@
 package org.maxdocs.taglib;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -37,8 +38,6 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.maxdocs.MaxDocsConstants;
-import org.maxdocs.data.HtmlPage;
-import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -65,8 +64,11 @@ public class MessagesTagTest
 	private WebApplicationContext mockWebApplicationContext;
 
 
-	/* (non-Javadoc)
+	/**
+	 * setUp:
+	 * 
 	 * @see junit.framework.TestCase#setUp()
+	 * @throws Exception
 	 */
 	@Before
 	public void setUp() throws Exception
@@ -102,6 +104,13 @@ public class MessagesTagTest
 	}
 
 
+	/**
+	 * testDoStartTagMessagesDefault:
+	 * Check default output.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
 	@Test
 	public void testDoStartTagMessagesDefault() throws JspException, UnsupportedEncodingException
 	{
@@ -111,11 +120,11 @@ public class MessagesTagTest
 		String styleClass = null;
 		String expectedOutput = "<ul class=\"maxdocsMessages\"><li>Message</li></ul>";
 
-		testTag(plain, styleClass, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, expectedOutput));
 	}
 
 
-	private void testTag(Boolean plain, String styleClass, String expectedOutput)
+	private boolean testTag(Boolean plain, String styleClass, String expectedOutput)
 		throws JspException, UnsupportedEncodingException
 	{
 		replayAllMocks();
@@ -136,6 +145,8 @@ public class MessagesTagTest
 		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
+		
+		return true;
 	}
 
 

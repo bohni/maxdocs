@@ -68,8 +68,11 @@ public class PageNameTagTest
 
 	private WebApplicationContext mockWebApplicationContext;
 
-	/* (non-Javadoc)
+	/**
+	 * setUp:
+	 * 
 	 * @see junit.framework.TestCase#setUp()
+	 * @throws Exception
 	 */
 	@Before
 	public void setUp() throws Exception
@@ -110,7 +113,7 @@ public class PageNameTagTest
 
 	/**
 	 * testDoStartTagDefault:
-	 * Check output.
+	 * Check default output.
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
@@ -164,7 +167,7 @@ public class PageNameTagTest
 	{
 		log.trace("testDoStartTagWithPlain");
 
-		Boolean plain = true;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = null;
 		String expectedOutput = htmlPage.getPageName();
 
@@ -187,7 +190,7 @@ public class PageNameTagTest
 	{
 		log.trace("testDoStartTagWithPlainAndStyle");
 
-		Boolean plain = true;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = "style";
 		String expectedOutput = htmlPage.getPageName();
 
