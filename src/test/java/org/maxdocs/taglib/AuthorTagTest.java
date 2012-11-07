@@ -24,6 +24,7 @@
 package org.maxdocs.taglib;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.UnsupportedEncodingException;
 
@@ -67,6 +68,7 @@ public class AuthorTagTest
 	private MockPageContext mockPageContext;
 
 	private WebApplicationContext mockWebApplicationContext;
+
 
 	/**
 	 * setUp:
@@ -112,11 +114,12 @@ public class AuthorTagTest
 			.anyTimes();
 	}
 
+
 	/**
 	 * testDoStartTagAuthorDefault:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>type = "author"</li>
+	 * <li>type = "author"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
@@ -133,15 +136,16 @@ public class AuthorTagTest
 		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + htmlPage.getAuthor()
 			+ "</a></span>";
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagAuthorWithStyle:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>styleClass = "style"</li>
-	 *   <li>type = "author"</li>
+	 * <li>styleClass = "style"</li>
+	 * <li>type = "author"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
@@ -158,15 +162,16 @@ public class AuthorTagTest
 		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + htmlPage.getAuthor()
 			+ "</a></span>";
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagAuthorWithPlain:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>plain = true</li>
-	 *   <li>type = "author"</li>
+	 * <li>plain = true</li>
+	 * <li>type = "author"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
@@ -182,16 +187,17 @@ public class AuthorTagTest
 		String type = "author";
 		String expectedOutput = htmlPage.getAuthor();
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagAuthorWithPlainAndStyle:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>plain = true</li>
-	 *   <li>styleClass = "style"</li>
-	 *   <li>type = "author"</li>
+	 * <li>plain = true</li>
+	 * <li>styleClass = "style"</li>
+	 * <li>type = "author"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
@@ -201,20 +207,21 @@ public class AuthorTagTest
 	public void testDoStartTagAuthorWithPlainAndStyle() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagAuthorWithPlainAndStyle");
-		Boolean plain =  Boolean.TRUE;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = "style";
 		String type = "author";
 		String expectedOutput = htmlPage.getAuthor();
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 
 	}
+
 
 	/**
 	 * testDoStartTagEditorDefault:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>type = "editor"</li>
+	 * <li>type = "editor"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
@@ -231,15 +238,16 @@ public class AuthorTagTest
 		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + htmlPage.getEditor()
 			+ "</a></span>";
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagEditorWithStyle:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>styleClass = "style"</li>
-	 *   <li>type = "editor"</li>
+	 * <li>styleClass = "style"</li>
+	 * <li>type = "editor"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
@@ -256,16 +264,18 @@ public class AuthorTagTest
 		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + htmlPage.getEditor()
 			+ "</a></span>";
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagEditorWithPlain:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>plain = true</li>
-	 *   <li>type = "editor"</li>
+	 * <li>plain = true</li>
+	 * <li>type = "editor"</li>
 	 * </ul>
+	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
@@ -274,21 +284,22 @@ public class AuthorTagTest
 	{
 		log.trace("testDoStartTagEditorWithPlain");
 
-		Boolean plain =  Boolean.TRUE;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = null;
 		String type = "editor";
 		String expectedOutput = htmlPage.getEditor();
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagEditorWithPlainAndStyle:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>plain = true</li>
-	 *   <li>styleClass = "style"</li>
-	 *   <li>type = "editor"</li>
+	 * <li>plain = true</li>
+	 * <li>styleClass = "style"</li>
+	 * <li>type = "editor"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
@@ -299,20 +310,22 @@ public class AuthorTagTest
 	{
 		log.trace("testDoStartTagEditorWithPlainAndStyle");
 
-		Boolean plain =  Boolean.TRUE;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = "style";
 		String type = "editor";
 		String expectedOutput = htmlPage.getEditor();
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagWrongTypeDefault:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>type = "test"</li>
+	 * <li>type = "test"</li>
 	 * </ul>
+	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
@@ -327,15 +340,16 @@ public class AuthorTagTest
 		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">unsupported type '" + type
 			+ "'</a></span>";
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagWrongTypeWithStyle:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>styleClass = "style"</li>
-	 *   <li>type = "test"</li>
+	 * <li>styleClass = "style"</li>
+	 * <li>type = "test"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
@@ -352,15 +366,16 @@ public class AuthorTagTest
 		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">unsupported type '" + type
 			+ "'</a></span>";
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagWrongTypeWithPlain:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>plain = true</li>
-	 *   <li>type = "test"</li>
+	 * <li>plain = true</li>
+	 * <li>type = "test"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
@@ -371,21 +386,22 @@ public class AuthorTagTest
 	{
 		log.trace("testDoStartTagWrongTypePlain");
 
-		Boolean plain =  Boolean.TRUE;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = null;
 		String type = "test";
 		String expectedOutput = "unsupported type '" + type + "'";
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagWrongTypeWithPlainAndStyle:
 	 * Check output with parameters set
 	 * <ul>
-	 *   <li>plain = true</li>
-	 *   <li>styleClass = "style"</li>
-	 *   <li>type = "test"</li>
+	 * <li>plain = true</li>
+	 * <li>styleClass = "style"</li>
+	 * <li>type = "test"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
@@ -396,13 +412,14 @@ public class AuthorTagTest
 	{
 		log.trace("testDoStartTagWrongTypePlain");
 
-		Boolean plain =  Boolean.TRUE;
+		Boolean plain = Boolean.TRUE;
 		String styleClass = "style";
 		String type = "test";
 		String expectedOutput = "unsupported type '" + type + "'";
 
-		testTag(plain, styleClass, type, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
 	}
+
 
 	/**
 	 * testDoStartTagPageNotExists:
@@ -430,9 +447,9 @@ public class AuthorTagTest
 		verifyAllMocks();
 	}
 
-	private void testTag(Boolean plain, String styleClass, String type, String expectedOutput)
-		throws JspException,
-		UnsupportedEncodingException
+
+	private boolean testTag(Boolean plain, String styleClass, String type, String expectedOutput)
+		throws JspException, UnsupportedEncodingException
 	{
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
@@ -457,12 +474,16 @@ public class AuthorTagTest
 		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
+
+		return true;
 	}
+
 
 	private void replayAllMocks()
 	{
 		EasyMock.replay(mockWebApplicationContext, mockEngine);
 	}
+
 
 	private void verifyAllMocks()
 	{
