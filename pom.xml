@@ -267,6 +267,13 @@
 					<inputEncoding>${project.build.sourceEncoding}</inputEncoding>
 					<locales>de,en</locales>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.wagon</groupId>
+						<artifactId>wagon-ssh</artifactId>
+						<version>1.0</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -275,6 +282,8 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>
 			<plugin>
