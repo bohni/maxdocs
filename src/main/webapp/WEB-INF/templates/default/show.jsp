@@ -153,6 +153,6 @@
 	</div>
 		<!-- end: #footer -->
 	<!-- full skiplink functionality in webkit browsers -->
-	<script src="<%=request.getContextPath()%>/internal/templates/default/yaml/core/js/yaml-focusfix.js" type="text/javascript" />
+	<script src="<%=request.getContextPath()%>/internal/templates/default/yaml/core/js/yaml-focusfix.js" type="text/javascript"></script>
 </body>
 </html>
