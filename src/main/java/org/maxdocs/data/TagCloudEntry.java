@@ -32,7 +32,6 @@ import java.util.List;
  * A TagCloudEntry stores all attributes to a single tag.
  * 
  * @author Team maxdocs.org
- *
  */
 public class TagCloudEntry
 {
@@ -40,22 +39,30 @@ public class TagCloudEntry
 
 	private List<String> pages = Collections.synchronizedList(new ArrayList<String>());
 
+
 	/**
 	 * Minimal constructor. Contains required fields.
-
 	 * Creates an {@link TagCloudEntry} object with the given parameters.
-	 *
+	 * 
 	 * @param tagName the name of the tag
 	 */
 	public TagCloudEntry(String tagName)
 	{
 		this.tagName = tagName;
 	}
-	
+
+
+	/**
+	 * addPage:
+	 * Adds the pagePath to this tag
+	 * 
+	 * @param pagePath the pagePath to add
+	 */
 	public void addPage(String pagePath)
 	{
 		pages.add(pagePath);
 	}
+
 
 	/**
 	 * getCount: Returns the count.
@@ -88,7 +95,8 @@ public class TagCloudEntry
 	{
 		return pages;
 	}
-	
+
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -96,6 +104,6 @@ public class TagCloudEntry
 	public String toString()
 	{
 		return "[" + tagName + ":" + pages.size() + ":" + pages + "]";
-		
+
 	}
 }

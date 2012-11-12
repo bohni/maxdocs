@@ -271,6 +271,11 @@ public class AbstractPage
 		this.tags = tags;
 	}
 
+	/**
+	 * addTag: adds a tag to the tag collection
+	 * 
+	 * @param tag the tag to add
+	 */
 	public void addTag(String tag)
 	{
 		getTags().add(tag);

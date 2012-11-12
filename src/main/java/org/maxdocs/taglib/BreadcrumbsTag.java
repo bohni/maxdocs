@@ -49,6 +49,10 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(BreadcrumbsTag.class);
 
+	/**
+	 * Default constructor.
+	 * Creates a {@link BreadcrumbsTag} object.
+	 */
 	public BreadcrumbsTag()
 	{
 		super("maxdocsBreadcrumbs");
