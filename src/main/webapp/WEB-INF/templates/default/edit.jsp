@@ -48,9 +48,9 @@
 <meta name="description" content="${description}"/>
 <meta name="author" content="${author}"/>
 <link href="<%=request.getContextPath()%>/internal/templates/default/css/maxdocs.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/internal/templates/default/css/smoothness/jquery-ui-1.8.17.custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<%=request.getContextPath()%>/internal/templates/default/js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/internal/templates/default/js/jquery-ui-1.8.17.custom.min.js"></script>
+<link href="<%=request.getContextPath()%>/internal/templates/default/css/smoothness/jquery-ui-1.9.1.custom.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/internal/templates/default/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/internal/templates/default/js/jquery-ui-1.9.1.custom.js"></script>
 <script type="text/javascript">
 var contextPath = "<%=request.getContextPath()%>";
 </script>
@@ -167,6 +167,6 @@ var contextPath = "<%=request.getContextPath()%>";
 	</div>
 		<!-- end: #footer -->
 	<!-- full skiplink functionality in webkit browsers -->
-	<script src="<%=request.getContextPath()%>/internal/templates/default/yaml/core/js/yaml-focusfix.js" type="text/javascript" />
+	<script src="<%=request.getContextPath()%>/internal/templates/default/yaml/core/js/yaml-focusfix.js" type="text/javascript"></script>
 </body>
 </html>
