@@ -48,7 +48,9 @@ public class MarkupParserTest
 	 */
 	@Before
 	public void setUp() throws Exception
-	{}
+	{
+		// nothing to do yet
+	}
 
 
 
