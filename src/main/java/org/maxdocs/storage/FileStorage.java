@@ -158,20 +158,21 @@ public class FileStorage implements Storage
 	 */
 	private void createVersionPath(String versionFolder)
 	{
+		String folder = versionFolder;
 		String fileSeparator = System.getProperty("file.separator");
-		if (StringUtils.isBlank(versionFolder))
+		if (StringUtils.isBlank(folder))
 		{
-			versionFolder = DEFAULT_VERSION_FOLDER;
-			log.warn("Parameter versionFolder is not set. Using default value '{}'", versionFolder);
+			folder = DEFAULT_VERSION_FOLDER;
+			log.warn("Parameter versionFolder is not set. Using default value '{}'", folder);
 		}
 
-		if (StringUtils.startsWith(versionFolder, fileSeparator))
+		if (StringUtils.startsWith(folder, fileSeparator))
 		{
-			this.versionPath = this.contentPath + versionFolder.substring(1);
+			this.versionPath = this.contentPath + folder.substring(1);
 		}
 		else
 		{
-			this.versionPath = this.contentPath + versionFolder;
+			this.versionPath = this.contentPath + folder;
 		}
 		if (!StringUtils.endsWith(this.versionPath, fileSeparator))
 		{

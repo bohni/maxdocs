@@ -53,6 +53,11 @@ public class FileStorageTest
 	private static Logger log = LoggerFactory.getLogger(FileStorageTest.class);
 	private FileStorage storage;	
 	private File tempDir;
+	/**
+	 * setUp:
+	 * @see Before
+	 * @throws IOException
+	 */
 	@Before
 	public void setUp() throws IOException
 	{
@@ -61,6 +66,10 @@ public class FileStorageTest
 		storage = new FileStorage(tempDir.getAbsolutePath());	
 	}
 	
+	/**
+	 * shutdown:
+	 * @see After
+	 */
 	@After
 	public void shutdown()
 	{
@@ -94,6 +103,10 @@ public class FileStorageTest
 		}
 	}
 
+	/**
+	 * testSave: Test for saving a page
+	 * 
+	 */
 	@Test
 	public void testSave()
 	{
@@ -119,6 +132,10 @@ public class FileStorageTest
 		}
 	}
 
+	/**
+	 * testPageToString: Test to transform a page to a String for saving
+	 * 
+	 */
 	@Test
 	public void testPageToString()
 	{
