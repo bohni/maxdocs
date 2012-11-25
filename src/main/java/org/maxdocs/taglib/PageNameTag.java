@@ -30,6 +30,7 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.engine.MaxDocs;
@@ -72,19 +73,23 @@ public class PageNameTag extends AbstractMaxDocsTagSupport
 				MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pagePath);
 
+			String pageName;
 			if (htmlPage != null)
 			{
-				String pageName = htmlPage.getPageName();
-
-				if (isPlain())
-				{
-					pageContext.getOut().write(pageName);
-				}
-				else
-				{
-					pageContext.getOut()
-						.write("<h1 class=\"" + getStyleClass() + "\">" + pageName + "</h1>");
-				}
+				pageName = htmlPage.getPageName();
+			}
+			else
+			{
+				pageName = StringUtils.substringAfterLast(pagePath, "/");
+			}
+			if (isPlain())
+			{
+				pageContext.getOut().write(pageName);
+			}
+			else
+			{
+				pageContext.getOut()
+					.write("<h1 class=\"" + getStyleClass() + "\">" + pageName + "</h1>");
 			}
 		}
 		catch (IOException e)
