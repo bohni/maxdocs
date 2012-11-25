@@ -230,7 +230,7 @@
 			<description>The name of the page to be evaluated.</description>
 			<name>page</name>
 			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 
@@ -243,7 +243,7 @@
 			<description>The name of the page to be evaluated.</description>
 			<name>page</name>
 			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 
