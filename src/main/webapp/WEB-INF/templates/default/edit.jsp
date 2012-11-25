@@ -148,7 +148,15 @@ var contextPath = "<%=request.getContextPath()%>";
 				<!-- begin: #col3 static column -->
 				<div class="ym-col3">
 					<div class="ym-cbox">
-						<h2>Seite <max:pageName plain="true" /> bearbeiten</h2>
+						<h2>Seite <max:pageName plain="true" />
+						<c:set var="pageName"><max:pageName plain="true"/></c:set>
+						<max:noSuchPage page="${pageName}">
+							erstellen
+						</max:noSuchPage>
+						<max:pageExists page="${pageName}">
+							bearbeiten
+						</max:pageExists>
+						</h2>
 						<form method="post" action="?action=save" accept-charset="UTF-8">
 							<p>Markup: <max:markupLanguage type="input" size="1" /></p>
 							<textarea rows="15" cols="58" name="content"><max:pageSource /></textarea>
