@@ -29,6 +29,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <%@ taglib uri="/WEB-INF/maxdocs.tld" prefix="max"%>
 
 <html lang="en">
@@ -38,7 +39,7 @@
 <fmt:setBundle var="internal" basename="org.maxdocs.maxdocs" /> 
 <fmt:setBundle var="maxdocs" basename="maxdocs" /> 
 <title>
-<fmt:message key="show.title" bundle="${template}">
+<fmt:message key="edit.title" bundle="${template}">
       <fmt:param><max:pageName plain="true" /></fmt:param>
       <fmt:param>MaxDocs</fmt:param>
     </fmt:message>
@@ -72,14 +73,25 @@ var contextPath = "<%=request.getContextPath()%>";
 		<div class="ym-wbox">
 			<header>
 				<div id="topnav">
+					<c:url var="login" value="">
+						<c:param name="action" value="login" />
+					</c:url>
+					<c:url var="logout" value="">
+						<c:param name="action" value="doLogout" />
+					</c:url>
 					<span>
-						<a href="#">Login</a> |
-						<a href="#">Contact</a> | 
-						<a href="#">Imprint</a>
+						<shiro:notAuthenticated>
+							<a href="${login}"><fmt:message key="link.login.title" bundle="${template}" /></a> |
+						</shiro:notAuthenticated>
+						<shiro:authenticated>
+							<a href="${logout}"><fmt:message key="link.logout.title" bundle="${template}" /></a> |
+						</shiro:authenticated>
+						<a href="Contact"><fmt:message key="link.contact.title" bundle="${template}" /></a> |
+						<a href="Imprint"><fmt:message key="link.imprint.title" bundle="${template}" /></a>
 					</span>
 				</div>
 				<h2><img src="<%=request.getContextPath()%>/internal/templates/default/images/maxdocs-klein.png" alt="MaxDocs" /><br/>
-				<fmt:message key="show.heading" bundle="${template}" /></h2>
+				<fmt:message key="edit.heading" bundle="${template}" /></h2>
 			</header>
 			<div id="breadcrumbs">
 				<max:breadcrumbs />
@@ -101,12 +113,12 @@ var contextPath = "<%=request.getContextPath()%>";
 					<c:param name="action" value="info" />
 				</c:url>
 				<span>
-					<a href="${show}"><fmt:message key="show.link.show" bundle="${template}" /></a> | 
-					<fmt:message key="show.link.edit" bundle="${template}" /> | 
-					<a href="${delete}"><fmt:message key="show.link.delete" bundle="${template}" /></a> | 
-					<a href="${rename}"><fmt:message key="show.link.rename" bundle="${template}" /></a> | 
-					<a href="${source}"><fmt:message key="show.link.source" bundle="${template}" /></a> | 
-					<a href="${info}"><fmt:message key="show.link.info" bundle="${template}" /></a>
+					<a href="${show}"><fmt:message key="link.show.title" bundle="${template}" /></a> | 
+					<fmt:message key="link.edit.title" bundle="${template}" /> | 
+					<a href="${delete}"><fmt:message key="link.delete.title" bundle="${template}" /></a> | 
+					<a href="${rename}"><fmt:message key="link.rename.title" bundle="${template}" /></a> | 
+					<a href="${source}"><fmt:message key="link.source.title" bundle="${template}" /></a> | 
+					<a href="${info}"><fmt:message key="link.info.title" bundle="${template}" /></a>
 				</span>
 			</div>
 			<div id="main">

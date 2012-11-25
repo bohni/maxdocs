@@ -39,6 +39,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.MarkupPage;
 import org.maxdocs.engine.MaxDocs;
@@ -47,7 +54,6 @@ import org.maxdocs.exceptions.EditWithoutChangesException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -60,7 +66,10 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class MaxDocsServlet extends HttpServlet
 {
 	private static final String ACTION_DELETE = "delete";
+	private static final String ACTION_DO_LOGIN = "dologin";
+	private static final String ACTION_DO_LOGOUT = "dologout";
 	private static final String ACTION_EDIT = "edit";
+	private static final String ACTION_LOGIN = "login";
 	private static final String ACTION_RENAME = "rename";
 	private static final String ACTION_SAVE = "save";
 	private static final String ACTION_SHOW = "show";
@@ -150,9 +159,21 @@ public class MaxDocsServlet extends HttpServlet
 		{
 			actionDelete(request, response);
 		}
+		else if (StringUtils.equalsIgnoreCase(action, ACTION_DO_LOGIN))
+		{
+			actionDoLogin(request, response);
+		}
+		else if (StringUtils.equalsIgnoreCase(action, ACTION_DO_LOGOUT))
+		{
+			actionDoLogout(request, response);
+		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
 		{
 			actionEdit(request, response);
+		}
+		else if (StringUtils.equalsIgnoreCase(action, ACTION_LOGIN))
+		{
+			actionLogin(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_RENAME))
 		{
@@ -170,6 +191,10 @@ public class MaxDocsServlet extends HttpServlet
 		{
 			actionSource(request, response);
 		}
+		else
+		{
+			actionShow(request, response);
+		}
 		response.setCharacterEncoding("UTF-8");
 	}
 
@@ -181,6 +206,7 @@ public class MaxDocsServlet extends HttpServlet
 	 */
 	private void buildBreadcrumbs(HttpServletRequest request)
 	{
+		log.trace("buildBreadcrumbs(HttpServletRequest)");
 		// get Breadcrumbs from session 
 		CircularFifoBuffer breadcrumbs = (CircularFifoBuffer) request.getSession().getAttribute(
 			MaxDocsConstants.MAXDOCS_BREADCRUMBS);
@@ -224,14 +250,126 @@ public class MaxDocsServlet extends HttpServlet
 	private void actionDelete(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		// TODO, 03.02.2012: check user role
-		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
-		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		if (!maxDocs.delete(pagePath))
+		log.trace("actionDelete(HttpServletRequest, HttpServletResponse");
+		Subject currentUser = SecurityUtils.getSubject();
+		String username = (String) currentUser.getPrincipal();
+
+		List<String> messages = getMessages(request);
+		if (checkPermission(currentUser, "page:delete"))
 		{
-			// TODO, 03.02.2012: show error message
+			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			if (!maxDocs.delete(pagePath))
+			{
+				messages.add("Page '" + pagePath + "' could not be deleted!");
+			}
 		}
+		else
+		{
+			log.debug("Missing delete permission");
+			if (username == null)
+			{
+				messages.add("No delete permission for unkown users");
+
+			}
+			else
+			{
+				messages.add("Missing delete permission for user " + username);
+			}
+		}
+		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+		actionShow(request, response);
+	}
+
+
+	/**
+	 * actionDoLogin:
+	 * Does the login with Apache Shiro
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void actionDoLogin(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		log.trace("actionDoLogin(HttpServletRequest, HttpServletResponse");
+		Subject currentUser = SecurityUtils.getSubject();
+		if (!currentUser.isAuthenticated())
+		{
+			String username = (String) request.getParameter("username");
+			String password = (String) request.getParameter("password");
+
+			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+
+			//this is all you have to do to support 'remember me' (no config - built in!):
+			String strRememberme = (String) request.getParameter("rememberMe");
+			if (StringUtils.isNotBlank(strRememberme))
+			{
+				boolean rememberme = Boolean.parseBoolean(strRememberme);
+				token.setRememberMe(rememberme);
+			}
+			List<String> messages = getMessages(request);
+			try
+			{
+				currentUser.login(token);
+				log.debug("User {} successfully logged in", username);
+				messages.add("Successfully logged in!");
+				// TODO: Where to go?
+				actionShow(request, response);
+			}
+			catch (UnknownAccountException uae)
+			{
+				//username wasn't in the system, show them an error message?
+				log.debug("User {} not logged in: UnknownAccountException", username);
+				messages.add("Username and password do not match!");
+				actionLogin(request, response);
+			}
+			catch (IncorrectCredentialsException ice)
+			{
+				//password didn't match, try again?
+				log.debug("User {} not logged in: IncorrectCredentialsException", username);
+				messages.add("Username and password do not match!");
+				actionLogin(request, response);
+			}
+			catch (LockedAccountException lae)
+			{
+				//account for that username is locked - can't login.  Show them a message?
+				log.debug("User {} not logged in: LockedAccountException", username);
+				messages.add("Username and password do not match!");
+				actionLogin(request, response);
+			}
+			catch (AuthenticationException ae)
+			{
+				//unexpected condition - error?
+				log.error("User {} not logged in: AuthenticationException - {}", username, ae.getMessage());
+				messages.add("An unkonwn error occurred! Try again later!");
+				actionLogin(request, response);
+			}
+			finally
+			{
+				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+			}
+		}
+
+	}
+
+
+	/**
+	 * actionLogout:
+	 * Performs the logout
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void actionDoLogout(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		log.trace("actionLogout(HttpServletRequest, HttpServletResponse");
+		// TODO: logout
 		actionShow(request, response);
 	}
 
@@ -247,25 +385,51 @@ public class MaxDocsServlet extends HttpServlet
 	private void actionEdit(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		// TODO, 03.02.2012: check user role
-		if(!SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_USER"))
+		log.trace("actionEdit(HttpServletRequest, HttpServletResponse");
+		Subject currentUser = SecurityUtils.getSubject();
+		String username = (String) currentUser.getPrincipal();
+		if (checkPermission(currentUser, "page:edit"))
+		{
+			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
+			request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/edit.jsp").forward(
+				request, response);
+		}
+		else
 		{
 			log.debug("Missing edit permission");
-			List<String> messages = (List<String>) request.getAttribute(MaxDocsConstants.MAXDOCS_MESSAGES);
-			if(messages == null)
+			List<String> messages = getMessages(request);
+			if (username == null)
 			{
-				messages = new ArrayList<String>();
+				messages.add("No edit permission for unkown users");
+
 			}
-			messages.add("Missing edit permission");
+			else
+			{
+				messages.add("Missing edit permission for user " + username);
+			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 			actionShow(request, response);
 		}
-		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
-		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
-		request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
-		request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/edit.jsp").forward(request,
+	}
+
+
+	/**
+	 * actionLogin:
+	 * Shows the login page
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void actionLogin(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		log.trace("actionLogin(HttpServletRequest, HttpServletResponse");
+		request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/login.jsp").forward(request,
 			response);
 	}
 
@@ -281,13 +445,33 @@ public class MaxDocsServlet extends HttpServlet
 	private void actionRename(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		// TODO, 03.02.2012: check user role
-		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
-		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		// maxDocs.rename(pagePath, newPagePath);
+		log.trace("actionRename(HttpServletRequest, HttpServletResponse");
+		Subject currentUser = SecurityUtils.getSubject();
+		String username = (String) currentUser.getPrincipal();
+		if (checkPermission(currentUser, "page:rename"))
+		{
+			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			// TODO: maxDocs.rename(pagePath, newPagePath);
+		}
+		else
+		{
+			log.debug("Missing rename permission");
+			List<String> messages = getMessages(request);
+			if (username == null)
+			{
+				messages.add("No rename permission for unkown users");
+
+			}
+			else
+			{
+				messages.add("Missing rename permission for user " + username);
+			}
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+		}
 		actionShow(request, response);
 	}
+
 
 	/**
 	 * actionSave:
@@ -301,54 +485,74 @@ public class MaxDocsServlet extends HttpServlet
 	private void actionSave(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		// TODO, 03.02.2012: check user role
-		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
-		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		MarkupPage newPage = new MarkupPage();
-		newPage.setAuthor(username);
-		newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
-		newPage.setEditor(username);
-		newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
-		newPage.setPagePath(pagePath);
-		if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_TAGS)))
+		log.trace("actionSave(HttpServletRequest, HttpServletResponse");
+		Subject currentUser = SecurityUtils.getSubject();
+		String username = (String) currentUser.getPrincipal();
+		List<String> messages = getMessages(request);
+		if (checkPermission(currentUser, "page:save"))// TODO: which permissions allow saving?
 		{
-			String tags = request.getParameter(PARAMETER_NAME_TAGS);
-			String[] tagArray = StringUtils.splitByWholeSeparator(tags, ", ");
-			Set<String> tagList = Collections.synchronizedSet(new HashSet<String>());
-			for (String tag : tagArray)
+			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			MarkupPage newPage = new MarkupPage();
+			newPage.setAuthor(username);
+			newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
+			newPage.setEditor(username);
+			newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
+			newPage.setPagePath(pagePath);
+			if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_TAGS)))
 			{
-				tagList.add(tag.trim());
+				String tags = request.getParameter(PARAMETER_NAME_TAGS);
+				String[] tagArray = StringUtils.splitByWholeSeparator(tags, ", ");
+				Set<String> tagList = Collections.synchronizedSet(new HashSet<String>());
+				for (String tag : tagArray)
+				{
+					tagList.add(tag.trim());
+				}
+				newPage.setTags(tagList);
 			}
-			newPage.setTags(tagList);
+			if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
+			{
+				newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
+			}
+			boolean success = false;
+			try
+			{
+				success = maxDocs.save(newPage);
+			}
+			catch (ConcurrentEditException e)
+			{
+				// TODO: show error message
+				log.debug("Concurrent changes...");
+			}
+			catch (EditWithoutChangesException e)
+			{
+				// TODO: show error message
+				log.debug("No changes...");
+			}
+	
+			if (!success)
+			{
+				// TODO: show error message
+				log.error("Other error");
+			}
 		}
-		if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
+		else
 		{
-			newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
-		}
-		boolean success = false;
-		try
-		{
-			success = maxDocs.save(newPage);
-		}
-		catch (ConcurrentEditException e)
-		{
-			// TODO: show error message
-			log.debug("Concurrent changes...");
-		}
-		catch (EditWithoutChangesException e)
-		{
-			// TODO: show error message
-			log.debug("No changes...");
-		}
+			log.debug("Missing save permission");
+			if (username == null)
+			{
+				messages.add("No save permission for unkown users");
 
-		if (!success)
-		{
-			// TODO: show error message
-			log.error("Other error");
+			}
+			else
+			{
+				messages.add("Missing save permission for user " + username);
+			}
 		}
+		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 		actionShow(request, response);
 	}
+
 
 	/**
 	 * actionShow:
@@ -362,7 +566,9 @@ public class MaxDocsServlet extends HttpServlet
 	private void actionShow(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		log.trace("actionShow(HttpServletRequest, HttpServletResponse");
+		Subject currentUser = SecurityUtils.getSubject();
+		String username = (String) currentUser.getPrincipal();
 		// TODO, 03.02.2012: check user role
 		request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/show.jsp").forward(request,
 			response);
@@ -380,10 +586,30 @@ public class MaxDocsServlet extends HttpServlet
 	private void actionSource(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		// TODO, 03.02.2012: check user role
-		request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/source.jsp").forward(request,
-			response);
+		log.trace("actionSource(HttpServletRequest, HttpServletResponse");
+		Subject currentUser = SecurityUtils.getSubject();
+		String username = (String) currentUser.getPrincipal();
+		if (checkPermission(currentUser, "page:viewSource"))
+		{
+			request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/source.jsp").forward(request,
+				response);
+		}
+		else
+		{
+			log.debug("Missing viewSource permission");
+			List<String> messages = getMessages(request);
+			if (username == null)
+			{
+				messages.add("No viewSource permission for unkown users");
+
+			}
+			else
+			{
+				messages.add("Missing viewSource permission for user " + username);
+			}
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+			actionShow(request, response);
+		}
 	}
 
 	/**
@@ -394,10 +620,48 @@ public class MaxDocsServlet extends HttpServlet
 	 */
 	private String getTemplate()
 	{
+		log.trace("getTemplate()");
 		ApplicationContext context = WebApplicationContextUtils
 			.getRequiredWebApplicationContext(getServletContext());
 		String templateName = (String) context.getBean("templateName");
 		log.debug("templateName={}", templateName);
 		return templateName;
+	}
+
+
+	/**
+	 * checkPermission:
+	 * Checks, if currentUser is permitted for permission.
+	 * 
+	 * @param currentUser
+	 * @param permission
+	 * @return <code>true</code>, if user is permitted
+	 */
+	private boolean checkPermission(Subject currentUser, String permission)
+	{
+		log.trace("checkPermission(Subject, String)");
+		if (currentUser.isPermitted(permission))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	
+	/**
+	 * getMessages:
+	 * Returns the messages list from teh request.
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @return the message list
+	 */
+	private List<String> getMessages(HttpServletRequest request)
+	{
+		List<String> messages = (List<String>) request.getAttribute(MaxDocsConstants.MAXDOCS_MESSAGES);
+		if (messages == null)
+		{
+			messages = new ArrayList<String>();
+		}
+		return messages;
 	}
 }
