@@ -208,18 +208,13 @@ public class PageNameTagTest
 	public void testDoStartTagPageNotExists() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagPageNotExists");
-		String expectedOutput = "";
 
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
-		replayAllMocks();
+		Boolean plain = null;
+		String styleClass = null;
 
-		int tagReturnValue = pageNameTag.doStartTag();
-		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+		String expectedOutput = "<h1 class=\"maxdocsPageName\">" + htmlPage.getPageName() + "</h1>";
 
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
-		assertEquals("Output should be empty", expectedOutput, output);
-
-		verifyAllMocks();
+		testTag(plain, styleClass, expectedOutput);
 	}
 
 	/**
