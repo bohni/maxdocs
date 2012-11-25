@@ -254,24 +254,19 @@ public class MaxDocsServlet extends HttpServlet
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
 
-		List<String> messages = (List<String>) request.getAttribute(MaxDocsConstants.MAXDOCS_MESSAGES);
+		List<String> messages = getMessages(request);
 		if (checkPermission(currentUser, "page:delete"))
 		{
 			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			if (!maxDocs.delete(pagePath))
 			{
-
 				messages.add("Page '" + pagePath + "' could not be deleted!");
 			}
 		}
 		else
 		{
 			log.debug("Missing delete permission");
-			if (messages == null)
-			{
-				messages = new ArrayList<String>();
-			}
 			if (username == null)
 			{
 				messages.add("No delete permission for unkown users");
@@ -315,11 +310,7 @@ public class MaxDocsServlet extends HttpServlet
 				boolean rememberme = Boolean.parseBoolean(strRememberme);
 				token.setRememberMe(rememberme);
 			}
-			List<String> messages = (List<String>) request.getAttribute(MaxDocsConstants.MAXDOCS_MESSAGES);
-			if (messages == null)
-			{
-				messages = new ArrayList<String>();
-			}
+			List<String> messages = getMessages(request);
 			try
 			{
 				currentUser.login(token);
@@ -409,11 +400,7 @@ public class MaxDocsServlet extends HttpServlet
 		else
 		{
 			log.debug("Missing edit permission");
-			List<String> messages = (List<String>) request.getAttribute(MaxDocsConstants.MAXDOCS_MESSAGES);
-			if (messages == null)
-			{
-				messages = new ArrayList<String>();
-			}
+			List<String> messages = getMessages(request);
 			if (username == null)
 			{
 				messages.add("No edit permission for unkown users");
@@ -461,10 +448,27 @@ public class MaxDocsServlet extends HttpServlet
 		log.trace("actionRename(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
-		// TODO, 03.02.2012: check user role
-		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
-		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		// maxDocs.rename(pagePath, newPagePath);
+		if (checkPermission(currentUser, "page:rename"))
+		{
+			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			// TODO: maxDocs.rename(pagePath, newPagePath);
+		}
+		else
+		{
+			log.debug("Missing rename permission");
+			List<String> messages = getMessages(request);
+			if (username == null)
+			{
+				messages.add("No rename permission for unkown users");
+
+			}
+			else
+			{
+				messages.add("Missing rename permission for user " + username);
+			}
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+		}
 		actionShow(request, response);
 	}
 
@@ -484,53 +488,71 @@ public class MaxDocsServlet extends HttpServlet
 		log.trace("actionSave(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
-		// TODO, 03.02.2012: check user role
-		String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
-		MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-		MarkupPage newPage = new MarkupPage();
-		newPage.setAuthor(username);
-		newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
-		newPage.setEditor(username);
-		newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
-		newPage.setPagePath(pagePath);
-		if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_TAGS)))
+		List<String> messages = getMessages(request);
+		if (checkPermission(currentUser, "page:save"))// TODO: which permissions allow saving?
 		{
-			String tags = request.getParameter(PARAMETER_NAME_TAGS);
-			String[] tagArray = StringUtils.splitByWholeSeparator(tags, ", ");
-			Set<String> tagList = Collections.synchronizedSet(new HashSet<String>());
-			for (String tag : tagArray)
+			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			MarkupPage newPage = new MarkupPage();
+			newPage.setAuthor(username);
+			newPage.setContent(request.getParameter(PARAMETER_NAME_CONTENT));
+			newPage.setEditor(username);
+			newPage.setMarkupLanguage(request.getParameter(PARAMETER_NAME_MARKUP));
+			newPage.setPagePath(pagePath);
+			if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_TAGS)))
 			{
-				tagList.add(tag.trim());
+				String tags = request.getParameter(PARAMETER_NAME_TAGS);
+				String[] tagArray = StringUtils.splitByWholeSeparator(tags, ", ");
+				Set<String> tagList = Collections.synchronizedSet(new HashSet<String>());
+				for (String tag : tagArray)
+				{
+					tagList.add(tag.trim());
+				}
+				newPage.setTags(tagList);
 			}
-			newPage.setTags(tagList);
+			if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
+			{
+				newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
+			}
+			boolean success = false;
+			try
+			{
+				success = maxDocs.save(newPage);
+			}
+			catch (ConcurrentEditException e)
+			{
+				// TODO: show error message
+				log.debug("Concurrent changes...");
+			}
+			catch (EditWithoutChangesException e)
+			{
+				// TODO: show error message
+				log.debug("No changes...");
+			}
+	
+			if (!success)
+			{
+				// TODO: show error message
+				log.error("Other error");
+			}
 		}
-		if (StringUtils.isNotBlank(request.getParameter(PARAMETER_NAME_VERSION)))
+		else
 		{
-			newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
-		}
-		boolean success = false;
-		try
-		{
-			success = maxDocs.save(newPage);
-		}
-		catch (ConcurrentEditException e)
-		{
-			// TODO: show error message
-			log.debug("Concurrent changes...");
-		}
-		catch (EditWithoutChangesException e)
-		{
-			// TODO: show error message
-			log.debug("No changes...");
-		}
+			log.debug("Missing save permission");
+			if (username == null)
+			{
+				messages.add("No save permission for unkown users");
 
-		if (!success)
-		{
-			// TODO: show error message
-			log.error("Other error");
+			}
+			else
+			{
+				messages.add("Missing save permission for user " + username);
+			}
 		}
+		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 		actionShow(request, response);
 	}
+
 
 	/**
 	 * actionShow:
@@ -567,9 +589,27 @@ public class MaxDocsServlet extends HttpServlet
 		log.trace("actionSource(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
-		// TODO, 03.02.2012: check user role
-		request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/source.jsp").forward(request,
-			response);
+		if (checkPermission(currentUser, "page:viewSource"))
+		{
+			request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/source.jsp").forward(request,
+				response);
+		}
+		else
+		{
+			log.debug("Missing viewSource permission");
+			List<String> messages = getMessages(request);
+			if (username == null)
+			{
+				messages.add("No viewSource permission for unkown users");
+
+			}
+			else
+			{
+				messages.add("Missing viewSource permission for user " + username);
+			}
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+			actionShow(request, response);
+		}
 	}
 
 	/**
@@ -605,5 +645,23 @@ public class MaxDocsServlet extends HttpServlet
 			return true;
 		}
 		return false;
+	}
+
+	
+	/**
+	 * getMessages:
+	 * Returns the messages list from teh request.
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @return the message list
+	 */
+	private List<String> getMessages(HttpServletRequest request)
+	{
+		List<String> messages = (List<String>) request.getAttribute(MaxDocsConstants.MAXDOCS_MESSAGES);
+		if (messages == null)
+		{
+			messages = new ArrayList<String>();
+		}
+		return messages;
 	}
 }
