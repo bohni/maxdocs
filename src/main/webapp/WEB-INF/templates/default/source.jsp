@@ -109,10 +109,15 @@
 					<div class="ym-cbox">
 						<h2>Navigation</h2>
 						<max:pageExists page="LeftMenu">
-						<max:insertPage name="LeftMenu" />
+							<max:insertPage name="LeftMenu" />
 						</max:pageExists>
 						<max:noSuchPage page="LeftMenu">
-						<p>Menu nicht vorhanden</p>
+							<c:url var="createMenu" value="LeftMenu">
+								<c:param name="action" value="edit" />
+							</c:url>
+							<p>
+								Menu nicht vorhanden - <a href="${createMenu}">Erstellen</a>
+							</p>
 						</max:noSuchPage>
 					</div>
 				</div>
@@ -136,9 +141,8 @@
 				</div>
 				<!-- end: #col3 -->
 			</div>
-	<!-- end: #main -->
+			<!-- end: #main -->
 
-	<!-- begin: #footer -->
 			<footer>
 				This page (version <max:pageVersion />) was last changed on 
 				<max:date type="lastChange" /> by <max:author type="editor" />
@@ -150,7 +154,6 @@
 			</footer>
 		</div>
 	</div>
-		<!-- end: #footer -->
 	<!-- full skiplink functionality in webkit browsers -->
 	<script src="<%=request.getContextPath()%>/internal/templates/default/yaml/core/js/yaml-focusfix.js" type="text/javascript"></script>
 </body>
