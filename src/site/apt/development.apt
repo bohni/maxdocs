@@ -1,4 +1,4 @@
-~~
+
 ~~ Copyright (c) 2011-2012, Team maxdocs.org
 ~~
 ~~ All rights reserved.
@@ -142,6 +142,8 @@ Entwicklung
 		* prüfen: mvn validate license:check
 
 		* generieren: mvn validate license:format
+		
+	* {{{https://github.com/github/maven-plugins}Github Plugins}}
 
 * nützliche Links
 
@@ -152,4 +154,5 @@ Entwicklung
 	* {{{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}UTF-8 encoding mit Apache Tomcat}}
 	
 	* {{{http://ahoehma.wordpress.com/2010/05/25/export-maven-war-artifact-as-runnable-jetty-package/}Assembly als Standalone}}
- 
+	
+	* {{{http://shaierera.blogspot.de/2012/11/lucene-facets-part-1.html}Lucene Facets, Part 1}}
