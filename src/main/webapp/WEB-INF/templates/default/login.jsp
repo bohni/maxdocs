@@ -115,7 +115,7 @@
 							Username: <input type="text" name="username" /> <br />
 							Password: <input type="password" name="password" /><br />
 							<input type="checkbox" name="rememberMe" value="true" />Remember Me?
-							<button type="submit">${login.button.submit}</button>
+							<button type="submit"><fmt:message key="login.button.submit" bundle="${template}" /></button>
 						</form>
 					</div>
 				</div>
