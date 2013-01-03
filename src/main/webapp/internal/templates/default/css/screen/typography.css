@@ -235,4 +235,9 @@
   .tagcloud5 {font-size: large;}
   .tagcloud6 {font-size: x-large;}
   .tagcloud7 {font-size: xx-large;}
+  
+  .maxdocsBreadcrumbs {list-style-type: none; margin: 0; }
+  .maxdocsBreadcrumbs li {margin: 0; padding-right: 0.5em; display: inline;}
+  .maxdocsBreadcrumbs li:FIRST-CHILD:BEFORE {padding:0; content: ""}
+  .maxdocsBreadcrumbs li:BEFORE { padding-right: 0.5em; content: ">";}
 }
