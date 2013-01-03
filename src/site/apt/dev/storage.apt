@@ -63,13 +63,13 @@ Storage
   <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 +-----------------------------------------
 
-	* Storage liefert Linksliste für alle Seiten (wer verlink auf mich)
-
-	* Engine nutzt Linkliste für z.B. rename. Sie benutzt den Parser für 
-	geänderte Links und den Storage rein zum Speichern der geänderten Seiten. 
+	* Storage liefert Linksliste für alle Seiten (wer verlink auf mich)\
+	  Engine nutzt Linkliste für z.B. rename. Sie benutzt den Parser für 
+	  geänderte Links und den Storage rein zum Speichern der geänderten Seiten.\
+	  (neuer Ansatz: siehe {{{engine.html}Engine}}  
 
 	* Ursprungsversion beim Speichern prüfen, ob noch vorhanden oder bereits eine 
-	neuere Version gespeichert ist.
+	  neuere Version gespeichert ist.
 
 FileStorageProvider
 
@@ -86,7 +86,7 @@ FileStorageProvider
 		* Install anbieten -> Doku aus Jarfile lesen und als www schreiben
 
 	* Alle Seiten werden auf dem Filesystem nur mit <lfdNr>.txt gespeichert.
-	Die Seiten enthalten den PagePath als Metadaten\
-	Alle Seiten werden beim Start eingelesen in Liste/Map mit Zuordnung PagePath<->LfdNr
+	  Die Seiten enthalten den PagePath als Metadaten\
+	  Alle Seiten werden beim Start eingelesen in Liste/Map mit Zuordnung PagePath<->LfdNr
 
-	*  	Versionierung erfolgt als <ContentFolder>/<VersionsFolder>/<LfdNr>/<Version>.txt
+	* Versionierung erfolgt als <ContentFolder>/<VersionsFolder>/<LfdNr>/<Version>.txt
