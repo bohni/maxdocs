@@ -1,7 +1,7 @@
 <!doctype html>
 <%--
 
-    Copyright (c) 2011-2012, Team maxdocs.org
+    Copyright (c) 2011-2013, Team maxdocs.org
 
     All rights reserved.
 

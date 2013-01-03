@@ -1,5 +1,5 @@
 @REM
-@REM Copyright (c) 2011-2012, Team maxdocs.org
+@REM Copyright (c) 2011-2013, Team maxdocs.org
 @REM
 @REM All rights reserved.
 @REM
