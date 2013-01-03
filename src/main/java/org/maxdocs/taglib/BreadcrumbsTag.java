@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * BreadcrumbsTag:
- * Tag, that displays breadcrumbs of the session.
+ * Tag, that displays breadcrumbs stored in request as unordered list.
  *
  * @author Team maxdocs.org
  *
@@ -79,26 +79,24 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 
 				@SuppressWarnings("rawtypes")
 				Iterator iter = breadcrumbsMap.iterator();
-
 				while (iter.hasNext())
 				{
-					if (breadcrumbs.length() > 0)
-					{
-						breadcrumbs.append(" &gt; ");
-					}
 					String breadcrumb = (String) iter.next();
-					breadcrumbs.append("<a href=\"" + request.getContextPath() + breadcrumb + "\" title=\""
-						+ breadcrumb + "\">" + StringUtils.substringAfterLast(breadcrumb, "/") + "</a>");
+					breadcrumbs.append("<li><a href=\"" + request.getContextPath() + breadcrumb + "\" title=\""
+						+ breadcrumb + "\">" + StringUtils.substringAfterLast(breadcrumb, "/") + "</a></li>");
 				}
-
+				
 				if (isPlain())
 				{
+					breadcrumbs.insert(0, "<ul>");
+					breadcrumbs.append("</ul>");
 					pageContext.getOut().write(breadcrumbs.toString());
 				}
 				else
 				{
-					pageContext.getOut().write(
-						"<span class=\"" + getStyleClass() + "\">" + breadcrumbs.toString() + "</span>");
+					breadcrumbs.insert(0, "<ul class=\"" + getStyleClass() + "\">");
+					breadcrumbs.append("</ul>");
+					pageContext.getOut().write(breadcrumbs.toString());
 				}
 			}
 		}
