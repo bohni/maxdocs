@@ -27,56 +27,204 @@
  ------
  Team maxdocs.org
  ------
- 2011-12-30
+2013-01-06
  
 Roadmap
 
- Auf dieser Seite werden die nächsten geplanten Schritte beschrieben.
+ Auf dieser Seite werden die nächsten Milertones und die benötigten Features beschrieben.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* nächster Schritt
+* Milestone M1
 
-** Dokumentation
+ In diesem Milestone soll eine erste Version von Maxdocs entstehen, mit der Seiten erstellt, 
+ angezeigt, bearbeitet und gelöscht werden können.
 
- Javadoc-Kommentare prüfen und vereinheitlichen.
+ Es wird ein erstes rudimentäres Template erstellt, welches die benötigten Funktionen unterstützt.
+ Dabei erfolgt die Anzeige grundsätzlich über CustomTags, welche die Daten zu Anzeige von der Engine
+ holen.
 
- Architektur dokumentieren.
+ Das Datenmodell besteht aus "Seiten". Es gibt Seitenobjekte für die Seite mit dem Inhalt als Markup
+ und es gibt Objekte mit dem fertig als HTML gerenderten Inhalt. 
 
- Bereits implementierte Konzepte dokumentieren.
+ Es wird ein ServletFilter benötigt, der die Request entsprechend der URL filtert. Allen Aufrufe für 
+ Seiten in Maxdocs  wird "/content" vorangestellt, damit dann das MaxdocsServlet den dispatchten 
+ Request bearbeiten kann. Alle URLs, die mit "internal" beginnen, werden an das DefaultServlet 
+ weitergeleitet (für css, Bilder, etc.) 
+ 
+ Das MaxdocsServlet löst dann die entsprechende Verarbeitung in der Engine aus.
+ 
+ Die Engine bietet die benötigte Funktionalitäten und liegt im Context der WebApplikation, so dass
+ sie von allen beteiligten Komponenten erreichbar ist.
 
-** Codereview
 
- Auf den bisher erstellten Code muss ein Review durchgeführt werden.
- Gegebenenfalls gefundende Punkte müssen überarbeitet werden.
+** Filter
 
-** Unit Tests
+ Der Filter leitet alle URLs, die mit "/internal" starten, an das DefaultServlet weiter.
+ Allen URLs wird "/content" vorangestellt und die neue URL dispatched.
 
- Es sollten für den bestehenden Code alle nötigen Unit Tests erstellt werden.
+** Servlet
 
+ Das Servlet bedient alle URLs, die mit "/content" beginnen.
+
+	* breadcrumbs\
+	Die Breadcumbs werden als Strings (PagePath) in einem org.apache.commons.collections.buffer.CircularFifoBuffer
+	erfasst. Dieser Buffer wird als Session-Attribut gespeichert. Die Anzahl der zu speichernden Pfade
+	kann in der Konfig eingestellt werden. Per default werden die letzten 5 unterschiedlichen Pfade
+	gespeichert.
+	
+	* delete\
+	Löschen der übergebenen Seite
+	
+	* edit\
+	Bearbeiten der übergebenen Seite
+	
+	* save\
+	Speichern der übergebenen Seite
+	
+	* show\
+	Anzeigen der übergebenen Seite
+	
+	* source\
+	Anzeigen des Sourcecode der übergebenen Seite
+	
+** Engine
+
+	* delete
+	
+	* exists
+	
+	* getHtmlPage
+	
+	* getMarkupPage
+	
+	* save
+
+** FileStorage
+
+	* delete
+	
+	* exists
+	
+	* load
+	
+	* save
+
+** Parser
+
+	* Anbindung
+
+** Taglib
+
+	* author
+	
+	* breadcrumbs
+	
+	* date
+	
+	* insertPage
+	
+	* markupLanguage
+	
+	* noSuchPage
+	
+	* pageContent
+	
+	* pageExists
+	
+	* pageName
+	
+	* pageSource
+	
+	* pageVersion
+	
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* übernächster Schritt
+* Milestone M2
+
+ Mit dem zweiten Meilenstein werden weitere Funktionen eingebaut, außerdem soll nun eine erste
+ Implementierung der Security erfolgen.
+
+** Servlet
+
+	* login\
+	Login des übergebenen Users
+
+	* logout\
+	Logout des angemeldeten Users
+
+	* rename\
+	Umbenennen der übergebenen Seite
+
+
+** Engine
+
+	* rename
+
+	* tagcloud
+
+	* links2me
+
+** FileStorage
+
+	* rename
+
+	* tagcloud
+
+** Parser
+
+	* Creole vervollständigen
+
+** Taglib
+
+	* messages
+	
+	* tagCloud
 
 ** Security
 
- Security-Konzept erstellen:
+	* Security-Konzept verfeinern:
 
- Kann Spring Security verwendet werden?
+	* Wie kann dynamisch auf Seitenbasis gesperrt werden?
 
- Wie kann dynamisch auf Seitenbasis gesperrt werden?
+	* Welche Rechte werden benötigt (View, Edit, Rename, Delete, Upload, etc.)
 
- Welche Rechte werden benötigt (View, Edit, Rename, Delete, Upload, etc.)
+	* Wie können Rechte und Rollen getrennt werden? 
 
- Wie können Rechte und Rollen getrennt werden? 
- {{{http://stackoverflow.com/questions/6357579/spring-security-with-roles-and-permissions}Spring Security 1}}
- {{{http://www.javabeat.net/2011/04/separating-roles-and-permissions-in-spring-security/}Spring Security 2}}
-
- Wie wird Security konfiguriert?
+	* Wie wird Security konfiguriert?
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Zukünftige Schritte
+* Milestone M3
+
+ Im dritten Meilenstein wird nun das Plugin-Konzept erarbeitet und implementiert.
+
+** Plugins
+
+** Blog
+
+** Templates
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* weitere Themen
+
+	* Dokumentation
+
+		* Javadoc-Kommentare prüfen und vereinheitlichen.
+
+		* Architektur dokumentieren.
+
+		* Bereits implementierte Konzepte dokumentieren.
+
+	* Unit Tests
+
+		* Es sollten für den bestehenden Code alle nötigen Unit Tests erstellt werden.
+
+	* Codereview
+
+		* Auf den bisher erstellten Code muss ein Review durchgeführt werden.
+		   Gegebenenfalls gefundende Punkte müssen überarbeitet werden.
 
 	* Caching der Seiten
 

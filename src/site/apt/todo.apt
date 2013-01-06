@@ -27,7 +27,7 @@
  ------
  Team maxdocs.org
  ------
- 2011-12-30
+2013-01-06
 
 ~~ Hier soll eine freie Sammlung offener TODOs gepflegt werden
 
@@ -57,7 +57,7 @@ TODO
 
 			* Branching Model
 
-	* Entwicklun
+	* Entwicklung
 
 		* Default-Template: Texte in properties auslagern (I18n)
 
@@ -71,7 +71,7 @@ TODO
 
 		* MarkupParser: weitere Markups
 
-		* Security: Konzept erstellen und prüfen, ob mit Spring Security umsetzbar
+		* Security: Konzept erstellen und prüfen, ob mit Spring Security / Apache Shiro umsetzbar
 
 		* Default Template: Favicon
 

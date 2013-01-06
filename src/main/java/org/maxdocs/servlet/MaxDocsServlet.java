@@ -139,7 +139,7 @@ public class MaxDocsServlet extends HttpServlet
 		String pagePath = pathInfo;
 		if (StringUtils.equals(pagePath, "/"))
 		{
-			pagePath += DEFAULT_PAGE_NAME;
+			pagePath += DEFAULT_PAGE_NAME; //TODO: default name from configuration?
 		}
 		log.debug("pagePath={}", pagePath);
 		request.setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
