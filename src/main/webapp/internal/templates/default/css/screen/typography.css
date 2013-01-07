@@ -239,5 +239,8 @@
   .maxdocsBreadcrumbs {list-style-type: none; margin: 0; }
   .maxdocsBreadcrumbs li {margin: 0; padding-right: 0.5em; display: inline;}
   .maxdocsBreadcrumbs li:FIRST-CHILD:BEFORE {padding:0; content: ""}
-  .maxdocsBreadcrumbs li:BEFORE { padding-right: 0.5em; content: ">";}
+  .maxdocsBreadcrumbs li:BEFORE {padding-right: 0.5em; content: ">";}
+  
+  div#errors {background-color: #ffcccc; border: 1px solid #ff0000;}
+  div#errors ul{margin: 0 0 0 1em}
 }

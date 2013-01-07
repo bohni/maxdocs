@@ -70,8 +70,7 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 		{
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
-			// TODO: why can't this be read from the session? Why returns pageContext.getSession() always null?
-			CircularFifoBuffer breadcrumbsMap = (CircularFifoBuffer) pageContext.getRequest().getAttribute(
+			CircularFifoBuffer breadcrumbsMap = (CircularFifoBuffer) pageContext.getSession().getAttribute(
 				MaxDocsConstants.MAXDOCS_BREADCRUMBS);
 			if (breadcrumbsMap != null)
 			{

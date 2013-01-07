@@ -66,7 +66,7 @@ import org.slf4j.LoggerFactory;
 public class FileStorage implements Storage
 {
 	private static final String DEFAULT_VERSION_FOLDER = "versions";
-	private static final String DEFAULT_CONTENT_PATH = "content/";
+	private static final String DEFAULT_CONTENT_PATH = "content" + System.getProperty("file.separator");
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
 	private String contentPath;
 	private String versionPath;
@@ -463,6 +463,7 @@ public class FileStorage implements Storage
 	{
 		log.trace("load({})", pagePath);
 		String pathname = contentPath + files.get(pagePath);
+		log.debug("pathname is {}", pathname);
 		MarkupPage markupPage = null;
 		File file = new File(pathname);
 		if (file.exists())
@@ -554,8 +555,90 @@ public class FileStorage implements Storage
 	public MarkupPage load(String pagePath, int version)
 	{
 		log.trace("load({}, {})", pagePath, version);
-		// TODO Auto-generated method stub
-		return null;
+		// create pathname of version 
+		StringBuffer pathname = new StringBuffer(contentPath + files.get(pagePath));
+		pathname.insert(pathname.length() - 4, System.getProperty("file.separator") + version);
+		log.debug("pathname is {}", pathname);
+		MarkupPage markupPage = null;
+		File file = new File(pathname.toString());
+		if (file.exists())
+		{
+			markupPage = new MarkupPage();
+			markupPage.setPagePath(pagePath);
+			Scanner scanner = null;
+			try
+			{
+				scanner = new Scanner(new FileInputStream(file), "UTF-8");
+				String line;
+				StringBuilder content = new StringBuilder();
+				int count = 0;
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
+				while (scanner.hasNextLine())
+				{
+					line = scanner.nextLine();
+					if (StringUtils.startsWith(line, "author"))
+					{
+						markupPage.setAuthor(StringUtils.substringAfterLast(line, "="));
+					}
+					else if (StringUtils.startsWith(line, "contentType"))
+					{
+						markupPage.setMarkupLanguage(StringUtils.substringAfterLast(line, "="));
+					}
+					else if (StringUtils.startsWith(line, "creationDateFirst"))
+					{
+						Date date = sdf.parse(StringUtils.substringAfterLast(line, "="));
+						markupPage.setFirstVersionCreationDate(date);
+					}
+					else if (StringUtils.startsWith(line, "creationDateThis"))
+					{
+						Date date = sdf.parse(StringUtils.substringAfterLast(line, "="));
+						markupPage.setCurrentVersionCreationDate(date);
+					}
+					else if (StringUtils.startsWith(line, "editor"))
+					{
+						markupPage.setEditor(StringUtils.substringAfterLast(line, "="));
+					}
+					else if (StringUtils.startsWith(line, "version"))
+					{
+						markupPage.setVersion(version);
+					}
+					else if (StringUtils.startsWith(line, "tags"))
+					{
+						String tags = StringUtils.substringAfterLast(line, "=");
+						Set<String> taglist = Collections.synchronizedSet(new HashSet<String>());
+						String[] stringarr = StringUtils.splitByWholeSeparator(tags, ", ");
+						CollectionUtils.addAll(taglist, stringarr);
+						markupPage.setTags(taglist);
+					}
+					else if (StringUtils.isBlank(line) && count == 0)
+					{
+						count = 1;
+					}
+					else if (count > 0)
+					{
+						content.append(line + System.getProperty("line.separator"));
+					}
+				}
+				markupPage.setContent(content.toString());
+				log.debug("page {} loaded", markupPage.getPagePath());
+			}
+			catch (FileNotFoundException e)
+			{
+				log.error(e.getMessage(), e);
+			}
+			catch (ParseException e)
+			{
+				log.error(e.getMessage(), e);
+			}
+			finally
+			{
+				if (scanner != null)
+				{
+					scanner.close();
+				}
+			}
+		}
+		return markupPage;
 	}
 
 

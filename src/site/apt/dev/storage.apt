@@ -90,3 +90,5 @@ FileStorageProvider
 	  Alle Seiten werden beim Start eingelesen in Liste/Map mit Zuordnung PagePath<->LfdNr
 
 	* Versionierung erfolgt als <ContentFolder>/<VersionsFolder>/<LfdNr>/<Version>.txt
+
+	* Laden von alten Versionen: Was passiert, wenn die gewünschte Version nicht existiert (Versionsnr. in URL manuell geändert)?

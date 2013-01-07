@@ -24,7 +24,7 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 --%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -147,7 +147,9 @@
 				<!-- begin: #col3 static column -->
 				<div class="ym-col3">
 					<div class="ym-cbox">
+						<c:if test="${! empty requestScope.MAXDOCS_MESSAGES}">
 						<div id="errors"><max:messages /></div>
+						</c:if>
 						<h2><max:pageName plain="true" /></h2>
 						<max:pageContent />
 					</div>

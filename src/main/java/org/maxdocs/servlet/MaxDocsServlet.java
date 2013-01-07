@@ -234,8 +234,6 @@ public class MaxDocsServlet extends HttpServlet
 		}
 		// store breadcrumbs in session ...
 		request.getSession().setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
-		// ... and request (for BreadcrumbsTag) TODO: why can't it be read in taglib?
-		request.setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
 	}
 
 	/**
