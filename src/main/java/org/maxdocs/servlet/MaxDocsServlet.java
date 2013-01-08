@@ -45,6 +45,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.MarkupPage;
@@ -147,6 +149,7 @@ public class MaxDocsServlet extends HttpServlet
 		// breadcrumbs
 		buildBreadcrumbs(request);
 
+	
 		// Action
 		String action = request.getParameter(PARAMETER_NAME_ACTION);
 		if (StringUtils.isBlank(action))
@@ -264,15 +267,15 @@ public class MaxDocsServlet extends HttpServlet
 		}
 		else
 		{
-			log.debug("Missing delete permission");
+			log.debug("Missing page:delete permission");
 			if (username == null)
 			{
-				messages.add("No delete permission for unkown users");
+				messages.add("No page:delete permission for unkown users");
 
 			}
 			else
 			{
-				messages.add("Missing delete permission for user " + username);
+				messages.add("Missing page:delete permission for user " + username);
 			}
 		}
 		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
@@ -302,12 +305,13 @@ public class MaxDocsServlet extends HttpServlet
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 
 			//this is all you have to do to support 'remember me' (no config - built in!):
+			boolean rememberme = false;
 			String strRememberme = (String) request.getParameter("rememberMe");
 			if (StringUtils.isNotBlank(strRememberme))
 			{
-				boolean rememberme = Boolean.parseBoolean(strRememberme);
-				token.setRememberMe(rememberme);
+				rememberme = Boolean.parseBoolean(strRememberme);
 			}
+			token.setRememberMe(rememberme);
 			List<String> messages = getMessages(request);
 			try
 			{
@@ -315,6 +319,7 @@ public class MaxDocsServlet extends HttpServlet
 				log.debug("User {} successfully logged in", username);
 				messages.add("Successfully logged in!");
 				// TODO: Where to go?
+				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 				actionShow(request, response);
 			}
 			catch (UnknownAccountException uae)
@@ -322,6 +327,7 @@ public class MaxDocsServlet extends HttpServlet
 				//username wasn't in the system, show them an error message?
 				log.debug("User {} not logged in: UnknownAccountException", username);
 				messages.add("Username and password do not match!");
+				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 				actionLogin(request, response);
 			}
 			catch (IncorrectCredentialsException ice)
@@ -329,6 +335,7 @@ public class MaxDocsServlet extends HttpServlet
 				//password didn't match, try again?
 				log.debug("User {} not logged in: IncorrectCredentialsException", username);
 				messages.add("Username and password do not match!");
+				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 				actionLogin(request, response);
 			}
 			catch (LockedAccountException lae)
@@ -336,6 +343,7 @@ public class MaxDocsServlet extends HttpServlet
 				//account for that username is locked - can't login.  Show them a message?
 				log.debug("User {} not logged in: LockedAccountException", username);
 				messages.add("Username and password do not match!");
+				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 				actionLogin(request, response);
 			}
 			catch (AuthenticationException ae)
@@ -343,11 +351,8 @@ public class MaxDocsServlet extends HttpServlet
 				//unexpected condition - error?
 				log.error("User {} not logged in: AuthenticationException - {}", username, ae.getMessage());
 				messages.add("An unkonwn error occurred! Try again later!");
-				actionLogin(request, response);
-			}
-			finally
-			{
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+				actionLogin(request, response);
 			}
 		}
 
@@ -367,6 +372,8 @@ public class MaxDocsServlet extends HttpServlet
 		throws ServletException, IOException
 	{
 		log.trace("actionLogout(HttpServletRequest, HttpServletResponse");
+		Subject currentUser = SecurityUtils.getSubject();
+		currentUser.logout();
 		actionShow(request, response);
 	}
 
@@ -396,16 +403,16 @@ public class MaxDocsServlet extends HttpServlet
 		}
 		else
 		{
-			log.debug("Missing edit permission");
+			log.debug("Missing page:edit permission");
 			List<String> messages = getMessages(request);
 			if (username == null)
 			{
-				messages.add("No edit permission for unkown users");
+				messages.add("No page:edit permission for unkown users");
 
 			}
 			else
 			{
-				messages.add("Missing edit permission for user " + username);
+				messages.add("Missing page:edit permission for user " + username);
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 			actionShow(request, response);
@@ -453,16 +460,16 @@ public class MaxDocsServlet extends HttpServlet
 		}
 		else
 		{
-			log.debug("Missing rename permission");
+			log.debug("Missing page:rename permission");
 			List<String> messages = getMessages(request);
 			if (username == null)
 			{
-				messages.add("No rename permission for unkown users");
+				messages.add("No page:rename permission for unkown users");
 
 			}
 			else
 			{
-				messages.add("Missing rename permission for user " + username);
+				messages.add("Missing page:rename permission for user " + username);
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 		}
@@ -535,15 +542,15 @@ public class MaxDocsServlet extends HttpServlet
 		}
 		else
 		{
-			log.debug("Missing save permission");
+			log.debug("Missing page:save permission");
 			if (username == null)
 			{
-				messages.add("No save permission for unkown users");
+				messages.add("No page:save permission for unkown users");
 
 			}
 			else
 			{
-				messages.add("Missing save permission for user " + username);
+				messages.add("Missing page:save permission for user " + username);
 			}
 		}
 		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
@@ -566,9 +573,27 @@ public class MaxDocsServlet extends HttpServlet
 		log.trace("actionShow(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
-		// TODO, 03.02.2012: check user role
-		request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/show.jsp").forward(request,
-			response);
+		if (checkPermission(currentUser, "page:view"))
+		{
+			request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/show.jsp").forward(request,
+				response);
+		}
+		else
+		{
+			log.debug("Missing page:view permission");
+			List<String> messages = getMessages(request);
+			if (username == null)
+			{
+				messages.add("No page:view permission for unkown users");
+
+			}
+			else
+			{
+				messages.add("Missing page:view permission for user " + username);
+			}
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+			actionLogin(request, response);
+		}
 	}
 
 	/**
@@ -593,16 +618,16 @@ public class MaxDocsServlet extends HttpServlet
 		}
 		else
 		{
-			log.debug("Missing viewSource permission");
+			log.debug("Missing page:viewSource permission");
 			List<String> messages = getMessages(request);
 			if (username == null)
 			{
-				messages.add("No viewSource permission for unkown users");
+				messages.add("No page:viewSource permission for unkown users");
 
 			}
 			else
 			{
-				messages.add("Missing viewSource permission for user " + username);
+				messages.add("Missing page:viewSource permission for user " + username);
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 			actionShow(request, response);
@@ -637,6 +662,16 @@ public class MaxDocsServlet extends HttpServlet
 	private boolean checkPermission(Subject currentUser, String permission)
 	{
 		log.trace("checkPermission(Subject, String)");
+
+		String username = (String) currentUser.getPrincipal();
+
+		if(StringUtils.isBlank(username))
+		{
+			// Nicht angemeldet, also anonymous verwenden!
+			PrincipalCollection principals = new SimplePrincipalCollection("anonymous", "maxdocsRealm");
+			currentUser = new Subject.Builder().principals(principals).buildSubject();
+		}
+		
 		if (currentUser.isPermitted(permission))
 		{
 			return true;
