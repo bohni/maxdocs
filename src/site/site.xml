@@ -79,6 +79,15 @@
 				href="todo.html" />
 		</menu>
 
+		<menu name="Dokumentation">
+			<item
+				name="Getting started"
+				href="docs/gettingstarted.html" />
+			<item
+				name="Installation"
+				href="docs/installation.html" />
+		</menu>
+
 		<menu name="Entwicklung">
 			<item
 				name="Engine"
