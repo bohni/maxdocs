@@ -23,63 +23,14 @@
 ~~
 
  ------
- MaxDocs UseCases
+ MaxDocs Milestone M4
  ------
  Team maxdocs.org
  ------
- 2012-04-26
+2013-01-09
 
+Milestone M4
 
-MaxDocs UseCases
+ Der vierte Meilenstein führt die Blog-Engine ein un ein passendes Template
 
-* Administrator
-
-	* Auspacken
-	
-	* Konfiguration
-	
-	* Template
-	
-	* Plugins
-	
-	* Starten
-	
-	* Indizes neu erstellen
-	
-	* Import
-	
-	* Export
-	
-	* Security
-	
-* Anwender
-	
-	* Seite anzeigen
-	
-	* Seite anlegen
-	
-	* Seite bearbeiten starten
-	
-	* Seite bearbeiten abbrechen
-	
-	* Seite Content ändern
-	
-	* Seite Tags ändern
-	
-	* Seite Vorschau
-	
-	* Seite speichern
-	
-	* Seite löschen
-	
-	* Seite umbenennen
-	
-	* Seitenquelltext anzeigen
-	
-	* Seiteninformation anzeigen
-	
-	* Suche
-	
-	* Login
-	
-	* Logout
+* Blog und Template

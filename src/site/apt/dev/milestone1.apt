@@ -23,19 +23,13 @@
 ~~
 
  ------
- MaxDocs Roadmap
+ MaxDocs Milestone M1
  ------
  Team maxdocs.org
  ------
-2013-01-06
- 
-Roadmap
+2013-01-09
 
- Auf dieser Seite werden die nächsten Milertones und die benötigten Features beschrieben.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Milestone M1
+Milestone M1
 
  In diesem Milestone soll eine erste Version von Maxdocs entstehen, mit der Seiten erstellt, 
  angezeigt, bearbeitet und gelöscht werden können.
@@ -58,12 +52,12 @@ Roadmap
  sie von allen beteiligten Komponenten erreichbar ist.
 
 
-** Filter
+* Filter
 
  Der Filter leitet alle URLs, die mit "/internal" starten, an das DefaultServlet weiter.
- Allen URLs wird "/content" vorangestellt und die neue URL dispatched.
+ Allen anderen URLs wird "/content" vorangestellt und die neue URL dispatched.
 
-** Servlet
+* Servlet
 
  Das Servlet bedient alle URLs, die mit "/content" beginnen. Dabei wird auch der Parameter "action"
  ausgewertet.
@@ -90,7 +84,7 @@ Roadmap
 	* source\
 	Berechtigungsprüfung, dann Anzeigen des Sourcecode der übergebenen Seite
 	
-** Engine
+* Engine
 
  Die Engine stellt die komplette Geschäftslogik zur Verfügung. 
 
@@ -109,7 +103,7 @@ Roadmap
 	* save\
 	Speichern an Storage delegieren
 
-** FileStorage
+* FileStorage
 
  Der FileStorage ist die Default-Implementierung des Storage-Interfaces, der die Daten auf dem
  Dateisystem speichert.
@@ -126,7 +120,7 @@ Roadmap
 	* save\
 	Speichern der Seite auf Platte
 
-** Parser
+* Parser
 
  Der Parser erzeugt aus den Markup-Daten das anzuzeigende HTML 
 
@@ -134,7 +128,7 @@ Roadmap
 	Der Parser wird mit Spring verwaltet. Mit der ServiceLocatorFactoryBean werden alle spezifischen
 	ParserImplementierungen verfügbar gemacht.
 
-** Taglib
+* Taglib
 
  Die Taglib enthält alle JSP-Tags zur Anzeige der Daten. Dabei haben alle Tags das 
  styleClass- und das plain-Attribut. Das Attribut styleClass wird als html-Attribut class gerendert.
@@ -211,132 +205,3 @@ Roadmap
 	
 	* pageVersion\
 	
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Milestone M2
-
- Mit dem zweiten Meilenstein werden weitere Funktionen eingebaut, außerdem soll nun eine erste
- Implementierung der Security erfolgen.
-
-** Servlet
-
-	* login\
-	Login des übergebenen Users
-
-	* logout\
-	Logout des angemeldeten Users
-
-	* rename\
-	Umbenennen der übergebenen Seite
-
-
-** Engine
-
-	* rename
-
-	* tagcloud
-
-	* links2me
-
-** FileStorage
-
-	* rename
-
-	* tagcloud
-
-** Parser
-
-	* Creole vervollständigen
-
-** Taglib
-
-	* messages
-	
-	* tagCloud
-
-** Security
-
-	* Security-Konzept verfeinern:
-
-	* Wie kann dynamisch auf Seitenbasis gesperrt werden?
-
-	* Welche Rechte werden benötigt (View, Edit, Rename, Delete, Upload, etc.)
-
-	* Wie können Rechte und Rollen getrennt werden? 
-
-	* Wie wird Security konfiguriert?
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Milestone M3
-
- Im dritten Meilenstein wird nun das Plugin-Konzept erarbeitet und implementiert.
-
-** Plugins
-
-** Blog
-
-** Templates
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* weitere Themen
-
-	* Dokumentation
-
-		* Javadoc-Kommentare prüfen und vereinheitlichen.
-
-		* Architektur dokumentieren.
-
-		* Bereits implementierte Konzepte dokumentieren.
-
-	* Unit Tests
-
-		* Es sollten für den bestehenden Code alle nötigen Unit Tests erstellt werden.
-
-	* Codereview
-
-		* Auf den bisher erstellten Code muss ein Review durchgeführt werden.
-		   Gegebenenfalls gefundende Punkte müssen überarbeitet werden.
-
-	* Caching der Seiten
-
-	* Save: Parsen und interne Links als Metadata speichern
-	
-	* Wikistart: 
-
-		* Map1 pagePath -> Filename [String]
-
-		* Map2 pagePath -> Links2Me [List]
-
-		* List für RecentChanges (30 neuesten); evtl. über Lucene?
-		
-		* Map3 tag -> pagePath [List]	
-
-	* Delete (MaxDocs Engine, FileStorage)
-
-	* Rename (MaxDocs Engine, FileStorage)
-
-	* Parser
-	
-		* Bestehende Parser erweitern/korrigieren
-
-		* Weitere Markups
-		
-	* Load version (MaxDocs Engine, FileStorage)
-
-	* Compare Versions (MaxDocs Engine)
-
-	* Plugin-Konzept erstellen
-
-	* Anhänge
-
-	* Hook für Search und Statistik
-
-	* Bilder
-
-	* Gallery
-
-	* I18n
-
-	* +1 / Gefällt mir / ...

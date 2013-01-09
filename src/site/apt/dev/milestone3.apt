@@ -23,63 +23,23 @@
 ~~
 
  ------
- MaxDocs UseCases
+ MaxDocs Milestone M3
  ------
  Team maxdocs.org
  ------
- 2012-04-26
+2013-01-09
 
+Milestone M3
 
-MaxDocs UseCases
+ Im dritten Meilenstein wird nun das Plugin-Konzept erarbeitet und implementiert.
+ Außerdem werden gleich die ersten notwendigen Plugins implementiert (ImagePlugin,
 
-* Administrator
+* Plugin-Konzept
 
-	* Auspacken
-	
-	* Konfiguration
-	
-	* Template
-	
-	* Plugins
-	
-	* Starten
-	
-	* Indizes neu erstellen
-	
-	* Import
-	
-	* Export
-	
-	* Security
-	
-* Anwender
-	
-	* Seite anzeigen
-	
-	* Seite anlegen
-	
-	* Seite bearbeiten starten
-	
-	* Seite bearbeiten abbrechen
-	
-	* Seite Content ändern
-	
-	* Seite Tags ändern
-	
-	* Seite Vorschau
-	
-	* Seite speichern
-	
-	* Seite löschen
-	
-	* Seite umbenennen
-	
-	* Seitenquelltext anzeigen
-	
-	* Seiteninformation anzeigen
-	
-	* Suche
-	
-	* Login
-	
-	* Logout
+* Plugins
+
+** ImagePlugin
+
+** RecentChangesPlugin
+
+** IndexPlugin

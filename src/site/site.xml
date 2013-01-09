@@ -69,38 +69,69 @@
 				name="Über"
 				href="index.html" />
 			<item
-				name="Entwicklung"
-				href="development.html" />
-			<item
-				name="Roadmap"
-				href="roadmap.html" />
-			<item
-				name="TODOs"
-				href="todo.html" />
+				name="Getting started"
+				href="getting-started.html" />
 		</menu>
 
 		<menu name="Dokumentation">
 			<item
-				name="Getting started"
-				href="docs/gettingstarted.html" />
-			<item
 				name="Installation"
 				href="docs/installation.html" />
+			<item
+				name="Konfiguration"
+				href="docs/konfiguration.html" />
+			<item
+				name="Templating"
+				href="docs/templating.html" />
 		</menu>
 
 		<menu name="Entwicklung">
 			<item
-				name="Engine"
-				href="dev/engine.html" />
+				name="Entwicklung"
+				href="development.html"
+				collapse="true">
+				<item
+					name="Use Cases"
+					href="dev/usecases.html" />
+				<item
+					name="Filter"
+					href="dev/filter.html" />
+				<item
+					name="Servlet"
+					href="dev/servlet.html" />
+				<item
+					name="Engine"
+					href="dev/engine.html" />
+				<item
+					name="Parser"
+					href="dev/parser.html" />
+				<item
+					name="Storage"
+					href="dev/storage.html" />
+				<item
+					name="Taglib"
+					href="dev/taglib.html" />
+			</item>
 			<item
-				name="Parser"
-				href="dev/parser.html" />
-			<item
-				name="Storage"
-				href="dev/storage.html" />
-			<item
-				name="Taglib"
-				href="dev/taglib.html" />
+				name="Roadmap"
+				collapse="true"
+				href="dev/roadmap.html">
+				<item
+					name="Milestone M1"
+					href="dev/milestone1.html" />
+				<item
+					name="Milestone M2"
+					href="dev/milestone2.html" />
+				<item
+					name="Milestone M3"
+					href="dev/milestone3.html" />
+				<item
+					name="Milestone M4"
+					href="dev/milestone4.html" />
+				<item
+					name="TODOs"
+					href="dev/todo.html" />
+			</item>
 		</menu>
 
 		<menu name="Sprache">

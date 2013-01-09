@@ -1,0 +1,161 @@
+~~
+~~ Copyright (c) 2011-2013, Team maxdocs.org
+~~
+~~ All rights reserved.
+~~
+~~ Redistribution and use in source and binary forms, with or without modification, are permitted provided
+~~ that the following conditions are met:
+~~
+~~ 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the
+~~    following disclaimer.
+~~ 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
+~~    the following disclaimer in the documentation and/or other materials provided with the distribution.
+~~ 3. The name of the author may not be used to endorse or promote products derived from this software
+~~    without specific prior written permission.
+~~
+~~ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+~~ DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+~~ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+~~ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+~~ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+~~
+
+ ------
+ MaxDocs TODO
+ ------
+ Team maxdocs.org
+ ------
+2013-01-06
+
+~~ Hier soll eine freie Sammlung offener TODOs gepflegt werden
+
+TODO
+
+ Hier ist eine Liste der TODOs:
+
+	* Entwicklungsumgebung
+
+		* Preferences/Templates für Eclipse bereitstellen
+
+		* PMD Regeln festlegen
+
+	* Dokumentation
+
+		* develop.txt nach apt für Maven-Site-Dokumentation
+
+		* Lizenzen prüfen, auflisten
+
+		* Getting started Doku für Entwickler
+
+			* Eclipse und Plugins installieren
+
+			* Eclipse konfigurieren (Preferences, Templates, PMD Regeln, etc.)
+
+			* GitHub
+
+			* Branching Model
+
+	* Entwicklung
+
+		* Default-Template: Texte in properties auslagern (I18n)
+
+		* Messages überarbeiten (I18n) 
+
+		* UnitTest verbessern
+
+		* FileStorage: Speichern unter lfdNr., Delete, Rename, Load Version
+
+		* Attachments, Web-Handling
+
+		* MarkupParser: weitere Markups
+
+		* Security: Konzept erstellen und prüfen, ob mit Spring Security / Apache Shiro umsetzbar
+
+		* Default Template: Favicon
+
+		* MaxDocs-Konfig: Konzept erstellen
+
+		* Code aufräumen
+
+			* Refactor lange Mehtoden
+
+			* Schnittstellen prüfen
+
+	* Design / Konzepte	
+
+		* Securtiy
+
+			* Rollen
+
+			* Rechte
+
+		* Plugins
+
+		* Attachments
+
+			* Metadaten-Datei (reicht Mimetype?)
+
+			* Erweiterung des Dateiformats 
+
+	* Dokumentation
+
+		* Javadoc-Kommentare prüfen und vereinheitlichen.
+
+		* Architektur dokumentieren.
+
+		* Bereits implementierte Konzepte dokumentieren.
+
+	* Unit Tests
+
+		* Es sollten für den bestehenden Code alle nötigen Unit Tests erstellt werden.
+
+	* Codereview
+
+		* Auf den bisher erstellten Code muss ein Review durchgeführt werden.
+		   Gegebenenfalls gefundende Punkte müssen überarbeitet werden.
+
+	* Caching der Seiten
+
+	* Save: Parsen und interne Links als Metadata speichern
+	
+	* Wikistart: 
+
+		* Map1 pagePath -> Filename [String]
+
+		* Map2 pagePath -> Links2Me [List]
+
+		* List für RecentChanges (30 neuesten); evtl. über Lucene?
+		
+		* Map3 tag -> pagePath [List]	
+
+	* Delete (MaxDocs Engine, FileStorage)
+
+	* Rename (MaxDocs Engine, FileStorage)
+
+	* Parser
+	
+		* Bestehende Parser erweitern/korrigieren
+
+		* Weitere Markups
+		
+	* Load version (MaxDocs Engine, FileStorage)
+
+	* Compare Versions (MaxDocs Engine)
+
+	* Plugin-Konzept erstellen
+
+	* Anhänge
+
+	* Hook für Search und Statistik
+
+	* Bilder
+
+	* Gallery
+
+	* I18n
+
+	* +1 / Gefällt mir / ...
+	
+	* "Watch" auf Seiten, um per Mail über Änderungen informiert zu werden?

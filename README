@@ -1,3 +1,11 @@
-﻿MaxDocs uses the branching model described by Vincent Driessen on his blog post at
+MaxDocs is a new wiki approach focusing on the following features
+
+	* Cool URIs dont change (http://www.w3.org/Provider/Style/URI)
+
+	* simple templating
+
+	* Support of different markups
+
+It uses the branching model described by Vincent Driessen on his blog post at
 http://nvie.com/posts/a-successful-git-branching-model/
 

@@ -23,63 +23,61 @@
 ~~
 
  ------
- MaxDocs UseCases
+ MaxDocs Milestone M2
  ------
  Team maxdocs.org
  ------
- 2012-04-26
+2013-01-09
+
+Milestone M2
+
+ Mit dem zweiten Meilenstein werden weitere Funktionen eingebaut, außerdem soll nun eine erste
+ Implementierung der Security erfolgen.
+
+* Servlet
+
+	* login\
+	Login des übergebenen Users
+
+	* logout\
+	Logout des angemeldeten Users
+
+	* rename\
+	Umbenennen der übergebenen Seite
 
 
-MaxDocs UseCases
+* Engine
 
-* Administrator
+	* rename
 
-	* Auspacken
+	* tagcloud
+
+	* links2me
+
+* FileStorage
+
+	* rename
+
+	* tagcloud
+
+* Parser
+
+	* Creole vervollständigen
+
+* Taglib
+
+	* messages
 	
-	* Konfiguration
-	
-	* Template
-	
-	* Plugins
-	
-	* Starten
-	
-	* Indizes neu erstellen
-	
-	* Import
-	
-	* Export
-	
-	* Security
-	
-* Anwender
-	
-	* Seite anzeigen
-	
-	* Seite anlegen
-	
-	* Seite bearbeiten starten
-	
-	* Seite bearbeiten abbrechen
-	
-	* Seite Content ändern
-	
-	* Seite Tags ändern
-	
-	* Seite Vorschau
-	
-	* Seite speichern
-	
-	* Seite löschen
-	
-	* Seite umbenennen
-	
-	* Seitenquelltext anzeigen
-	
-	* Seiteninformation anzeigen
-	
-	* Suche
-	
-	* Login
-	
-	* Logout
+	* tagCloud
+
+* Security
+
+	* Security-Konzept verfeinern:
+
+	* Wie kann dynamisch auf Seitenbasis gesperrt werden?
+
+	* Welche Rechte werden benötigt (View, Edit, Rename, Delete, Upload, etc.)
+
+	* Wie können Rechte und Rollen getrennt werden? 
+
+	* Wie wird Security konfiguriert?
