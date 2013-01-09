@@ -76,6 +76,8 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 			{
 				StringBuffer breadcrumbs = new StringBuffer();
 
+				breadcrumbs.append("<ul class=\"" + getStyleClass() + "\">");
+
 				@SuppressWarnings("rawtypes")
 				Iterator iter = breadcrumbsMap.iterator();
 				while (iter.hasNext())
@@ -85,18 +87,8 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 						+ breadcrumb + "\">" + StringUtils.substringAfterLast(breadcrumb, "/") + "</a></li>");
 				}
 				
-				if (isPlain())
-				{
-					breadcrumbs.insert(0, "<ul>");
-					breadcrumbs.append("</ul>");
-					pageContext.getOut().write(breadcrumbs.toString());
-				}
-				else
-				{
-					breadcrumbs.insert(0, "<ul class=\"" + getStyleClass() + "\">");
-					breadcrumbs.append("</ul>");
-					pageContext.getOut().write(breadcrumbs.toString());
-				}
+				breadcrumbs.append("</ul>");
+				pageContext.getOut().write(breadcrumbs.toString());
 			}
 		}
 		catch (IOException e)
