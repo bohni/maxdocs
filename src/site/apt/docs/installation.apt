@@ -31,14 +31,6 @@
 
 Installation
 
-	* Konfiguration
-
-		* Security (2 Realms in Spring)
-		
-		* Verzeichnisse
-		
-		* Template
-		
-		* Breadcrumbs
-		
-		* Logging
+	* Standalone
+	
+	* Application server
