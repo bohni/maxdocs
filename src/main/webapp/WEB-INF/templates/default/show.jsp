@@ -151,7 +151,10 @@
 						<div id="errors"><max:messages /></div>
 						</c:if>
 						<h2><max:pageName plain="true" /></h2>
-						<max:pageContent />
+						<max:pageExists><max:pageContent /></max:pageExists>
+						<max:noSuchPage>Die Seite <strong><max:pageName plain="true" /></strong> existiert nicht.!<br/>
+						<a href="${edit}">Erstelle</a> sie doch einfach.</max:noSuchPage>
+						
 					</div>
 				</div>
 				<!-- end: #col3 -->

@@ -25,7 +25,6 @@ package org.maxdocs.taglib;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
@@ -34,8 +33,6 @@ import org.maxdocs.data.HtmlPage;
 import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.kennardconsulting.core.net.UrlEncodedQueryString;
 
 /**
  * PageContentTag:
@@ -70,18 +67,6 @@ public class PageContentTag extends TagSupport
 			{
 				pageContext.getOut().write(
 					"<div class=\"" + styleClass + "\">" + htmlPage.getContent() + "</div>");
-			}
-			else
-			{
-				HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-				String query = request.getQueryString();
-				String contextPath = request.getContextPath();
-				UrlEncodedQueryString queryString = UrlEncodedQueryString.parse(query);
-				queryString.set("action", "edit");
-				pageContext.getOut().write(
-					"<div class=\"" + styleClass + "\"><p>Die Seite <strong>" + pagePath
-						+ "</strong> existiert nicht. <a href=\"" + contextPath + pagePath + "?"
-						+ queryString.toString() + "\">Erstelle</a> sie doch einfach.</p></div>");
 			}
 		}
 		catch (IOException e)
