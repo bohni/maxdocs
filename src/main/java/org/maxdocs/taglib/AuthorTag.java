@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * AuthorTag:
- * Tag, that displays the author within a span container.
+ * Tag, that displays the author or editor within a span container.
  *
  * @author Team maxdocs.org
  *
