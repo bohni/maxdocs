@@ -88,11 +88,14 @@
 		<menu name="Entwicklung">
 			<item
 				name="Entwicklung"
-				href="development.html"
+				href="dev/entwicklung.html"/>
+			<item
+				name="Use Cases"
+				href="dev/usecases.html" />
+			<item
+				name="Architektur"
+				href="dev/architektur.html"
 				collapse="true">
-				<item
-					name="Use Cases"
-					href="dev/usecases.html" />
 				<item
 					name="Filter"
 					href="dev/filter.html" />
@@ -107,7 +110,7 @@
 					href="dev/parser.html" />
 				<item
 					name="Storage"
-					href="dev/storage.html" />
+					href="dev/storage.html"/>
 				<item
 					name="Taglib"
 					href="dev/taglib.html" />
@@ -115,22 +118,22 @@
 			<item
 				name="Roadmap"
 				collapse="true"
-				href="dev/roadmap.html">
+				href="roadmap/roadmap.html">
 				<item
 					name="Milestone M1"
-					href="dev/milestone1.html" />
+					href="roadmap/milestone1.html" />
 				<item
 					name="Milestone M2"
-					href="dev/milestone2.html" />
+					href="roadmap/milestone2.html" />
 				<item
 					name="Milestone M3"
-					href="dev/milestone3.html" />
+					href="roadmap/milestone3.html" />
 				<item
 					name="Milestone M4"
-					href="dev/milestone4.html" />
+					href="roadmap/milestone4.html" />
 				<item
 					name="TODOs"
-					href="dev/todo.html" />
+					href="roadmap/todo.html" />
 			</item>
 		</menu>
 
