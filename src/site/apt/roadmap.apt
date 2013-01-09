@@ -65,7 +65,8 @@ Roadmap
 
 ** Servlet
 
- Das Servlet bedient alle URLs, die mit "/content" beginnen.
+ Das Servlet bedient alle URLs, die mit "/content" beginnen. Dabei wird auch der Parameter "action"
+ ausgewertet.
 
 	* breadcrumbs\
 	Die Breadcumbs werden als Strings (PagePath) in einem org.apache.commons.collections.buffer.CircularFifoBuffer
@@ -74,69 +75,141 @@ Roadmap
 	gespeichert.
 	
 	* delete\
-	Löschen der übergebenen Seite
+	Berechtigungsprüfung, dann Löschen der übergebenen Seite durch die Engine veranlassen.
 	
 	* edit\
-	Bearbeiten der übergebenen Seite
+	Berechtigungsprüfung, dann notwendige Daten im Request ablegen und edit.jsp anzeigen.
 	
 	* save\
-	Speichern der übergebenen Seite
+	Berechtigungsprüfung, dann die Daten übergebenen Daten auslesen und das erzeugte Seitenobjekt
+	über die Engine speichern.
 	
 	* show\
-	Anzeigen der übergebenen Seite
+	Berechtigungsprüfung, dann Anzeigen der übergebenen Seite
 	
 	* source\
-	Anzeigen des Sourcecode der übergebenen Seite
+	Berechtigungsprüfung, dann Anzeigen des Sourcecode der übergebenen Seite
 	
 ** Engine
 
-	* delete
+ Die Engine stellt die komplette Geschäftslogik zur Verfügung. 
+
+	* delete\
+	Löschen an Storgae delegieren
 	
-	* exists
+	* exists\
+	Anfrage an Storage delegieren
 	
-	* getHtmlPage
+	* getHtmlPage\
+	MarkupPage über Storage laden, dann mit durch Parser in HTMLPage wandeln und zurück geben.
 	
-	* getMarkupPage
+	* getMarkupPage\
+	MarkupPage über Storage ladenund zurück geben.
 	
-	* save
+	* save\
+	Speichern an Storage delegieren
 
 ** FileStorage
 
-	* delete
+ Der FileStorage ist die Default-Implementierung des Storage-Interfaces, der die Daten auf dem
+ Dateisystem speichert.
+
+	* delete\
+	Übergebene Seite löschen: aktuelle und historisierte Daten, sowie aus Seitenmap
 	
-	* exists
+	* exists\
+	Prüfen, ob Seite bereits vorhanden ist
 	
-	* load
+	* load\
+	Laden der aktuellen Version der Seite von Platte
 	
-	* save
+	* save\
+	Speichern der Seite auf Platte
 
 ** Parser
 
-	* Anbindung
+ Der Parser erzeugt aus den Markup-Daten das anzuzeigende HTML 
+
+	* Anbindung\
+	Der Parser wird mit Spring verwaltet. Mit der ServiceLocatorFactoryBean werden alle spezifischen
+	ParserImplementierungen verfügbar gemacht.
 
 ** Taglib
 
-	* author
+ Die Taglib enthält alle JSP-Tags zur Anzeige der Daten. Dabei haben alle Tags das 
+ styleClass- und das plain-Attribut. Das Attribut styleClass wird als html-Attribut class gerendert.
+ Das plain-Attribut steuert, ob das entsprechende Tag den Text mit oder ohne HTML-Tags rendert. 
+
+	* author\
+	Gibt den Autor (hat die Seite erstellt) oder Editor (hat die Seite bearbeitet) der Seite aus.\
+	Unterstütze Attribute:
 	
-	* breadcrumbs
+		* styleClass: Default ist maxdocsAuthor
+		
+		* plain: Default ist false
 	
-	* date
+		* type: author oder editor. Default ist author
+		
+	* breadcrumbs\
+	Dieses Tag gibt die zuletzt besuchten Seiten als ul-Element aus.\
+	Unterstütze Attribute:
 	
-	* insertPage
+		* styleClass: Default ist maxdocsBreadcrumbs
 	
-	* markupLanguage
+	* date\
+	Dieses Tag gibt das Datum der Anlage oder der letzten Änderung aus, was über das Attribut type 
+	gesteuert wird. Das Datumsformat wird über das Attribut format gesteuert, welches das Pattern
+	im SimpleDateformat enthalten muss.\
+	Unterstütze Attribute:
 	
-	* noSuchPage
+		* styleClass: Default ist maxdocsDate
+		
+		* plain: Default ist false
 	
-	* pageContent
+		* type: creation oder lastChange. Default ist lastChange
+		
+		* fromat: Pattern im SimpleDateFormat. Default ist yyyy-MM-dd HH:mm
 	
-	* pageExists
+	* insertPage\
+	Dieses Tag erzeugt einen div-Container mit dem geparsten HTML der im name-Attribut angegebenen
+	Seite.\
+	Unterstütze Attribute:
 	
-	* pageName
+		* styleClass: Default ist maxdocsInsertedPage
+		
+		* name: Name der einzufügenden Seite
 	
-	* pageSource
+	* markupLanguage\
+	Dieses Tag gibt die Markupsprache aus, mit der diese Seite geschrieben wurde. Über das type-Attibut
+	kann gesteuert werden, ob die Markupsprache der Seite als String (output) oder als select-Element
+	(input) ausgegeben wird\
+	Unterstütze Attribute:
 	
-	* pageVersion
+		* styleClass: Default ist maxdocsMarkupLanguage
+		
+		* plain: Wird nur bei type output unterstützt. Default ist false
+		
+		* type: output oder input. Default ist output
+	
+	* noSuchPage\
+	Mit diesem Tag kann Text ausgegeben werden, wenn die zu prüfende Seite nicht exisitert.\
+	Unterstütze Attribute:
+	
+		* page: Name der Seite. Wenn nicht angegeben, wird der aktuelle Seitenname verwendet.
+	
+	* pageContent\
+	
+	* pageExists\
+	Mit diesem Tag kann Text ausgegeben werden, wenn die zu prüfende Seite exisitert.\
+	Unterstütze Attribute:
+	
+		* page: Name der Seite. Wenn nicht angegeben, wird der aktuelle Seitenname verwendet.
+	
+	* pageName\
+	
+	* pageSource\
+	
+	* pageVersion\
 	
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
