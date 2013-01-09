@@ -29,43 +29,46 @@
  ------
 2013-01-06
 
-~~ Auf dieser Seite soll der Entwicklungsprozess dargestellt werden.
+~~ Auf dieser Seite wird der Entwicklungsprozess erklärt: Umgebung installieren, Projekt einrichten, Vorgaben
 
 Entwicklung
 
 * Allgemeines
 
- Die Entwicklung läuft auf github. Der Entwicklungsbranch ist develop. Das
- {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}} ist zu beachten!
+ Die Entwicklung läuft auf github.com, der Entwicklungsbranch ist develop.
+ Das {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}} ist zu beachten!
 
-* Issues
-
- Damit die Issues direkt in Eclipse bearbeitet werden können, kann über den Eclipse Marketplace
- der Github Mylyn Connector installiert werden.
-
-* Entwicklungsumgebung
+* Entwicklungsumgebung installieren und konfigurieren
 
 ** Eclipse
 
  Bei der Entwicklung kommt die {{{http://www.eclipse.org/downloads/}Eclipse IDE for Java EE Developers}}
- zum Einsatz. Zusätzlich werden noch die folgenden Plugins benötigt,  die über den Eclipse Marketplace 
+ zum Einsatz.
+
+ Zusätzlich werden noch die folgenden Plugins benötigt,  die über den Eclipse Marketplace 
  direkt in der IDE installiert werden können:
 
-	* Maven Integration for Eclipse WTP
-
-	* EGit - Git Team Provider
-
-	* Github Mylyn Connector
-
-	* optional: EasyShell
-
-	* optional: SpringIDE
-
-	* optional: {{{http://apteditor.sourceforge.net/}APT Editor}} (Dieses Plugin muss manuell installiert werden. 
-	  Einfach das JAR-file in das dropins-Verzeichnis von Eclipse kopieren)
+		* Maven Integration for Eclipse WTP
+	
+		* EGit - Git Team Provider
+	
+		* Github Mylyn Connector
+	
+		* optional: EasyShell
+	
+		* optional: SpringIDE
+	
+		* optional: {{{http://apteditor.sourceforge.net/}APT Editor}} (Dieses Plugin muss manuell installiert werden. 
+		  Einfach das JAR-file in das dropins-Verzeichnis von Eclipse kopieren)
 
  Damit der Sourcecode ein einheitliches Format hat, müssen in Eclipse folgende Preferences zwingend
  angepasst werden:
+
+	* General > Workspace
+	
+		* Text file encoding: UTF-8
+		
+		* New text file line delimiter: Unix
 
 	* General > Editors > Text Editors
 
@@ -77,15 +80,15 @@ Entwicklung
 
 ** Maven
 
- Für den Standbau kommt bei MaxDocs {{{http://maven.apache.org}Apache Maven}} zum Einsatz.
+ Für den Standbau wird bei MaxDocs {{{http://maven.apache.org}Apache Maven}} verwendet.
 
 ** Git
 
  Die Versionierung erfolgt mit {{{http://www.git-scm.org}Git}} auf {{{http://www.github.com/bohni/maxdocs}github.com}}.
 
-* Getting started
-
-	* git installieren
+ Nach der Installation von Git müssen noch folgende Einstellungen vorgenommen werden, natürlich mit
+ entsprechend angepasstem Namen und E-Mail-Adresse. Besonders wichtig ist die Einstellung autocrlf,
+ damit es nicht zu Komplikationen bei den Zeilenenden der Dateien kommt. 
 
 		* git config --global user.name "John Doe"
 
@@ -95,15 +98,12 @@ Entwicklung
 
 		* Mac/Unix : git config --global core.autocrlf input
 
-	* Maven installieren
 
-	* Eclipse installieren
+* Projekt anlegen
 
-		* Maven-Plugin m2e 
-
-		* EGit
-
-		* Preferences einstellen (alle "Muss" Einstellungen (UTF8, Linelength, etc.)
+ Das Projekt kann auf zwei Arten angelegt werden. Zum einen über die Command line, hier wird das
+ Projekt in Eclipse importiert. Oder aber es wird gleich in Eclipse über den Wizard ein neues Projekt 
+ aus dem git Repository heraus angelegt.
 
 ** Command line
 
@@ -123,11 +123,19 @@ Entwicklung
 
 	* Git Repository View: Import projects
 
-** Beide
+* Vorgaben
 
-	* Maven Dependencies ins lokale Repository aufnehmen (wikitext)
+ Bei der Programmierung sind die folgende Vorgaben zu beachten
 
-		* mvn install ...
+	* Alle Dateien müssen in UTF-8 gespeichert werden
+
+	* Die Einrückungen erfolgen grundsätzlich mit Tabulatoren, nicht mit Leerzeichen
+
+	* Es müssen die bereitgestellten Formatter und Templates verwendet werden.
+
+	* Es wird immer die durch den Compiler generierete serialVersionUID verwendet, d.h. im Sourcecode
+	  wird keine entsprechende Konstante verwendet. Falls die Warnings in Eclipse stören, können diese
+	  unter  Java > Compiler > Errors/Warnings > Potential programming problems ausgeschaltet werden.
 
 * Tipps und Tricks
 
