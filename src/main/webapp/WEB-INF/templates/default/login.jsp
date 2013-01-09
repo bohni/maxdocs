@@ -24,7 +24,7 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 --%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -108,6 +108,9 @@
 				<div class="ym-col3">
 					<div class="ym-cbox">
 						<h2>Login</h2>
+						<c:if test="${! empty requestScope.MAXDOCS_MESSAGES}">
+						<div id="errors"><max:messages /></div>
+						</c:if>
 						<c:url var="dologin" value="">
 							<c:param name="action" value="dologin" />
 						</c:url>
