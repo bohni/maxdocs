@@ -556,7 +556,8 @@ public class FileStorage implements Storage
 	{
 		log.trace("load({}, {})", pagePath, version);
 		// create pathname of version 
-		StringBuffer pathname = new StringBuffer(contentPath + files.get(pagePath));
+		StringBuffer pathname = new StringBuffer(contentPath);
+		pathname.append(files.get(pagePath));
 		pathname.insert(pathname.length() - 4, System.getProperty("file.separator") + version);
 		log.debug("pathname is {}", pathname);
 		MarkupPage markupPage = null;
