@@ -106,7 +106,7 @@
 		<property name="realms">
 			<list>
 				<ref bean="iniRealm" />
-<!-- 				<ref bean="maxdocsRealm" /> -->
+				<ref bean="maxdocsRealm" />
 			</list>
 		</property>
     <!-- By default the servlet container sessions will be used.  Uncomment this line
