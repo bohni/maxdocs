@@ -27,7 +27,7 @@
  ------
  Team maxdocs.org
  ------
-2013-01-06
+2013-01-11
 
 ~~ Auf dieser Seite wird der Entwicklungsprozess erklärt: Umgebung installieren, Projekt einrichten, Vorgaben
 
@@ -49,15 +49,15 @@ Entwicklung
  direkt in der IDE installiert werden können:
 
 		* Maven Integration for Eclipse WTP
-	
+
 		* EGit - Git Team Provider
-	
+
 		* Github Mylyn Connector
-	
+
 		* optional: EasyShell
-	
+
 		* optional: SpringIDE
-	
+
 		* optional: {{{http://apteditor.sourceforge.net/}APT Editor}} (Dieses Plugin muss manuell installiert werden. 
 		  Einfach das JAR-file in das dropins-Verzeichnis von Eclipse kopieren)
 
@@ -65,18 +65,54 @@ Entwicklung
  angepasst werden:
 
 	* General > Workspace
-	
+
 		* Text file encoding: UTF-8
-		
+
 		* New text file line delimiter: Unix
 
 	* General > Editors > Text Editors
 
-		* Insert spaces for tabs: muss deaktiviert werden
+		* Insert spaces for tabs: deaktiviert
 
-		* Java > Code Style > Code Templates: {{MaxDocsCodeTemplates.xml}} muss importiert werden
+	* Java > Code Style > Code Templates: {{MaxDocsCodeTemplates.xml}} muss importiert werden
 
-		* Java > Code Style > Formatter: {{MaxDocsFormatter.xml}} muss importiert werden
+	* Java > Code Style > Formatter: {{MaxDocsFormatter.xml}} muss importiert werden
+
+	* Web > CSS Files
+
+		* Encoding: ISO10646/Unicode(UTF-8)
+
+	* Web > CSS Files > Editor
+
+		* Line Width: 110
+
+		* Indent using tabs: ausgewählt
+
+	* Web > HTML Files
+
+		* Encoding: ISO10646/Unicode(UTF-8)
+
+	* Web > HTML Files > Editor
+
+		* Line Width: 110
+
+		* Indent using tabs: ausgewählt
+
+	* Web > JSP Files
+
+		* Encoding: ISO10646/Unicode(UTF-8)
+
+	* XML > XML Files
+
+		* Encoding: ISO10646/Unicode(UTF-8)
+
+	* XML > XML Files > Editor
+
+		* Line Width: 110
+
+		* Split multiple attributes each on new line: true
+
+		* Indent using tabs: ausgewählt
 
 ** Maven
 
@@ -97,7 +133,6 @@ Entwicklung
 		* Windows: git config --global core.autocrlf true
 
 		* Mac/Unix : git config --global core.autocrlf input
-
 
 * Projekt anlegen
 
@@ -150,7 +185,7 @@ Entwicklung
 		* prüfen: mvn validate license:check
 
 		* generieren: mvn validate license:format
-		
+
 	* {{{https://github.com/github/maven-plugins}Github Plugins}}
 
 * nützliche Links
@@ -160,13 +195,15 @@ Entwicklung
 	* {{{http://blog.code-adept.com/2008/01/25/unit-testing-jsp-custom-tags/}Unit Testing Custom Tags}}
 
 	* {{{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}UTF-8 encoding mit Apache Tomcat}}
-	
+
 	* {{{http://ahoehma.wordpress.com/2010/05/25/export-maven-war-artifact-as-runnable-jetty-package/}Assembly als Standalone}}
-	
+
 	* {{{http://shaierera.blogspot.de/2012/11/lucene-facets-part-1.html}Lucene Facets, Part 1}}
-	
+
 	* {{{http://blog.akquinet.de/2012/04/12/maven-sites-reloaded/}Maven Sites – Reloaded}}
-	
+
 	* {{{http://longair.net/blog/2009/04/16/git-fetch-and-merge/}git: fetch and merge, don’t pull}}
-	
+
 	* {{{http://www.mail-archive.com/shiro-user@incubator.apache.org/msg00742.html}Shiro: Anonymous user with permissions}}
+
+	* {{{http://www.sonarsource.org/effective-code-review-with-sonar/}Code Reviews mit Sonar}}

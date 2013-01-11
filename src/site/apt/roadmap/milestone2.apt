@@ -27,7 +27,7 @@
  ------
  Team maxdocs.org
  ------
-2013-01-09
+2013-01-11
 
 Milestone M2
 
@@ -37,13 +37,17 @@ Milestone M2
 * Servlet
 
 	* login\
-	Login des übergebenen Users
+	  Login des übergebenen Users
 
 	* logout\
-	Logout des angemeldeten Users
+	  Logout des angemeldeten Users
+
+	* Rechte prüfen\
+	  Bei jeder Aktion die Rechte des angemeldeten Users prüfen. Wenn kein User angemeldet ist,
+	  muss die Aktion als User "anonymous" erfolgen. 
 
 	* rename\
-	Umbenennen der übergebenen Seite
+	  Umbenennen der übergebenen Seite
 
 
 * Engine
@@ -72,12 +76,14 @@ Milestone M2
 
 * Security
 
-	* Security-Konzept verfeinern:
+	* Security-Konzept erstellen
+	
+		* Welches Framework? Spring Security oder Apache Shiro? -> Apache Shiro
 
-	* Wie kann dynamisch auf Seitenbasis gesperrt werden?
-
-	* Welche Rechte werden benötigt (View, Edit, Rename, Delete, Upload, etc.)
-
-	* Wie können Rechte und Rollen getrennt werden? 
-
-	* Wie wird Security konfiguriert?
+		* Wie kann dynamisch auf Seitenbasis gesperrt werden? -> URL-Filter auf "/", Prüfung im Servlet
+	
+		* Definition der benötigten Rechte (View, Edit, Rename, Delete, Upload, etc.)
+	
+		* Wie können Rechte und Rollen getrennt werden? -> Apache Shiro bietet entsprechende Konfiguration
+	
+		* Wie wird Security konfiguriert?

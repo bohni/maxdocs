@@ -27,11 +27,11 @@
  ------
  Team maxdocs.org
  ------
-2013-01-06
+2013-01-11
  
 Roadmap
 
- Auf dieser Seite werden die nächsten Milertones und die benötigten Features beschrieben.
+ Auf dieser Seite werden die nächsten Meilensteine und die benötigten Features beschrieben.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -70,12 +70,12 @@ Roadmap
 * Milestone M3
 
  Im dritten Meilenstein wird nun das Plugin-Konzept erarbeitet und implementiert.
- Außerdem werden gleich die ersten notwendigen Plugins implementiert (ImagePlugin,
+ Außerdem werden gleich die ersten notwendigen Plugins implementiert.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Milestone M4
 
- Der vierte Meilenstein führt die Blog-Engine ein un ein passendes Template
+ Der vierte Meilenstein führt die Blog-Engine und ein passendes Template ein
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
