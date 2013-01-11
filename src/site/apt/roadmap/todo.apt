@@ -27,7 +27,7 @@
  ------
  Team maxdocs.org
  ------
-2013-01-06
+2013-01-11
 
 ~~ Hier soll eine freie Sammlung offener TODOs gepflegt werden
 
@@ -35,77 +35,63 @@ TODO
 
  Hier ist eine Liste der TODOs:
 
-	* Entwicklungsumgebung
+Dokumentation
 
-		* Preferences/Templates für Eclipse bereitstellen
+* Dokumentation
+
+	* develop.txt nach apt für Maven-Site-Dokumentation -> {{{roadmap/todo.html}}}
+
+	* Lizenzen prüfen, auflisten
+
+	* Architektur dokumentieren.
+
+	* Bereits implementierte Konzepte dokumentieren.
+
+	* Getting started Doku für Entwickler
+
+		* Eclipse und Plugins installieren -> {{{dev/entwicklung.html}}}
+
+		* Eclipse konfigurieren (Preferences, Templates) -> {{{dev/entwicklung.html}}}
 
 		* PMD Regeln festlegen
 
-	* Dokumentation
+		* Git -> {{{dev/entwicklung.html}}}
+		
+		* Branching Model
 
-		* develop.txt nach apt für Maven-Site-Dokumentation
+* Konzepte
 
-		* Lizenzen prüfen, auflisten
+	* Attachments
 
-		* Getting started Doku für Entwickler
+		* Metadaten-Datei (reicht Mimetype?)
 
-			* Eclipse und Plugins installieren
+		* Erweiterung des Dateiformats 
 
-			* Eclipse konfigurieren (Preferences, Templates, PMD Regeln, etc.)
+Entwicklung
 
-			* GitHub
+	* i18n
+	
+		* Default-Template: Texte in properties auslagern
 
-			* Branching Model
+		* Messages überarbeiten 
 
-	* Entwicklung
+	* UnitTest verbessern
 
-		* Default-Template: Texte in properties auslagern (I18n)
+	* Attachments, Web-Handling
 
-		* Messages überarbeiten (I18n) 
+	* MarkupParser: weitere Markups
 
-		* UnitTest verbessern
+	* Default Template: Favicon
 
-		* FileStorage: Speichern unter lfdNr., Delete, Rename, Load Version
+	* MaxDocs-Konfig: Konzept erstellen
 
-		* Attachments, Web-Handling
+	* Code aufräumen
 
-		* MarkupParser: weitere Markups
+		* Refactor lange Methoden
 
-		* Security: Konzept erstellen und prüfen, ob mit Spring Security / Apache Shiro umsetzbar
-
-		* Default Template: Favicon
-
-		* MaxDocs-Konfig: Konzept erstellen
-
-		* Code aufräumen
-
-			* Refactor lange Mehtoden
-
-			* Schnittstellen prüfen
-
-	* Design / Konzepte	
-
-		* Securtiy
-
-			* Rollen
-
-			* Rechte
-
-		* Plugins
-
-		* Attachments
-
-			* Metadaten-Datei (reicht Mimetype?)
-
-			* Erweiterung des Dateiformats 
-
-	* Dokumentation
+		* Schnittstellen prüfen
 
 		* Javadoc-Kommentare prüfen und vereinheitlichen.
-
-		* Architektur dokumentieren.
-
-		* Bereits implementierte Konzepte dokumentieren.
 
 	* Unit Tests
 
@@ -114,7 +100,7 @@ TODO
 	* Codereview
 
 		* Auf den bisher erstellten Code muss ein Review durchgeführt werden.
-		   Gegebenenfalls gefundende Punkte müssen überarbeitet werden.
+		  Gegebenenfalls gefundende Punkte müssen überarbeitet werden.
 
 	* Caching der Seiten
 
@@ -129,8 +115,6 @@ TODO
 		* List für RecentChanges (30 neuesten); evtl. über Lucene?
 		
 		* Map3 tag -> pagePath [List]	
-
-	* Delete (MaxDocs Engine, FileStorage)
 
 	* Rename (MaxDocs Engine, FileStorage)
 
@@ -153,8 +137,6 @@ TODO
 	* Bilder
 
 	* Gallery
-
-	* I18n
 
 	* +1 / Gefällt mir / ...
 	

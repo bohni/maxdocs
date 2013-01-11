@@ -27,7 +27,7 @@
  ------
  Team maxdocs.org
  ------
-2013-01-09
+2013-01-11
 
 Milestone M1
 
@@ -89,7 +89,7 @@ Milestone M1
  Die Engine stellt die komplette Geschäftslogik zur Verfügung. 
 
 	* delete\
-	Löschen an Storgae delegieren
+	Löschen an Storage delegieren
 	
 	* exists\
 	Anfrage an Storage delegieren
@@ -98,7 +98,7 @@ Milestone M1
 	MarkupPage über Storage laden, dann mit durch Parser in HTMLPage wandeln und zurück geben.
 	
 	* getMarkupPage\
-	MarkupPage über Storage ladenund zurück geben.
+	MarkupPage über Storage laden und zurück geben.
 	
 	* save\
 	Speichern an Storage delegieren
@@ -132,11 +132,12 @@ Milestone M1
 
  Die Taglib enthält alle JSP-Tags zur Anzeige der Daten. Dabei haben alle Tags das 
  styleClass- und das plain-Attribut. Das Attribut styleClass wird als html-Attribut class gerendert.
- Das plain-Attribut steuert, ob das entsprechende Tag den Text mit oder ohne HTML-Tags rendert. 
+ Das plain-Attribut steuert, ob das entsprechende Tag den Text mit oder ohne HTML-Tags rendert.
+ Allerdings wird plain nicht von allen Tags ausgewertet.
 
 	* author\
-	Gibt den Autor (hat die Seite erstellt) oder Editor (hat die Seite bearbeitet) der Seite aus.\
-	Unterstütze Attribute:
+	  Gibt den Autor (hat die Seite erstellt) oder Editor (hat die Seite bearbeitet) der Seite aus.\
+	  Unterstützte Attribute:
 	
 		* styleClass: Default ist maxdocsAuthor
 		
@@ -145,16 +146,16 @@ Milestone M1
 		* type: author oder editor. Default ist author
 		
 	* breadcrumbs\
-	Dieses Tag gibt die zuletzt besuchten Seiten als ul-Element aus.\
-	Unterstütze Attribute:
+	  Dieses Tag gibt die zuletzt besuchten Seiten als ul-Element aus.\
+	  Unterstützte Attribute:
 	
 		* styleClass: Default ist maxdocsBreadcrumbs
 	
 	* date\
-	Dieses Tag gibt das Datum der Anlage oder der letzten Änderung aus, was über das Attribut type 
-	gesteuert wird. Das Datumsformat wird über das Attribut format gesteuert, welches das Pattern
-	im SimpleDateformat enthalten muss.\
-	Unterstütze Attribute:
+	  Dieses Tag gibt das Datum der Anlage oder der letzten Änderung aus, was über das Attribut type 
+	  gesteuert wird. Das Datumsformat wird über das Attribut format gesteuert, welches das Pattern
+	  im SimpleDateformat enthalten muss.\
+	  Unterstützte Attribute:
 	
 		* styleClass: Default ist maxdocsDate
 		
@@ -162,22 +163,22 @@ Milestone M1
 	
 		* type: creation oder lastChange. Default ist lastChange
 		
-		* fromat: Pattern im SimpleDateFormat. Default ist yyyy-MM-dd HH:mm
+		* format: Pattern im SimpleDateFormat. Default ist yyyy-MM-dd HH:mm
 	
 	* insertPage\
-	Dieses Tag erzeugt einen div-Container mit dem geparsten HTML der im name-Attribut angegebenen
-	Seite.\
-	Unterstütze Attribute:
+	  Dieses Tag erzeugt einen div-Container mit dem geparsten HTML der im name-Attribut angegebenen
+	  Seite.\
+	  Unterstützte Attribute:
 	
 		* styleClass: Default ist maxdocsInsertedPage
 		
 		* name: Name der einzufügenden Seite
 	
 	* markupLanguage\
-	Dieses Tag gibt die Markupsprache aus, mit der diese Seite geschrieben wurde. Über das type-Attibut
-	kann gesteuert werden, ob die Markupsprache der Seite als String (output) oder als select-Element
-	(input) ausgegeben wird\
-	Unterstütze Attribute:
+	  Dieses Tag gibt die Markupsprache aus, mit der diese Seite geschrieben wurde. Über das type-Attibut
+	  kann gesteuert werden, ob die Markupsprache der Seite als String (output) oder als select-Element
+	  (input) ausgegeben wird\
+	  Unterstützte Attribute:
 	
 		* styleClass: Default ist maxdocsMarkupLanguage
 		
@@ -186,22 +187,38 @@ Milestone M1
 		* type: output oder input. Default ist output
 	
 	* noSuchPage\
-	Mit diesem Tag kann Text ausgegeben werden, wenn die zu prüfende Seite nicht exisitert.\
-	Unterstütze Attribute:
+	  Mit diesem Tag kann Text ausgegeben werden, wenn die zu prüfende Seite nicht existiert.\
+	  Unterstützte Attribute:
 	
 		* page: Name der Seite. Wenn nicht angegeben, wird der aktuelle Seitenname verwendet.
 	
 	* pageContent\
+	  Dieses Tag liefert den fertig als HTML gerenderten Inhalt der aktuellen Seite\
+	  Unterstützte Attribute:
+	
+		* styleClass: Default ist maxdocsContent
 	
 	* pageExists\
-	Mit diesem Tag kann Text ausgegeben werden, wenn die zu prüfende Seite exisitert.\
-	Unterstütze Attribute:
+	Mit diesem Tag kann Text ausgegeben werden, wenn die zu prüfende Seite existiert.\
+	Unterstützte Attribute:
 	
 		* page: Name der Seite. Wenn nicht angegeben, wird der aktuelle Seitenname verwendet.
 	
 	* pageName\
+	  Dieses Tag liefert den Namen der aktuellen Seite zurück.\
+	  Unterstützte Attribute:
 	
+		* styleClass: Default ist maxdocsPageName
+		
+		* plain: Default ist false
+		
 	* pageSource\
+	  Dieses Tag liefert den Sourcecode des Inhalts der aktuellen Seite\
 	
 	* pageVersion\
+	  Dieses Tag liefert die aktuelle Versionsnummer der aktuellen Seite\
+	  Unterstützte Attribute:
 	
+		* styleClass: Default ist maxdocsPageVersion
+		
+		* plain: Default ist false
