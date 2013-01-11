@@ -24,7 +24,9 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<prerequisites>
@@ -437,6 +439,10 @@
 				</reportSets>
 				<configuration>
 					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+					<excludes>
+						<exclude>**/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
+						<exclude>**/org/maxdocs/apache/catalina/filters/SetCharacterEncodingFilter.java</exclude>
+					</excludes>
 					<linkXRef>true</linkXRef>
 					<targetJdk>1.6</targetJdk>
 					<includeTests>true</includeTests>

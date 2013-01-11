@@ -122,7 +122,7 @@ import java.util.StringTokenizer;
  * @author Richard Kennard
  * @version 1.2
  */
-@SuppressWarnings("PMD") // added for MaxDocs
+
 public class UrlEncodedQueryString {
 
 	//
@@ -335,8 +335,8 @@ public class UrlEncodedQueryString {
 	 * Returns whether the named parameter exists.
 	 * <p>
 	 * This can be useful to distinguish between a parameter not existing, and a parameter existing
-	 * but with a <code>null</code> value (eg. <code>foo=1&amp;bar</code>). This is distinct from a
-	 * parameter existing with a value of the empty String (eg. <code>foo=1&amp;bar=</code>).
+	 * but with a <code>null</code> value (eg. <code>foo=1&bar</code>). This is distinct from a
+	 * parameter existing with a value of the empty String (eg. <code>foo=1&bar=</code>).
 	 */
 
 	public boolean contains( final String name ) {
