@@ -36,7 +36,7 @@ import org.maxdocs.data.MarkupPage;
  */
 public interface MarkupParser
 {
-	public HtmlPage parseToHtml(MarkupPage markupPage);
+	HtmlPage parseToHtml(MarkupPage markupPage);
 	
-	public  Map<String, String> getMarkupLanguages();
+	 Map<String, String> getMarkupLanguages();
 }

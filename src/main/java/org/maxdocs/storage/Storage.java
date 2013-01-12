@@ -44,7 +44,7 @@ public interface Storage
 	 * @param pagePath the requested page
 	 * @return <code>true</code> if and only if the page is successfully deleted; <code>false</code> otherwise
 	 */
-	public boolean delete(String pagePath);
+	boolean delete(String pagePath);
 
 
 	/**
@@ -54,7 +54,7 @@ public interface Storage
 	 * @param pagePath the requested page
 	 * @return <code>true</code> if the pagePath exists; <code>false</code> otherwise
 	 */
-	public boolean exists(String pagePath);
+	boolean exists(String pagePath);
 
 
 	/**
@@ -63,7 +63,7 @@ public interface Storage
 	 * 
 	 * @return a list with tag cloud entries
 	 */
-	public List<TagCloudEntry> getTagCloudEntries();
+	List<TagCloudEntry> getTagCloudEntries();
 
 
 	/**
@@ -73,7 +73,7 @@ public interface Storage
 	 * @param pagePath the requested page
 	 * @return the MarkupPage object of the requested page
 	 */
-	public MarkupPage load(String pagePath);
+	MarkupPage load(String pagePath);
 
 
 	/**
@@ -84,7 +84,7 @@ public interface Storage
 	 * @param version the requested version
 	 * @return the MarkupPage object of the requested page
 	 */
-	public MarkupPage load(String pagePath, int version);
+	MarkupPage load(String pagePath, int version);
 
 
 	/**
@@ -96,7 +96,7 @@ public interface Storage
 	 * @return <code>true</code> if and only if the page is successfully renamed; <code>false</code> otherwise
 	 * @throws ConcurrentEditException
 	 */
-	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException;
+	boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException;
 
 
 	/**
@@ -109,5 +109,5 @@ public interface Storage
 	 * @throws ConcurrentEditException
 	 * @throws EditWithoutChangesException
 	 */
-	public boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException;
+	boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException;
 }

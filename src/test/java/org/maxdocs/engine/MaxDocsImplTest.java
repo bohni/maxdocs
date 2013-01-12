@@ -98,6 +98,7 @@ public class MaxDocsImplTest
 	 * testGetHtmlPage:
 	 * Checks getHtmlPage().
 	 */
+	@Test
 	public void testGetHtmlPage()
 	{
 		EasyMock.expect(storage.exists(pagePath)).andReturn(true);

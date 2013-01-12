@@ -46,5 +46,5 @@ public interface MaxDocsPlugin
 	 * @throws IOException If an input or output exception occurs
 	 * @throws IllegalStateException If the response was committed before this method call
 	 */
-	public void forward(ServletRequest request, ServletResponse response) throws IOException, IllegalStateException;
+	void forward(ServletRequest request, ServletResponse response) throws IOException, IllegalStateException;
 }

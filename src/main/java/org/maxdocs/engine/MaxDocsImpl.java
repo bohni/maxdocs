@@ -184,6 +184,7 @@ public class MaxDocsImpl implements MaxDocs
 	/* (non-Javadoc)
 	 * @see org.maxdocs.engine.MaxDocs#save(org.maxdocs.data.MarkupPage, org.maxdocs.data.MarkupPage)
 	 */
+	@Override
 	public boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException
 	{
 		if(newPage == null)

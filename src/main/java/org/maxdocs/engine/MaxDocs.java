@@ -46,7 +46,7 @@ public interface MaxDocs
 	 * @param pagePath the complete path of the page
 	 * @return <code>true</code> if and only if the file is successfully deleted; <code>false</code> otherwise
 	 */
-	public boolean delete(String pagePath);
+	boolean delete(String pagePath);
 
 
 	/**
@@ -56,7 +56,7 @@ public interface MaxDocs
 	 * @param pagePath the complete path of the page
 	 * @return <code>true</code> if the pagePath exists; <code>false</code> otherwise
 	 */
-	public boolean exists(String pagePath);
+	boolean exists(String pagePath);
 
 
 	/**
@@ -65,7 +65,7 @@ public interface MaxDocs
 	 * 
 	 * @return the default markup language
 	 */
-	public String getDefaultMarkupLangage();
+	String getDefaultMarkupLangage();
 
 
 	/**
@@ -74,7 +74,7 @@ public interface MaxDocs
 	 * @param pagePath the complete path of the page
 	 * @return an object containing all data of the requested page
 	 */
-	public HtmlPage getHtmlPage(String pagePath);
+	HtmlPage getHtmlPage(String pagePath);
 
 
 	/**
@@ -86,7 +86,7 @@ public interface MaxDocs
 	 *
 	 * @return all supported markup languages as map.
 	 */
-	public Map<String, String> getMarkupLangages();
+	Map<String, String> getMarkupLangages();
 
 
 	/**
@@ -95,7 +95,7 @@ public interface MaxDocs
 	 * @param pagePath the complete path of the page
 	 * @return an object containing all data of the requested page
 	 */
-	public MarkupPage getMarkupPage(String pagePath);
+	MarkupPage getMarkupPage(String pagePath);
 
 
 	/**
@@ -106,7 +106,7 @@ public interface MaxDocs
 	 * 
 	 * @return a map with the tag cloud
 	 */
-	public Map<String, Integer> getTagCloud();
+	Map<String, Integer> getTagCloud();
 
 
 	/**
@@ -118,7 +118,7 @@ public interface MaxDocs
 	 * @return <code>true</code> if and only if the file is successfully renamed; <code>false</code> otherwise
 	 * @throws ConcurrentEditException
 	 */
-	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException;
+	boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException;
 
 
 	/**
@@ -130,5 +130,5 @@ public interface MaxDocs
 	 * @throws ConcurrentEditException
 	 * @throws EditWithoutChangesException
 	 */
-	public boolean save(MarkupPage markupPage) throws ConcurrentEditException, EditWithoutChangesException;
+	boolean save(MarkupPage markupPage) throws ConcurrentEditException, EditWithoutChangesException;
 }
