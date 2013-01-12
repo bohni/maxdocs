@@ -61,8 +61,8 @@ public class AuthorTagTEI extends AbstractMaxDocsTagTEI
 		Object o = data.getAttribute("type");
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
-			if (!((String) o).toLowerCase().equals("author") &&
-				!((String) o).toLowerCase().equals("editor"))
+			if (!((String) o).equalsIgnoreCase("author") &&
+				!((String) o).equalsIgnoreCase("editor"))
 			{
 				msgs.add(new ValidationMessage(data.getId(),
 					"Invalid value for type. Only 'author' or 'editor' supported."));
@@ -75,6 +75,6 @@ public class AuthorTagTEI extends AbstractMaxDocsTagTEI
 		}
 
 		ValidationMessage[] msgArray = msgs.toArray(new ValidationMessage[msgs.size()]);
-		return msgArray;
+		return msgArray; // NOPMD local used for debugging 
 	}
 }

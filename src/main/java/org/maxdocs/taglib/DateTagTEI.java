@@ -76,8 +76,8 @@ public class DateTagTEI extends AbstractMaxDocsTagTEI
 		o = data.getAttribute("type");
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
-			if (!((String) o).toLowerCase().equals("creation") &&
-				!((String) o).toLowerCase().equals("lastchange"))
+			if (!((String) o).equalsIgnoreCase("creation") &&
+				!((String) o).equalsIgnoreCase("lastchange"))
 			{
 				msgs.add(new ValidationMessage(data.getId(),
 					"Invalid value for type. Only 'creation' or 'lastChange' supported."));
@@ -89,6 +89,6 @@ public class DateTagTEI extends AbstractMaxDocsTagTEI
 			return null;
 		}
 		ValidationMessage[] msgArray = msgs.toArray(new ValidationMessage[msgs.size()]);
-		return msgArray;
+		return msgArray; // NOPMD local used for debugging
 	}
 }

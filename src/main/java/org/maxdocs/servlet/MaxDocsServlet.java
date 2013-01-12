@@ -67,6 +67,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  */
 public class MaxDocsServlet extends HttpServlet
 {
+	private static final String TEMPLATES_ROOT = "/WEB-INF/templates/";
 	private static final String ACTION_DELETE = "delete";
 	private static final String ACTION_DO_LOGIN = "dologin";
 	private static final String ACTION_DO_LOGOUT = "dologout";
@@ -398,7 +399,7 @@ public class MaxDocsServlet extends HttpServlet
 			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
-			request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/edit.jsp").forward(
+			request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/edit.jsp").forward(
 				request, response);
 		}
 		else
@@ -433,7 +434,7 @@ public class MaxDocsServlet extends HttpServlet
 		throws ServletException, IOException
 	{
 		log.trace("actionLogin(HttpServletRequest, HttpServletResponse");
-		request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/login.jsp").forward(request,
+		request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/login.jsp").forward(request,
 			response);
 	}
 
@@ -575,7 +576,7 @@ public class MaxDocsServlet extends HttpServlet
 		String username = (String) currentUser.getPrincipal();
 		if (checkPermission(currentUser, "page:view"))
 		{
-			request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/show.jsp").forward(request,
+			request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/show.jsp").forward(request,
 				response);
 		}
 		else
@@ -613,7 +614,7 @@ public class MaxDocsServlet extends HttpServlet
 		String username = (String) currentUser.getPrincipal();
 		if (checkPermission(currentUser, "page:viewSource"))
 		{
-			request.getRequestDispatcher("/WEB-INF/templates/" + getTemplate() + "/source.jsp").forward(request,
+			request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/source.jsp").forward(request,
 				response);
 		}
 		else
@@ -663,16 +664,17 @@ public class MaxDocsServlet extends HttpServlet
 	{
 		log.trace("checkPermission(Subject, String)");
 
+		Subject user = currentUser;
 		String username = (String) currentUser.getPrincipal();
 
 		if(StringUtils.isBlank(username))
 		{
 			// Nicht angemeldet, also anonymous verwenden!
 			PrincipalCollection principals = new SimplePrincipalCollection("anonymous", "maxdocsRealm");
-			currentUser = new Subject.Builder().principals(principals).buildSubject();
+			user = new Subject.Builder().principals(principals).buildSubject();
 		}
 		
-		if (currentUser.isPermitted(permission))
+		if (user.isPermitted(permission))
 		{
 			return true;
 		}

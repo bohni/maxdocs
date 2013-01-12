@@ -63,6 +63,6 @@ public class PageNameTagTEI extends AbstractMaxDocsTagTEI
 			return null;
 		}
 		ValidationMessage[] msgArray = msgs.toArray(new ValidationMessage[msgs.size()]);
-		return msgArray;
+		return msgArray; // NOPMD local used for debugging
 	}
 }

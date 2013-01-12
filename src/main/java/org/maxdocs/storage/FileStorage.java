@@ -65,8 +65,10 @@ import org.slf4j.LoggerFactory;
  */
 public class FileStorage implements Storage
 {
+	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+	private static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	private static final String DEFAULT_VERSION_FOLDER = "versions";
-	private static final String DEFAULT_CONTENT_PATH = "content" + System.getProperty("file.separator");
+	private static final String DEFAULT_CONTENT_PATH = "content" + FILE_SEPARATOR;
 	private static Logger log = LoggerFactory.getLogger(FileStorage.class);
 	private String contentPath;
 	private String versionPath;
@@ -130,7 +132,6 @@ public class FileStorage implements Storage
 	 */
 	private void createContentPath(String contentPath)
 	{
-		String fileSeparator = System.getProperty("file.separator");
 		this.contentPath = contentPath;
 
 		if (StringUtils.isBlank(this.contentPath))
@@ -139,9 +140,9 @@ public class FileStorage implements Storage
 			log.warn("Parameter contentPath is not set. Using default value '{}'", this.contentPath);
 		}
 
-		if (!StringUtils.endsWith(this.contentPath, fileSeparator))
+		if (!StringUtils.endsWith(this.contentPath, FILE_SEPARATOR))
 		{
-			this.contentPath = this.contentPath + fileSeparator;
+			this.contentPath = this.contentPath + FILE_SEPARATOR;
 		}
 
 		File storage = new File(this.contentPath);
@@ -159,14 +160,13 @@ public class FileStorage implements Storage
 	private void createVersionPath(String versionFolder)
 	{
 		String folder = versionFolder;
-		String fileSeparator = System.getProperty("file.separator");
 		if (StringUtils.isBlank(folder))
 		{
 			folder = DEFAULT_VERSION_FOLDER;
 			log.warn("Parameter versionFolder is not set. Using default value '{}'", folder);
 		}
 
-		if (StringUtils.startsWith(folder, fileSeparator))
+		if (StringUtils.startsWith(folder, FILE_SEPARATOR))
 		{
 			this.versionPath = this.contentPath + folder.substring(1);
 		}
@@ -174,9 +174,9 @@ public class FileStorage implements Storage
 		{
 			this.versionPath = this.contentPath + folder;
 		}
-		if (!StringUtils.endsWith(this.versionPath, fileSeparator))
+		if (!StringUtils.endsWith(this.versionPath, FILE_SEPARATOR))
 		{
-			this.versionPath = this.versionPath + fileSeparator;
+			this.versionPath = this.versionPath + FILE_SEPARATOR;
 		}
 
 		File versions = new File(this.versionPath);
@@ -484,7 +484,7 @@ public class FileStorage implements Storage
 		// create pathname of version 
 		StringBuffer pathname = new StringBuffer(contentPath);
 		pathname.append(files.get(pagePath));
-		pathname.insert(pathname.length() - 4, System.getProperty("file.separator") + version);
+		pathname.insert(pathname.length() - 4, FILE_SEPARATOR + version);
 		log.debug("pathname is {}", pathname);
 		MarkupPage markupPage = null;
 		File file = new File(pathname.toString());
@@ -551,7 +551,7 @@ public class FileStorage implements Storage
 				}
 				else if (count > 0)
 				{
-					content.append(line + System.getProperty("line.separator"));
+					content.append(line + LINE_SEPARATOR);
 				}
 			}
 			markupPage.setContent(content.toString());
@@ -712,7 +712,7 @@ public class FileStorage implements Storage
 		{
 			log.error(e.getMessage(), e);
 			success = false;
-			throw new RuntimeException("Error while saving file " + filename); //TODO: checked exceptions?
+			throw new RuntimeException("Error while saving file " + filename, e); //TODO: checked exceptions?
 		}
 		finally
 		{

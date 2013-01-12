@@ -61,8 +61,8 @@ public class MarkupLanguageTagTEI extends AbstractMaxDocsTagTEI
 		Object o = data.getAttribute("type");
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
-			if (!((String) o).toLowerCase().equals("input") &&
-				!((String) o).toLowerCase().equals("output"))
+			if (!((String) o).equalsIgnoreCase("input") &&
+				!((String) o).equalsIgnoreCase("output"))
 			{
 				msgs.add(new ValidationMessage(data.getId(),
 					"Invalid value for type. Only 'input' or 'output' supported."));
@@ -87,6 +87,6 @@ public class MarkupLanguageTagTEI extends AbstractMaxDocsTagTEI
 			return null;
 		}
 		ValidationMessage[] msgArray = msgs.toArray(new ValidationMessage[msgs.size()]);
-		return msgArray;
+		return msgArray; // NOPMD local used for debugging
 	}
 }

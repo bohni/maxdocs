@@ -57,8 +57,8 @@ public abstract class AbstractMaxDocsTagTEI extends TagExtraInfo
 		Object o = data.getAttribute("plain");
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
-			if (!((String) o).toLowerCase().equals("true") &&
-				!((String) o).toLowerCase().equals("false"))
+			if (!((String) o).equalsIgnoreCase("true") &&
+				!((String) o).equalsIgnoreCase("false"))
 			{
 				msgs.add(new ValidationMessage(data.getId(), "Invalid boolean value."));
 			}
@@ -68,6 +68,6 @@ public abstract class AbstractMaxDocsTagTEI extends TagExtraInfo
 			return null;
 		}
 		ValidationMessage[] msgArray = msgs.toArray(new ValidationMessage[msgs.size()]);
-		return msgArray;
+		return msgArray; // NOPMD local used for debugging
 	}
 }
