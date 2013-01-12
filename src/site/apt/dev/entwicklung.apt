@@ -36,8 +36,19 @@ Entwicklung
 * Allgemeines
 
  Die Entwicklung läuft auf github.com, der Entwicklungsbranch ist develop.
- Das {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}} ist zu beachten!
 
+ Es wird ein Branching Modell verwendet, das sich an das {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Modell}}
+ von Vincent Driessen anlehnt.
+
+ Bei MaxDocs sind die folgenden Branches definiert:
+
+	* master entspricht dem develop branch in Vincents Modell 
+
+	* releases entspricht dem master branch in Vincents Modell.
+ 
+ 
+
+ 
 * Entwicklungsumgebung installieren und konfigurieren
 
 ** Eclipse

@@ -6,6 +6,12 @@ MaxDocs is a new wiki approach focusing on the following features
 
 	* Support of different markups
 
-It uses the branching model described by Vincent Driessen on his blog post at
+It uses a branching model that is inspired by Vincent Driessen's model on his blog post at
 http://nvie.com/posts/a-successful-git-branching-model/
 
+Macdocs defines the following branches:
+
+	* master corresponds to the develop branch in Vincent's model 
+
+	* releases corresponds to the master branch in Vincent's model.
+ 
