@@ -25,6 +25,7 @@ package org.maxdocs.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -125,10 +126,12 @@ public class FileStorageTest
 		catch (ConcurrentEditException e)
 		{
 			log.error(e.getMessage(), e);
+			fail(e.getMessage());
 		}
 		catch (EditWithoutChangesException e)
 		{
 			log.error(e.getMessage(), e);
+			fail(e.getMessage());
 		}
 	}
 
@@ -158,4 +161,58 @@ public class FileStorageTest
 		assertEquals("Output not equal!", expected, storage.pageToString(page));
 	}
 
+	
+	/**
+	 * testPageLoad:
+	 * Test loading of the current version of a page
+	 */
+	@Test
+	public void testPageLoad()
+	{
+		log.trace("testPageLoad");
+		String author = "Author";
+		String content = "Content";
+		Date date = new Date();
+		String markupLanguage = "mediawiki";
+		String pagePath = "/Main";
+		String tag1 = "Tag1";
+		String tag2 = "Tag2";
+
+		MarkupPage page = new MarkupPage();
+		page.setAuthor(author);
+		page.setContent(content);
+		page.setCurrentVersionCreationDate(date);
+		page.setFirstVersionCreationDate(date);
+		page.setMarkupLanguage(markupLanguage);
+		page.setPagePath(pagePath);
+		page.addTag(tag1);
+		page.addTag(tag2);
+		
+		try
+		{
+			boolean success = storage.save(page);
+			assertTrue("save failed", success);
+			MarkupPage loaded = storage.load(pagePath);
+			assertEquals("author not equal", author, loaded.getAuthor());
+			assertEquals("markupLanguage not equal", markupLanguage, loaded.getMarkupLanguage());
+			assertEquals("content not equal", content + System.getProperty("line.separator"), loaded.getContent());
+			assertEquals("pagePath not equal", pagePath, loaded.getPagePath());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			assertEquals("lastChangeDate not equal", sdf.format(date), sdf.format(loaded.getCurrentVersionCreationDate()));
+			assertEquals("creationDate not equal", sdf.format(date), sdf.format(loaded.getFirstVersionCreationDate()));
+			assertEquals("Tags.size not euqal", 2, loaded.getTags().size());
+			assertTrue("tag1 not in Tags", loaded.getTags().contains(tag1));
+			assertTrue("tag2 not in Tags", loaded.getTags().contains(tag2));
+		}
+		catch (ConcurrentEditException e)
+		{
+			log.error(e.getMessage(), e);
+			fail(e.getMessage());
+		}
+		catch (EditWithoutChangesException e)
+		{
+			log.error(e.getMessage(), e);
+			fail(e.getMessage());
+		}
+	}
 }

@@ -87,3 +87,5 @@ Milestone M2
 		* Wie können Rechte und Rollen getrennt werden? -> Apache Shiro bietet entsprechende Konfiguration
 	
 		* Wie wird Security konfiguriert?
+		
+		* eigene Userklasse für Daten (Vor- Nachname, E-Mail-Adresse, Homepage, ...) und Einstellungen(Abschnitte bearbeiten, ...)

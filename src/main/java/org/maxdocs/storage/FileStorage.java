@@ -468,81 +468,7 @@ public class FileStorage implements Storage
 		File file = new File(pathname);
 		if (file.exists())
 		{
-			markupPage = new MarkupPage();
-			markupPage.setPagePath(pagePath);
-			Scanner scanner = null;
-			try
-			{
-				scanner = new Scanner(new FileInputStream(file), "UTF-8");
-				String line;
-				StringBuilder content = new StringBuilder();
-				int count = 0;
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
-				while (scanner.hasNextLine())
-				{
-					line = scanner.nextLine();
-					if (StringUtils.startsWith(line, "author"))
-					{
-						markupPage.setAuthor(StringUtils.substringAfterLast(line, "="));
-					}
-					else if (StringUtils.startsWith(line, "contentType"))
-					{
-						markupPage.setMarkupLanguage(StringUtils.substringAfterLast(line, "="));
-					}
-					else if (StringUtils.startsWith(line, "creationDateFirst"))
-					{
-						Date date = sdf.parse(StringUtils.substringAfterLast(line, "="));
-						markupPage.setFirstVersionCreationDate(date);
-					}
-					else if (StringUtils.startsWith(line, "creationDateThis"))
-					{
-						Date date = sdf.parse(StringUtils.substringAfterLast(line, "="));
-						markupPage.setCurrentVersionCreationDate(date);
-					}
-					else if (StringUtils.startsWith(line, "editor"))
-					{
-						markupPage.setEditor(StringUtils.substringAfterLast(line, "="));
-					}
-					else if (StringUtils.startsWith(line, "version"))
-					{
-						String version = StringUtils.substringAfterLast(line, "=").trim();
-						markupPage.setVersion(Integer.parseInt(version));
-					}
-					else if (StringUtils.startsWith(line, "tags"))
-					{
-						String tags = StringUtils.substringAfterLast(line, "=");
-						Set<String> taglist = Collections.synchronizedSet(new HashSet<String>());
-						String[] stringarr = StringUtils.splitByWholeSeparator(tags, ", ");
-						CollectionUtils.addAll(taglist, stringarr);
-						markupPage.setTags(taglist);
-					}
-					else if (StringUtils.isBlank(line) && count == 0)
-					{
-						count = 1;
-					}
-					else if (count > 0)
-					{
-						content.append(line + System.getProperty("line.separator"));
-					}
-				}
-				markupPage.setContent(content.toString());
-				log.debug("page {} loaded", markupPage.getPagePath());
-			}
-			catch (FileNotFoundException e)
-			{
-				log.error(e.getMessage(), e);
-			}
-			catch (ParseException e)
-			{
-				log.error(e.getMessage(), e);
-			}
-			finally
-			{
-				if (scanner != null)
-				{
-					scanner.close();
-				}
-			}
+			markupPage = load(file, pagePath);
 		}
 		return markupPage;
 	}
@@ -564,79 +490,86 @@ public class FileStorage implements Storage
 		File file = new File(pathname.toString());
 		if (file.exists())
 		{
-			markupPage = new MarkupPage();
-			markupPage.setPagePath(pagePath);
-			Scanner scanner = null;
-			try
+			markupPage = load(file, pagePath);
+		}
+		return markupPage;
+	}
+	
+	private MarkupPage load(File file, String pagePath)
+	{
+		MarkupPage markupPage = new MarkupPage();
+		markupPage.setPagePath(pagePath);
+		Scanner scanner = null;
+		try
+		{
+			scanner = new Scanner(new FileInputStream(file), "UTF-8");
+			String line;
+			StringBuilder content = new StringBuilder();
+			int count = 0;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
+			while (scanner.hasNextLine())
 			{
-				scanner = new Scanner(new FileInputStream(file), "UTF-8");
-				String line;
-				StringBuilder content = new StringBuilder();
-				int count = 0;
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
-				while (scanner.hasNextLine())
+				line = scanner.nextLine();
+				if (StringUtils.startsWith(line, "author"))
 				{
-					line = scanner.nextLine();
-					if (StringUtils.startsWith(line, "author"))
-					{
-						markupPage.setAuthor(StringUtils.substringAfterLast(line, "="));
-					}
-					else if (StringUtils.startsWith(line, "contentType"))
-					{
-						markupPage.setMarkupLanguage(StringUtils.substringAfterLast(line, "="));
-					}
-					else if (StringUtils.startsWith(line, "creationDateFirst"))
-					{
-						Date date = sdf.parse(StringUtils.substringAfterLast(line, "="));
-						markupPage.setFirstVersionCreationDate(date);
-					}
-					else if (StringUtils.startsWith(line, "creationDateThis"))
-					{
-						Date date = sdf.parse(StringUtils.substringAfterLast(line, "="));
-						markupPage.setCurrentVersionCreationDate(date);
-					}
-					else if (StringUtils.startsWith(line, "editor"))
-					{
-						markupPage.setEditor(StringUtils.substringAfterLast(line, "="));
-					}
-					else if (StringUtils.startsWith(line, "version"))
-					{
-						markupPage.setVersion(version);
-					}
-					else if (StringUtils.startsWith(line, "tags"))
-					{
-						String tags = StringUtils.substringAfterLast(line, "=");
-						Set<String> taglist = Collections.synchronizedSet(new HashSet<String>());
-						String[] stringarr = StringUtils.splitByWholeSeparator(tags, ", ");
-						CollectionUtils.addAll(taglist, stringarr);
-						markupPage.setTags(taglist);
-					}
-					else if (StringUtils.isBlank(line) && count == 0)
-					{
-						count = 1;
-					}
-					else if (count > 0)
-					{
-						content.append(line + System.getProperty("line.separator"));
-					}
+					markupPage.setAuthor(StringUtils.substringAfterLast(line, "="));
 				}
-				markupPage.setContent(content.toString());
-				log.debug("page {} loaded", markupPage.getPagePath());
-			}
-			catch (FileNotFoundException e)
-			{
-				log.error(e.getMessage(), e);
-			}
-			catch (ParseException e)
-			{
-				log.error(e.getMessage(), e);
-			}
-			finally
-			{
-				if (scanner != null)
+				else if (StringUtils.startsWith(line, "contentType"))
 				{
-					scanner.close();
+					markupPage.setMarkupLanguage(StringUtils.substringAfterLast(line, "="));
 				}
+				else if (StringUtils.startsWith(line, "creationDateFirst"))
+				{
+					Date date = sdf.parse(StringUtils.substringAfterLast(line, "="));
+					markupPage.setFirstVersionCreationDate(date);
+				}
+				else if (StringUtils.startsWith(line, "creationDateThis"))
+				{
+					Date date = sdf.parse(StringUtils.substringAfterLast(line, "="));
+					markupPage.setCurrentVersionCreationDate(date);
+				}
+				else if (StringUtils.startsWith(line, "editor"))
+				{
+					markupPage.setEditor(StringUtils.substringAfterLast(line, "="));
+				}
+				else if (StringUtils.startsWith(line, "version"))
+				{
+					String version = StringUtils.substringAfterLast(line, "=").trim();
+					markupPage.setVersion(Integer.parseInt(version));
+				}
+				else if (StringUtils.startsWith(line, "tags"))
+				{
+					String tags = StringUtils.substringAfterLast(line, "=");
+					Set<String> taglist = Collections.synchronizedSet(new HashSet<String>());
+					String[] stringarr = StringUtils.splitByWholeSeparator(tags, ", ");
+					CollectionUtils.addAll(taglist, stringarr);
+					markupPage.setTags(taglist);
+				}
+				else if (StringUtils.isBlank(line) && count == 0)
+				{
+					count = 1;
+				}
+				else if (count > 0)
+				{
+					content.append(line + System.getProperty("line.separator"));
+				}
+			}
+			markupPage.setContent(content.toString());
+			log.debug("page {} loaded", markupPage.getPagePath());
+		}
+		catch (FileNotFoundException e)
+		{
+			log.error(e.getMessage(), e);
+		}
+		catch (ParseException e)
+		{
+			log.error(e.getMessage(), e);
+		}
+		finally
+		{
+			if (scanner != null)
+			{
+				scanner.close();
 			}
 		}
 		return markupPage;
