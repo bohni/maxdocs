@@ -62,7 +62,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 /**
  * MaxDocsServlet:
  * Main servlet of MaxDocs.
- *
+ * 
  * @author Team maxdocs.org
  */
 public class MaxDocsServlet extends HttpServlet
@@ -88,6 +88,7 @@ public class MaxDocsServlet extends HttpServlet
 
 	private static Logger log = LoggerFactory.getLogger(MaxDocsServlet.class);
 
+
 	/* (non-Javadoc)
 	 * @see javax.servlet.GenericServlet#init()
 	 */
@@ -102,6 +103,7 @@ public class MaxDocsServlet extends HttpServlet
 			.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, webApplicationContext.getBean("maxDocs"));
 	}
 
+
 	/* (non-Javadoc)
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
@@ -112,6 +114,7 @@ public class MaxDocsServlet extends HttpServlet
 		doService(request, response);
 	}
 
+
 	/* (non-Javadoc)
 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
@@ -121,6 +124,7 @@ public class MaxDocsServlet extends HttpServlet
 	{
 		doService(request, response);
 	}
+
 
 	protected void doService(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
@@ -150,7 +154,6 @@ public class MaxDocsServlet extends HttpServlet
 		// breadcrumbs
 		buildBreadcrumbs(request);
 
-	
 		// Action
 		String action = request.getParameter(PARAMETER_NAME_ACTION);
 		if (StringUtils.isBlank(action))
@@ -202,11 +205,13 @@ public class MaxDocsServlet extends HttpServlet
 		response.setCharacterEncoding("UTF-8");
 	}
 
+
 	/**
 	 * buildBreadcrumbs:
 	 * Build the breadcrumbs
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
 	 */
 	private void buildBreadcrumbs(HttpServletRequest request)
 	{
@@ -216,9 +221,10 @@ public class MaxDocsServlet extends HttpServlet
 			MaxDocsConstants.MAXDOCS_BREADCRUMBS);
 		if (breadcrumbs == null)
 		{
-			ApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-			Integer count= (Integer) context.getBean("breadcrumbsCount");
-			if(count == null)
+			ApplicationContext context = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(getServletContext());
+			Integer count = (Integer) context.getBean("breadcrumbsCount");
+			if (count == null)
 			{
 				count = Integer.valueOf(5);
 			}
@@ -240,12 +246,15 @@ public class MaxDocsServlet extends HttpServlet
 		request.getSession().setAttribute(MaxDocsConstants.MAXDOCS_BREADCRUMBS, breadcrumbs);
 	}
 
+
 	/**
 	 * actionDelete:
 	 * Delete a page
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
@@ -288,8 +297,10 @@ public class MaxDocsServlet extends HttpServlet
 	 * actionDoLogin:
 	 * Does the login with Apache Shiro
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
@@ -364,8 +375,10 @@ public class MaxDocsServlet extends HttpServlet
 	 * actionLogout:
 	 * Performs the logout
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
@@ -378,12 +391,15 @@ public class MaxDocsServlet extends HttpServlet
 		actionShow(request, response);
 	}
 
+
 	/**
 	 * actionEdit:
 	 * Edit a page
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
@@ -399,8 +415,8 @@ public class MaxDocsServlet extends HttpServlet
 			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
-			request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/edit.jsp").forward(
-				request, response);
+			request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/edit.jsp").forward(request,
+				response);
 		}
 		else
 		{
@@ -425,8 +441,10 @@ public class MaxDocsServlet extends HttpServlet
 	 * actionLogin:
 	 * Shows the login page
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
@@ -434,16 +452,19 @@ public class MaxDocsServlet extends HttpServlet
 		throws ServletException, IOException
 	{
 		log.trace("actionLogin(HttpServletRequest, HttpServletResponse");
-		request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/login.jsp").forward(request,
-			response);
+		request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/login.jsp")
+			.forward(request, response);
 	}
+
 
 	/**
 	 * actionRename:
 	 * Rename a page
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
@@ -482,8 +503,10 @@ public class MaxDocsServlet extends HttpServlet
 	 * actionSave:
 	 * Save a page
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
@@ -534,7 +557,7 @@ public class MaxDocsServlet extends HttpServlet
 				// TODO: show error message
 				log.debug("No changes...");
 			}
-	
+
 			if (!success)
 			{
 				// TODO: show error message
@@ -563,8 +586,10 @@ public class MaxDocsServlet extends HttpServlet
 	 * actionShow:
 	 * Show a page
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
@@ -597,12 +622,15 @@ public class MaxDocsServlet extends HttpServlet
 		}
 	}
 
+
 	/**
 	 * actionSource:
 	 * Show the page source
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-	 * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
@@ -634,6 +662,7 @@ public class MaxDocsServlet extends HttpServlet
 			actionShow(request, response);
 		}
 	}
+
 
 	/**
 	 * getTemplate:
@@ -667,13 +696,13 @@ public class MaxDocsServlet extends HttpServlet
 		Subject user = currentUser;
 		String username = (String) currentUser.getPrincipal();
 
-		if(StringUtils.isBlank(username))
+		if (StringUtils.isBlank(username))
 		{
 			// Nicht angemeldet, also anonymous verwenden!
 			PrincipalCollection principals = new SimplePrincipalCollection("anonymous", "maxdocsRealm");
 			user = new Subject.Builder().principals(principals).buildSubject();
 		}
-		
+
 		if (user.isPermitted(permission))
 		{
 			return true;
@@ -681,12 +710,13 @@ public class MaxDocsServlet extends HttpServlet
 		return false;
 	}
 
-	
+
 	/**
 	 * getMessages:
 	 * Returns the messages list from teh request.
 	 * 
-	 * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
 	 * @return the message list
 	 */
 	private List<String> getMessages(HttpServletRequest request)

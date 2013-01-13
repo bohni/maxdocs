@@ -58,7 +58,8 @@ public final class MaxDocsConstants
 	 * Key for storing the messages
 	 */
 	public static final String MAXDOCS_MESSAGES = "MAXDOCS_MESSAGES";
-	
+
+
 	private MaxDocsConstants()
 	{
 		// no instance needed

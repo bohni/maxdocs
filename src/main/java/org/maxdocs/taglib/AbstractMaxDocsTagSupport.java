@@ -28,9 +28,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 /**
  * AbstractMaxDocsTagSupport:
  * Abstract super class for MaxDocs taglib tag classes.
- * 
  * Provides styleClass and plain attributes.
- *
+ * 
  * @author Team maxdocs.org
  */
 public abstract class AbstractMaxDocsTagSupport extends TagSupport
@@ -53,6 +52,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 	/**
 	 * Minimal constructor. Contains required fields.
 	 * Creates an {@link AbstractMaxDocsTagSupport} object with the given parameters.
+	 * 
 	 * @param styleClass
 	 */
 	public AbstractMaxDocsTagSupport(String styleClass)
@@ -64,6 +64,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 	/**
 	 * Full constructor. Contains required and optional fields.
 	 * Creates an {@link AbstractMaxDocsTagSupport} object with the given parameters.
+	 * 
 	 * @param styleClass
 	 * @param plain
 	 */
@@ -77,7 +78,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 
 	/**
 	 * getStyleClass() returns the styleClass
-	 *
+	 * 
 	 * @return the styleClass
 	 */
 	public String getStyleClass()
@@ -88,7 +89,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 
 	/**
 	 * setStyleClass() sets the styleClass
-	 *
+	 * 
 	 * @param styleClass the styleClass to set
 	 */
 	public void setStyleClass(String styleClass)
@@ -99,7 +100,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 
 	/**
 	 * isPlain() returns the plain
-	 *
+	 * 
 	 * @return the plain
 	 */
 	public boolean isPlain()
@@ -110,7 +111,7 @@ public abstract class AbstractMaxDocsTagSupport extends TagSupport
 
 	/**
 	 * setPlain() sets the plain
-	 *
+	 * 
 	 * @param plain the plain to set
 	 */
 	public void setPlain(boolean plain)

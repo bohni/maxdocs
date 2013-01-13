@@ -37,13 +37,13 @@ import org.slf4j.LoggerFactory;
 /**
  * PageContentTag:
  * Tag, that displays the content within a div container.
- *
+ * 
  * @author Team maxdocs.org
- *
  */
 public class PageSourceTag extends TagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(PageSourceTag.class);
+
 
 	/* (non-Javadoc)
 	 *

@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
 /**
  * FileStorage
  * This storage persists the data in files on a hard disk. <br />
- * Files are saved with as <code>&lt;contentPath&gt;/&lt;number&gt;.txt</code> where number is an increasing  
+ * Files are saved with as <code>&lt;contentPath&gt;/&lt;number&gt;.txt</code> where number is an increasing
  * number.<br />
  * Old versions are saved with filename
  * <code>&lt;contentPath&gt;/&lt;versionFolder&gt;/&lt;number&gt;/&lt;version&gt;.txt</code>.
@@ -215,9 +215,8 @@ public class FileStorage implements Storage
 	 * <li>link2me - stores to a page all pages that link to it</li>
 	 * <li>tagMap - stores to each tag its count</li>
 	 * </ul>
-	 * 
 	 * The indexes are cached on disk. If the cached indexes are not up to date, the parameter
-	 * rebuild could be used to force a rebuild.   
+	 * rebuild could be used to force a rebuild.
 	 * 
 	 * @param rebuild if set to <code>true</code>, the indexes are build from scratch.
 	 */
@@ -494,7 +493,8 @@ public class FileStorage implements Storage
 		}
 		return markupPage;
 	}
-	
+
+
 	private MarkupPage load(File file, String pagePath)
 	{
 		MarkupPage markupPage = new MarkupPage();
@@ -666,6 +666,7 @@ public class FileStorage implements Storage
 		return success;
 	}
 
+
 	protected String pageToString(MarkupPage page)
 	{
 		log.trace("pageToString({})", page.getPagePath());
@@ -675,10 +676,9 @@ public class FileStorage implements Storage
 		content.append("pagePath=" + page.getPagePath() + lineSeperator);
 		content.append("author=" + page.getAuthor() + lineSeperator);
 		content.append("editor=" + page.getEditor() + lineSeperator);
-		content.append("creationDateFirst=" + sdf.format(page.getFirstVersionCreationDate())
-			+ lineSeperator);
-		content.append("creationDateThis=" + sdf.format(page.getCurrentVersionCreationDate())
-			+ lineSeperator);
+		content.append("creationDateFirst=" + sdf.format(page.getFirstVersionCreationDate()) + lineSeperator);
+		content
+			.append("creationDateThis=" + sdf.format(page.getCurrentVersionCreationDate()) + lineSeperator);
 		content.append("contentType=" + page.getMarkupLanguage() + lineSeperator);
 		content.append("version=" + page.getVersion() + lineSeperator);
 		content.append("tags=" + page.getTagsAsString() + lineSeperator);
@@ -687,6 +687,7 @@ public class FileStorage implements Storage
 		content.append(page.getContent());
 		return content.toString();
 	}
+
 
 	/**
 	 * writePage:

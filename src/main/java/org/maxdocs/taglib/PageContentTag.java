@@ -37,15 +37,15 @@ import org.slf4j.LoggerFactory;
 /**
  * PageContentTag:
  * Tag, that displays the content within a div container.
- *
+ * 
  * @author Team maxdocs.org
- *
  */
 public class PageContentTag extends TagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(PageContentTag.class);
 
 	private String styleClass = "maxdocsContent";
+
 
 	/* (non-Javadoc)
 	 *
@@ -76,6 +76,7 @@ public class PageContentTag extends TagSupport
 		return SKIP_BODY;
 	}
 
+
 	/* (non-Javadoc)
 	 *
 	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
@@ -87,6 +88,7 @@ public class PageContentTag extends TagSupport
 		return EVAL_PAGE;
 	}
 
+
 	/**
 	 * getStyleClass: Returns the styleClass.
 	 * 
@@ -97,11 +99,12 @@ public class PageContentTag extends TagSupport
 		return styleClass;
 	}
 
+
 	/**
 	 * setStyleClass: Sets the styleClass.
 	 * 
 	 * @param styleClass
-	 *            the styleClass to set
+	 *        the styleClass to set
 	 */
 	public void setStyleClass(String styleClass)
 	{

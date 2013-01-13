@@ -38,12 +38,13 @@ import org.slf4j.LoggerFactory;
 /**
  * DateTagTEI:
  * Provides validation of the plain, format and type attributes.
- *
+ * 
  * @author Team maxdocs.org
  */
 public class DateTagTEI extends AbstractMaxDocsTagTEI
 {
 	private static Logger log = LoggerFactory.getLogger(DateTagTEI.class);
+
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagExtraInfo#validate(javax.servlet.jsp.tagext.TagData)
@@ -76,8 +77,7 @@ public class DateTagTEI extends AbstractMaxDocsTagTEI
 		o = data.getAttribute("type");
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
-			if (!((String) o).equalsIgnoreCase("creation") &&
-				!((String) o).equalsIgnoreCase("lastchange"))
+			if (!((String) o).equalsIgnoreCase("creation") && !((String) o).equalsIgnoreCase("lastchange"))
 			{
 				msgs.add(new ValidationMessage(data.getId(),
 					"Invalid value for type. Only 'creation' or 'lastChange' supported."));

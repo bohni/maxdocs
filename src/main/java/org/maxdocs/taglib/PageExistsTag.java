@@ -37,13 +37,13 @@ import org.slf4j.LoggerFactory;
  * If the page exists, the body part will be rendered.
  * 
  * @author Team maxdocs.org
- *
  */
 public class PageExistsTag extends BodyTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(PageExistsTag.class);
 
 	private String page;
+
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.BodyTagSupport#doStartTag()
@@ -72,6 +72,7 @@ public class PageExistsTag extends BodyTagSupport
 		return SKIP_BODY;
 	}
 
+
 	/**
 	 * getPage: Returns the page.
 	 * 
@@ -81,6 +82,7 @@ public class PageExistsTag extends BodyTagSupport
 	{
 		return page;
 	}
+
 
 	/**
 	 * setPage: Sets the page.

@@ -40,22 +40,22 @@ import org.slf4j.LoggerFactory;
 /**
  * PageNameTag:
  * Tag, that displays the page name within a h1 container.
- *
+ * 
  * @author Team maxdocs.org
- *
  */
 public class PageNameTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(PageNameTag.class);
 
+
 	/**
 	 * Constructor.
-	 *
 	 */
 	public PageNameTag()
 	{
 		super("maxdocsPageName");
 	}
+
 
 	/* (non-Javadoc)
 	 *
@@ -88,8 +88,7 @@ public class PageNameTag extends AbstractMaxDocsTagSupport
 			}
 			else
 			{
-				pageContext.getOut()
-					.write("<h1 class=\"" + getStyleClass() + "\">" + pageName + "</h1>");
+				pageContext.getOut().write("<h1 class=\"" + getStyleClass() + "\">" + pageName + "</h1>");
 			}
 		}
 		catch (IOException e)

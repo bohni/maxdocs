@@ -41,9 +41,8 @@ import org.slf4j.LoggerFactory;
 /**
  * MarkupLanguageTag:
  * Tag, that displays the contentType within a span container.
- *
+ * 
  * @author Team maxdocs.org
- *
  */
 public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 {
@@ -56,7 +55,6 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 
 	/**
 	 * Constructor.
-	 *
 	 */
 	public MarkupLanguageTag()
 	{
@@ -126,7 +124,7 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 
 	/**
 	 * getType: Returns the type.
-	 *
+	 * 
 	 * @return the type
 	 */
 	public String getType()
@@ -137,7 +135,7 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 
 	/**
 	 * setType: Sets the type.
-	 *
+	 * 
 	 * @param type the type to set
 	 */
 	public void setType(String type)
@@ -148,7 +146,7 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 
 	/**
 	 * getSize: Returns the size.
-	 *
+	 * 
 	 * @return the size
 	 */
 	public int getSize()
@@ -159,7 +157,7 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 
 	/**
 	 * setSize: Sets the size.
-	 *
+	 * 
 	 * @param size the size to set
 	 */
 	public void setSize(int size)

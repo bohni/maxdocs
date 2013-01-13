@@ -45,9 +45,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Author:
  * Tag, that displays a tag cloud within a div container.
- *
+ * 
  * @author Team maxdocs.org
- *
  */
 public class TagCloudTag extends TagSupport
 {
@@ -56,6 +55,7 @@ public class TagCloudTag extends TagSupport
 	private String styleClass = "maxdocsTagCloud";
 
 	private int size = 0;
+
 
 	/* (non-Javadoc)
 	 *
@@ -116,6 +116,7 @@ public class TagCloudTag extends TagSupport
 		return SKIP_BODY;
 	}
 
+
 	/**
 	 * getStyleClass: Returns the styleClass.
 	 * 
@@ -126,16 +127,18 @@ public class TagCloudTag extends TagSupport
 		return styleClass;
 	}
 
+
 	/**
 	 * setStyleClass: Sets the styleClass.
 	 * 
 	 * @param styleClass
-	 *            the styleClass to set
+	 *        the styleClass to set
 	 */
 	public void setStyleClass(final String styleClass)
 	{
 		this.styleClass = styleClass;
 	}
+
 
 	/**
 	 * getSize: Returns the size.
@@ -146,6 +149,7 @@ public class TagCloudTag extends TagSupport
 	{
 		return size;
 	}
+
 
 	/**
 	 * setSize: Sets the size.

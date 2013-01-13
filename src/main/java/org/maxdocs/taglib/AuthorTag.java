@@ -40,15 +40,15 @@ import org.slf4j.LoggerFactory;
 /**
  * AuthorTag:
  * Tag, that displays the author or editor within a span container.
- *
+ * 
  * @author Team maxdocs.org
- *
  */
 public class AuthorTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(AuthorTag.class);
 
 	private String type = "author";
+
 
 	/**
 	 * Default constructor.
@@ -58,6 +58,7 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 	{
 		super("maxdocsAuthor");
 	}
+
 
 	/* (non-Javadoc)
 	 *
@@ -114,9 +115,10 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 		return SKIP_BODY;
 	}
 
+
 	/**
 	 * getType() returns the type
-	 *
+	 * 
 	 * @return the type
 	 */
 	public String getType()
@@ -124,9 +126,10 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 		return type;
 	}
 
+
 	/**
 	 * setType() sets the type
-	 *
+	 * 
 	 * @param type the type to set
 	 */
 	public void setType(String type)

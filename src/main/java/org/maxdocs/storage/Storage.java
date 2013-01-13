@@ -33,7 +33,7 @@ import org.maxdocs.exceptions.EditWithoutChangesException;
 /**
  * Storage:
  * Interface for storage providers of MaxDocs.
- *
+ * 
  * @author Team maxdocs.org
  */
 public interface Storage
@@ -41,6 +41,7 @@ public interface Storage
 	/**
 	 * delete:
 	 * Deletes the requested page.
+	 * 
 	 * @param pagePath the requested page
 	 * @return <code>true</code> if and only if the page is successfully deleted; <code>false</code> otherwise
 	 */
@@ -102,7 +103,7 @@ public interface Storage
 	/**
 	 * save:
 	 * Persists the MarkupPage object in the storage.
-	 * If the page exists, the current version will be saved in the versions folder. 
+	 * If the page exists, the current version will be saved in the versions folder.
 	 * 
 	 * @param newPage the page to save
 	 * @return <code>true</code> if and only if the page is successfully deleted; <code>false</code> otherwise

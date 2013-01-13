@@ -27,11 +27,18 @@ import org.eclipse.mylyn.wikitext.core.parser.markup.MarkupLanguage;
 
 /**
  * MarkupLanguageFactory:
- * TODO 02.01.2012: Dokumentation ergänzen
- *
+ * Factory bean for creating a {@link MarkupLanguage}.
+ * 
  * @author Team maxdocs.org
  */
 public interface MarkupLanguageFactory
 {
-	public MarkupLanguage getMarkupLanguage(String markupLanguageBeanName);
+	/**
+	 * getMarkupLanguage:
+	 * Returns the MarkupLanguage object to the given parameter
+	 * 
+	 * @param markupLanguageBeanName the bean name of the markupLanguage
+	 * @return a {@link MarkupLanguage} object
+	 */
+	MarkupLanguage getMarkupLanguage(String markupLanguageBeanName);
 }

@@ -33,11 +33,11 @@ import org.slf4j.LoggerFactory;
  * If the page does not exists, the body part will be rendered.
  * 
  * @author Team maxdocs.org
- *
  */
 public class NoSuchPageTag extends PageExistsTag
 {
 	private static Logger log = LoggerFactory.getLogger(NoSuchPageTag.class);
+
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.BodyTagSupport#doStartTag()

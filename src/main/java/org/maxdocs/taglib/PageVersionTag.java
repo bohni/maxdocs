@@ -39,22 +39,22 @@ import org.slf4j.LoggerFactory;
 /**
  * PageVersionTag:
  * Tag, that displays the version of the page within a span container.
- *
+ * 
  * @author Team maxdocs.org
- *
  */
 public class PageVersionTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(PageVersionTag.class);
 
+
 	/**
 	 * Constructor.
-	 *
 	 */
 	public PageVersionTag()
 	{
 		super("maxdocsPageVersion");
 	}
+
 
 	/* (non-Javadoc)
 	 *
@@ -82,8 +82,8 @@ public class PageVersionTag extends AbstractMaxDocsTagSupport
 				}
 				else
 				{
-					pageContext.getOut()
-						.write("<span class=\"" + getStyleClass() + "\">" + pageVersion + "</span>");
+					pageContext.getOut().write(
+						"<span class=\"" + getStyleClass() + "\">" + pageVersion + "</span>");
 				}
 			}
 		}

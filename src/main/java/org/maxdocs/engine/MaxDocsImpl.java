@@ -51,6 +51,8 @@ public class MaxDocsImpl implements MaxDocs
 	private MarkupParser parser;
 
 	private Storage storage;
+
+
 	/* (non-Javadoc)
 	 * @see org.maxdocs.engine.MaxDocs#delete(java.lang.String)
 	 */
@@ -60,6 +62,7 @@ public class MaxDocsImpl implements MaxDocs
 		log.trace("delete()");
 		return storage.delete(pagePath);
 	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -72,6 +75,7 @@ public class MaxDocsImpl implements MaxDocs
 		return storage.exists(pagePath);
 	}
 
+
 	/* (non-Javadoc)
 	 * @see org.maxdocs.engine.MaxDocs#getDefaultMarkupLangages()
 	 */
@@ -80,6 +84,7 @@ public class MaxDocsImpl implements MaxDocs
 	{
 		return "MediaWiki";
 	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -90,17 +95,18 @@ public class MaxDocsImpl implements MaxDocs
 	public HtmlPage getHtmlPage(String pagePath)
 	{
 		log.trace("getHtmlPage({})", pagePath);
-		
-		if(!exists(pagePath))
+
+		if (!exists(pagePath))
 		{
 			return null;
 		}
 
 		MarkupPage markupPage = storage.load(pagePath);
 		HtmlPage htmlPage = parser.parseToHtml(markupPage);
-		
+
 		return htmlPage;
 	}
+
 
 	/* (non-Javadoc)
 	 * @see org.maxdocs.engine.MaxDocs#getMarkupLangages()
@@ -110,6 +116,7 @@ public class MaxDocsImpl implements MaxDocs
 	{
 		return parser.getMarkupLanguages();
 	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -121,7 +128,7 @@ public class MaxDocsImpl implements MaxDocs
 	{
 		log.trace("getMarkupPage({})", pagePath);
 
-		if(!exists(pagePath))
+		if (!exists(pagePath))
 		{
 			return null;
 		}
@@ -129,6 +136,7 @@ public class MaxDocsImpl implements MaxDocs
 		MarkupPage markupPage = storage.load(pagePath);
 		return markupPage;
 	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -140,37 +148,38 @@ public class MaxDocsImpl implements MaxDocs
 	{
 		log.trace("getTagCloud()");
 		List<TagCloudEntry> tagCloudEntries = storage.getTagCloudEntries();
-		
-		
+
 		int max = 0;
 		int min = Integer.MAX_VALUE;
-		
+
 		for (Iterator<TagCloudEntry> iterator = tagCloudEntries.iterator(); iterator.hasNext();)
 		{
-			TagCloudEntry tagCloudEntry = (TagCloudEntry) iterator.next();
-			if(tagCloudEntry.getCount()> max)
+			TagCloudEntry tagCloudEntry = iterator.next();
+			if (tagCloudEntry.getCount() > max)
 			{
 				max = tagCloudEntry.getCount();
 			}
-			if(tagCloudEntry.getCount()< min)
+			if (tagCloudEntry.getCount() < min)
 			{
 				min = tagCloudEntry.getCount();
 			}
 		}
-		
-		int step = (max-min)/7 + 1;
+
+		int step = (max - min) / 7 + 1;
 
 		Map<String, Integer> tagCloud = new HashMap<String, Integer>();
 
 		for (Iterator<TagCloudEntry> iterator = tagCloudEntries.iterator(); iterator.hasNext();)
 		{
-			TagCloudEntry tagCloudEntry = (TagCloudEntry) iterator.next();
-			int weight = tagCloudEntry.getCount()/step;
-			tagCloud.put(tagCloudEntry.getTagName(), weight > 0 ? Integer.valueOf(weight) : Integer.valueOf(1));
+			TagCloudEntry tagCloudEntry = iterator.next();
+			int weight = tagCloudEntry.getCount() / step;
+			tagCloud.put(tagCloudEntry.getTagName(),
+				weight > 0 ? Integer.valueOf(weight) : Integer.valueOf(1));
 		}
 
 		return tagCloud;
 	}
+
 
 	/* (non-Javadoc)
 	 * @see org.maxdocs.engine.MaxDocs#rename(java.lang.String, java.lang.String)
@@ -181,13 +190,14 @@ public class MaxDocsImpl implements MaxDocs
 		return storage.rename(pagePath, newPagePath);
 	}
 
+
 	/* (non-Javadoc)
 	 * @see org.maxdocs.engine.MaxDocs#save(org.maxdocs.data.MarkupPage, org.maxdocs.data.MarkupPage)
 	 */
 	@Override
 	public boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException
 	{
-		if(newPage == null)
+		if (newPage == null)
 		{
 			throw new IllegalArgumentException("save(markupPage): markupPage is null!");
 		}
@@ -195,12 +205,10 @@ public class MaxDocsImpl implements MaxDocs
 		return storage.save(newPage);
 	}
 
-	
-	
-	
+
 	/**
 	 * setParser() sets the parser
-	 *
+	 * 
 	 * @param parser the parser to set
 	 */
 	public void setParser(MarkupParser parser)
@@ -208,16 +216,16 @@ public class MaxDocsImpl implements MaxDocs
 		this.parser = parser;
 	}
 
+
 	/**
 	 * setStorage: Sets the storage.
 	 * 
 	 * @param storage
-	 *            the storage to set
+	 *        the storage to set
 	 */
 	public void setStorage(Storage storage)
 	{
 		this.storage = storage;
 	}
-	
-	
+
 }

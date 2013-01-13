@@ -41,9 +41,8 @@ import org.slf4j.LoggerFactory;
 /**
  * DateTag:
  * Tag, that displays the date within a span container.
- *
+ * 
  * @author Team maxdocs.org
- *
  */
 public class DateTag extends AbstractMaxDocsTagSupport
 {
@@ -53,14 +52,15 @@ public class DateTag extends AbstractMaxDocsTagSupport
 
 	private String type = "lastChange";
 
+
 	/**
 	 * Constructor.
-	 *
 	 */
 	public DateTag()
 	{
 		super("maxdocsDate");
 	}
+
 
 	/* (non-Javadoc)
 	 *
@@ -104,8 +104,7 @@ public class DateTag extends AbstractMaxDocsTagSupport
 				}
 				else
 				{
-					pageContext.getOut().write(
-						"<span class=\"" + getStyleClass() + "\">" + date + "</span>");
+					pageContext.getOut().write("<span class=\"" + getStyleClass() + "\">" + date + "</span>");
 				}
 			}
 		}
@@ -116,9 +115,10 @@ public class DateTag extends AbstractMaxDocsTagSupport
 		return SKIP_BODY;
 	}
 
+
 	/**
 	 * getFormat() returns the format
-	 *
+	 * 
 	 * @return the format
 	 */
 	public String getFormat()
@@ -126,9 +126,10 @@ public class DateTag extends AbstractMaxDocsTagSupport
 		return format;
 	}
 
+
 	/**
 	 * setFormat() sets the format
-	 *
+	 * 
 	 * @param format the format to set
 	 */
 	public void setFormat(String format)
@@ -136,9 +137,10 @@ public class DateTag extends AbstractMaxDocsTagSupport
 		this.format = format;
 	}
 
+
 	/**
 	 * getType() returns the type
-	 *
+	 * 
 	 * @return the type
 	 */
 	public String getType()
@@ -146,9 +148,10 @@ public class DateTag extends AbstractMaxDocsTagSupport
 		return type;
 	}
 
+
 	/**
 	 * setType() sets the type
-	 *
+	 * 
 	 * @param type the type to set
 	 */
 	public void setType(String type)

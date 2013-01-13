@@ -38,7 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * MarkupParserImpl:
- *
+ * 
  * @author Team maxdocs.org
  */
 public class MarkupParserImpl implements MarkupParser
@@ -47,7 +47,7 @@ public class MarkupParserImpl implements MarkupParser
 	private Map<String, String> languageMapping = new HashMap<String, String>();
 	private MarkupLanguageFactory markupLanguageFactory;
 
-	
+
 	/* (non-Javadoc)
 	 * @see org.maxdocs.parser.MarkupParser#parseToHtml(org.maxdocs.data.MarkupPage)
 	 */
@@ -56,9 +56,9 @@ public class MarkupParserImpl implements MarkupParser
 	{
 		log.trace("parseToHtml", markupPage.getPagePath());
 		HtmlPage htmlPage = new HtmlPage(markupPage);
-		
+
 		String languageName = markupPage.getMarkupLanguage();
-		if(languageMapping.containsKey(languageName))
+		if (languageMapping.containsKey(languageName))
 		{
 			org.eclipse.mylyn.wikitext.core.parser.MarkupParser parser = new org.eclipse.mylyn.wikitext.core.parser.MarkupParser();
 			String languageBeanName = languageMapping.get(languageName);
@@ -71,35 +71,35 @@ public class MarkupParserImpl implements MarkupParser
 		}
 		else
 		{
-			htmlPage.setContent("<b>error: markup-language "+languageName+" not supported</b>");
+			htmlPage.setContent("<b>error: markup-language " + languageName + " not supported</b>");
 		}
 
 		return htmlPage;
 	}
-	
-	
+
+
 	/**
 	 * setMarkupLanguages(): The Spring container will inject a Map with the bean name as key and
-	 * the bean type as value of all MarkupLanguage-beans defined in the Spring configuration.    
-	 *
+	 * the bean type as value of all MarkupLanguage-beans defined in the Spring configuration.
+	 * 
 	 * @param markupLanguages
 	 */
 	@Autowired
-	public void setMarkupLanguages(Map<String, AbstractMarkupLanguage> markupLanguages) 
+	public void setMarkupLanguages(Map<String, AbstractMarkupLanguage> markupLanguages)
 	{
-		for (Map.Entry<String, ? extends AbstractMarkupLanguage> markupLanguage : markupLanguages.entrySet()) 
+		for (Map.Entry<String, ? extends AbstractMarkupLanguage> markupLanguage : markupLanguages.entrySet())
 		{
-			String languageName = ((AbstractMarkupLanguage)markupLanguage.getValue()).getName();
+			String languageName = ((AbstractMarkupLanguage) markupLanguage.getValue()).getName();
 			String beanName = markupLanguage.getKey();
 			languageMapping.put(languageName, beanName);
 			log.debug("adding parser for markup language {} (bean: {})", languageName, beanName);
 		}
 	}
 
-	
+
 	/**
 	 * getMarkupLanguageFactory() returns the markupLanguageFactory
-	 *
+	 * 
 	 * @return the markupLanguageFactory
 	 */
 	public MarkupLanguageFactory getMarkupLanguageFactory()
@@ -107,10 +107,10 @@ public class MarkupParserImpl implements MarkupParser
 		return this.markupLanguageFactory;
 	}
 
-	
+
 	/**
 	 * setMarkupLanguageFactory() sets the markupLanguageFactory
-	 *
+	 * 
 	 * @param markupLanguageFactory the markupLanguageFactory to set
 	 */
 	public void setMarkupLanguageFactory(MarkupLanguageFactory markupLanguageFactory)

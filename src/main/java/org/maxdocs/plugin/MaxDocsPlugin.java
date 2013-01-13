@@ -39,7 +39,7 @@ public interface MaxDocsPlugin
 
 	/**
 	 * forward()
-	 * The plugin has to handle the forward 
+	 * The plugin has to handle the forward
 	 *
 	 * @param request a ServletRequest object that represents the request the client makes of the servlet
 	 * @param response a ServletResponse object that represents the response the servlet returns to the client

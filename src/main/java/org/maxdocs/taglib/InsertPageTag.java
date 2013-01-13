@@ -41,9 +41,8 @@ import org.slf4j.LoggerFactory;
 /**
  * InsertPageTag:
  * Tag, that displays the content of the given page within a div container.
- *
+ * 
  * @author Team maxdocs.org
- *
  */
 public class InsertPageTag extends TagSupport
 {
@@ -52,6 +51,7 @@ public class InsertPageTag extends TagSupport
 	private String styleClass = "maxdocsInsertedPage";
 
 	private String name = "";
+
 
 	/* (non-Javadoc)
 	 *
@@ -80,6 +80,7 @@ public class InsertPageTag extends TagSupport
 		return SKIP_BODY;
 	}
 
+
 	/**
 	 * getStyleClass: Returns the styleClass.
 	 * 
@@ -90,26 +91,29 @@ public class InsertPageTag extends TagSupport
 		return styleClass;
 	}
 
+
 	/**
 	 * setStyleClass: Sets the styleClass.
 	 * 
 	 * @param styleClass
-	 *            the styleClass to set
+	 *        the styleClass to set
 	 */
 	public void setStyleClass(final String styleClass)
 	{
 		this.styleClass = styleClass;
 	}
 
+
 	/**
 	 * getName() returns the name
-	 *
+	 * 
 	 * @return the name
 	 */
 	public String getName()
 	{
 		return name;
 	}
+
 
 	/**
 	 * setName() sets the name

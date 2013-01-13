@@ -43,6 +43,7 @@ public class MessagesTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(MessagesTag.class);
 
+
 	/**
 	 * Default constructor.
 	 * Creates a {@link MessagesTag} object.
@@ -52,9 +53,11 @@ public class MessagesTag extends AbstractMaxDocsTagSupport
 		super("maxdocsMessages");
 	}
 
+
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
 	 */
+	@Override
 	public int doStartTag() throws JspException
 	{
 		log.trace("doStartTag()");
@@ -76,7 +79,7 @@ public class MessagesTag extends AbstractMaxDocsTagSupport
 				{
 					messagesText.append("<li>" + message + "</li>");
 				}
-				if(messages.size() > 0)
+				if (messages.size() > 0)
 				{
 					messagesText.append("</ul>");
 				}

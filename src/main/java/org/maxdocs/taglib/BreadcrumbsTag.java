@@ -41,13 +41,13 @@ import org.slf4j.LoggerFactory;
 /**
  * BreadcrumbsTag:
  * Tag, that displays breadcrumbs stored in request as unordered list.
- *
+ * 
  * @author Team maxdocs.org
- *
  */
 public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(BreadcrumbsTag.class);
+
 
 	/**
 	 * Default constructor.
@@ -57,6 +57,7 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 	{
 		super("maxdocsBreadcrumbs");
 	}
+
 
 	/* (non-Javadoc)
 	 *
@@ -83,10 +84,11 @@ public class BreadcrumbsTag extends AbstractMaxDocsTagSupport
 				while (iter.hasNext())
 				{
 					String breadcrumb = (String) iter.next();
-					breadcrumbs.append("<li><a href=\"" + request.getContextPath() + breadcrumb + "\" title=\""
-						+ breadcrumb + "\">" + StringUtils.substringAfterLast(breadcrumb, "/") + "</a></li>");
+					breadcrumbs.append("<li><a href=\"" + request.getContextPath() + breadcrumb
+						+ "\" title=\"" + breadcrumb + "\">"
+						+ StringUtils.substringAfterLast(breadcrumb, "/") + "</a></li>");
 				}
-				
+
 				breadcrumbs.append("</ul>");
 				pageContext.getOut().write(breadcrumbs.toString());
 			}

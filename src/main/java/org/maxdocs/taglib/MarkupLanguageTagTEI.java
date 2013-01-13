@@ -36,12 +36,13 @@ import org.slf4j.LoggerFactory;
 /**
  * MarkupLanguageTagTEI:
  * Provides validation of the plain attribute.
- *
+ * 
  * @author Team maxdocs.org
  */
 public class MarkupLanguageTagTEI extends AbstractMaxDocsTagTEI
 {
 	private static Logger log = LoggerFactory.getLogger(MarkupLanguageTagTEI.class);
+
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagExtraInfo#validate(javax.servlet.jsp.tagext.TagData)
@@ -61,8 +62,7 @@ public class MarkupLanguageTagTEI extends AbstractMaxDocsTagTEI
 		Object o = data.getAttribute("type");
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
-			if (!((String) o).equalsIgnoreCase("input") &&
-				!((String) o).equalsIgnoreCase("output"))
+			if (!((String) o).equalsIgnoreCase("input") && !((String) o).equalsIgnoreCase("output"))
 			{
 				msgs.add(new ValidationMessage(data.getId(),
 					"Invalid value for type. Only 'input' or 'output' supported."));

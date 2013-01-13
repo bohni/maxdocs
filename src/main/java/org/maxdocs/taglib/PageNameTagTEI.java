@@ -36,12 +36,13 @@ import org.slf4j.LoggerFactory;
 /**
  * PageNameTagTEI:
  * Provides validation of the plain attribute.
- *
+ * 
  * @author Team maxdocs.org
  */
 public class PageNameTagTEI extends AbstractMaxDocsTagTEI
 {
 	private static Logger log = LoggerFactory.getLogger(PageNameTagTEI.class);
+
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagExtraInfo#validate(javax.servlet.jsp.tagext.TagData)

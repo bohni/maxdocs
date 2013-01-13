@@ -36,14 +36,14 @@ import org.slf4j.LoggerFactory;
 /**
  * AbstractMaxDocsTagTEI:
  * Abstract super class for MaxDocs taglib tag extra info classes.
- * 
  * Provides validation of the plain attribute.
- *
+ * 
  * @author Team maxdocs.org
  */
 public abstract class AbstractMaxDocsTagTEI extends TagExtraInfo
 {
 	private static Logger log = LoggerFactory.getLogger(AbstractMaxDocsTagTEI.class);
+
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagExtraInfo#validate(javax.servlet.jsp.tagext.TagData)
@@ -57,8 +57,7 @@ public abstract class AbstractMaxDocsTagTEI extends TagExtraInfo
 		Object o = data.getAttribute("plain");
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
-			if (!((String) o).equalsIgnoreCase("true") &&
-				!((String) o).equalsIgnoreCase("false"))
+			if (!((String) o).equalsIgnoreCase("true") && !((String) o).equalsIgnoreCase("false"))
 			{
 				msgs.add(new ValidationMessage(data.getId(), "Invalid boolean value."));
 			}

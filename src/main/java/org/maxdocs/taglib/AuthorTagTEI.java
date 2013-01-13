@@ -36,12 +36,13 @@ import org.slf4j.LoggerFactory;
 /**
  * AuthorTagTEI:
  * Provides validation of the plain and type attributes.
- *
+ * 
  * @author Team maxdocs.org
  */
 public class AuthorTagTEI extends AbstractMaxDocsTagTEI
 {
 	private static Logger log = LoggerFactory.getLogger(AuthorTagTEI.class);
+
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagExtraInfo#validate(javax.servlet.jsp.tagext.TagData)
@@ -61,8 +62,7 @@ public class AuthorTagTEI extends AbstractMaxDocsTagTEI
 		Object o = data.getAttribute("type");
 		if (o != null && o != TagData.REQUEST_TIME_VALUE)
 		{
-			if (!((String) o).equalsIgnoreCase("author") &&
-				!((String) o).equalsIgnoreCase("editor"))
+			if (!((String) o).equalsIgnoreCase("author") && !((String) o).equalsIgnoreCase("editor"))
 			{
 				msgs.add(new ValidationMessage(data.getId(),
 					"Invalid value for type. Only 'author' or 'editor' supported."));
