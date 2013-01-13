@@ -35,7 +35,7 @@ Entwicklung
 
 * Allgemeines
 
- Die Entwicklung läuft auf github.com, der Entwicklungsbranch ist develop.
+ Die Entwicklung läuft auf github.com, der Entwicklungsbranch ist master.
 
  Es wird ein Branching Modell verwendet, das sich an das {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Modell}}
  von Vincent Driessen anlehnt.

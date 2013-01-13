@@ -29,17 +29,18 @@
  ------
 2013-01-11
 
-~~ Hier soll eine freie Sammlung offener TODOs gepflegt werden
+~~ Hier wird eine freie Sammlung offener TODOs gepflegt
 
 TODO
 
- Hier ist eine Liste der TODOs:
+ Hier ist eine Liste von TODOs (Ideen, offene Punkte, ...), die evtl. in zukünftigen Meilensteinen
+ umgesetzt werden:
 
 Dokumentation
 
 * Dokumentation
 
-	* develop.txt nach apt für Maven-Site-Dokumentation -> {{{roadmap/todo.html}}}
+	* develop.txt nach apt für Maven-Site-Dokumentation -> {{{./todo.html}TODO}}
 
 	* Lizenzen prüfen, auflisten
 
@@ -49,13 +50,13 @@ Dokumentation
 
 	* Getting started Doku für Entwickler
 
-		* Eclipse und Plugins installieren -> {{{dev/entwicklung.html}}}
+		* Eclipse und Plugins installieren -> {{{../dev/entwicklung.html}Entwicklung}}
 
-		* Eclipse konfigurieren (Preferences, Templates) -> {{{dev/entwicklung.html}}}
+		* Eclipse konfigurieren (Preferences, Templates) -> {{{../dev/entwicklung.html}Entwicklung}}
 
 		* PMD Regeln festlegen
 
-		* Git -> {{{dev/entwicklung.html}}}
+		* Git -> {{{../dev/entwicklung.html}Entwicklung}}
 		
 		* Branching Model
 
