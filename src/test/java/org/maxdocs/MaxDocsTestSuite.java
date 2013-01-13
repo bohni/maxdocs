@@ -21,10 +21,15 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.maxdocs.taglib;
+package org.maxdocs;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.maxdocs.data.MarkupPageTest;
+import org.maxdocs.engine.MaxDocsImplTest;
+import org.maxdocs.parser.MarkupParserTest;
+import org.maxdocs.storage.FileStorageTest;
+import org.maxdocs.taglib.TaglibSuite;
 
 /**
  * TaglibSuite:
@@ -35,13 +40,13 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	AuthorTagTest.class,
-	MarkupLanguageTagTest.class,
-	PageNameTagTest.class,
-	PageVersionTagTest.class,
-	MessagesTagTest.class,
+	MarkupPageTest.class,
+	MaxDocsImplTest.class,
+	MarkupParserTest.class,
+	FileStorageTest.class,
+	TaglibSuite.class
 })
-public class TaglibSuite
+public class MaxDocsTestSuite
 {
 	// the class remains completely empty,
 	// being used only as a holder for the above annotations

@@ -86,11 +86,6 @@ public class MessagesTagTest
 		// Create the MockPageContext passing in the mock servlet context created above
 		mockPageContext = new MockPageContext(mockServletContext);
 
-		// Test data
-		List<String> messages = new ArrayList<String>();
-		messages.add("Message");
-
-		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 		// Create an instance of the custom tag we want to test
 		// set it's PageContext to the MockPageContext we created above
 		messagesTag = new MessagesTag();
@@ -101,6 +96,31 @@ public class MessagesTagTest
 		// I've included it in the setUp()
 		EasyMock.expect(mockWebApplicationContext.getServletContext()).andReturn(mockServletContext)
 			.anyTimes();
+	}
+
+
+	/**
+	 * testDoStartTagMessagesEmpty:
+	 * Check default output for empty messages list.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagMessagesEmpty() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testDoStartTagMessagesDefault");
+
+		// Test data
+		List<String> messages = new ArrayList<String>();
+
+		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+
+		Boolean plain = null;
+		String styleClass = null;
+		String expectedOutput = "";
+
+		assertTrue("testTag must return true", testTag(plain, styleClass, expectedOutput));
 	}
 
 
@@ -116,9 +136,40 @@ public class MessagesTagTest
 	{
 		log.trace("testDoStartTagMessagesDefault");
 
+		// Test data
+		List<String> messages = new ArrayList<String>();
+		messages.add("Message");
+
+		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+
 		Boolean plain = null;
 		String styleClass = null;
 		String expectedOutput = "<ul class=\"maxdocsMessages\"><li>Message</li></ul>";
+
+		assertTrue("testTag must return true", testTag(plain, styleClass, expectedOutput));
+	}
+
+
+	/**
+	 * testDoStartTagMessagesWrongClass:
+	 * Check default output for wrong class.
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDoStartTagMessagesWrongClass() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testDoStartTagMessagesDefault");
+
+		// Test data
+		List<String> messages = null;
+
+		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+
+		Boolean plain = null;
+		String styleClass = null;
+		String expectedOutput = "";
 
 		assertTrue("testTag must return true", testTag(plain, styleClass, expectedOutput));
 	}

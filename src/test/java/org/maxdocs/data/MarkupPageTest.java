@@ -25,6 +25,7 @@ package org.maxdocs.data;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -51,7 +52,7 @@ public class MarkupPageTest
 		log.trace("testCopyContructor");
 		String author = "author";
 		String content = "Content";
-		String contentType = "ContentType";
+		String markupLanguage = "ContentType";
 		Date currentVersionCreationDate = new Date();
 		String editor = "editor";
 		Date firstVersionCreationDate = new Date();
@@ -63,7 +64,7 @@ public class MarkupPageTest
 		MarkupPage page1 = new MarkupPage();
 		page1.setAuthor(author);
 		page1.setContent(content);
-		page1.setMarkupLanguage(contentType);
+		page1.setMarkupLanguage(markupLanguage);
 		page1.setCurrentVersionCreationDate(currentVersionCreationDate);
 		page1.setEditor(editor);
 		page1.setFirstVersionCreationDate(firstVersionCreationDate);
@@ -74,16 +75,19 @@ public class MarkupPageTest
 		MarkupPage page2 = new MarkupPage(page1);
 		page2.setCurrentVersionCreationDate(currentVersionCreationDate);
 		
-		assertNotSame(page1, page2);
-		assertEquals(author, page2.getAuthor());
-		assertEquals(content, page2.getContent());
-		assertEquals(contentType, page2.getMarkupLanguage());
-		assertEquals(currentVersionCreationDate, page2.getCurrentVersionCreationDate());
-		assertEquals(editor, page2.getEditor());
-		assertEquals(firstVersionCreationDate, page2.getFirstVersionCreationDate());
-		assertEquals(pageName, page2.getPageName());
-		assertEquals(pagePath, page2.getPagePath());
-		assertEquals(tags, page2.getTags());
-		assertEquals(version, page2.getVersion());
+		assertNotSame("page1 und page2 sind das gleiche Objekt", page1, page2);
+		assertEquals("author falsch", author, page2.getAuthor());
+		assertEquals("content falsch", content, page2.getContent());
+		assertEquals("markupLanguage falsch", markupLanguage, page2.getMarkupLanguage());
+		assertEquals("currentVersionCreationDate falsch", currentVersionCreationDate, page2.getCurrentVersionCreationDate());
+		assertEquals("editor falsch", editor, page2.getEditor());
+		assertEquals("firstVersionCreationDate falsch", firstVersionCreationDate, page2.getFirstVersionCreationDate());
+		assertEquals("pageName falsch", pageName, page2.getPageName());
+		assertEquals("pagePath falsch", pagePath, page2.getPagePath());
+		assertEquals("tags falsch", tags, page2.getTags());
+		assertEquals("version falsch", version, page2.getVersion());
+		
+		MarkupPage page3 = new MarkupPage(null);
+		assertTrue("", page3.getCurrentVersionCreationDate() != null);
 	}
 }
