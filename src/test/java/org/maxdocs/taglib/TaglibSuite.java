@@ -36,6 +36,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 	AuthorTagTest.class,
+	BreadcrumbsTagTest.class,
+	DateTagTest.class,
+	InsertPageTagTest.class,
 	MarkupLanguageTagTest.class,
 	PageNameTagTest.class,
 	PageVersionTagTest.class,

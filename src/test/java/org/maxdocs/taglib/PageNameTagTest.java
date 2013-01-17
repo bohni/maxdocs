@@ -36,13 +36,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
-import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockPageContext;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * PageNameTagTest:
@@ -50,100 +46,77 @@ import org.springframework.web.context.WebApplicationContext;
  * 
  * @author Team maxdocs.org
  */
-public class PageNameTagTest
+public class PageNameTagTest extends AbstractTagTest
 {
 	private static Logger log = LoggerFactory.getLogger(PageNameTagTest.class);
 
-	private MaxDocs mockEngine;
-
 	private HtmlPage htmlPage;
 
-	private final String pagePath = "/Main";
+	private final static String PAGE_PATH = "/foo/bar/Main";
+
+	private final static String PAGE_NAME = "Main";
 
 	private PageNameTag pageNameTag;
 
-	private MockServletContext mockServletContext;
-
-	private MockPageContext mockPageContext;
-
-	private WebApplicationContext mockWebApplicationContext;
 
 	/**
 	 * setUp:
+	 * Prepare test data
 	 * 
 	 * @see junit.framework.TestCase#setUp()
-	 * @throws Exception
 	 */
 	@Before
-	public void setUp() throws Exception
+	public void setUp()
 	{
-		log.trace("setUp");
-		// Create the mock servlet context
-		mockServletContext = new MockServletContext();
+		super.setUp();
 
-		// Create the mock Spring Context so that we can mock out the calls to getBean in the custom tag
-		// Then add the Spring Context to the Servlet Context
-		mockWebApplicationContext = EasyMock.createMock(WebApplicationContext.class);
-		mockServletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,
-			mockWebApplicationContext);
-
-		// Create the MockPageContext passing in the mock servlet context created above
-		mockPageContext = new MockPageContext(mockServletContext);
-
-		// Test data
-		htmlPage = new HtmlPage();
-		htmlPage.setPagePath(pagePath);
-
-		// Create the mocked MaxDocs engine
-		mockEngine = EasyMock.createMock(MaxDocs.class);
-
-		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
-		mockServletContext.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, mockEngine);
 		// Create an instance of the custom tag we want to test
 		// set it's PageContext to the MockPageContext we created above
 		pageNameTag = new PageNameTag();
 		pageNameTag.setPageContext(mockPageContext);
 
-		// Whenever you make a call to the doStartTag() method on the custom tag it calls getServletContext()
-		// on the WebApplicationContext. So to avoid having to put this expect statement in every test
-		// I've included it in the setUp()
-		EasyMock.expect(mockWebApplicationContext.getServletContext()).andReturn(mockServletContext)
-			.anyTimes();
+		// Test data
+		htmlPage = new HtmlPage();
+		htmlPage.setPagePath(PAGE_PATH);
+
+		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, PAGE_PATH);
 	}
 
+
 	/**
-	 * testDoStartTagDefault:
-	 * Check default output.
+	 * testDefault:
+	 * Check output with no parameters set
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagDefault() throws JspException, UnsupportedEncodingException
+	public void testDefault() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagDefault");
+		log.trace("testDefault");
 
 		Boolean plain = null;
 		String styleClass = null;
-		String expectedOutput = "<h1 class=\"maxdocsPageName\">" + htmlPage.getPageName() + "</h1>";
+		String expectedOutput = "<h1 class=\"maxdocsPageName\">" + PAGE_NAME + "</h1>";
 
 		testTag(plain, styleClass, expectedOutput);
 	}
 
+
 	/**
-	 * testDoStartTagWithStyle:
-	 * Check output with parameters set
+	 * testWithStyle:
+	 * Check output with following parameters set
 	 * <ul>
-	 *   <li>styleClass = "style"</li>
+	 * <li>styleClass = "style"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagWithStyle() throws JspException, UnsupportedEncodingException
+	public void testWithStyle() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagWithStyle");
+		log.trace("testWithStyle");
 
 		Boolean plain = null;
 		String styleClass = "style";
@@ -152,20 +125,21 @@ public class PageNameTagTest
 		testTag(plain, styleClass, expectedOutput);
 	}
 
+
 	/**
-	 * testDoStartTagWithPlain:
-	 * Check output with parameters set
+	 * testWithPlain:
+	 * Check output with following parameters set
 	 * <ul>
-	 *   <li>plain = true</li>
+	 * <li>plain = true</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagWithPlain() throws JspException, UnsupportedEncodingException
+	public void testWithPlain() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagWithPlain");
+		log.trace("testWithPlain");
 
 		Boolean plain = Boolean.TRUE;
 		String styleClass = null;
@@ -174,21 +148,22 @@ public class PageNameTagTest
 		testTag(plain, styleClass, expectedOutput);
 	}
 
+
 	/**
-	 * testDoStartTagWithPlainAndStyle:
-	 * Check output with parameters set
+	 * testWithPlainAndStyle:
+	 * Check output with following parameters set
 	 * <ul>
-	 *   <li>plain = true</li>
-	 *   <li>styleClass = "style"</li>
+	 * <li>plain = true</li>
+	 * <li>styleClass = "style"</li>
 	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagWithPlainAndStyle() throws JspException, UnsupportedEncodingException
+	public void testWithPlainAndStyle() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagWithPlainAndStyle");
+		log.trace("testWithPlainAndStyle");
 
 		Boolean plain = Boolean.TRUE;
 		String styleClass = "style";
@@ -197,25 +172,34 @@ public class PageNameTagTest
 		testTag(plain, styleClass, expectedOutput);
 	}
 
+
 	/**
-	 * testDoStartTagPageNotExists:
+	 * testPageNotExists:
 	 * Check output for non existing page.
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagPageNotExists() throws JspException, UnsupportedEncodingException
+	public void testPageNotExists() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagPageNotExists");
+		log.trace("testPageNotExists");
 
-		Boolean plain = null;
-		String styleClass = null;
+		String expectedOutput = "<h1 class=\"maxdocsPageName\">" + PAGE_NAME + "</h1>";
 
-		String expectedOutput = "<h1 class=\"maxdocsPageName\">" + htmlPage.getPageName() + "</h1>";
+		EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(null);
 
-		testTag(plain, styleClass, expectedOutput);
+		replayAllMocks();
+
+		int tagReturnValue = pageNameTag.doStartTag();
+		assertEquals("Tag should return 'SKIP_BODY'!", TagSupport.SKIP_BODY, tagReturnValue);
+
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+		assertEquals("Output not equal!", expectedOutput, output);
+
+		verifyAllMocks();
 	}
+
 
 	/**
 	 * testTag():
@@ -230,7 +214,7 @@ public class PageNameTagTest
 	private void testTag(Boolean plain, String styleClass, String expectedOutput) throws JspException,
 		UnsupportedEncodingException
 	{
-		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
+		EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(htmlPage);
 		replayAllMocks();
 
 		if (plain != null)
@@ -249,15 +233,5 @@ public class PageNameTagTest
 		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
-	}
-
-	private void replayAllMocks()
-	{
-		EasyMock.replay(mockWebApplicationContext, mockEngine);
-	}
-
-	private void verifyAllMocks()
-	{
-		EasyMock.verify(mockWebApplicationContext, mockEngine);
 	}
 }

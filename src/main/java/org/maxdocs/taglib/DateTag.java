@@ -48,7 +48,7 @@ public class DateTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(DateTag.class);
 
-	private String format;
+	private String format = "yyyy-MM-dd HH:mm";
 
 	private String type = "lastChange";
 
@@ -80,23 +80,22 @@ public class DateTag extends AbstractMaxDocsTagSupport
 
 			if (htmlPage != null)
 			{
-				if (StringUtils.isBlank(format))
-				{
-					format = "yyyy-MM-dd HH:mm";
-					//((SimpleDateFormat)DateFormat.getDateTimeInstance(
-					//DateFormat.SHORT, DateFormat.SHORT, pageContext.getRequest().getLocale())).toPattern();
-				}
-				SimpleDateFormat sdf = new SimpleDateFormat(format);
+				SimpleDateFormat sdf = new SimpleDateFormat(getFormat());
 
 				String date;
-				if (StringUtils.equals(type, "creation"))
+				if (StringUtils.equals(getType(), "creation"))
 				{
 					date = sdf.format(htmlPage.getFirstVersionCreationDate());
 				}
-				else
+				else if(StringUtils.equals(getType(), "lastchange"))
 				{
 					date = sdf.format(htmlPage.getCurrentVersionCreationDate());
 				}
+				else
+				{
+					date = "unsupported type '" + getType() + "'";
+				}
+
 
 				if (isPlain())
 				{

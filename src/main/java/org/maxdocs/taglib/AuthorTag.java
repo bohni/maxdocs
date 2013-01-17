@@ -80,17 +80,17 @@ public class AuthorTag extends AbstractMaxDocsTagSupport
 			{
 
 				String author;
-				if (StringUtils.equals(type, "author"))
+				if (StringUtils.equals(getType(), "author"))
 				{
 					author = htmlPage.getAuthor();
 				}
-				else if (StringUtils.equals(type, "editor"))
+				else if (StringUtils.equals(getType(), "editor"))
 				{
 					author = htmlPage.getEditor();
 				}
 				else
 				{
-					author = "unsupported type '" + type + "'";
+					author = "unsupported type '" + getType() + "'";
 				}
 
 				if (isPlain())

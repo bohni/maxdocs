@@ -38,13 +38,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.HtmlPage;
-import org.maxdocs.engine.MaxDocs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockPageContext;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * MarkupLanguageTagTest:
@@ -52,173 +48,261 @@ import org.springframework.web.context.WebApplicationContext;
  * 
  * @author Team maxdocs.org
  */
-public class MarkupLanguageTagTest
+public class MarkupLanguageTagTest extends AbstractTagTest
 {
 	private static Logger log = LoggerFactory.getLogger(MarkupLanguageTagTest.class);
-
-	private MaxDocs mockEngine;
 
 	private HtmlPage htmlPage;
 
 	private final String pagePath = "/Main";
 
+	private final String markupMediaWiki[] = new String[] { "MediaWiki", "mediawiki" };
+
 	private MarkupLanguageTag markupLanguageTag;
 
-	private MockServletContext mockServletContext;
-
-	private MockPageContext mockPageContext;
-
-	private WebApplicationContext mockWebApplicationContext;
 
 	/**
 	 * setUp:
+	 * Prepare test data
 	 * 
 	 * @see junit.framework.TestCase#setUp()
-	 * @throws Exception
 	 */
 	@Before
-	public void setUp() throws Exception
+	public void setUp()
 	{
-		log.trace("setUp");
+		super.setUp();
 
-		// Create the mock servlet context
-		mockServletContext = new MockServletContext();
-
-		// Create the mock Spring Context so that we can mock out the calls to getBean in the custom tag
-		// Then add the Spring Context to the Servlet Context
-		mockWebApplicationContext = EasyMock.createMock(WebApplicationContext.class);
-		mockServletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,
-			mockWebApplicationContext);
-
-		// Create the MockPageContext passing in the mock servlet context created above
-		mockPageContext = new MockPageContext(mockServletContext);
-
-		// Test data
-		htmlPage = new HtmlPage();
-		htmlPage.setMarkupLanguage("MediaWiki");
-		Map<String, String> languages = new HashMap<String, String>();
-		languages.put("MediaWiki", "mediawiki");
-
-		// Create the mocked MaxDocs engine
-		mockEngine = EasyMock.createMock(MaxDocs.class);
-		EasyMock.expect(mockEngine.getMarkupLangages()).andReturn(languages);
-		EasyMock.expect(mockEngine.getDefaultMarkupLangage()).andReturn("MediaWiki");
-
-		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
-		mockServletContext.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, mockEngine);
-		// Create an instance of the custom tag we want to test
-		// set it's PageContext to the MockPageContext we created above
+		// Prepare tag
 		markupLanguageTag = new MarkupLanguageTag();
 		markupLanguageTag.setPageContext(mockPageContext);
 
-		// Whenever you make a call to the doStartTag() method on the custom tag it calls getServletContext()
-		// on the WebApplicationContext. So to avoid having to put this expect statement in every test
-		// I've included it in the setUp()
-		EasyMock.expect(mockWebApplicationContext.getServletContext()).andReturn(mockServletContext)
-			.anyTimes();
+		// Test data
+		htmlPage = new HtmlPage();
+		htmlPage.setMarkupLanguage(markupMediaWiki[0]);
+		Map<String, String> languages = new HashMap<String, String>();
+		languages.put(markupMediaWiki[0], markupMediaWiki[1]);
+		languages.put("Creole", "creole");
+		languages.put("JspWiki", "jspwiki");
+
+		// Prepare mocks
+		EasyMock.expect(mockEngine.getMarkupLangages()).andReturn(languages);
+		EasyMock.expect(mockEngine.getDefaultMarkupLangage()).andReturn(markupMediaWiki[0]);
+
+		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, pagePath);
 	}
 
+
 	/**
-	 * testDoStartTagDefault:
-	 * Check output.
+	 * testDefaultOutput:
+	 * Check output with no parameters set
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagDefault() throws JspException, UnsupportedEncodingException
+	public void testDefaultOutput() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagDefault");
+		log.trace("testDefaultOutput");
 
 		Boolean plain = null;
 		String styleClass = null;
-		String expectedOutput = "<span class=\"maxdocsMarkupLanguage\">" + htmlPage.getMarkupLanguage()
-			+ "</span>";
+		String expectedOutput = "<span class=\"maxdocsMarkupLanguage\">" + markupMediaWiki[0] + "</span>";
 
-		testTag(plain, styleClass, expectedOutput);
+		testTag(plain, styleClass, "output", expectedOutput);
 	}
 
+
 	/**
-	 * testDoStartTagWithStyle:
-	 * Check output for with parameters set
+	 * testDefaultInput:
+	 * Check output with following parameters set
 	 * <ul>
-	 *   <li>styleClass = "style"</li>
+	 * <li><code>type = "input"</code></li>
 	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagWithStyle() throws JspException, UnsupportedEncodingException
+	public void testDefaultInput() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagWithStyle");
+		log.trace("testDefaultInput");
 
 		Boolean plain = null;
-		String styleClass = "style";
-		String expectedOutput = "<span class=\"" + styleClass + "\">" + htmlPage.getMarkupLanguage()
-			+ "</span>";
+		String styleClass = null;
+		String expectedOutput = "<select class=\"maxdocsMarkupLanguage\" name=\"markupLanguage\" size=\"1\">"
+			+ "<option value=\"Creole\" >Creole</option>"
+			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
+			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
 
-		testTag(plain, styleClass, expectedOutput);
+		testTag(plain, styleClass, "input", expectedOutput);
 	}
 
+
 	/**
-	 * testDoStartTagWithPlain:
-	 * Check output for with parameters set
+	 * testOutputPlain:
+	 * Check output with following parameters set
 	 * <ul>
-	 *   <li>plain = true</li>
+	 * <li><code>plain = "true"</code></li>
 	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagWithPlain() throws JspException, UnsupportedEncodingException
+	public void testOutputPlain() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagWithPlain");
+		log.trace("testOutputPlain");
 
 		Boolean plain = Boolean.TRUE;
 		String styleClass = null;
-		String expectedOutput = htmlPage.getMarkupLanguage();
+		String expectedOutput = markupMediaWiki[0];
 
-		testTag(plain, styleClass, expectedOutput);
+		testTag(plain, styleClass, "output", expectedOutput);
 	}
 
+
 	/**
-	 * testDoStartTagWithPlainAndStyle:
-	 * Check output with parameters set
+	 * testDefaultInputPlain:
+	 * Check output with following parameters set
 	 * <ul>
-	 *   <li>plain = true</li>
-	 *   <li>styleClass = "style"</li>
+	 * <li><code>plain = "true"</code></li>
+	 * <li><code>type = "input"</code></li>
 	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagWithPlainAndStyle() throws JspException, UnsupportedEncodingException
+	public void testDefaultInputPlain() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagWithPlainAndStyle");
+		log.trace("testDefaultInputPlain");
 
 		Boolean plain = Boolean.TRUE;
-		String styleClass = "style";
-		String expectedOutput = htmlPage.getMarkupLanguage();
+		String styleClass = null;
+		String expectedOutput = "<select class=\"maxdocsMarkupLanguage\" name=\"markupLanguage\" size=\"1\">"
+			+ "<option value=\"Creole\" >Creole</option>"
+			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
+			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
 
-		testTag(plain, styleClass, expectedOutput);
+		testTag(plain, styleClass, "input", expectedOutput);
 	}
 
+
 	/**
-	 * testDoStartTagPageNotExists:
-	 * Check output for non existing page.
+	 * testOutputStyle:
+	 * Check output with following parameters set
+	 * <ul>
+	 * <li><code>styleClass = "style"</code></li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagPageNotExists() throws JspException, UnsupportedEncodingException
+	public void testOutputStyle() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagPageNotExists");
+		log.trace("testOutputStyle");
 
-		String expectedOutput = "<span class=\"maxdocsMarkupLanguage\">MediaWiki</span>";
+		Boolean plain = null;
+		String styleClass = "style";
+		String expectedOutput = "<span class=\"" + styleClass + "\">" + markupMediaWiki[0] + "</span>";
+
+		testTag(plain, styleClass, "output", expectedOutput);
+	}
+
+
+	/**
+	 * testDefaultInputStyle:
+	 * Check output with following parameters set
+	 * <ul>
+	 * <li><code>styleClass = "style"</code></li>
+	 * <li><code>type = "input"</code></li>
+	 * </ul>
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDefaultInputStyle() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testDefaultInputStyle");
+
+		Boolean plain = null;
+		String styleClass = "style";
+		String expectedOutput = "<select class=\"" + styleClass + "\" name=\"markupLanguage\" size=\"1\">"
+			+ "<option value=\"Creole\" >Creole</option>"
+			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
+			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
+
+		testTag(plain, styleClass, "input", expectedOutput);
+	}
+
+
+	/**
+	 * testOutputPlainAndStyle:
+	 * Check output with following parameters set
+	 * <ul>
+	 * <li><code>plain = "true"</code></li>
+	 * <li><code>styleClass = "style"</code></li>
+	 * </ul>
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testOutputPlainAndStyle() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testOutputPlainAndStyle");
+
+		Boolean plain = Boolean.TRUE;
+		String styleClass = "style";
+		String expectedOutput = markupMediaWiki[0];
+
+		testTag(plain, styleClass, "output", expectedOutput);
+	}
+
+
+	/**
+	 * testDefaultInputPlainAndStyle:
+	 * Check output with following parameters set
+	 * <ul>
+	 * <li><code>plain = "true"</code></li>
+	 * <li><code>styleClass = "style"</code></li>
+	 * <li><code>type = "input"</code></li>
+	 * </ul>
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testDefaultInputPlainAndStyle() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testDefaultInputPlainAndStyle");
+
+		Boolean plain = Boolean.TRUE;
+		String styleClass = "style";
+		String expectedOutput = "<select class=\"" + styleClass + "\" name=\"markupLanguage\" size=\"1\">"
+			+ "<option value=\"Creole\" >Creole</option>"
+			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
+			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
+
+		testTag(plain, styleClass, "input", expectedOutput);
+	}
+
+
+	/**
+	 * testOutputPageNotExists:
+	 * Check output for non existing page with no parameters set
+	 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testOutputPageNotExists() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testOutputPageNotExists");
+
+		String expectedOutput = "<span class=\"maxdocsMarkupLanguage\">" + markupMediaWiki[0] + "</span>";
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
 		replayAllMocks();
@@ -232,6 +316,44 @@ public class MarkupLanguageTagTest
 		verifyAllMocks();
 	}
 
+
+	/**
+	 * testInputPageNotExists:
+	 * Check output for non existing page with following parameters set
+	 * <ul>
+	 * <li><code>type = "input"</code></li>
+	 * <li><code>size = "2"</code></li>
+	 * </ul>
+		 * 
+	 * @throws JspException
+	 * @throws UnsupportedEncodingException
+	 */
+	@Test
+	public void testInputPageNotExists() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testInputPageNotExists");
+
+		String expectedOutput = "<select class=\"maxdocsMarkupLanguage\" name=\"markupLanguage\" size=\"2\">" +
+				"<option value=\"Creole\" >Creole</option>" +
+				"<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>" +
+				"<option value=\"JspWiki\" >JspWiki</option>" +
+				"</select>";
+
+		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
+		replayAllMocks();
+
+		markupLanguageTag.setType("input");
+		markupLanguageTag.setSize(2);
+		int tagReturnValue = markupLanguageTag.doStartTag();
+		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
+
+		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		assertEquals("Output should be empty", expectedOutput, output);
+
+		verifyAllMocks();
+	}
+
+
 	/**
 	 * testTag():
 	 * Tests the output with the given parameters.
@@ -242,8 +364,8 @@ public class MarkupLanguageTagTest
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
-	private void testTag(Boolean plain, String styleClass, String expectedOutput) throws JspException,
-		UnsupportedEncodingException
+	private void testTag(Boolean plain, String styleClass, String type, String expectedOutput)
+		throws JspException, UnsupportedEncodingException
 	{
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
@@ -256,6 +378,10 @@ public class MarkupLanguageTagTest
 		{
 			markupLanguageTag.setStyleClass(styleClass);
 		}
+		if (StringUtils.isNotBlank(type))
+		{
+			markupLanguageTag.setType(type);
+		}
 
 		int tagReturnValue = markupLanguageTag.doStartTag();
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
@@ -264,15 +390,5 @@ public class MarkupLanguageTagTest
 		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
-	}
-
-	private void replayAllMocks()
-	{
-		EasyMock.replay(mockWebApplicationContext, mockEngine);
-	}
-
-	private void verifyAllMocks()
-	{
-		EasyMock.verify(mockWebApplicationContext, mockEngine);
 	}
 }

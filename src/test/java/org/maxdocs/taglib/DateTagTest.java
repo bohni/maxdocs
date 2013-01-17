@@ -24,8 +24,11 @@
 package org.maxdocs.taglib;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -41,22 +44,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
- * PageVersionTagTest:
- * Unit test for {@link PageVersionTag}.
+ * AuthorTagTest:
+ * Unit test for @{link AuthorTag}.
  * 
  * @author Team maxdocs.org
  */
-public class PageVersionTagTest extends AbstractTagTest
+public class DateTagTest extends AbstractTagTest
 {
-	private static Logger log = LoggerFactory.getLogger(PageVersionTagTest.class);
+	private static Logger log = LoggerFactory.getLogger(DateTagTest.class);
 
-	private final static String PAGE_PATH = "/Main";
+	private static final String PAGE_PATH = "/Main";
 
-	private static final int VERSION = 2;
-	
+	private static final String DATE_STRING = "2012-12-17 14:15";
+
+	private Calendar date;
+
 	private HtmlPage htmlPage;
 
-	private PageVersionTag pageVersionTag;
+	private DateTag dateTag;
 
 
 	/**
@@ -72,98 +77,51 @@ public class PageVersionTagTest extends AbstractTagTest
 
 		// Create an instance of the custom tag we want to test
 		// set it's PageContext to the MockPageContext we created above
-		pageVersionTag = new PageVersionTag();
-		pageVersionTag.setPageContext(mockPageContext);
+		dateTag = new DateTag();
+		dateTag.setPageContext(mockPageContext);
 
 		// Test data
 		htmlPage = new HtmlPage();
-		htmlPage.setVersion(VERSION);
+
+		date = GregorianCalendar.getInstance();
+		date.clear();
+		date.set(Calendar.YEAR, 2012);
+		date.set(Calendar.MONTH, 11);
+		date.set(Calendar.DATE, 17);
+		date.set(Calendar.HOUR, 14);
+		date.set(Calendar.MINUTE, 15);
+		date.set(Calendar.SECOND, 37);
+
+		htmlPage.setFirstVersionCreationDate(date.getTime());
+		htmlPage.setCurrentVersionCreationDate(date.getTime());
 
 		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, PAGE_PATH);
 	}
 
 
 	/**
-	 * testDoStartTagDefault:
-	 * Check output.
+	 * testCreationDefault:
+	 * Check output with following parameters set
+	 * <ul>
+	 * <li>type = "creationDate"</li>
+	 * </ul>
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagDefault() throws JspException, UnsupportedEncodingException
+	public void testCreationDefault() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagDefault");
+		log.trace("testCreationDefault");
 
 		Boolean plain = null;
 		String styleClass = null;
-		String expectedOutput = "<span class=\"maxdocsPageVersion\">" + VERSION + "</span>";
+		String type = "creation";
+		String format = null;
 
-		testTag(plain, styleClass, expectedOutput);
-	}
+		String expectedOutput = "<span class=\"maxdocsDate\">" + DATE_STRING + "</span>";
 
-
-	/**
-	 * testDoStartTagWithStyle:
-	 * Check output with parameters set
-	 * <ul>
-	 * <li>styleClass = "style"</li>
-	 * </ul>
-	 * 
-	 * @throws JspException
-	 * @throws UnsupportedEncodingException
-	 */
-	@Test
-	public void testDoStartTagWithStyle() throws JspException, UnsupportedEncodingException
-	{
-		Boolean plain = null;
-		String styleClass = "style";
-		String expectedOutput = "<span class=\"" + styleClass + "\">" + VERSION + "</span>";
-
-		testTag(plain, styleClass, expectedOutput);
-	}
-
-
-	/**
-	 * testDoStartTagWithPlain:
-	 * Check output with parameters set
-	 * <ul>
-	 * <li>plain = true</li>
-	 * </ul>
-	 * 
-	 * @throws JspException
-	 * @throws UnsupportedEncodingException
-	 */
-	@Test
-	public void testDoStartTagWithPlain() throws JspException, UnsupportedEncodingException
-	{
-		Boolean plain = Boolean.TRUE;
-		String styleClass = null;
-		String expectedOutput = Integer.toString(VERSION);
-
-		testTag(plain, styleClass, expectedOutput);
-	}
-
-
-	/**
-	 * testDoStartTagWithPlainAndStyle:
-	 * Check output with parameters set
-	 * <ul>
-	 * <li>plain = true</li>
-	 * <li>styleClass = "style"</li>
-	 * </ul>
-	 * 
-	 * @throws JspException
-	 * @throws UnsupportedEncodingException
-	 */
-	@Test
-	public void testDoStartTagWithPlainAndStyle() throws JspException, UnsupportedEncodingException
-	{
-		Boolean plain = Boolean.TRUE;
-		String styleClass = "style";
-		String expectedOutput = Integer.toString(VERSION);
-
-		testTag(plain, styleClass, expectedOutput);
+		assertTrue("testTag must return true", testTag(plain, styleClass, type, format, expectedOutput));
 	}
 
 
@@ -178,52 +136,55 @@ public class PageVersionTagTest extends AbstractTagTest
 	public void testDoStartTagPageNotExists() throws JspException, UnsupportedEncodingException
 	{
 		log.trace("testDoStartTagPageNotExists");
-		String expectedOutput = "";
 
 		EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(null);
+
 		replayAllMocks();
 
-		int tagReturnValue = pageVersionTag.doStartTag();
+		int tagReturnValue = dateTag.doStartTag();
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		String expectedOutput = "";
+
+		assertEquals("Tag should return 'TagSupport.SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
 		assertEquals("Output should be empty", expectedOutput, output);
 
 		verifyAllMocks();
 	}
 
 
-	/**
-	 * testTag():
-	 * Tests the output with the given parameters.
-	 * 
-	 * @param plain
-	 * @param styleClass
-	 * @param expectedOutput
-	 * @throws JspException
-	 * @throws UnsupportedEncodingException
-	 */
-	private void testTag(Boolean plain, String styleClass, String expectedOutput) throws JspException,
-		UnsupportedEncodingException
+	private boolean testTag(Boolean plain, String styleClass, String type, String format,
+							String expectedOutput) throws JspException, UnsupportedEncodingException
 	{
 		EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(htmlPage);
 		replayAllMocks();
 
 		if (plain != null)
 		{
-			pageVersionTag.setPlain(plain.booleanValue());
+			dateTag.setPlain(plain.booleanValue());
 		}
 		if (StringUtils.isNotBlank(styleClass))
 		{
-			pageVersionTag.setStyleClass(styleClass);
+			dateTag.setStyleClass(styleClass);
+		}
+		if (StringUtils.isNotBlank(type))
+		{
+			dateTag.setType(type);
 		}
 
-		int tagReturnValue = pageVersionTag.doStartTag();
-		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
+		if (StringUtils.isNotBlank(format))
+		{
+			dateTag.setFormat(format);
+		}
+
+		int tagReturnValue = dateTag.doStartTag();
+		assertEquals("Tag should return 'TagSupport.SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
 
 		String output = ((MockHttpServletResponse) mockPageContext.getResponse()).getContentAsString();
 		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
+
+		return true;
 	}
 }

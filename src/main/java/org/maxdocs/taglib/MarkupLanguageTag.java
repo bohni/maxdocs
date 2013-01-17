@@ -99,7 +99,7 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 			else
 			{
 				pageContext.getOut().write(
-					"<select class=\"" + getStyleClass() + "\" name=\"markupLanguage\" size=\"" + size
+					"<select class=\"" + getStyleClass() + "\" name=\"markupLanguage\" size=\"" + getSize()
 						+ "\">");
 				for (String key : markupLanguages.keySet())
 				{

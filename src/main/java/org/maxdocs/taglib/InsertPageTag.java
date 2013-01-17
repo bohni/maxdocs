@@ -70,7 +70,7 @@ public class InsertPageTag extends TagSupport
 			if (htmlPage != null)
 			{
 				pageContext.getOut().write(
-					"<div class=\"" + styleClass + "\">" + htmlPage.getContent() + "</div>");
+					"<div class=\"" + getStyleClass() + "\">" + htmlPage.getContent() + "</div>");
 			}
 		}
 		catch (IOException e)
@@ -123,7 +123,7 @@ public class InsertPageTag extends TagSupport
 	 */
 	public void setName(String name)
 	{
-		if (StringUtils.startsWith("/", name))
+		if (StringUtils.startsWith(name, "/"))
 		{
 			this.name = name;
 		}
