@@ -406,7 +406,25 @@ public class FileStorage implements Storage
 	public boolean exists(String pagePath)
 	{
 		log.trace("exists({})", pagePath);
-		return files.containsKey(pagePath);
+	
+		boolean exists = false;
+		if(files.containsKey(pagePath))
+		{
+			String pathname = contentPath + files.get(pagePath);
+			File file = new File(pathname);
+			if(file.exists())
+			{
+				exists = true;
+			}
+			else
+			{
+				// No longer available on HDD. Remove from mapping.
+				files.remove(pagePath);
+				updateTagMap(pagePath, "");
+				
+			}
+		}
+		return exists;
 	}
 
 

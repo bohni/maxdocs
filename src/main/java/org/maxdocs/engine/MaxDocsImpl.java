@@ -102,7 +102,12 @@ public class MaxDocsImpl implements MaxDocs
 		}
 
 		MarkupPage markupPage = storage.load(pagePath);
-		HtmlPage htmlPage = parser.parseToHtml(markupPage);
+		
+		HtmlPage htmlPage = null;
+		if(markupPage != null)
+		{
+			htmlPage = parser.parseToHtml(markupPage);
+		}
 
 		return htmlPage;
 	}
