@@ -68,6 +68,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class MaxDocsServlet extends HttpServlet
 {
 	private static final String TEMPLATES_ROOT = "/WEB-INF/templates/";
+
 	private static final String ACTION_DELETE = "delete";
 	private static final String ACTION_DO_LOGIN = "dologin";
 	private static final String ACTION_DO_LOGOUT = "dologout";
@@ -77,6 +78,8 @@ public class MaxDocsServlet extends HttpServlet
 	private static final String ACTION_SAVE = "save";
 	private static final String ACTION_SHOW = "show";
 	private static final String ACTION_SOURCE = "source";
+
+	private static final int BREADCRUMBS_COUNT = 5;
 
 	private static final String DEFAULT_PAGE_NAME = "Main";
 
@@ -226,7 +229,7 @@ public class MaxDocsServlet extends HttpServlet
 			Integer count = (Integer) context.getBean("breadcrumbsCount");
 			if (count == null)
 			{
-				count = Integer.valueOf(5);
+				count = Integer.valueOf(BREADCRUMBS_COUNT);
 			}
 			breadcrumbs = new CircularFifoBuffer(count.intValue());
 		}
