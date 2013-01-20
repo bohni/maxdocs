@@ -60,11 +60,11 @@ MaxDocs Engine
 
 	* Tagcloud: Die Tagcloud könnte auch einfach nur aus den Tags bestehen und beim Klick auf ein
 	  Tag könnten via Lucene die Ergebnisse ermittelt werden.\
-	  Auch diese Funktionalität sollt ein eine eigenen Klasse ausgelagert werden.  
+	  Auch diese Funktionalität sollte in eine eigenen Klasse ausgelagert werden.  
 
 	* Attachments:
-	  Muessen von unserem Servlet verarbeitet werden wg. PrettyURL.\
-	  exists() darf nicht nur true, sondern muss auch den Mimetype liefern (oder  zwei Methoden)
+	  Müssen von unserem Servlet verarbeitet werden wg. PrettyURL.\
+	  exists() darf nicht nur true, sondern muss auch den Mimetype liefern (oder zwei Methoden)
 
 	* URLs: Anwender definiert alle von maxdocs unterstütze URLs:\
 	  maxdocs.wiki = /\

@@ -45,10 +45,7 @@ Entwicklung
 	* master entspricht dem develop branch in Vincents Modell 
 
 	* releases entspricht dem master branch in Vincents Modell.
- 
- 
 
- 
 * Entwicklungsumgebung installieren und konfigurieren
 
 ** Eclipse
@@ -59,22 +56,69 @@ Entwicklung
  Zusätzlich werden noch die folgenden Plugins benötigt,  die über den Eclipse Marketplace 
  direkt in der IDE installiert werden können:
 
-		* Maven Integration for Eclipse WTP
-
 		* EGit - Git Team Provider
+		
+			* Eclipse EGit
 
-		* Github Mylyn Connector
+			* Eclipse JGit
 
-		* PMD
+		* GitHub Mylyn Connector
 
-		* Findbugs
+			* Eclipse EGit Mylyn GitHub Feature
+
+		* Maven Integration for Eclipse WTP
+		
+			* m2e - Maven Integration for Eclipse
+
+			* m2e connector for mavenarchiver pom properties
+
+			* m2e-wtp - Maven Integration for WTP (Incubation)
+
+		* Sonar
+
+			* Sonar Java Analyser
+
+			* Sonar m2e Connector
+
+			* Sonar Mylyn Connector
+
+ Die folgenden Plugins aus dem Marketplace sind optional:
+
+		* optional: EclEmma Java Code Coverage
+
+			* EclEmma Java Code Coverage
 
 		* optional: EasyShell
 
-		* optional: SpringIDE
+			* Easy Shell Feature
 
-		* optional: {{{http://apteditor.sourceforge.net/}APT Editor}} (Dieses Plugin muss manuell installiert werden. 
-		  Einfach das JAR-file in das dropins-Verzeichnis von Eclipse kopieren)
+		* optional: FindBugs Eclipse Plugin
+
+			* FindBugs Feature
+
+		* optional: Spring Tool Suite (STS) for Eclipse ...
+		
+			* Spring IDE Autowire Extension (optional)
+
+			* Spring IDE core (required)
+
+			* Spring IDE Maven Support (optional)
+
+			* Spring IDE Mylyn Integration (optional)
+
+ Dazu können noch folgende zwei Plugins installiert werden, die nicht über den Marketplace erhältlich
+ sind:
+
+		* optional: {{{http://apteditor.sourceforge.net/}APT Editor}}\
+		  (Dieses Plugin muss manuell installiert werden. Einfach das JAR-file in das dropins-Verzeichnis
+		  von Eclipse kopieren)
+
+		* optional: {{{http://http://pmd.sourceforge.net/}PMD}}\
+		  (Dieses Plugin  kann über "Help > Install New Software..." installiert werden.
+		  Dazu wird als Update Site dir URL {{http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site}}
+		  verwendet.
+
+			* PMD Plug-in
 
  Damit der Sourcecode ein einheitliches Format hat, müssen in Eclipse folgende Preferences zwingend
  angepasst werden:
@@ -89,9 +133,11 @@ Entwicklung
 
 		* Insert spaces for tabs: deaktiviert
 
-	* Java > Code Style > Code Templates: {{MaxDocsCodeTemplates.xml}} muss importiert werden
+	* Java > Code Style > Clean Up: {{{./cleanup.xml}cleanup.xml}} muss importiert werden
 
-	* Java > Code Style > Formatter: {{MaxDocsFormatter.xml}} muss importiert werden
+	* Java > Code Style > Code Templates: {{{./codetemplates.xml}codetemplates.xml}} muss importiert werden
+
+	* Java > Code Style > Formatter: {{{./codeformatter.xml}codeformatter.xml}} muss importiert werden
 
 	* Web > CSS Files
 
@@ -179,11 +225,13 @@ Entwicklung
 
 	* Alle Dateien müssen in UTF-8 gespeichert werden
 
+	* Das Zeilenende ist im Unix-Format zu halten
+
 	* Die Einrückungen erfolgen grundsätzlich mit Tabulatoren, nicht mit Leerzeichen
 
 	* Es müssen die bereitgestellten Formatter und Templates verwendet werden.
 
-	* Es wird immer die durch den Compiler generierete serialVersionUID verwendet, d.h. im Sourcecode
+	* Es wird immer die durch den Compiler generierte serialVersionUID verwendet, d.h. im Sourcecode
 	  wird keine entsprechende Konstante verwendet. Falls die Warnings in Eclipse stören, können diese
 	  unter  Java > Compiler > Errors/Warnings > Potential programming problems ausgeschaltet werden.
 
