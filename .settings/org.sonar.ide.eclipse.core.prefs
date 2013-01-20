@@ -1,0 +1,5 @@
+analyseLocally=false
+eclipse.preferences.version=1
+projectKey=org.maxdocs\:maxdocs\:master
+serverUrl=http\://rivendell.dyndns-free.com\:7080/sonar
+version=2
