@@ -257,6 +257,10 @@
 						<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
 						<targetJdk>1.6</targetJdk>
 						<includeTests>true</includeTests>
+						<excludes>
+							<exclude>**/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
+							<exclude>**/org/maxdocs/apache/catalina/filters/SetCharacterEncodingFilter.java</exclude>
+						</excludes>
 						<rulesets>
 							<ruleset>file:///${basedir}/src/main/config/pmd/ruleset-4.3.xml</ruleset>
 						</rulesets>
