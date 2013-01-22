@@ -131,7 +131,7 @@
 				This page (version
 				<max:pageVersion />
 				) was last changed on
-				<max:date type="lastChange" />
+				<max:date type="lastchange" />
 				by
 				<max:author type="editor" />
 				<br />Layout based on <a href="http://www.yaml.de/">YAML</a> <br />Version

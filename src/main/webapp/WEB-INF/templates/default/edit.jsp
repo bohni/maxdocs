@@ -180,7 +180,7 @@ var contextPath = "<%=request.getContextPath()%>";
 
 			<footer>
 				This page (version <max:pageVersion />) was last changed on 
-				<max:date type="lastChange" /> by <max:author type="editor" />
+				<max:date type="lastchange" /> by <max:author type="editor" />
 				<br />Layout based on <a href="http://www.yaml.de/">YAML</a>
 				<br />Version <fmt:message key="maxdocs.version" bundle="${internal}"/> vom <fmt:message key="maxdocs.buildtime" bundle="${internal}"/>
 				<br />&copy; <fmt:message key="maxdocs.inceptionYear" bundle="${internal}"/>
