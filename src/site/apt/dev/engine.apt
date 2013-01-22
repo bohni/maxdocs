@@ -46,6 +46,8 @@ MaxDocs Engine
 
 	* Locking
 
+	* Caching von gerenderten Seiten
+
 	* etc.
 
 	* zweimal Parser aufrufen:\
