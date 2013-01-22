@@ -519,6 +519,10 @@ public class MaxDocsServlet extends HttpServlet
 		log.trace("actionSave(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
+		if(StringUtils.isBlank(username))
+		{
+			username="Anonymous"; //TODO: i18n, IP address?
+		}
 		List<String> messages = getMessages(request);
 		if (checkPermission(currentUser, "page:save"))// TODO: which permissions allow saving?
 		{
@@ -570,7 +574,7 @@ public class MaxDocsServlet extends HttpServlet
 		else
 		{
 			log.debug("Missing page:save permission");
-			if (username == null)
+			if (currentUser.getPrincipal() == null)
 			{
 				messages.add("No page:save permission for unkown users");
 
