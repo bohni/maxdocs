@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.data.PageLight;
 import org.maxdocs.data.TagCloudEntry;
 import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
@@ -183,6 +184,18 @@ public class MaxDocsImpl implements MaxDocs
 		}
 
 		return tagCloud;
+	}
+
+
+	/**
+	 * getVersion:
+	 * TODO, 23.01.2013: Documentation
+	 * @param pagePath
+	 * @return
+	 */
+	public List<PageLight> getVersions(String pagePath)
+	{
+		return storage.getVersions(pagePath);
 	}
 
 

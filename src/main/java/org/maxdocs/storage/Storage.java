@@ -26,6 +26,7 @@ package org.maxdocs.storage;
 import java.util.List;
 
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.data.PageLight;
 import org.maxdocs.data.TagCloudEntry;
 import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
@@ -65,6 +66,16 @@ public interface Storage
 	 * @return a list with tag cloud entries
 	 */
 	List<TagCloudEntry> getTagCloudEntries();
+
+
+	/**
+	 * getVersions:
+	 * Returns a list of PageLight-Objects that contains all versions of the given pagePath
+	 *
+	 * @param pagePath
+	 * @return list of PageLight-Objects 
+	 */
+	List<PageLight> getVersions(String pagePath);
 
 
 	/**

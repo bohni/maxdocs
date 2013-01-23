@@ -167,43 +167,43 @@ public class MaxDocsServlet extends HttpServlet
 
 		if (StringUtils.equalsIgnoreCase(action, ACTION_DELETE))
 		{
-			actionDelete(request, response);
+			delete(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_DO_LOGIN))
 		{
-			actionDoLogin(request, response);
+			doLogin(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_DO_LOGOUT))
 		{
-			actionDoLogout(request, response);
+			doLogout(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
 		{
-			actionEdit(request, response);
+			edit(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_LOGIN))
 		{
-			actionLogin(request, response);
+			login(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_RENAME))
 		{
-			actionRename(request, response);
+			rename(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_SAVE))
 		{
-			actionSave(request, response);
+			save(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_SHOW))
 		{
-			actionShow(request, response);
+			show(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_SOURCE))
 		{
-			actionSource(request, response);
+			source(request, response);
 		}
 		else
 		{
-			actionShow(request, response);
+			show(request, response);
 		}
 		response.setCharacterEncoding("UTF-8");
 	}
@@ -251,7 +251,7 @@ public class MaxDocsServlet extends HttpServlet
 
 
 	/**
-	 * actionDelete:
+	 * delete:
 	 * Delete a page
 	 * 
 	 * @param request an HttpServletRequest object that contains the request the client has made of the
@@ -261,7 +261,7 @@ public class MaxDocsServlet extends HttpServlet
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
-	private void actionDelete(HttpServletRequest request, HttpServletResponse response)
+	private void delete(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
 		log.trace("actionDelete(HttpServletRequest, HttpServletResponse");
@@ -292,12 +292,12 @@ public class MaxDocsServlet extends HttpServlet
 			}
 		}
 		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
-		actionShow(request, response);
+		show(request, response);
 	}
 
 
 	/**
-	 * actionDoLogin:
+	 * doLogin:
 	 * Does the login with Apache Shiro
 	 * 
 	 * @param request an HttpServletRequest object that contains the request the client has made of the
@@ -307,7 +307,7 @@ public class MaxDocsServlet extends HttpServlet
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
-	private void actionDoLogin(HttpServletRequest request, HttpServletResponse response)
+	private void doLogin(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
 		log.trace("actionDoLogin(HttpServletRequest, HttpServletResponse");
@@ -335,7 +335,7 @@ public class MaxDocsServlet extends HttpServlet
 				messages.add("Successfully logged in!");
 				// TODO: Where to go?
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
-				actionShow(request, response);
+				show(request, response);
 			}
 			catch (UnknownAccountException uae)
 			{
@@ -343,7 +343,7 @@ public class MaxDocsServlet extends HttpServlet
 				log.debug("User {} not logged in: UnknownAccountException", username);
 				messages.add("Username and password do not match!");
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
-				actionLogin(request, response);
+				login(request, response);
 			}
 			catch (IncorrectCredentialsException ice)
 			{
@@ -351,7 +351,7 @@ public class MaxDocsServlet extends HttpServlet
 				log.debug("User {} not logged in: IncorrectCredentialsException", username);
 				messages.add("Username and password do not match!");
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
-				actionLogin(request, response);
+				login(request, response);
 			}
 			catch (LockedAccountException lae)
 			{
@@ -359,7 +359,7 @@ public class MaxDocsServlet extends HttpServlet
 				log.debug("User {} not logged in: LockedAccountException", username);
 				messages.add("Username and password do not match!");
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
-				actionLogin(request, response);
+				login(request, response);
 			}
 			catch (AuthenticationException ae)
 			{
@@ -367,7 +367,7 @@ public class MaxDocsServlet extends HttpServlet
 				log.error("User {} not logged in: AuthenticationException - {}", username, ae.getMessage());
 				messages.add("An unkonwn error occurred! Try again later!");
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
-				actionLogin(request, response);
+				login(request, response);
 			}
 		}
 
@@ -375,7 +375,7 @@ public class MaxDocsServlet extends HttpServlet
 
 
 	/**
-	 * actionLogout:
+	 * doLogout:
 	 * Performs the logout
 	 * 
 	 * @param request an HttpServletRequest object that contains the request the client has made of the
@@ -385,18 +385,18 @@ public class MaxDocsServlet extends HttpServlet
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
-	private void actionDoLogout(HttpServletRequest request, HttpServletResponse response)
+	private void doLogout(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
 		log.trace("actionLogout(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		currentUser.logout();
-		actionShow(request, response);
+		show(request, response);
 	}
 
 
 	/**
-	 * actionEdit:
+	 * edit:
 	 * Edit a page
 	 * 
 	 * @param request an HttpServletRequest object that contains the request the client has made of the
@@ -406,7 +406,7 @@ public class MaxDocsServlet extends HttpServlet
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
-	private void actionEdit(HttpServletRequest request, HttpServletResponse response)
+	private void edit(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
 		log.trace("actionEdit(HttpServletRequest, HttpServletResponse");
@@ -435,13 +435,13 @@ public class MaxDocsServlet extends HttpServlet
 				messages.add("Missing page:edit permission for user " + username);
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
-			actionShow(request, response);
+			show(request, response);
 		}
 	}
 
 
 	/**
-	 * actionLogin:
+	 * login:
 	 * Shows the login page
 	 * 
 	 * @param request an HttpServletRequest object that contains the request the client has made of the
@@ -451,7 +451,7 @@ public class MaxDocsServlet extends HttpServlet
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
-	private void actionLogin(HttpServletRequest request, HttpServletResponse response)
+	private void login(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
 		log.trace("actionLogin(HttpServletRequest, HttpServletResponse");
@@ -461,7 +461,7 @@ public class MaxDocsServlet extends HttpServlet
 
 
 	/**
-	 * actionRename:
+	 * rename:
 	 * Rename a page
 	 * 
 	 * @param request an HttpServletRequest object that contains the request the client has made of the
@@ -471,7 +471,7 @@ public class MaxDocsServlet extends HttpServlet
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
-	private void actionRename(HttpServletRequest request, HttpServletResponse response)
+	private void rename(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
 		log.trace("actionRename(HttpServletRequest, HttpServletResponse");
@@ -498,12 +498,12 @@ public class MaxDocsServlet extends HttpServlet
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 		}
-		actionShow(request, response);
+		show(request, response);
 	}
 
 
 	/**
-	 * actionSave:
+	 * save:
 	 * Save a page
 	 * 
 	 * @param request an HttpServletRequest object that contains the request the client has made of the
@@ -513,7 +513,7 @@ public class MaxDocsServlet extends HttpServlet
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
-	private void actionSave(HttpServletRequest request, HttpServletResponse response)
+	private void save(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
 		log.trace("actionSave(HttpServletRequest, HttpServletResponse");
@@ -585,12 +585,12 @@ public class MaxDocsServlet extends HttpServlet
 			}
 		}
 		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
-		actionShow(request, response);
+		show(request, response);
 	}
 
 
 	/**
-	 * actionShow:
+	 * show:
 	 * Show a page
 	 * 
 	 * @param request an HttpServletRequest object that contains the request the client has made of the
@@ -600,7 +600,7 @@ public class MaxDocsServlet extends HttpServlet
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
-	private void actionShow(HttpServletRequest request, HttpServletResponse response)
+	private void show(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
 		log.trace("actionShow(HttpServletRequest, HttpServletResponse");
@@ -608,6 +608,9 @@ public class MaxDocsServlet extends HttpServlet
 		String username = (String) currentUser.getPrincipal();
 		if (checkPermission(currentUser, "page:view"))
 		{
+			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			request.setAttribute("VERSIONS", maxDocs.getVersions(pagePath));
 			request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/show.jsp").forward(request,
 				response);
 		}
@@ -625,13 +628,13 @@ public class MaxDocsServlet extends HttpServlet
 				messages.add("Missing page:view permission for user " + username);
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
-			actionLogin(request, response);
+			login(request, response);
 		}
 	}
 
 
 	/**
-	 * actionSource:
+	 * source:
 	 * Show the page source
 	 * 
 	 * @param request an HttpServletRequest object that contains the request the client has made of the
@@ -641,7 +644,7 @@ public class MaxDocsServlet extends HttpServlet
 	 * @throws ServletException - if the target resource throws this exception
 	 * @throws IOException - if the target resource throws this exception
 	 */
-	private void actionSource(HttpServletRequest request, HttpServletResponse response)
+	private void source(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
 		log.trace("actionSource(HttpServletRequest, HttpServletResponse");
@@ -666,7 +669,7 @@ public class MaxDocsServlet extends HttpServlet
 				messages.add("Missing page:viewSource permission for user " + username);
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
-			actionShow(request, response);
+			show(request, response);
 		}
 	}
 

@@ -47,6 +47,7 @@ import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.data.PageLight;
 import org.maxdocs.data.TagCloudEntry;
 import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
@@ -121,6 +122,281 @@ public class FileStorage implements Storage
 		createVersionPath(versionFolder);
 
 		buildIndexes(false);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#delete(java.lang.String)
+	 */
+	@Override
+	public boolean delete(String pagePath)
+	{
+		log.trace("delete({})", pagePath);
+
+		boolean success = true;
+		if (exists(pagePath))
+		{
+			String fileName = contentPath + files.get(pagePath);
+
+			// delete current version
+			File f = new File(fileName);
+			if (f.exists())
+			{
+				success = f.delete();
+				if (success)
+				{
+					log.debug("File '{}' deleted.", fileName);
+					String pageNumber = StringUtils.substringBefore(files.get(pagePath), ".");
+					files.remove(pagePath);
+					// delete history
+					String fileVersionPath = versionPath + "/" + pageNumber;
+					f = new File(fileVersionPath);
+					if (f.exists())
+					{
+						if (!deleteRecursive(f))
+						{
+							log.error(
+								"File '{}' deleted, but version folder '{}' could not be deleted. Manual deletion necessary.",
+								fileName, fileVersionPath);
+						}
+					}
+				}
+			}
+		}
+		return success;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#exists(java.lang.String)
+	 */
+	@Override
+	public boolean exists(String pagePath)
+	{
+		log.trace("exists({})", pagePath);
+
+		boolean exists = false;
+		if (files.containsKey(pagePath))
+		{
+			String pathname = contentPath + files.get(pagePath);
+			File file = new File(pathname);
+			if (file.exists())
+			{
+				exists = true;
+			}
+			else
+			{
+				// No longer available on HDD. Remove from mapping.
+				files.remove(pagePath);
+				updateTagMap(pagePath, "");
+
+			}
+		}
+		return exists;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#getTagCloud()
+	 */
+	@Override
+	public List<TagCloudEntry> getTagCloudEntries()
+	{
+		log.trace("getTagCloud()");
+		List<TagCloudEntry> tagCloudEntries = Collections.synchronizedList(new ArrayList<TagCloudEntry>());
+		tagCloudEntries.addAll(tagMap.values());
+		Collections.sort(tagCloudEntries, new Comparator<TagCloudEntry>() {
+			@Override
+			public int compare(TagCloudEntry o1, TagCloudEntry o2)
+			{
+				return Integer.compare(o1.getCount(), o2.getCount());
+			}
+		});
+		return tagCloudEntries;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#getVersions(java.lang.String)
+	 */
+	@Override
+	public List<PageLight> getVersions(String pagePath)
+	{
+		// TODO Auto-generated method stub
+		log.trace("getVersions()");
+		List<PageLight> list = new ArrayList<>();
+		MarkupPage page = load(pagePath);
+		if(page !=null)
+		{
+			for (int i = page.getVersion(); i > 0; i--)
+			{
+				if(i == page.getVersion())
+				{
+					list.add(new PageLight(load(pagePath)));
+				}
+				else
+				{
+					list.add(new PageLight(load(pagePath, i)));
+				}
+			}
+		}
+		return list;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#load(java.lang.String)
+	 */
+	@Override
+	public MarkupPage load(String pagePath)
+	{
+		log.trace("load({})", pagePath);
+		String pathname = contentPath + files.get(pagePath);
+		log.debug("pathname is {}", pathname);
+		MarkupPage markupPage = null;
+		File file = new File(pathname);
+		if (file.exists())
+		{
+			markupPage = load(file, pagePath);
+		}
+		return markupPage;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#load(java.lang.String, int)
+	 */
+	@Override
+	public MarkupPage load(String pagePath, int version)
+	{
+		log.trace("load({}, {})", pagePath, version);
+		// create pathname of version 
+		StringBuffer pathname = new StringBuffer(contentPath);
+		pathname.append(DEFAULT_VERSION_FOLDER);
+		pathname.append(FILE_SEPARATOR);
+		pathname.append(files.get(pagePath));
+		pathname.insert(pathname.length() - 4, FILE_SEPARATOR + version);
+		log.debug("pathname is {}", pathname);
+		MarkupPage markupPage = null;
+		File file = new File(pathname.toString());
+		if (file.exists())
+		{
+			markupPage = load(file, pagePath);
+		}
+		return markupPage;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#rename(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException
+	{
+		log.trace("rename({}, {})", pagePath, newPagePath);
+		MarkupPage page = load(pagePath);
+		page.setPagePath(newPagePath);
+		boolean success = false;
+		try
+		{
+			success = save(page);
+			if (success)
+			{
+				files.put(newPagePath, files.get(pagePath));
+				files.remove(pagePath);
+			}
+		}
+		catch (EditWithoutChangesException e)
+		{
+			log.error("This EditWithoutChangesException should never be thrown, because rename does a change.");
+		}
+		log.debug("renamed {} to {}", pagePath, newPagePath);
+		return success;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.storage.Storage#save(org.maxdocs.data.MarkupPage)
+	 */
+	@Override
+	public boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException
+	{
+		if (newPage == null)
+		{
+			throw new IllegalArgumentException("save(markupPage): markupPage is null!");
+		}
+		log.trace("save({})", newPage.getPagePath());
+
+		boolean success = true;
+
+		String filenameNew;
+		MarkupPage oldPage = load(newPage.getPagePath());
+		if (oldPage != null)
+		{
+			if (oldPage.getVersion() != newPage.getVersion())
+			{
+				throw new ConcurrentEditException();
+			}
+
+			if (StringUtils.equals(oldPage.getContent(), newPage.getContent())
+				&& CollectionUtils.isEqualCollection(oldPage.getTags(), newPage.getTags())
+				&& StringUtils.equals(oldPage.getPagePath(), newPage.getPagePath()))
+			{
+				throw new EditWithoutChangesException();
+			}
+
+			newPage.setAuthor(oldPage.getAuthor());
+			newPage.setFirstVersionCreationDate(oldPage.getFirstVersionCreationDate());
+
+			String pageNumber = StringUtils.substringBefore(files.get(oldPage.getPagePath()), ".");
+			String path = versionPath + "/" + pageNumber;
+			File folder = new File(path);
+			if (!folder.exists())
+			{
+				folder.mkdirs();
+			}
+			success = writePage(oldPage, path + "/" + oldPage.getVersion() + ".txt");
+			filenameNew = contentPath + files.get(oldPage.getPagePath());
+		}
+		else
+		{
+			int max = getNextPageNumber();
+			filenameNew = contentPath + max + ".txt";
+		}
+
+		if (success)
+		{
+			newPage.setVersion(newPage.getVersion() + 1);
+			success = writePage(newPage, filenameNew);
+			if (success)
+			{
+				files.put(newPage.getPagePath(), StringUtils.substringAfterLast(filenameNew, contentPath));
+			}
+		}
+
+		return success;
+	}
+
+
+	protected String pageToString(MarkupPage page)
+	{
+		log.trace("pageToString({})", page.getPagePath());
+		String lineSeperator = "\n";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
+		StringBuilder content = new StringBuilder();
+		content.append("pagePath=" + page.getPagePath() + lineSeperator);
+		content.append("author=" + page.getAuthor() + lineSeperator);
+		content.append("editor=" + page.getEditor() + lineSeperator);
+		content.append("creationDateFirst=" + sdf.format(page.getFirstVersionCreationDate()) + lineSeperator);
+		content
+			.append("creationDateThis=" + sdf.format(page.getCurrentVersionCreationDate()) + lineSeperator);
+		content.append("contentType=" + page.getMarkupLanguage() + lineSeperator);
+		content.append("version=" + page.getVersion() + lineSeperator);
+		content.append("tags=" + page.getTagsAsString() + lineSeperator);
+		updateTagMap(page.getPagePath(), page.getTagsAsString());
+		content.append(lineSeperator);
+		content.append(page.getContent());
+		return content.toString();
 	}
 
 
@@ -329,48 +605,6 @@ public class FileStorage implements Storage
 	}
 
 
-	/* (non-Javadoc)
-	 * @see org.maxdocs.storage.Storage#delete(java.lang.String)
-	 */
-	@Override
-	public boolean delete(String pagePath)
-	{
-		log.trace("delete({})", pagePath);
-
-		boolean success = true;
-		if (exists(pagePath))
-		{
-			String fileName = contentPath + files.get(pagePath);
-
-			// delete current version
-			File f = new File(fileName);
-			if (f.exists())
-			{
-				success = f.delete();
-				if (success)
-				{
-					log.debug("File '{}' deleted.", fileName);
-					String pageNumber = StringUtils.substringBefore(files.get(pagePath), ".");
-					files.remove(pagePath);
-					// delete history
-					String fileVersionPath = versionPath + "/" + pageNumber;
-					f = new File(fileVersionPath);
-					if (f.exists())
-					{
-						if (!deleteRecursive(f))
-						{
-							log.error(
-								"File '{}' deleted, but version folder '{}' could not be deleted. Manual deletion necessary.",
-								fileName, fileVersionPath);
-						}
-					}
-				}
-			}
-		}
-		return success;
-	}
-
-
 	/**
 	 * deleteRecursive:
 	 * Deletes the file or directory denoted by this abstract pathname.
@@ -399,35 +633,6 @@ public class FileStorage implements Storage
 	}
 
 
-	/* (non-Javadoc)
-	 * @see org.maxdocs.storage.Storage#exists(java.lang.String)
-	 */
-	@Override
-	public boolean exists(String pagePath)
-	{
-		log.trace("exists({})", pagePath);
-	
-		boolean exists = false;
-		if(files.containsKey(pagePath))
-		{
-			String pathname = contentPath + files.get(pagePath);
-			File file = new File(pathname);
-			if(file.exists())
-			{
-				exists = true;
-			}
-			else
-			{
-				// No longer available on HDD. Remove from mapping.
-				files.remove(pagePath);
-				updateTagMap(pagePath, "");
-				
-			}
-		}
-		return exists;
-	}
-
-
 	/**
 	 * getNextPageNumber:
 	 * Return the next free number for saving a page.
@@ -449,67 +654,6 @@ public class FileStorage implements Storage
 		max++;
 		log.debug("nextPageNumber: {}", max);
 		return max;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see org.maxdocs.storage.Storage#getTagCloud()
-	 */
-	@Override
-	public List<TagCloudEntry> getTagCloudEntries()
-	{
-		log.trace("getTagCloud()");
-		List<TagCloudEntry> tagCloudEntries = Collections.synchronizedList(new ArrayList<TagCloudEntry>());
-		tagCloudEntries.addAll(tagMap.values());
-		Collections.sort(tagCloudEntries, new Comparator<TagCloudEntry>() {
-			@Override
-			public int compare(TagCloudEntry o1, TagCloudEntry o2)
-			{
-				return Integer.compare(o1.getCount(), o2.getCount());
-			}
-		});
-		return tagCloudEntries;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see org.maxdocs.storage.Storage#load(java.lang.String)
-	 */
-	@Override
-	public MarkupPage load(String pagePath)
-	{
-		log.trace("load({})", pagePath);
-		String pathname = contentPath + files.get(pagePath);
-		log.debug("pathname is {}", pathname);
-		MarkupPage markupPage = null;
-		File file = new File(pathname);
-		if (file.exists())
-		{
-			markupPage = load(file, pagePath);
-		}
-		return markupPage;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see org.maxdocs.storage.Storage#load(java.lang.String, int)
-	 */
-	@Override
-	public MarkupPage load(String pagePath, int version)
-	{
-		log.trace("load({}, {})", pagePath, version);
-		// create pathname of version 
-		StringBuffer pathname = new StringBuffer(contentPath);
-		pathname.append(files.get(pagePath));
-		pathname.insert(pathname.length() - 4, FILE_SEPARATOR + version);
-		log.debug("pathname is {}", pathname);
-		MarkupPage markupPage = null;
-		File file = new File(pathname.toString());
-		if (file.exists())
-		{
-			markupPage = load(file, pagePath);
-		}
-		return markupPage;
 	}
 
 
@@ -591,119 +735,6 @@ public class FileStorage implements Storage
 			}
 		}
 		return markupPage;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see org.maxdocs.storage.Storage#rename(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException
-	{
-		log.trace("rename({}, {})", pagePath, newPagePath);
-		MarkupPage page = load(pagePath);
-		page.setPagePath(newPagePath);
-		boolean success = false;
-		try
-		{
-			success = save(page);
-			if (success)
-			{
-				files.put(newPagePath, files.get(pagePath));
-				files.remove(pagePath);
-			}
-		}
-		catch (EditWithoutChangesException e)
-		{
-			log.error("This EditWithoutChangesException should never be thrown, because rename does a change.");
-		}
-		log.debug("renamed {} to {}", pagePath, newPagePath);
-		return success;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see org.maxdocs.storage.Storage#save(org.maxdocs.data.MarkupPage)
-	 */
-	@Override
-	public boolean save(MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException
-	{
-		if (newPage == null)
-		{
-			throw new IllegalArgumentException("save(markupPage): markupPage is null!");
-		}
-		log.trace("save({})", newPage.getPagePath());
-
-		boolean success = true;
-
-		String filenameNew;
-		MarkupPage oldPage = load(newPage.getPagePath());
-		if (oldPage != null)
-		{
-			if (oldPage.getVersion() != newPage.getVersion())
-			{
-				throw new ConcurrentEditException();
-			}
-
-			if (StringUtils.equals(oldPage.getContent(), newPage.getContent())
-				&& CollectionUtils.isEqualCollection(oldPage.getTags(), newPage.getTags())
-				&& StringUtils.equals(oldPage.getPagePath(), newPage.getPagePath()))
-			{
-				throw new EditWithoutChangesException();
-			}
-
-			newPage.setAuthor(oldPage.getAuthor());
-			newPage.setFirstVersionCreationDate(oldPage.getFirstVersionCreationDate());
-
-			String pageNumber = StringUtils.substringBefore(files.get(oldPage.getPagePath()), ".");
-			String path = versionPath + "/" + pageNumber;
-			File folder = new File(path);
-			if (!folder.exists())
-			{
-				folder.mkdirs();
-			}
-			success = writePage(oldPage, path + "/" + oldPage.getVersion() + ".txt");
-			filenameNew = contentPath + files.get(oldPage.getPagePath());
-		}
-		else
-		{
-			int max = getNextPageNumber();
-			filenameNew = contentPath + max + ".txt";
-		}
-
-		if (success)
-		{
-			newPage.setVersion(newPage.getVersion() + 1);
-			success = writePage(newPage, filenameNew);
-			if (success)
-			{
-				files.put(newPage.getPagePath(), StringUtils.substringAfterLast(filenameNew, contentPath));
-			}
-		}
-
-		return success;
-	}
-
-
-	protected String pageToString(MarkupPage page)
-	{
-		log.trace("pageToString({})", page.getPagePath());
-		String lineSeperator = "\n";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
-		StringBuilder content = new StringBuilder();
-		content.append("pagePath=" + page.getPagePath() + lineSeperator);
-		content.append("author=" + page.getAuthor() + lineSeperator);
-		content.append("editor=" + page.getEditor() + lineSeperator);
-		content.append("creationDateFirst=" + sdf.format(page.getFirstVersionCreationDate()) + lineSeperator);
-		content
-			.append("creationDateThis=" + sdf.format(page.getCurrentVersionCreationDate()) + lineSeperator);
-		content.append("contentType=" + page.getMarkupLanguage() + lineSeperator);
-		content.append("version=" + page.getVersion() + lineSeperator);
-		content.append("tags=" + page.getTagsAsString() + lineSeperator);
-		updateTagMap(page.getPagePath(), page.getTagsAsString());
-		content.append(lineSeperator);
-		content.append(page.getContent());
-		return content.toString();
 	}
 
 

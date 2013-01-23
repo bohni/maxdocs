@@ -92,3 +92,5 @@ FileStorageProvider
 	* Versionierung erfolgt als <ContentFolder>/<VersionsFolder>/<LfdNr>/<Version>.txt
 
 	* Laden von alten Versionen: Was passiert, wenn die gewünschte Version nicht existiert (Versionsnr. in URL manuell geändert)?
+
+	* Light-Objekte für Versionshistorie

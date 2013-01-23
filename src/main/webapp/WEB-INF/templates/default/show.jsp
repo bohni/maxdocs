@@ -154,6 +154,13 @@
 						<max:pageExists><max:pageContent /></max:pageExists>
 						<max:noSuchPage>Die Seite <strong><max:pageName plain="true" /></strong> existiert nicht.!<br/>
 						<a href="${edit}">Erstelle</a> sie doch einfach.</max:noSuchPage>
+						<c:if test="${! empty requestScope.VERSIONS}">
+						<table>
+						<c:forEach items="${requestScope.VERSIONS}" var="version">
+						<tr><td>${version.version}</td><td>${version.editor}</td><td>${version.currentVersionCreationDate}</td></tr>
+						</c:forEach>
+						</table>
+						</c:if>
 						
 					</div>
 				</div>

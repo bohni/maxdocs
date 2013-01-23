@@ -23,10 +23,12 @@
  */
 package org.maxdocs.engine;
 
+import java.util.List;
 import java.util.Map;
 
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.data.PageLight;
 import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
 
@@ -108,7 +110,7 @@ public interface MaxDocs
 	 */
 	Map<String, Integer> getTagCloud();
 
-
+	List<PageLight> getVersions(String pagePath);
 	/**
 	 * rename:
 	 * Renames the page with the given pagePath
