@@ -386,6 +386,9 @@
 					</includes>
 					<useDefaultExcludes>true</useDefaultExcludes>
 					<useDefaultMapping>true</useDefaultMapping>
+					<mapping>
+						<ini>SCRIPT_STYLE</ini>
+					</mapping>
 					<properties>
 						<project.inceptionYear>${project.inceptionYear}</project.inceptionYear>
 						<project.organization.name>${project.organization.name}</project.organization.name>
