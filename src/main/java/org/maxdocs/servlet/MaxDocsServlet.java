@@ -50,6 +50,8 @@ import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.data.MarkupPage;
+import org.maxdocs.data.Message;
+import org.maxdocs.data.Severity;
 import org.maxdocs.engine.MaxDocs;
 import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
@@ -268,14 +270,14 @@ public class MaxDocsServlet extends HttpServlet
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
 
-		List<String> messages = getMessages(request);
+		List<Message> messages = getMessages(request);
 		if (checkPermission(currentUser, "page:delete"))
 		{
 			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
 			if (!maxDocs.delete(pagePath))
 			{
-				messages.add("Page '" + pagePath + "' could not be deleted!");
+				messages.add(new Message("Page '" + pagePath + "' could not be deleted!", Severity.ERROR));
 			}
 		}
 		else
@@ -283,12 +285,12 @@ public class MaxDocsServlet extends HttpServlet
 			log.debug("Missing page:delete permission");
 			if (username == null)
 			{
-				messages.add("No page:delete permission for unkown users");
+				messages.add(new Message("No page:delete permission for unkown users", Severity.ERROR));
 
 			}
 			else
 			{
-				messages.add("Missing page:delete permission for user " + username);
+				messages.add(new Message("Missing page:delete permission for user " + username, Severity.ERROR));
 			}
 		}
 		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
@@ -327,12 +329,12 @@ public class MaxDocsServlet extends HttpServlet
 				rememberme = Boolean.parseBoolean(strRememberme);
 			}
 			token.setRememberMe(rememberme);
-			List<String> messages = getMessages(request);
+			List<Message> messages = getMessages(request);
 			try
 			{
 				currentUser.login(token);
 				log.debug("User {} successfully logged in", username);
-				messages.add("Successfully logged in!");
+				messages.add(new Message("Successfully logged in!", Severity.ERROR));
 				// TODO: Where to go?
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 				show(request, response);
@@ -341,7 +343,7 @@ public class MaxDocsServlet extends HttpServlet
 			{
 				//username wasn't in the system, show them an error message?
 				log.debug("User {} not logged in: UnknownAccountException", username);
-				messages.add("Username and password do not match!");
+				messages.add(new Message("Username and password do not match!", Severity.ERROR));
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 				login(request, response);
 			}
@@ -349,7 +351,7 @@ public class MaxDocsServlet extends HttpServlet
 			{
 				//password didn't match, try again?
 				log.debug("User {} not logged in: IncorrectCredentialsException", username);
-				messages.add("Username and password do not match!");
+				messages.add(new Message("Username and password do not match!", Severity.ERROR));
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 				login(request, response);
 			}
@@ -357,7 +359,7 @@ public class MaxDocsServlet extends HttpServlet
 			{
 				//account for that username is locked - can't login.  Show them a message?
 				log.debug("User {} not logged in: LockedAccountException", username);
-				messages.add("Username and password do not match!");
+				messages.add(new Message("Username and password do not match!", Severity.ERROR));
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 				login(request, response);
 			}
@@ -365,7 +367,7 @@ public class MaxDocsServlet extends HttpServlet
 			{
 				//unexpected condition - error?
 				log.error("User {} not logged in: AuthenticationException - {}", username, ae.getMessage());
-				messages.add("An unkonwn error occurred! Try again later!");
+				messages.add(new Message("An unkonwn error occurred! Try again later!", Severity.ERROR));
 				request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 				login(request, response);
 			}
@@ -424,15 +426,15 @@ public class MaxDocsServlet extends HttpServlet
 		else
 		{
 			log.debug("Missing page:edit permission");
-			List<String> messages = getMessages(request);
+			List<Message> messages = getMessages(request);
 			if (username == null)
 			{
-				messages.add("No page:edit permission for unkown users");
+				messages.add(new Message("No page:edit permission for unkown users", Severity.ERROR));
 
 			}
 			else
 			{
-				messages.add("Missing page:edit permission for user " + username);
+				messages.add(new Message("Missing page:edit permission for user " + username, Severity.ERROR));
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 			show(request, response);
@@ -486,15 +488,14 @@ public class MaxDocsServlet extends HttpServlet
 		else
 		{
 			log.debug("Missing page:rename permission");
-			List<String> messages = getMessages(request);
+			List<Message> messages = getMessages(request);
 			if (username == null)
 			{
-				messages.add("No page:rename permission for unkown users");
-
+				messages.add(new Message("No page:rename permission for unkown users", Severity.ERROR));
 			}
 			else
 			{
-				messages.add("Missing page:rename permission for user " + username);
+				messages.add(new Message("Missing page:rename permission for user " + username, Severity.ERROR));
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 		}
@@ -523,7 +524,7 @@ public class MaxDocsServlet extends HttpServlet
 		{
 			username="Anonymous"; //TODO: i18n, IP address?
 		}
-		List<String> messages = getMessages(request);
+		List<Message> messages = getMessages(request);
 		if (checkPermission(currentUser, "page:save"))// TODO: which permissions allow saving?
 		{
 			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
@@ -549,39 +550,36 @@ public class MaxDocsServlet extends HttpServlet
 			{
 				newPage.setVersion(Integer.parseInt(request.getParameter(PARAMETER_NAME_VERSION)));
 			}
-			boolean success = false;
 			try
 			{
-				success = maxDocs.save(newPage);
+				boolean success = maxDocs.save(newPage);
+				if (!success)
+				{
+					messages.add(new Message("Uppps! An unknown error occured!", Severity.ERROR));
+				}
 			}
 			catch (ConcurrentEditException e)
 			{
-				// TODO: show error message
-				log.debug("Concurrent changes...");
+				messages.add(new Message("There where other changes saved while editing this page!", Severity.ERROR));
+				// TODO: Merge anbieten
 			}
 			catch (EditWithoutChangesException e)
 			{
-				// TODO: show error message
-				log.debug("No changes...");
+				messages.add(new Message("No changes where made. No new version created.", Severity.INFO));
 			}
 
-			if (!success)
-			{
-				// TODO: show error message
-				log.error("Other error");
-			}
 		}
 		else
 		{
 			log.debug("Missing page:save permission");
 			if (currentUser.getPrincipal() == null)
 			{
-				messages.add("No page:save permission for unkown users");
+				messages.add(new Message("No page:save permission for unkown users", Severity.ERROR));
 
 			}
 			else
 			{
-				messages.add("Missing page:save permission for user " + username);
+				messages.add(new Message("Missing page:save permission for user " + username, Severity.ERROR));
 			}
 		}
 		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
@@ -617,15 +615,15 @@ public class MaxDocsServlet extends HttpServlet
 		else
 		{
 			log.debug("Missing page:view permission");
-			List<String> messages = getMessages(request);
+			List<Message> messages = getMessages(request);
 			if (username == null)
 			{
-				messages.add("No page:view permission for unkown users");
+				messages.add(new Message("No page:view permission for unkown users", Severity.ERROR));
 
 			}
 			else
 			{
-				messages.add("Missing page:view permission for user " + username);
+				messages.add(new Message("Missing page:view permission for user " + username, Severity.ERROR));
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 			login(request, response);
@@ -658,15 +656,15 @@ public class MaxDocsServlet extends HttpServlet
 		else
 		{
 			log.debug("Missing page:viewSource permission");
-			List<String> messages = getMessages(request);
+			List<Message> messages = getMessages(request);
 			if (username == null)
 			{
-				messages.add("No page:viewSource permission for unkown users");
+				messages.add(new Message("No page:viewSource permission for unkown users", Severity.ERROR));
 
 			}
 			else
 			{
-				messages.add("Missing page:viewSource permission for user " + username);
+				messages.add(new Message("Missing page:viewSource permission for user " + username, Severity.ERROR));
 			}
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 			show(request, response);
@@ -729,12 +727,13 @@ public class MaxDocsServlet extends HttpServlet
 	 *        servlet
 	 * @return the message list
 	 */
-	private List<String> getMessages(HttpServletRequest request)
+	private List<Message> getMessages(HttpServletRequest request)
 	{
-		List<String> messages = (List<String>) request.getAttribute(MaxDocsConstants.MAXDOCS_MESSAGES);
+		@SuppressWarnings("unchecked")
+		List<Message> messages = (List<Message>) request.getAttribute(MaxDocsConstants.MAXDOCS_MESSAGES);
 		if (messages == null)
 		{
-			messages = new ArrayList<String>();
+			messages = new ArrayList<>();
 		}
 		return messages;
 	}
