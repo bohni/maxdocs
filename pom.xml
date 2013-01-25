@@ -92,6 +92,7 @@
 	</issueManagement>
 
 	<properties>
+		<project.build.targetJDK>1.7</project.build.targetJDK>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -192,6 +193,16 @@
 			<version>3.2.0.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>3.2.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.6.8</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>
@@ -260,7 +271,7 @@
 					<version>2.7.1</version>
 					<configuration>
 						<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-						<targetJdk>1.6</targetJdk>
+						<targetJdk>${project.build.targetJDK}</targetJdk>
 						<includeTests>true</includeTests>
 						<excludes>
 							<exclude>**/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
@@ -296,8 +307,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>${project.build.targetJDK}</source>
+					<target>${project.build.targetJDK}</target>
 					<showDeprecation>true</showDeprecation>
 					<showWarnings>true</showWarnings>
 				</configuration>
@@ -376,6 +387,9 @@
 					</includes>
 					<useDefaultExcludes>true</useDefaultExcludes>
 					<useDefaultMapping>true</useDefaultMapping>
+					<mapping>
+						<ini>SCRIPT_STYLE</ini>
+					</mapping>
 					<properties>
 						<project.inceptionYear>${project.inceptionYear}</project.inceptionYear>
 						<project.organization.name>${project.organization.name}</project.organization.name>
@@ -453,7 +467,7 @@
 						<exclude>**/org/maxdocs/apache/catalina/filters/SetCharacterEncodingFilter.java</exclude>
 					</excludes>
 					<linkXRef>true</linkXRef>
-					<targetJdk>1.6</targetJdk>
+					<targetJdk>${project.build.targetJDK}</targetJdk>
 					<includeTests>true</includeTests>
 					<rulesets>
 						<ruleset>file:///${basedir}/src/main/config/pmd/ruleset-4.3.xml</ruleset>

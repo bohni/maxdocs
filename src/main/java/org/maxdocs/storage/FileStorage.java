@@ -225,14 +225,14 @@ public class FileStorage implements Storage
 		// TODO Auto-generated method stub
 		log.trace("getVersions()");
 		List<PageLight> list = new ArrayList<>();
-		MarkupPage page = load(pagePath);
-		if(page !=null)
+		if(exists(pagePath))
 		{
+			MarkupPage page = load(pagePath);
 			for (int i = page.getVersion(); i > 0; i--)
 			{
 				if(i == page.getVersion())
 				{
-					list.add(new PageLight(load(pagePath)));
+					list.add(new PageLight(page));
 				}
 				else
 				{
@@ -269,7 +269,7 @@ public class FileStorage implements Storage
 	@Override
 	public MarkupPage load(String pagePath, int version)
 	{
-		log.trace("load({}, {})", pagePath, version);
+		log.trace("load({}, {})", pagePath, Integer.toString(version));
 		// create pathname of version 
 		StringBuffer pathname = new StringBuffer(contentPath);
 		pathname.append(DEFAULT_VERSION_FOLDER);
@@ -717,7 +717,7 @@ public class FileStorage implements Storage
 				}
 			}
 			markupPage.setContent(content.toString());
-			log.debug("page {} loaded", markupPage.getPagePath());
+			log.debug("page {}, Version {} loaded", markupPage.getPagePath(), Integer.toString(markupPage.getVersion()));
 		}
 		catch (FileNotFoundException e)
 		{

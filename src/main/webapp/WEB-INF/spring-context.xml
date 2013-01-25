@@ -24,20 +24,81 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -->
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<!-- Properties -->
 	<context:property-placeholder location="classpath:maxdocs.properties" />
-	
+
+	<!-- Cache -->
+	<bean
+		id="cacheManager"
+		class="org.springframework.cache.support.SimpleCacheManager">
+		<property name="caches">
+			<set>
+				<bean
+					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+					name="markupPages" />
+				<bean
+					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+					name="htmlPages" />
+			</set>
+		</property>
+	</bean>
+
+	<cache:advice
+		id="markupCacheAdvice"
+		cache-manager="cacheManager">
+		<cache:caching cache="markupPages">
+			<cache:cacheable
+				method="load"
+				key="#pagePath" />
+			<cache:cache-evict
+				method="save"
+				key="#newPage.pagePath"
+				all-entries="false" />
+		</cache:caching>
+	</cache:advice>
+
+	<cache:advice
+		id="htmlCacheAdvice"
+		cache-manager="cacheManager">
+		<cache:caching cache="htmlPages">
+			<cache:cacheable
+				method="getHtmlPage"
+				key="#pagePath" />
+			<cache:cache-evict
+				method="save"
+				key="#newPage.pagePath"
+				all-entries="false" />
+		</cache:caching>
+	</cache:advice>
+
+	<!-- apply the cacheable behavior to interfaces -->
+	<aop:config>
+		<aop:advisor
+			advice-ref="markupCacheAdvice"
+			pointcut="execution(* org.maxdocs.storage.Storage.*(..))" />
+		<aop:advisor
+			advice-ref="htmlCacheAdvice"
+			pointcut="execution(* org.maxdocs.engine.MaxDocs.*(..))" />
+	</aop:config>
+
 	<!-- Storage -->
-	<bean id="storageImpl" class="org.maxdocs.storage.FileStorage">
+	<bean
+		id="storageImpl"
+		class="org.maxdocs.storage.FileStorage">
 		<constructor-arg value="${maxdocs.contentPath}" />
 		<constructor-arg value="${maxdocs.versionFolder}" />
 	</bean>
@@ -45,39 +106,67 @@
 	<!-- Markup parser -->
 	<context:component-scan base-package="org.maxdocs.parser" />
 
-	<bean id="mediawiki"
+	<bean
+		id="mediawiki"
 		class="org.eclipse.mylyn.wikitext.mediawiki.core.MediaWikiLanguage">
-		<property name="internalLinkPattern" value="{0}" />
+		<property
+			name="internalLinkPattern"
+			value="{0}" />
 	</bean>
-	<bean id="creole" class="org.eclipse.mylyn.wikitext.creole.core.CreoleLanguage" />
+	<bean
+		id="creole"
+		class="org.eclipse.mylyn.wikitext.creole.core.CreoleLanguage" />
 
-	<bean id="markupLanguageFactory"
+	<bean
+		id="markupLanguageFactory"
 		class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
-		<property name="serviceLocatorInterface" value="org.maxdocs.parser.MarkupLanguageFactory" />
+		<property
+			name="serviceLocatorInterface"
+			value="org.maxdocs.parser.MarkupLanguageFactory" />
 	</bean>
 
-	<bean id="parserImpl" class="org.maxdocs.parser.MarkupParserImpl">
-		<property name="markupLanguageFactory" ref="markupLanguageFactory" />
+	<bean
+		id="parserImpl"
+		class="org.maxdocs.parser.MarkupParserImpl">
+		<property
+			name="markupLanguageFactory"
+			ref="markupLanguageFactory" />
 	</bean>
 
 	<!-- Maxdocs engine -->
-	<bean id="maxDocs" class="org.maxdocs.engine.MaxDocsImpl">
-		<property name="storage" ref="storageImpl" />
-		<property name="parser" ref="parserImpl" />
+	<bean
+		id="maxDocs"
+		class="org.maxdocs.engine.MaxDocsImpl">
+		<property
+			name="storage"
+			ref="storageImpl" />
+		<property
+			name="parser"
+			ref="parserImpl" />
 	</bean>
 
 	<!--  Template -->
-	<bean id="templateName" class="java.lang.String" scope="session">
+	<bean
+		id="templateName"
+		class="java.lang.String"
+		scope="session">
 		<constructor-arg value="${maxdocs.templateName}" />
 	</bean>
 
-	<bean id="breadcrumbsCount" scope="singleton" class="java.lang.Integer">
+	<bean
+		id="breadcrumbsCount"
+		scope="singleton"
+		class="java.lang.Integer">
 		<constructor-arg value="${maxdocs.breadcrumbsCount}" />
 	</bean>
 	
 	<!-- Apache Shiro Security -->
-	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<property name="securityManager" ref="securityManager" />
+	<bean
+		id="shiroFilter"
+		class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property
+			name="securityManager"
+			ref="securityManager" />
     <!-- override these for application-specific URLs if you like: -->
     <!-- <property name="loginUrl" value="/login.jsp"/>
     <property name="successUrl" value="/home.jsp"/>
@@ -101,7 +190,9 @@
 <!-- to the shiroFilter's 'filters' Map if desired. See its JavaDoc for more details.       -->
 <!-- <bean id="someFilter" class="..."/> -->
 
-	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	<bean
+		id="securityManager"
+		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
     <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
 		<property name="realms">
 			<list>
@@ -113,13 +204,19 @@
          to use shiro's native sessions (see the JavaDoc for more): -->
     <!-- <property name="sessionMode" value="native"/> -->
 	</bean>
-	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	<bean
+		id="lifecycleBeanPostProcessor"
+		class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
-	<bean id="iniRealm" class="org.apache.shiro.realm.text.IniRealm">
+	<bean
+		id="iniRealm"
+		class="org.apache.shiro.realm.text.IniRealm">
 		<constructor-arg value="classpath:maxdocs-security.ini" />
 	</bean>
 
-	<bean id="maxdocsRealm" class="org.apache.shiro.realm.text.IniRealm">
+	<bean
+		id="maxdocsRealm"
+		class="org.apache.shiro.realm.text.IniRealm">
 		<constructor-arg value="classpath:maxdocs-security-anonymous.ini" />
 	</bean>
 
@@ -128,8 +225,9 @@
 	<bean
 		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
 		depends-on="lifecycleBeanPostProcessor" />
-	<bean
-		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-		<property name="securityManager" ref="securityManager" />
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property
+			name="securityManager"
+			ref="securityManager" />
 	</bean>
 </beans>

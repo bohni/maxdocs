@@ -29,7 +29,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
+import org.maxdocs.data.Message;
+import org.maxdocs.data.Severity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +46,9 @@ public class MessagesTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(MessagesTag.class);
 
+	private String error = "";
+	private String warning = "";
+	private String info = "";
 
 	/**
 	 * Default constructor.
@@ -70,14 +76,16 @@ public class MessagesTag extends AbstractMaxDocsTagSupport
 			Object o = request.getAttribute(MaxDocsConstants.MAXDOCS_MESSAGES);
 			if (o instanceof List<?>)
 			{
-				List<String> messages = (List<String>) o;
+				@SuppressWarnings("unchecked")
+				List<Message> messages = (List<Message>) o;
 				if (messages.size() > 0)
 				{
 					messagesText.append("<ul class=\"" + getStyleClass() + "\">");
 				}
-				for (String message : messages)
+				for (Message message : messages)
 				{
-					messagesText.append("<li>" + message + "</li>");
+					messagesText.append("<li" + getServerity(message.getSeverity()) + ">"
+						+ message.getMessage() + "</li>");
 				}
 				if (messages.size() > 0)
 				{
@@ -93,5 +101,95 @@ public class MessagesTag extends AbstractMaxDocsTagSupport
 			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
+	}
+
+
+	private String getServerity(Severity severity)
+	{
+		StringBuilder cssClass =  new StringBuilder(" class=\"");
+		if(Severity.ERROR.equals(severity))
+		{
+			cssClass.append(this.error);
+		}
+		else if(Severity.WARNING.equals(severity))
+		{
+			cssClass.append(this.warning);
+		}
+		else if(Severity.INFO.equals(severity))
+		{
+			cssClass.append(this.info);
+		}
+		cssClass.append("\"");
+		if(StringUtils.equals(" class=\"\"", cssClass.toString()))
+		{
+			cssClass = new StringBuilder();
+		}
+		return cssClass.toString();
+	}
+
+
+	/**
+	 * getError: Returns the error.
+	 * 
+	 * @return the error
+	 */
+	public String getError()
+	{
+		return error;
+	}
+
+
+	/**
+	 * setError: Sets the error.
+	 * 
+	 * @param error the error to set
+	 */
+	public void setError(String error)
+	{
+		this.error = error;
+	}
+
+
+	/**
+	 * getWarning: Returns the warning.
+	 * 
+	 * @return the warning
+	 */
+	public String getWarning()
+	{
+		return warning;
+	}
+
+
+	/**
+	 * setWarning: Sets the warning.
+	 * 
+	 * @param warning the warning to set
+	 */
+	public void setWarning(String warning)
+	{
+		this.warning = warning;
+	}
+
+
+	/**
+	 * getInfo: Returns the info.
+	 * 
+	 * @return the info
+	 */
+	public String getInfo()
+	{
+		return info;
+	}
+
+
+	/**
+	 * setInfo: Sets the info.
+	 * 
+	 * @param info the info to set
+	 */
+	public void setInfo(String info)
+	{
+		this.info = info;
 	}
 }

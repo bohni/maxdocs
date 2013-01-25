@@ -37,6 +37,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.maxdocs.MaxDocsConstants;
+import org.maxdocs.data.Message;
+import org.maxdocs.data.Severity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -83,7 +85,7 @@ public class MessagesTagTest extends AbstractTagTest
 		log.trace("testDoStartTagMessagesDefault");
 
 		// Test data
-		List<String> messages = new ArrayList<String>();
+		List<Message> messages = new ArrayList<>();
 
 		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 
@@ -108,8 +110,8 @@ public class MessagesTagTest extends AbstractTagTest
 		log.trace("testDoStartTagMessagesDefault");
 
 		// Test data
-		List<String> messages = new ArrayList<String>();
-		messages.add("Message");
+		List<Message> messages = new ArrayList<>();
+		messages.add(new Message("Message", Severity.ERROR));
 
 		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 
@@ -134,7 +136,7 @@ public class MessagesTagTest extends AbstractTagTest
 		log.trace("testDoStartTagMessagesDefault");
 
 		// Test data
-		List<String> messages = null;
+		List<Message> messages = null;
 
 		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 
