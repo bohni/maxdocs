@@ -142,3 +142,12 @@ Entwicklung
 	* +1 / Gefällt mir / ...
 	
 	* "Watch" auf Seiten, um per Mail über Änderungen informiert zu werden?
+	
+	* Für Crawler spezifisch aufbereitete Seiten liefern (z.B. nur Content)
+	
+	* HTTP-Header Date: Zeigt letzte Content-Änderung oder Zeitpunkt der Seitengenerierung (Abfragezeitpunkt)???
+	  -> Nur bei Crawler-spezifisch Content-Änderung als HTTP-Header-Date, weil sonst würde ein Proxy Änderungen am Layout
+	  nicht mitbekommen (News-Box, etc.)
+
+	* Kommentarfunktion: Es ist sinnvoll, die Kommentare getrennt von der Wiki-Seite zu verwalten. Implementierung
+	  könnte als "Forum" passieren
