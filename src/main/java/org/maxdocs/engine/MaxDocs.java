@@ -110,6 +110,13 @@ public interface MaxDocs
 	 */
 	Map<String, Integer> getTagCloud();
 
+	/**
+	 * getVersions:
+	 * Returns a list with all versions of the given page
+	 * 
+	 * @param pagePath the complete path of the page
+	 * @return list containing {@link PageLight} objects for every version
+	 */
 	List<PageLight> getVersions(String pagePath);
 	/**
 	 * rename:

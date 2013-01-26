@@ -197,7 +197,7 @@ public class FileStorageTest
 			assertEquals("markupLanguage not equal", markupLanguage, loaded.getMarkupLanguage());
 			assertEquals("content not equal", content + System.getProperty("line.separator"), loaded.getContent());
 			assertEquals("pagePath not equal", pagePath, loaded.getPagePath());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			assertEquals("lastChangeDate not equal", sdf.format(date), sdf.format(loaded.getCurrentVersionCreationDate()));
 			assertEquals("creationDate not equal", sdf.format(date), sdf.format(loaded.getFirstVersionCreationDate()));
 			assertEquals("Tags.size not euqal", 2, loaded.getTags().size());
