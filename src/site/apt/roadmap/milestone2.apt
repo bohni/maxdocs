@@ -34,6 +34,7 @@ Milestone M2
  Mit dem zweiten Meilenstein werden weitere Funktionen eingebaut, außerdem soll nun eine erste
  Implementierung der Security erfolgen.
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Servlet
 
 	* login\
@@ -49,7 +50,7 @@ Milestone M2
 	* rename\
 	  Umbenennen der übergebenen Seite
 
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Engine
 
 	* cache
@@ -60,6 +61,7 @@ Milestone M2
 
 	* links2me
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * FileStorage
 
 	* cache
@@ -68,10 +70,12 @@ Milestone M2
 
 	* tagcloud
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Parser
 
 	* Creole vervollständigen
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Taglib
 
 	* messages\
@@ -79,6 +83,7 @@ Milestone M2
 
 	* tagCloud
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Security
 
 	* Security-Konzept erstellen

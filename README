@@ -2,7 +2,9 @@ MaxDocs is a new wiki approach focusing on the following features
 
 	* Cool URIs dont change (http://www.w3.org/Provider/Style/URI)
 
-	* simple templating
+	* simple templating with jsp custom tags
+
+	* consistent use of UTF-8
 
 	* Support of different markups
 

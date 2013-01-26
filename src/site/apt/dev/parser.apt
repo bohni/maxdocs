@@ -32,6 +32,7 @@
 
 MaxDocs Parser
 	
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * unterstützte Markups:
 
 	* Creole {{http://www.wikicreole.org/wiki/Creole1.0}} -> WikiText Incubator
@@ -42,6 +43,7 @@ MaxDocs Parser
 
 	* Mediawiki {{http://en.wikipedia.org/wiki/Help:Wiki_markup}} -> TextileJ/WikiText
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * weitere Markups:
 
 	* Confluence -> TextileJ/WikiText
@@ -52,6 +54,7 @@ MaxDocs Parser
 
 	* reStructuredText {{http://docutils.sourceforge.net/rst.html}}
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Sonstiges
 
 	* Nur für Syntax, lässt Plugin Auszeichnung unverändert

@@ -36,7 +36,9 @@
 
 	* {{{http://www.w3.org/Provider/Style/URI}Cool URIs dont change}}
 
-	* einfaches Templating durch jsp-tags
+	* einfaches Templating durch JSP custom tags
+
+	* durchgängige Verwendung von UTF-8
 
 	* Unterstützung verschiedener Markups ({{{http://greensopinion.blogspot.com/2008/11/mylyn-wikitext-stand-alone-package.html}Wikitext}})
 

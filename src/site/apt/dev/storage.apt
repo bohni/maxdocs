@@ -35,6 +35,7 @@ MaxDocs Storage
 
 Storage
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Interface Storage
 
  MaxDocs bietet ein Interface zur Speicherung der Daten. Dadurch ist es möglich, verschiedene Backends
@@ -44,7 +45,16 @@ Storage
  Spring konfiguriert. Hier wird das Verzeichnis zum Speichern der aktuellen Versionen und das zum 
  Speichern der historiesierten Inhalte angegeben. 
 
-FileStorageProvider
+	* Storage liefert Linksliste für alle Seiten (wer verlink auf mich)\
+	  Engine nutzt Linkliste für z.B. rename. Sie benutzt den Parser für 
+	  geänderte Links und den Storage rein zum Speichern der geänderten Seiten.\
+	  (neuer Ansatz: siehe {{{./engine.html}Engine}}  
+
+	* Ursprungsversion beim Speichern prüfen, ob noch vorhanden oder bereits eine 
+	  neuere Version gespeichert ist.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* FileStorageProvider
 
 	* alles unter einem User ist schlecht (Security)
 

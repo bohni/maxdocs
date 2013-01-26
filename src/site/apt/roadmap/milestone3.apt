@@ -34,8 +34,10 @@ Milestone M3
  Im dritten Meilenstein wird nun das Plugin-Konzept erarbeitet und implementiert.
  Außerdem werden gleich die ersten notwendigen Plugins implementiert
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Plugin-Konzept
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Plugins
 
 ** ImagePlugin

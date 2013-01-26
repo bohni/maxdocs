@@ -38,6 +38,7 @@ TODO
 
 Dokumentation
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Dokumentation
 
 	* develop.txt nach apt für Maven-Site-Dokumentation -> {{{./todo.html}TODO}}
@@ -60,6 +61,7 @@ Dokumentation
 		
 		* Branching Model
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Konzepte
 
 	* Attachments
@@ -68,6 +70,50 @@ Dokumentation
 
 		* Erweiterung des Dateiformats 
 
+	* Gallery
+
+		* Gallery nimmt als Attribut einen Pfad und bereitet daraus ein Album auf. Ggf. mit Ordnern\
+		  zum navigieren
+
+		* Bilddarstellung mit Lightbox
+
+	* OSGi
+
+		* Soll eine Versionierung mit OSGi vorgesehen werden, damit Drittanbieter auf geänderte
+		  Schnittstellen reagieren können?
+
+	* Searchprovider
+
+		* Als Suchengine kommt Lucene zum Einsatz
+
+	* Image
+
+		* inline, wenn als Link auf Attachment
+
+		* Aufgrund MimeType oder Endung?
+
+	* Sprache\
+	  Wer gibt Sprache vor? Browser? Wiki-Besitzer? Server?
+
+		* Browser: Ein Wiki mit rein deutschen Inhalten bekommt I18n-Wiki-Texte (Formulare, Buttons, etc)
+
+		* Wiki-Besitzer: Alle Ausländer werden "ausgeschlossen"
+
+		* Server: geht gar nicht, da normalerweise keinerlei Einfluss
+
+	* Lösungsansätze:
+
+		* Browser:\
+´		  Nicht unterstützte Sprachen -> Default Locale\
+		  User kann Locale wählen (Dropdown), die dann im Cookie gespeichert wird.\
+		  Wiki verwendet nur Cookie-Locale (ggf. beim ersten Aufruf aus Browser-Locale übernommen)\
+		  Wiki-Besitzer könnte bei Installation die unterstützen Sprachen auswählen und nicht gewünschte weglassen
+
+		* Wiki-Besitzer:\
+		  Wiki-Besitzer könnte bei Installation die unterstützen Sprachen auswählen und so auch mehrere unterstützen\
+		  Config: default-Locale einstellen und Browser-Locale erlauben(ja/nein)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Entwicklung
 
 	* i18n

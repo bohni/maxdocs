@@ -33,6 +33,7 @@
 
 Entwicklung
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Allgemeines
 
  Die Entwicklung läuft auf github.com, der Entwicklungsbranch ist master.
@@ -46,6 +47,7 @@ Entwicklung
 
 	* releases entspricht dem master branch in Vincents Modell.
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Entwicklungsumgebung installieren und konfigurieren
 
 ** Eclipse
@@ -195,6 +197,7 @@ Entwicklung
 
 		* Mac/Unix : git config --global core.autocrlf input
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Projekt anlegen
 
  Das Projekt kann auf zwei Arten angelegt werden. Zum einen über die Command line, hier wird das
@@ -219,6 +222,7 @@ Entwicklung
 
 	* Git Repository View: Import projects
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Vorgaben
 
  Bei der Programmierung sind die folgende Vorgaben zu beachten
@@ -235,6 +239,7 @@ Entwicklung
 	  wird keine entsprechende Konstante verwendet. Falls die Warnings in Eclipse stören, können diese
 	  unter  Java > Compiler > Errors/Warnings > Potential programming problems ausgeschaltet werden.
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Tipps und Tricks
 
 	* Auf Updates der Abhängigkeiten und Plugins prüfen: {{{http://mojo.codehaus.org/versions-maven-plugin/}Versions Maven Plugin}}
@@ -251,6 +256,7 @@ Entwicklung
 
 	* {{{https://github.com/github/maven-plugins}Github Plugins}}
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * nützliche Links
 
 	* {{{http://nvie.com/posts/a-successful-git-branching-model/}Branching Model}}

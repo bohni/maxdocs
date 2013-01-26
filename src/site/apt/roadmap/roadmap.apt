@@ -34,7 +34,6 @@ Roadmap
  Auf dieser Seite werden die nächsten Meilensteine und die benötigten Features beschrieben.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 * Milestone M1
 
  In diesem Milestone soll eine erste Version von Maxdocs entstehen, mit der Seiten erstellt, 
@@ -59,23 +58,18 @@ Roadmap
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 * Milestone M2
 
  Mit dem zweiten Meilenstein werden weitere Funktionen eingebaut, außerdem soll nun eine erste
  Implementierung der Security erfolgen.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 * Milestone M3
 
  Im dritten Meilenstein wird nun das Plugin-Konzept erarbeitet und implementiert.
  Außerdem werden gleich die ersten notwendigen Plugins implementiert.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 * Milestone M4
 
  Der vierte Meilenstein führt die Blog-Engine und ein passendes Template ein
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

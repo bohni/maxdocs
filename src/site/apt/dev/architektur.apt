@@ -31,7 +31,10 @@
 
 ~~ Hier soll die Architektur erklärt werden - Filter/Servlet/Engine/Storage/Parser/Taglib/etc.
 
-Architektur
+Architekturansätze
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* UTF-8
 
  Das wichtigste ist, dass wir unabhängig von den Systemen sind:
 
@@ -63,10 +66,27 @@ Architektur
   <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 +-----------------------------------------
 
-	* Storage liefert Linksliste für alle Seiten (wer verlink auf mich)\
-	  Engine nutzt Linkliste für z.B. rename. Sie benutzt den Parser für 
-	  geänderte Links und den Storage rein zum Speichern der geänderten Seiten.\
-	  (neuer Ansatz: siehe {{{./engine.html}Engine}}  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Templates
 
-	* Ursprungsversion beim Speichern prüfen, ob noch vorhanden oder bereits eine 
-	  neuere Version gespeichert ist.
+ Es mus einfach sein, neue Templates zu erstellen. Als Ansatz sollen verschiedene Templates dienen,
+ die mitgeliefert werden:
+
+	* Default: mit Alles
+
+	* University: Simple als Start für Template-Entwickler
+
+	* Retro: mit Bunt und Animated Gifs
+
+	* Dreckstool: grün/schwarz
+
+ Es werden  verschiedene Seiten-Typen benötigt:
+
+	* Page: Eine Wikiseite, die im "Wikistyle" angezeigt wird
+
+	* Blog: Eine Wikiseite, die im Style "Blog" (z.B. mit Kalender) angezeigt wird.\ 
+	  Hier wird per Plugin die Stelle angegeben, wo die x letzten Blogeinträge kommen.
+
+	* Blogentry: Ein Blogeintrag, der im Style "Blog" angezeigt wird.
+
+	* "AbstractPage" als Vorlage für die einzelnen Seiten - sitemesh?
