@@ -29,6 +29,44 @@
  ------
  2013-01-09
 
+~~ Hier soll die Architektur erklärt werden - Filter/Servlet/Engine/Storage/Parser/Taglib/etc.
+
 Architektur
 
-~~ Hier soll die Architektur erklärt werden - Filter/Servlet/Engine/Storage/Parser/Taglib/etc.
+ Das wichtigste ist, dass wir unabhängig von den Systemen sind:
+
+	* Alles immer als UTF-8 behandeln, unabhängig vom System. {{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}}
+ 
+ In web.xml der webapp als ersten Filter eintragen:
+
++-----------------------------------------
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
++-----------------------------------------
+
+ In server.xml vom Tomcat:\
+ Bei den Connector-Tags (HTTP, AJP, ...): URIEncoding="UTF-8" hinzufügen
+  
+ In jsps:
+
++-----------------------------------------
+  <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
++-----------------------------------------
+
+	* Storage liefert Linksliste für alle Seiten (wer verlink auf mich)\
+	  Engine nutzt Linkliste für z.B. rename. Sie benutzt den Parser für 
+	  geänderte Links und den Storage rein zum Speichern der geänderten Seiten.\
+	  (neuer Ansatz: siehe {{{./engine.html}Engine}}  
+
+	* Ursprungsversion beim Speichern prüfen, ob noch vorhanden oder bereits eine 
+	  neuere Version gespeichert ist.

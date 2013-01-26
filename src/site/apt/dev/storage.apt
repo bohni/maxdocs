@@ -29,47 +29,20 @@
  ------
  2013-01-06
 
+~~ Hier wird das Storage-Interface und der FileStorage beschrieben
 
 MaxDocs Storage
 
-
 Storage
 
-	* Alles immer als UTF-8 behandeln, unabhängig vom System. {{http://wiki.apache.org/tomcat/FAQ/CharacterEncoding}}
- 
-  In web.xml der webapp als ersten Filter eintragen:
+* Interface Storage
 
-+-----------------------------------------
-	<filter>
-		<filter-name>EncodingFilter</filter-name>
-		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>EncodingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-+-----------------------------------------
+ MaxDocs bietet ein Interface zur Speicherung der Daten. Dadurch ist es möglich, verschiedene Backends
+ für die Ablage der Seiten zu verwenden.
 
-  In server.xml vom Tomcat:\
-  Bei den Connector-Tags: URIEncoding="UTF-8" hinzufügen
-  
-  In jsps:
-
-+-----------------------------------------
-  <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-+-----------------------------------------
-
-	* Storage liefert Linksliste für alle Seiten (wer verlink auf mich)\
-	  Engine nutzt Linkliste für z.B. rename. Sie benutzt den Parser für 
-	  geänderte Links und den Storage rein zum Speichern der geänderten Seiten.\
-	  (neuer Ansatz: siehe {{{./engine.html}Engine}}  
-
-	* Ursprungsversion beim Speichern prüfen, ob noch vorhanden oder bereits eine 
-	  neuere Version gespeichert ist.
+ Als Standard Storage-Provider ist eine datei-basierte Lösung implementiert. Der FileStorage wird über
+ Spring konfiguriert. Hier wird das Verzeichnis zum Speichern der aktuellen Versionen und das zum 
+ Speichern der historiesierten Inhalte angegeben. 
 
 FileStorageProvider
 
@@ -85,7 +58,7 @@ FileStorageProvider
 
 		* Install anbieten -> Doku aus Jarfile lesen und als www schreiben
 
-	* Alle Seiten werden auf dem Filesystem nur mit <lfdNr>.txt gespeichert.
+	* Alle Seiten werden auf dem Filesystem nur mit <lfdNr>.txt gespeichert (Security bezgl. /etc/passwd).
 	  Die Seiten enthalten den PagePath als Metadaten\
 	  Alle Seiten werden beim Start eingelesen in Liste/Map mit Zuordnung PagePath<->LfdNr
 
