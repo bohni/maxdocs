@@ -40,10 +40,10 @@
 		<fmt:param>MaxDocs</fmt:param>
 	</fmt:message></title>
 <c:set var="description">
-	<fmt:message key="description" bundle="${maxdocs}" />
+	<fmt:message key="meta.description" bundle="${maxdocs}" />
 </c:set>
 <c:set var="author">
-	<fmt:message key="author" bundle="${maxdocs}" />
+	<fmt:message key="meta.author" bundle="${maxdocs}" />
 </c:set>
 <meta name="description" content="${description}" />
 <meta name="author" content="${author}" />
