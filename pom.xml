@@ -374,6 +374,9 @@
 						<exclude>src/main/webapp/internal/templates/default/yaml/**</exclude>
 						<exclude>src/main/webapp/internal/templates/default/css/**</exclude>
 						<exclude>src/main/webapp/internal/templates/default/js/jquery*</exclude>
+						<exclude>src/main/webapp/internal/templates/flexible/yaml/**</exclude>
+						<exclude>src/main/webapp/internal/templates/flexible/css/**</exclude>
+						<exclude>src/main/webapp/internal/templates/flexible/js/jquery*</exclude>
 						<exclude>src/test/resources/filestorage/**</exclude>
 						<exclude>src/site/resources/maxdocs.epf</exclude>
 						<exclude>src/site/resources/*.pdf</exclude>
