@@ -23,6 +23,7 @@
  */
 package org.maxdocs.servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -266,7 +267,7 @@ public class MaxDocsServlet extends HttpServlet
 	private void delete(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		log.trace("actionDelete(HttpServletRequest, HttpServletResponse");
+		log.trace("delete(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
 
@@ -312,7 +313,7 @@ public class MaxDocsServlet extends HttpServlet
 	private void doLogin(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		log.trace("actionDoLogin(HttpServletRequest, HttpServletResponse");
+		log.trace("doLogin(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		if (!currentUser.isAuthenticated())
 		{
@@ -390,7 +391,7 @@ public class MaxDocsServlet extends HttpServlet
 	private void doLogout(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		log.trace("actionLogout(HttpServletRequest, HttpServletResponse");
+		log.trace("logout(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		currentUser.logout();
 		show(request, response);
@@ -411,7 +412,7 @@ public class MaxDocsServlet extends HttpServlet
 	private void edit(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		log.trace("actionEdit(HttpServletRequest, HttpServletResponse");
+		log.trace("edit(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
 		if (checkPermission(currentUser, "page:edit"))
@@ -456,7 +457,7 @@ public class MaxDocsServlet extends HttpServlet
 	private void login(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		log.trace("actionLogin(HttpServletRequest, HttpServletResponse");
+		log.trace("login(HttpServletRequest, HttpServletResponse");
 		request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/login.jsp")
 			.forward(request, response);
 	}
@@ -476,7 +477,7 @@ public class MaxDocsServlet extends HttpServlet
 	private void rename(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		log.trace("actionRename(HttpServletRequest, HttpServletResponse");
+		log.trace("rename(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
 		if (checkPermission(currentUser, "page:rename"))
@@ -517,7 +518,7 @@ public class MaxDocsServlet extends HttpServlet
 	private void save(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		log.trace("actionSave(HttpServletRequest, HttpServletResponse");
+		log.trace("save(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
 		if(StringUtils.isBlank(username))
@@ -601,7 +602,7 @@ public class MaxDocsServlet extends HttpServlet
 	private void show(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		log.trace("actionShow(HttpServletRequest, HttpServletResponse");
+		log.trace("show(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
 		if (checkPermission(currentUser, "page:view"))
@@ -645,7 +646,7 @@ public class MaxDocsServlet extends HttpServlet
 	private void source(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		log.trace("actionSource(HttpServletRequest, HttpServletResponse");
+		log.trace("source(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
 		if (checkPermission(currentUser, "page:viewSource"))
@@ -685,6 +686,12 @@ public class MaxDocsServlet extends HttpServlet
 			.getRequiredWebApplicationContext(getServletContext());
 		String templateName = (String) context.getBean("templateName");
 		log.debug("templateName={}", templateName);
+		
+		File templateDir = new File (getServletContext().getRealPath(TEMPLATES_ROOT + templateName));
+		if(!templateDir.exists())
+		{
+			templateName = "default";
+		}
 		return templateName;
 	}
 

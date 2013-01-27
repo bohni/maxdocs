@@ -101,12 +101,12 @@ public class TagCloudTag extends TagSupport
 				for (Iterator<String> iterator = list.iterator(); iterator.hasNext();)
 				{
 					String tagName = iterator.next();
-					tagCloud.append("<span class=\"tagcloud" + tagCloudMap.get(tagName) + "\">");
+					tagCloud.append("<li class=\"tagcloud" + tagCloudMap.get(tagName) + "\">");
 					tagCloud.append(tagName);
-					tagCloud.append("</span> ");
+					tagCloud.append("</li> ");
 				}
 
-				pageContext.getOut().write("<div class=\"" + styleClass + "\">" + tagCloud + "</div>");
+				pageContext.getOut().write("<ul class=\"" + styleClass + "\">" + tagCloud + "</ul>");
 			}
 		}
 		catch (IOException e)
