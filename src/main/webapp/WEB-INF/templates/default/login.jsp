@@ -47,8 +47,7 @@
 </c:set>
 <meta name="description" content="${description}" />
 <meta name="author" content="${author}" />
-<link href="<%=request.getContextPath()%>/internal/templates/default/css/maxdocs.css" rel="stylesheet"
-	type="text/css" />
+<link href="<%=request.getContextPath()%>/internal/templates/default/css/maxdocs.css" rel="stylesheet" type="text/css" />
 <!--[if lte IE 7]>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/internal/templates/default/yaml/core/iehacks.min.css" type="text/css"/>
 <![endif]-->
