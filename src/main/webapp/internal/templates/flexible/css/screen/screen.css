@@ -1,0 +1,180 @@
+@media screen {
+
+	/* force vertical scrollbar */
+	body {
+		overflow-y: scroll;
+	}
+	
+	/* Layout Module Configuration */
+	.ym-wrapper {
+		max-width: 80em;
+		margin: 0 auto;
+	}
+	
+	.ym-wbox {
+		padding: 1.5em;
+	}
+	
+	/* fallback for missing media queries support*/
+	body > header,
+	body > nav,
+	body > #main,
+	body > footer {
+		min-width: 760px;
+	}
+	
+	/* Basic Element Styling */
+	header {
+		background-color: #444;
+	}
+	
+	header h1 {
+		background: transparent;
+		color: #fff;
+	}
+	
+	nav {
+		background: #222222;
+	}
+
+	#main .info {
+		margin-bottom: 1.5em;
+	}
+
+	footer {
+		color: #666;
+		background: #f9f9f9;
+		border-top: 5px #efefef solid;
+		padding: 10px 20px;
+		line-height: 1.5em;
+	}
+	
+	footer .ym-wbox {
+		padding: 0 1.5em;
+
+
+	}
+
+	.ym-gbox { padding: 0 1.5em; }
+	.ym-gbox-left { padding: 0 1.5em 0 0; }
+	.ym-gbox-right { padding: 0 0 0 1.5em; }
+
+	section.box { padding: 0 1.5em 1.5em 1.5em; }
+
+	#main .content {
+		border-right: 1px #ddd solid;
+	}
+
+	/* skip links styling */
+	.ym-skiplinks a.ym-skip:focus,
+	.ym-skiplinks a.ym-skip:active {
+		color:#fff;
+		background:#333;
+		border-bottom:1px #000 solid;
+		padding:10px 0;
+		text-align: center;
+		text-decoration:none;
+	}
+
+	#topnav {
+		background: transparent;
+		color: #aaa;
+		top: 10px;
+		right: 10px; /* LTR */
+		text-align: right; /* LTR */
+	}
+
+	#topnav a {
+		color: #fff;
+	}
+
+}
+
+/* reset fallback values in modern browsers */
+@media screen and ( min-width: 0px ) {
+
+	body > header,
+	body > nav,
+	body > #main,
+	body > footer {
+		min-width: 0;
+	}
+}
+
+@media screen and ( max-width: 760px ) {
+
+	.secondary {
+		border-top: 1px #888 solid;
+		margin-top: 1.5em !important;
+	}
+
+	#main .content {
+		border: 0 none;
+	}
+
+	/* Linearisation for Grid- and Column-Module, based on CSS class .linearize-level-1 */
+	.linearize-level-1,
+	.linearize-level-1 > [class*="ym-g"],
+	.linearize-level-1 > [class*="ym-col"] {
+		display: block;
+		float: none;
+		padding: 0;
+		margin: 0;
+		width: 100% !important;
+	}
+
+	.linearize-level-1 > [class*="ym-g"] > [class*="ym-gbox"],
+	.linearize-level-1 > [class*="ym-col"] > [class*="ym-cbox"] {
+		overflow: hidden; /* optional for containing floats */
+		padding: 0;
+		margin: 0;
+	}
+
+}
+
+@media screen and ( max-width: 480px ) {
+
+
+	header .ym-wbox {
+		padding: 0.75em 10px;
+	}
+
+	footer .ym-wbox,
+	.ym-wbox,
+	nav .ym-hlist ul {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	header h1 {
+		font-size: 1.5em;
+		line-height: 1em;
+		margin: 0;
+	}
+
+	/* Linearisation for Grid- and Column-Module, based on CSS class .linearize-level-2 */
+	.linearize-level-2,
+	.linearize-level-2 > [class*="ym-g"],
+	.linearize-level-2 > [class*="ym-col"] {
+		display: block;
+		float: none;
+		padding: 0;
+		margin: 0;
+		width: 100% !important;
+	}
+
+	.linearize-level-2 > [class*="ym-g"] > [class*="ym-gbox"],
+	.linearize-level-2 > [class*="ym-col"] > [class*="ym-cbox"] {
+		overflow: hidden; /* optional for containing floats */
+		padding: 0;
+		margin: 0;
+	}
+
+	nav .ym-hlist ul,
+	nav .ym-hlist li {
+		display:block;
+		float: none;
+		width: auto;
+		text-align: left;
+	}
+}
