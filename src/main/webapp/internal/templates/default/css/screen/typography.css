@@ -228,6 +228,7 @@
   * Tag Cloud
   *
   */
+  .
   .tagcloud1 {font-size: xx-small;}
   .tagcloud2 {font-size: x-small;}
   .tagcloud3 {font-size: small;}
@@ -236,8 +237,18 @@
   .tagcloud6 {font-size: x-large;}
   .tagcloud7 {font-size: xx-large;}
   
-  .maxdocsBreadcrumbs {list-style-type: none; margin: 0; }
-  .maxdocsBreadcrumbs li {margin: 0; padding-right: 0.5em; display: inline;}
+  ul.maxdocsTagCloud {
+  	margin-left: 0;
+  } 
+
+  ul.maxdocsTagCloud li{
+    display: inline-block;
+    margin-left:0;
+    margin-right: 10px;
+  }
+  
+  .maxdocsBreadcrumbs { margin: 0; }
+  .maxdocsBreadcrumbs li {margin: 0; padding-right: 0.5em; display: inline-block;}
   .maxdocsBreadcrumbs li:FIRST-CHILD:BEFORE {padding:0; content: ""}
   .maxdocsBreadcrumbs li:BEFORE {padding-right: 0.5em; content: ">";}
   
