@@ -100,6 +100,9 @@
 	<nav id="nav">
 		<div class="ym-wrapper">
 			<div class="ym-hlist">
+				<c:url var="show" value="">
+					<c:param name="action" value="show" />
+				</c:url>
 				<c:url var="edit" value="">
 					<c:param name="action" value="edit" />
 				</c:url>
@@ -109,25 +112,22 @@
 				<c:url var="rename" value="">
 					<c:param name="action" value="rename" />
 				</c:url>
-				<c:url var="source" value="">
-					<c:param name="action" value="source" />
-				</c:url>
 				<c:url var="info" value="">
 					<c:param name="action" value="info" />
 				</c:url>
 				<ul>
-					<li class="active"><strong><fmt:message key="link.show.title" bundle="${template}" /></strong></li>
+					<li><a href="${show}"><fmt:message key="link.show.title" bundle="${template}" /></a></li>
 					<li><a href="${edit}"><fmt:message key="link.edit.title" bundle="${template}" /></a></li>
 					<max:pageExists>
 					<li><a href="${delete}"><fmt:message key="link.delete.title" bundle="${template}" /></a></li>
 					<li><a href="${rename}"><fmt:message key="link.rename.title" bundle="${template}" /></a></li>
-					<li><a href="${source}"><fmt:message key="link.source.title" bundle="${template}" /></a></li> 
+					<li class="active"><strong><fmt:message key="link.source.title" bundle="${template}" /></strong></li>
 					<li><a href="${info}"><fmt:message key="link.info.title" bundle="${template}" /></a></li>
 					</max:pageExists>
 					<max:noSuchPage>
 					<li><strong><fmt:message key="link.delete.title" bundle="${template}" /></strong></li>
 					<li><strong><fmt:message key="link.rename.title" bundle="${template}" /></strong></li>
-					<li><strong><fmt:message key="link.source.title" bundle="${template}" /></strong></li>
+					<li class="active"><strong><fmt:message key="link.source.title" bundle="${template}" /></strong></li>
 					<li><strong><fmt:message key="link.info.title" bundle="${template}" /></strong></li>
 					</max:noSuchPage>
 				</ul>
@@ -144,12 +144,10 @@
 						<div class="ym-gbox-left ym-clearfix">
 							<max:breadcrumbs />
 							<h1>
+								Seitenquelltext von
 								<max:pageName plain="true" />
 							</h1>
-
-						<max:pageExists><max:pageContent /></max:pageExists>
-						<max:noSuchPage><div class="maxdocsContent"><p>Die Seite <strong><max:pageName plain="true" /></strong> existiert nicht.!<br/>
-						<a href="${edit}">Erstelle</a> sie doch einfach.</p></div></max:noSuchPage>
+							<pre><max:pageSource /></pre>
 						</div>
 					</article>
 

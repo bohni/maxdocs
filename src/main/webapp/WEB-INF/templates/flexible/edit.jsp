@@ -125,10 +125,18 @@ var contextPath = "<%=request.getContextPath()%>";
 				<ul>
 					<li><a href="${show}"><fmt:message key="link.show.title" bundle="${template}" /></a></li>
 					<li class="active"><strong><fmt:message key="link.edit.title" bundle="${template}" /></strong></li>
+					<max:pageExists>
 					<li><a href="${delete}"><fmt:message key="link.delete.title" bundle="${template}" /></a></li>
 					<li><a href="${rename}"><fmt:message key="link.rename.title" bundle="${template}" /></a></li>
-					<li><a href="${source}"><fmt:message key="link.source.title" bundle="${template}" /></a></li>
+					<li><a href="${source}"><fmt:message key="link.source.title" bundle="${template}" /></a></li> 
 					<li><a href="${info}"><fmt:message key="link.info.title" bundle="${template}" /></a></li>
+					</max:pageExists>
+					<max:noSuchPage>
+					<li><strong><fmt:message key="link.delete.title" bundle="${template}" /></strong></li>
+					<li><strong><fmt:message key="link.rename.title" bundle="${template}" /></strong></li>
+					<li><strong><fmt:message key="link.source.title" bundle="${template}" /></strong></li>
+					<li><strong><fmt:message key="link.info.title" bundle="${template}" /></strong></li>
+					</max:noSuchPage>
 				</ul>
 			</div>
 		</div>

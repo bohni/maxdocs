@@ -100,6 +100,9 @@
 	<nav id="nav">
 		<div class="ym-wrapper">
 			<div class="ym-hlist">
+				<c:url var="show" value="">
+					<c:param name="action" value="show" />
+				</c:url>
 				<c:url var="edit" value="">
 					<c:param name="action" value="edit" />
 				</c:url>
@@ -116,21 +119,14 @@
 					<c:param name="action" value="info" />
 				</c:url>
 				<ul>
-					<li class="active"><strong><fmt:message key="link.show.title" bundle="${template}" /></strong></li>
-					<li><a href="${edit}"><fmt:message key="link.edit.title" bundle="${template}" /></a></li>
-					<max:pageExists>
-					<li><a href="${delete}"><fmt:message key="link.delete.title" bundle="${template}" /></a></li>
-					<li><a href="${rename}"><fmt:message key="link.rename.title" bundle="${template}" /></a></li>
-					<li><a href="${source}"><fmt:message key="link.source.title" bundle="${template}" /></a></li> 
-					<li><a href="${info}"><fmt:message key="link.info.title" bundle="${template}" /></a></li>
-					</max:pageExists>
-					<max:noSuchPage>
+					<li><strong><fmt:message key="link.show.title" bundle="${template}" /></strong></li>
+					<li><strong><fmt:message key="link.edit.title" bundle="${template}" /></strong></li>
 					<li><strong><fmt:message key="link.delete.title" bundle="${template}" /></strong></li>
 					<li><strong><fmt:message key="link.rename.title" bundle="${template}" /></strong></li>
 					<li><strong><fmt:message key="link.source.title" bundle="${template}" /></strong></li>
 					<li><strong><fmt:message key="link.info.title" bundle="${template}" /></strong></li>
-					</max:noSuchPage>
 				</ul>
+
 			</div>
 		</div>
 	</nav>
@@ -143,13 +139,25 @@
 					<article class="ym-g66 ym-gl content">
 						<div class="ym-gbox-left ym-clearfix">
 							<max:breadcrumbs />
-							<h1>
-								<max:pageName plain="true" />
-							</h1>
-
-						<max:pageExists><max:pageContent /></max:pageExists>
-						<max:noSuchPage><div class="maxdocsContent"><p>Die Seite <strong><max:pageName plain="true" /></strong> existiert nicht.!<br/>
-						<a href="${edit}">Erstelle</a> sie doch einfach.</p></div></max:noSuchPage>
+							<h1>Login</h1>
+							<c:if test="${! empty requestScope.MAXDOCS_MESSAGES}">
+								<div id="errors">
+									<max:messages />
+								</div>
+							</c:if>
+							<c:url var="dologin" value="">
+								<c:param name="action" value="dologin" />
+							</c:url>
+							
+							<form action="${dologin}" method="post">
+							<p>
+								Username: <input type="text" name="username" /> <br /> Password: <input type="password"
+									name="password" /><br /> <input type="checkbox" name="rememberMe" value="true" />Remember Me?
+								<button type="submit">
+									<fmt:message key="login.button.submit" bundle="${template}" />
+								</button>
+							</p>
+							</form>
 						</div>
 					</article>
 

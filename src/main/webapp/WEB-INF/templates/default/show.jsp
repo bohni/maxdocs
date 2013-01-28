@@ -108,10 +108,18 @@
 				<span>
 					<fmt:message key="link.show.title" bundle="${template}" /> |
 					<a href="${edit}"><fmt:message key="link.edit.title" bundle="${template}" /></a> |
+					<max:pageExists>
 					<a href="${delete}"><fmt:message key="link.delete.title" bundle="${template}" /></a> |
 					<a href="${rename}"><fmt:message key="link.rename.title" bundle="${template}" /></a> |
 					<a href="${source}"><fmt:message key="link.source.title" bundle="${template}" /></a> |
 					<a href="${info}"><fmt:message key="link.info.title" bundle="${template}" /></a>
+					</max:pageExists>
+					<max:noSuchPage>
+					<fmt:message key="link.delete.title" bundle="${template}" /> | 
+					<fmt:message key="link.rename.title" bundle="${template}" /> | 
+					<fmt:message key="link.source.title" bundle="${template}" /> | 
+					<fmt:message key="link.info.title" bundle="${template}" />
+					</max:noSuchPage>
 				</span>
 			</div>
 			<div id="main">
