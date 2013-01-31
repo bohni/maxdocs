@@ -90,6 +90,9 @@
 				<max:breadcrumbs />
 			</div>
 			<div id="action">
+				<c:url var="show" value="">
+					<c:param name="action" value="show" />
+				</c:url>
 				<c:url var="edit" value="">
 					<c:param name="action" value="edit" />
 				</c:url>
@@ -161,13 +164,6 @@
 						<max:pageExists><max:pageContent /></max:pageExists>
 						<max:noSuchPage>Die Seite <strong><max:pageName plain="true" /></strong> existiert nicht.!<br/>
 						<a href="${edit}">Erstelle</a> sie doch einfach.</max:noSuchPage>
-						<c:if test="${! empty requestScope.VERSIONS}">
-						<table>
-						<c:forEach items="${requestScope.VERSIONS}" var="version">
-						<tr><td>${version.version}</td><td>${version.editor}</td><td>${version.currentVersionCreationDate}</td></tr>
-						</c:forEach>
-						</table>
-						</c:if>
 						
 					</div>
 				</div>

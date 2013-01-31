@@ -76,6 +76,7 @@ public class MaxDocsServlet extends HttpServlet
 	private static final String ACTION_DO_LOGIN = "dologin";
 	private static final String ACTION_DO_LOGOUT = "dologout";
 	private static final String ACTION_EDIT = "edit";
+	private static final String ACTION_INFO = "info";
 	private static final String ACTION_LOGIN = "login";
 	private static final String ACTION_RENAME = "rename";
 	private static final String ACTION_SAVE = "save";
@@ -183,6 +184,10 @@ public class MaxDocsServlet extends HttpServlet
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_EDIT))
 		{
 			edit(request, response);
+		}
+		else if (StringUtils.equalsIgnoreCase(action, ACTION_INFO))
+		{
+			info(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_LOGIN))
 		{
@@ -444,6 +449,53 @@ public class MaxDocsServlet extends HttpServlet
 
 
 	/**
+	 * info:
+	 * Shows info of the page
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void info(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		log.trace("info(HttpServletRequest, HttpServletResponse");
+		Subject currentUser = SecurityUtils.getSubject();
+		String username = (String) currentUser.getPrincipal();
+		if (checkPermission(currentUser, "page:info"))
+		{
+			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
+			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			request.setAttribute("VERSIONS", maxDocs.getVersions(pagePath));
+			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
+			request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/info.jsp").forward(request,
+				response);
+		}
+		else
+		{
+			log.debug("Missing page:info permission");
+			List<Message> messages = getMessages(request);
+			if (username == null)
+			{
+				messages.add(new Message("No page:info permission for unkown users", Severity.ERROR));
+
+			}
+			else
+			{
+				messages
+					.add(new Message("Missing page:info permission for user " + username, Severity.ERROR));
+			}
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+			show(request, response);
+		}
+	}
+
+
+	/**
 	 * login:
 	 * Shows the login page
 	 * 
@@ -521,9 +573,9 @@ public class MaxDocsServlet extends HttpServlet
 		log.trace("save(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		String username = (String) currentUser.getPrincipal();
-		if(StringUtils.isBlank(username))
+		if (StringUtils.isBlank(username))
 		{
-			username="Anonymous"; //TODO: i18n, IP address?
+			username = "Anonymous"; //TODO: i18n, IP address?
 		}
 		List<Message> messages = getMessages(request);
 		if (checkPermission(currentUser, "page:save"))// TODO: which permissions allow saving?
@@ -609,7 +661,6 @@ public class MaxDocsServlet extends HttpServlet
 		{
 			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			request.setAttribute("VERSIONS", maxDocs.getVersions(pagePath));
 			request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/show.jsp").forward(request,
 				response);
 		}
@@ -686,9 +737,9 @@ public class MaxDocsServlet extends HttpServlet
 			.getRequiredWebApplicationContext(getServletContext());
 		String templateName = (String) context.getBean("templateName");
 		log.debug("templateName={}", templateName);
-		
-		File templateDir = new File (getServletContext().getRealPath(TEMPLATES_ROOT + templateName));
-		if(!templateDir.exists())
+
+		File templateDir = new File(getServletContext().getRealPath(TEMPLATES_ROOT + templateName));
+		if (!templateDir.exists())
 		{
 			templateName = "default";
 		}

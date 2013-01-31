@@ -102,6 +102,9 @@
 				<c:url var="rename" value="">
 					<c:param name="action" value="rename" />
 				</c:url>
+				<c:url var="source" value="">
+					<c:param name="action" value="source" />
+				</c:url>
 				<c:url var="info" value="">
 					<c:param name="action" value="info" />
 				</c:url>

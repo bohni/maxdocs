@@ -315,6 +315,7 @@ public class FileStorage implements Storage
 	}
 
 
+
 	/* (non-Javadoc)
 	 * @see org.maxdocs.storage.Storage#save(org.maxdocs.data.MarkupPage)
 	 */
@@ -372,6 +373,10 @@ public class FileStorage implements Storage
 			{
 				files.put(newPage.getPagePath(), StringUtils.substringAfterLast(filenameNew, contentPath));
 			}
+		}
+		else
+		{
+			// TODO: Was tun?
 		}
 
 		return success;

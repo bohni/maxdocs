@@ -55,7 +55,7 @@
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 </head>
-<body>
+<body onload="window.document.login.username.focus();">
 	<!-- skip link navigation -->
 	<ul class="ym-skiplinks">
 		<li><a class="ym-skip" href="#nav">Skip to navigation (Press Enter)</a></li>
@@ -113,10 +113,10 @@
 						<c:url var="dologin" value="">
 							<c:param name="action" value="dologin" />
 						</c:url>
-						<form action="${dologin}" method="post">
-							Username: <input type="text" name="username" /> <br />
-							Password: <input type="password" name="password" /><br />
-							<input type="checkbox" name="rememberMe" value="true" />Remember Me?
+						<form name="login" action="${dologin}" method="post">
+							Username: <input type="text" name="username" id="username" /> <br />
+							Password: <input type="password" name="password" id="password" /><br />
+							<input type="checkbox" name="rememberMe" value="true" id="rememberMe" />Remember Me?
 							<button type="submit"><fmt:message key="login.button.submit" bundle="${template}" /></button>
 						</form>
 					</div>
