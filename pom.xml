@@ -92,7 +92,8 @@
 	</issueManagement>
 
 	<properties>
-		<project.build.targetJDK>1.7</project.build.targetJDK>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -271,7 +272,7 @@
 					<version>2.7.1</version>
 					<configuration>
 						<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-						<targetJdk>${project.build.targetJDK}</targetJdk>
+						<targetJdk>${maven.compiler.target}</targetJdk>
 						<includeTests>true</includeTests>
 						<excludes>
 							<exclude>**/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
@@ -307,8 +308,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<source>${project.build.targetJDK}</source>
-					<target>${project.build.targetJDK}</target>
 					<showDeprecation>true</showDeprecation>
 					<showWarnings>true</showWarnings>
 				</configuration>
@@ -470,7 +469,7 @@
 						<exclude>**/org/maxdocs/apache/catalina/filters/SetCharacterEncodingFilter.java</exclude>
 					</excludes>
 					<linkXRef>true</linkXRef>
-					<targetJdk>${project.build.targetJDK}</targetJdk>
+					<targetJdk>${maven.compiler.target}</targetJdk>
 					<includeTests>true</includeTests>
 					<rulesets>
 						<ruleset>file:///${basedir}/src/main/config/pmd/ruleset-4.3.xml</ruleset>
