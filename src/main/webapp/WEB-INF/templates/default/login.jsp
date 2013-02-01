@@ -28,6 +28,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <%@ taglib uri="/WEB-INF/maxdocs.tld" prefix="max"%>
 
 <html lang="en">
@@ -65,9 +66,18 @@
 		<div class="ym-wbox">
 			<header>
 				<div id="topnav">
-					<span> <fmt:message key="link.login.title" bundle="${template}" /> | <a href="Contact"><fmt:message
-								key="link.contact.title" bundle="${template}" /></a> | <a href="Imprint"><fmt:message
-								key="link.imprint.title" bundle="${template}" /></a>
+					<c:url var="logout" value="">
+						<c:param name="action" value="doLogout" />
+					</c:url>
+					<span>
+						<shiro:notAuthenticated>
+							<fmt:message key="link.login.title" bundle="${template}" /> |
+						</shiro:notAuthenticated>
+						<shiro:authenticated>
+							<a href="${logout}"><fmt:message key="link.logout.title" bundle="${template}" /></a> |
+						</shiro:authenticated>
+							<a href="Contact"><fmt:message key="link.contact.title" bundle="${template}" /></a> |
+							<a href="Imprint"><fmt:message key="link.imprint.title" bundle="${template}" /></a>
 					</span>
 				</div>
 				<h2>
