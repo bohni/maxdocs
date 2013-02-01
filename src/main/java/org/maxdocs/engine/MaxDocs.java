@@ -123,11 +123,11 @@ public interface MaxDocs
 	 * Renames the page with the given pagePath
 	 * 
 	 * @param pagePath the complete current path of the page
-	 * @param newPagePath the complete new path of the page
+	 * @param newPage a page with the new page path, current version, author and editor set
 	 * @return <code>true</code> if and only if the file is successfully renamed; <code>false</code> otherwise
 	 * @throws ConcurrentEditException
 	 */
-	boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException;
+	boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException;
 
 
 	/**

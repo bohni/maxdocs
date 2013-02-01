@@ -104,11 +104,12 @@ public interface Storage
 	 * Renames the page with the given pagePath
 	 * 
 	 * @param pagePath the complete current path of the page
-	 * @param newPagePath the complete new path of the page
+	 * @param newPage a page with the new page path
 	 * @return <code>true</code> if and only if the page is successfully renamed; <code>false</code> otherwise
 	 * @throws ConcurrentEditException
+	 * @throws EditWithoutChangesException
 	 */
-	boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException;
+	boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException;
 
 
 	/**

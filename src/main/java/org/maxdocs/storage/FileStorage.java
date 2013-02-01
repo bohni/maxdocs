@@ -257,7 +257,7 @@ public class FileStorage implements Storage
 		File file = new File(pathname);
 		if (file.exists())
 		{
-			markupPage = load(file, pagePath);
+			markupPage = load(file);
 		}
 		return markupPage;
 	}
@@ -281,36 +281,36 @@ public class FileStorage implements Storage
 		File file = new File(pathname.toString());
 		if (file.exists())
 		{
-			markupPage = load(file, pagePath);
+			markupPage = load(file);
 		}
 		return markupPage;
 	}
 
 
 	/* (non-Javadoc)
-	 * @see org.maxdocs.storage.Storage#rename(java.lang.String, java.lang.String)
+	 * @see org.maxdocs.storage.Storage#rename(java.lang.String, org.maxdocs.data.MarkupPage)
 	 */
 	@Override
-	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException
+	public boolean rename(String oldPagePath, MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException
 	{
-		log.trace("rename({}, {})", pagePath, newPagePath);
-		MarkupPage page = load(pagePath);
+		String newPagePath = newPage.getPagePath();
+		log.trace("rename({}, {})", oldPagePath, newPagePath);
+		MarkupPage page = load(oldPagePath);
 		page.setPagePath(newPagePath);
+
+		files.put(newPagePath, files.get(oldPagePath));
+		
 		boolean success = false;
-		try
+		success = save(page);
+		if (success)
 		{
-			success = save(page);
-			if (success)
-			{
-				files.put(newPagePath, files.get(pagePath));
-				files.remove(pagePath);
-			}
+			files.remove(oldPagePath);
 		}
-		catch (EditWithoutChangesException e)
+		else
 		{
-			log.error("This EditWithoutChangesException should never be thrown, because rename does a change.");
+			files.remove(newPagePath);
 		}
-		log.debug("renamed {} to {}", pagePath, newPagePath);
+		log.debug("renamed {} to {}", oldPagePath, newPagePath);
 		return success;
 	}
 
@@ -662,10 +662,9 @@ public class FileStorage implements Storage
 	}
 
 
-	private MarkupPage load(File file, String pagePath)
+	private MarkupPage load(File file)
 	{
 		MarkupPage markupPage = new MarkupPage();
-		markupPage.setPagePath(pagePath);
 		Scanner scanner = null;
 		try
 		{
@@ -698,6 +697,10 @@ public class FileStorage implements Storage
 				else if (StringUtils.startsWith(line, "editor"))
 				{
 					markupPage.setEditor(StringUtils.substringAfterLast(line, "="));
+				}
+				else if (StringUtils.startsWith(line, "pagePath"))
+				{
+					markupPage.setPagePath(StringUtils.substringAfterLast(line, "="));
 				}
 				else if (StringUtils.startsWith(line, "version"))
 				{
