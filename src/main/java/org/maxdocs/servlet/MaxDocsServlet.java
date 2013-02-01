@@ -385,6 +385,9 @@ public class MaxDocsServlet extends HttpServlet
 		log.trace("logout(HttpServletRequest, HttpServletResponse");
 		Subject currentUser = SecurityUtils.getSubject();
 		currentUser.logout();
+		List<Message> messages = new ArrayList<>();
+		messages.add(new Message("Successfully logged out!", Severity.ERROR));
+		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 		show(request, response);
 	}
 
