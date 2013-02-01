@@ -161,10 +161,22 @@
 						<c:if test="${! empty requestScope.VERSIONS}">
 						<table>
 						<c:forEach items="${requestScope.VERSIONS}" var="version">
-						<tr><td>${version.version}</td><td>${version.editor}</td><td>${version.currentVersionCreationDate}</td></tr>
+						<tr>
+							<td>${version.version}</td><td>${version.editor}</td>
+							<td>${version.currentVersionCreationDate}</td>
+						</tr>
 						</c:forEach>
 						</table>
 						</c:if>
+						<h2>Rename</h2>
+						<form method="post" action="?action=rename" accept-charset="UTF-8">
+							<label for="newPagePath">New Name:</label><input type="text" name="newPagePath"
+								id="newPagePath" size="50" value="${MAXDOCS_MARKUP_PAGE.pagePath}" />
+							<input type="hidden" name="oldPagePath" value="${MAXDOCS_MARKUP_PAGE.pagePath}" />
+							<input type="hidden" name="version" value="${MAXDOCS_MARKUP_PAGE.version}" />
+							<input type="hidden" name="editor" value=""/>
+							<input type="submit" name="rename" value="Umbenennen" />
+						</form>
 					</div>
 				</div>
 				<!-- end: #col3 -->

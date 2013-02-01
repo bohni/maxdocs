@@ -92,6 +92,8 @@ public class MaxDocsServlet extends HttpServlet
 	private static final String PARAMETER_NAME_VERSION = "version";
 	private static final String PARAMETER_NAME_MARKUP = "markupLanguage";
 	private static final String PARAMETER_NAME_TAGS = "tags";
+	private static final String PARAMETER_NAME_NEW_PAGE_PATH = "newPagePath";
+	private static final String PARAMETER_NAME_OLD_PAGE_PATH = "oldPagePath";
 
 	private static Logger log = LoggerFactory.getLogger(MaxDocsServlet.class);
 
@@ -501,9 +503,41 @@ public class MaxDocsServlet extends HttpServlet
 		List<Message> messages = getMessages(request);
 		if (checkPermission(currentUser, "page:rename", messages))
 		{
-			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			// TODO: maxDocs.rename(pagePath, newPagePath);
+
+			String newPagePath = request.getParameter(PARAMETER_NAME_NEW_PAGE_PATH);
+			String oldPagePath = request.getParameter(PARAMETER_NAME_OLD_PAGE_PATH);
+			String version = request.getParameter(PARAMETER_NAME_VERSION);
+
+			if (StringUtils.isNotBlank(newPagePath))
+			{
+				MarkupPage newPage = new MarkupPage();
+				newPage.setAuthor(username);
+				newPage.setEditor(username);
+				newPage.setPagePath(newPagePath);
+
+				try
+				{
+					maxDocs.rename(oldPagePath, newPage);
+					request.setAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH, newPagePath);
+					response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
+					response.setHeader("Location", request.getContextPath() + newPagePath);
+				}
+				catch (ConcurrentEditException e)
+				{
+					messages.add(new Message("There where other changes saved while editing this page!",
+						Severity.ERROR));
+					// TODO: Merge anbieten
+				}
+				catch (EditWithoutChangesException e)
+				{
+					messages.add(new Message("No changes where made. No new version created.", Severity.INFO));
+				}
+			}
+			else
+			{
+				messages.add(new Message("New PagePath must be set!"));
+			}
 		}
 		request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 		show(request, response);

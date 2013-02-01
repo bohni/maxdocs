@@ -200,12 +200,12 @@ public class MaxDocsImpl implements MaxDocs
 
 
 	/* (non-Javadoc)
-	 * @see org.maxdocs.engine.MaxDocs#rename(java.lang.String, java.lang.String)
+	 * @see org.maxdocs.engine.MaxDocs#rename(java.lang.String, org.maxdocs.data.MarkupPage)
 	 */
 	@Override
-	public boolean rename(String pagePath, String newPagePath) throws ConcurrentEditException
+	public boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException
 	{
-		return storage.rename(pagePath, newPagePath);
+		return storage.rename(pagePath, newPage);
 	}
 
 
