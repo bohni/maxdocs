@@ -56,6 +56,7 @@ import org.maxdocs.data.Severity;
 import org.maxdocs.engine.MaxDocs;
 import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
+import org.maxdocs.exceptions.PageAlreadyExistsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -531,7 +532,12 @@ public class MaxDocsServlet extends HttpServlet
 				}
 				catch (EditWithoutChangesException e)
 				{
-					messages.add(new Message("No changes where made. No new version created.", Severity.INFO));
+					messages.add(new Message("No changes where made. No new version created.",
+						Severity.INFO));
+				}
+				catch (PageAlreadyExistsException e)
+				{
+					messages.add(new Message("A page with the given path already exists.", Severity.ERROR));
 				}
 			}
 			else
@@ -726,8 +732,8 @@ public class MaxDocsServlet extends HttpServlet
 			log.debug("Missing {} permission for user {}", permission, username);
 			if (username == null)
 			{
-				messages
-					.add(new Message("No " + permission + " permission for unkown users", Severity.ERROR));
+				messages.add(new Message("No " + permission + " permission for unkown users",
+					Severity.ERROR));
 
 			}
 			else

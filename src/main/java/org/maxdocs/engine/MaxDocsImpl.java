@@ -34,6 +34,7 @@ import org.maxdocs.data.PageLight;
 import org.maxdocs.data.TagCloudEntry;
 import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
+import org.maxdocs.exceptions.PageAlreadyExistsException;
 import org.maxdocs.parser.MarkupParser;
 import org.maxdocs.storage.Storage;
 import org.slf4j.Logger;
@@ -203,8 +204,12 @@ public class MaxDocsImpl implements MaxDocs
 	 * @see org.maxdocs.engine.MaxDocs#rename(java.lang.String, org.maxdocs.data.MarkupPage)
 	 */
 	@Override
-	public boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException
+	public boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException, PageAlreadyExistsException
 	{
+		if(storage.exists(newPage.getPagePath()))
+		{
+			throw new PageAlreadyExistsException("A page with the path '" + newPage.getPagePath() + "' already exists.");
+		}
 		return storage.rename(pagePath, newPage);
 	}
 

@@ -30,6 +30,7 @@ import org.maxdocs.data.PageLight;
 import org.maxdocs.data.TagCloudEntry;
 import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
+import org.maxdocs.exceptions.PageAlreadyExistsException;
 
 /**
  * Storage:
@@ -108,8 +109,9 @@ public interface Storage
 	 * @return <code>true</code> if and only if the page is successfully renamed; <code>false</code> otherwise
 	 * @throws ConcurrentEditException
 	 * @throws EditWithoutChangesException
+	 * @throws PageAlreadyExistsException
 	 */
-	boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException;
+	boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException, PageAlreadyExistsException;
 
 
 	/**

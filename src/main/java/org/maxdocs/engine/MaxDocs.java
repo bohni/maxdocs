@@ -31,13 +31,13 @@ import org.maxdocs.data.MarkupPage;
 import org.maxdocs.data.PageLight;
 import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
+import org.maxdocs.exceptions.PageAlreadyExistsException;
 
 /**
  * MaxDocs:
  * Interface for the engine of MaxDocs.
  * 
  * @author Team maxdocs.org
- * 
  */
 public interface MaxDocs
 {
@@ -82,10 +82,9 @@ public interface MaxDocs
 	/**
 	 * getMarkupLangages:
 	 * Returns a map with all supported markup languages.
-	 * 
 	 * key is service name.
 	 * value is display name.
-	 *
+	 * 
 	 * @return all supported markup languages as map.
 	 */
 	Map<String, String> getMarkupLangages();
@@ -110,6 +109,7 @@ public interface MaxDocs
 	 */
 	Map<String, Integer> getTagCloud();
 
+
 	/**
 	 * getVersions:
 	 * Returns a list with all versions of the given page
@@ -118,6 +118,8 @@ public interface MaxDocs
 	 * @return list containing {@link PageLight} objects for every version
 	 */
 	List<PageLight> getVersions(String pagePath);
+
+
 	/**
 	 * rename:
 	 * Renames the page with the given pagePath
@@ -126,8 +128,11 @@ public interface MaxDocs
 	 * @param newPage a page with the new page path, current version, author and editor set
 	 * @return <code>true</code> if and only if the file is successfully renamed; <code>false</code> otherwise
 	 * @throws ConcurrentEditException
+	 * @throws EditWithoutChangesException
+	 * @throws PageAlreadyExistsException
 	 */
-	boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException;
+	boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException,
+		EditWithoutChangesException, PageAlreadyExistsException;
 
 
 	/**
