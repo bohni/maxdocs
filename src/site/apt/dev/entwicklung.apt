@@ -189,13 +189,30 @@ Entwicklung
  entsprechend angepasstem Namen und E-Mail-Adresse. Besonders wichtig ist die Einstellung autocrlf,
  damit es nicht zu Komplikationen bei den Zeilenenden der Dateien kommt. 
 
-		* git config --global user.name "John Doe"
+		* Username
 
-		* git config --global user.email johndoe@example.com
+------------------------------------------
+> git config --global user.name "John Doe"
+------------------------------------------
 
-		* Windows: git config --global core.autocrlf true
+		* E-Mail-Adresse
 
-		* Mac/Unix : git config --global core.autocrlf input
+------------------------------------------
+> git config --global user.email johndoe@example.com
+------------------------------------------
+
+		* Zeilenende Windows
+
+------------------------------------------
+> git config --global core.autocrlf true
+------------------------------------------
+
+
+		* Zeilenende Mac/Unix 
+
+------------------------------------------
+> git config --global core.autocrlf input
+------------------------------------------
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Projekt anlegen
@@ -238,6 +255,21 @@ Entwicklung
 	* Es wird immer die durch den Compiler generierte serialVersionUID verwendet, d.h. im Sourcecode
 	  wird keine entsprechende Konstante verwendet. Falls die Warnings in Eclipse stören, können diese
 	  unter  Java > Compiler > Errors/Warnings > Potential programming problems ausgeschaltet werden.
+
+	* Alle Dateien müssen den Lizenz-Header enthalten. Dieser kann auch über ein Maven-Goal erstellt
+	  werden:
+
+		* Prüfen, welche Dateien einen falschen Header haben
+
+------------------------------------------
+> mvn validate license:check
+------------------------------------------
+
+		* Fehlende Header ergänzen
+
+------------------------------------------
+> mvn validate license:format
+------------------------------------------
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Tipps und Tricks
