@@ -27,7 +27,7 @@
  ------
  Team maxdocs.org
  ------
-2013-01-11
+2013-02-02
 
 ~~ Auf dieser Seite wird der Entwicklungsprozess erklärt: Umgebung installieren, Projekt einrichten, Vorgaben
 
@@ -256,16 +256,16 @@ Entwicklung
 	  wird keine entsprechende Konstante verwendet. Falls die Warnings in Eclipse stören, können diese
 	  unter  Java > Compiler > Errors/Warnings > Potential programming problems ausgeschaltet werden.
 
-	* Alle Dateien müssen den Lizenz-Header enthalten. Dieser kann auch über ein Maven-Goal erstellt
-	  werden:
+	* Alle Dateien müssen den Lizenz-Header enthalten (thrid-party Dateien müssen excluded werden!).
+	  Dieser kann auch über ein Maven-Goal erstellt werden:
 
-		* Prüfen, welche Dateien einen falschen Header haben
+		* Prüfen, welche Dateien einen falschen / keinen Header haben
 
 ------------------------------------------
 > mvn validate license:check
 ------------------------------------------
 
-		* Fehlende Header ergänzen
+		* Fehlende Header ergänzen / falsche Header korrigieren 
 
 ------------------------------------------
 > mvn validate license:format
