@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 import org.maxdocs.data.PageLight;
@@ -104,9 +105,9 @@ public class MaxDocsImpl implements MaxDocs
 		}
 
 		MarkupPage markupPage = storage.load(pagePath);
-		
+
 		HtmlPage htmlPage = null;
-		if(markupPage != null)
+		if (markupPage != null)
 		{
 			htmlPage = parser.parseToHtml(markupPage);
 		}
@@ -188,11 +189,25 @@ public class MaxDocsImpl implements MaxDocs
 	}
 
 
-	/**
-	 * getVersion:
-	 * TODO, 23.01.2013: Documentation
-	 * @param pagePath
-	 * @return
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#getPagesForTag(java.lang.String)
+	 */
+	public List<String> getPagesForTag(String tag)
+	{
+		List<TagCloudEntry> tagCloudEntries = storage.getTagCloudEntries();
+		for (TagCloudEntry tagCloudEntry : tagCloudEntries)
+		{
+			if(StringUtils.equals(tag, tagCloudEntry.getTagName()))
+			{
+				return tagCloudEntry.getPages();
+			}
+		}
+		return null;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.maxdocs.engine.MaxDocs#getVersions(java.lang.String)
 	 */
 	public List<PageLight> getVersions(String pagePath)
 	{
@@ -204,11 +219,13 @@ public class MaxDocsImpl implements MaxDocs
 	 * @see org.maxdocs.engine.MaxDocs#rename(java.lang.String, org.maxdocs.data.MarkupPage)
 	 */
 	@Override
-	public boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException, EditWithoutChangesException, PageAlreadyExistsException
+	public boolean rename(String pagePath, MarkupPage newPage) throws ConcurrentEditException,
+		EditWithoutChangesException, PageAlreadyExistsException
 	{
-		if(storage.exists(newPage.getPagePath()))
+		if (storage.exists(newPage.getPagePath()))
 		{
-			throw new PageAlreadyExistsException("A page with the path '" + newPage.getPagePath() + "' already exists.");
+			throw new PageAlreadyExistsException("A page with the path '" + newPage.getPagePath()
+				+ "' already exists.");
 		}
 		return storage.rename(pagePath, newPage);
 	}

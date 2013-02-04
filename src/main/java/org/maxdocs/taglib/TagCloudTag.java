@@ -102,7 +102,7 @@ public class TagCloudTag extends TagSupport
 				{
 					String tagName = iterator.next();
 					tagCloud.append("<li class=\"tagcloud" + tagCloudMap.get(tagName) + "\">");
-					tagCloud.append(tagName);
+					tagCloud.append("<a href=\"?action=listtag&selectedtag=" + tagName + "\">" + tagName + "</a>");
 					tagCloud.append("</li> ");
 				}
 

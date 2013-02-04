@@ -29,6 +29,7 @@ import java.util.Map;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 import org.maxdocs.data.PageLight;
+import org.maxdocs.data.TagCloudEntry;
 import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
 import org.maxdocs.exceptions.PageAlreadyExistsException;
@@ -108,6 +109,16 @@ public interface MaxDocs
 	 * @return a map with the tag cloud
 	 */
 	Map<String, Integer> getTagCloud();
+
+
+	/**
+	 * getPagesForTag:
+	 * Returns a list with all page paths to the given tag
+	 * 
+	 * @param tag a tag
+	 * @return the list with page paths or null, if tag is unkown
+	 */
+	List<String> getPagesForTag(String tag);
 
 
 	/**

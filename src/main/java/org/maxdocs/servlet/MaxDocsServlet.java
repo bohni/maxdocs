@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -78,6 +79,7 @@ public class MaxDocsServlet extends HttpServlet
 	private static final String ACTION_DO_LOGOUT = "dologout";
 	private static final String ACTION_EDIT = "edit";
 	private static final String ACTION_INFO = "info";
+	private static final String ACTION_LIST_TAG = "listtag";
 	private static final String ACTION_LOGIN = "login";
 	private static final String ACTION_RENAME = "rename";
 	private static final String ACTION_SAVE = "save";
@@ -90,11 +92,13 @@ public class MaxDocsServlet extends HttpServlet
 
 	private static final String PARAMETER_NAME_ACTION = "action";
 	private static final String PARAMETER_NAME_CONTENT = "content";
-	private static final String PARAMETER_NAME_VERSION = "version";
 	private static final String PARAMETER_NAME_MARKUP = "markupLanguage";
-	private static final String PARAMETER_NAME_TAGS = "tags";
 	private static final String PARAMETER_NAME_NEW_PAGE_PATH = "newPagePath";
 	private static final String PARAMETER_NAME_OLD_PAGE_PATH = "oldPagePath";
+	private static final String PARAMETER_NAME_PAGES_FOR_TAG = "pagesfortag";
+	private static final String PARAMETER_NAME_SELECTED_TAG = "selectedtag";
+	private static final String PARAMETER_NAME_TAGS = "tags";
+	private static final String PARAMETER_NAME_VERSION = "version";
 
 	private static Logger log = LoggerFactory.getLogger(MaxDocsServlet.class);
 
@@ -195,6 +199,10 @@ public class MaxDocsServlet extends HttpServlet
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_LOGIN))
 		{
 			login(request, response);
+		}
+		else if (StringUtils.equalsIgnoreCase(action, ACTION_LIST_TAG))
+		{
+			listtag(request, response);
 		}
 		else if (StringUtils.equalsIgnoreCase(action, ACTION_RENAME))
 		{
@@ -450,10 +458,54 @@ public class MaxDocsServlet extends HttpServlet
 		{
 			String pagePath = (String) request.getAttribute(MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
-			request.setAttribute("VERSIONS", maxDocs.getVersions(pagePath));
+			request.setAttribute("VERSIONS", maxDocs.getVersions(pagePath)); // TODO: Constants
 			MarkupPage markupPage = maxDocs.getMarkupPage(pagePath);
 			request.setAttribute(MaxDocsConstants.MAXDOCS_MARKUP_PAGE, markupPage);
 			request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/info.jsp").forward(request,
+				response);
+		}
+		else
+		{
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+			show(request, response);
+		}
+	}
+
+
+	/**
+	 * listtag:
+	 * Lists all pages to the selected tag
+	 * 
+	 * @param request an HttpServletRequest object that contains the request the client has made of the
+	 *        servlet
+	 * @param response an HttpServletResponse object that contains the response the servlet sends to the
+	 *        client
+	 * @throws ServletException - if the target resource throws this exception
+	 * @throws IOException - if the target resource throws this exception
+	 */
+	private void listtag(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		log.trace("listtag(HttpServletRequest, HttpServletResponse");
+		Subject currentUser = SecurityUtils.getSubject();
+		List<Message> messages = getMessages(request);
+		if (checkPermission(currentUser, "tags:list", messages))
+		{
+			String selectedtag = request.getParameter(this.PARAMETER_NAME_SELECTED_TAG);
+			MaxDocs maxDocs = (MaxDocs) getServletContext().getAttribute(MaxDocsConstants.MAXDOCS_ENGINE);
+			List<String> pages = maxDocs.getPagesForTag(selectedtag);
+			
+			if(pages != null)
+			{
+				request.setAttribute("PAGESFORTAG", pages);
+			}
+			else
+			{
+				messages.add(new Message("Kein Ergebnis", Severity.INFO));
+			}
+			
+			request.setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
+			request.getRequestDispatcher(TEMPLATES_ROOT + getTemplate() + "/taglist.jsp").forward(request,
 				response);
 		}
 		else
