@@ -110,6 +110,9 @@ var contextPath = "<%=request.getContextPath()%>";
 				<c:url var="show" value="">
 					<c:param name="action" value="show" />
 				</c:url>
+				<c:url var="edit" value="">
+					<c:param name="action" value="edit" />
+				</c:url>
 				<c:url var="delete" value="">
 					<c:param name="action" value="delete" />
 				</c:url>
@@ -161,7 +164,14 @@ var contextPath = "<%=request.getContextPath()%>";
 						</max:pageExists>
 							</h1>
 						<form method="post" action="?action=save" accept-charset="UTF-8">
-							<p>Markup: <max:markupLanguage type="input" size="1" /></p>
+							<p>Markup:
+								<max:noSuchPage page="${pageName}">
+									<max:markupLanguage type="input" size="1" />
+								</max:noSuchPage>
+								<max:pageExists page="${pageName}">
+									<max:markupLanguage type="output"/>
+								</max:pageExists>
+							</p>
 							<textarea rows="15" cols="58" name="content"><max:pageSource /></textarea><br/>
 							<label for="tags">Tags:</label><input type="text" name="tags" id="tags" size="50" value="${MAXDOCS_MARKUP_PAGE.tagsAsString}" /><br/>
 							<input type="hidden" name="action" value="save"/>

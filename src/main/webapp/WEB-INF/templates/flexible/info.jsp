@@ -124,14 +124,14 @@
 					<max:pageExists>
 					<li><a href="${delete}"><fmt:message key="link.delete.title" bundle="${template}" /></a></li>
 					<li><a href="${rename}"><fmt:message key="link.rename.title" bundle="${template}" /></a></li>
-					<li class="active"><strong><fmt:message key="link.source.title" bundle="${template}" /></strong></li>
-					<li><a href="${info}"><fmt:message key="link.info.title" bundle="${template}" /></a></li>
+					<li><a href="${source}"><fmt:message key="link.source.title" bundle="${template}" /></a></li> 
+					<li class="active"><fmt:message key="link.info.title" bundle="${template}" /></li>
 					</max:pageExists>
 					<max:noSuchPage>
 					<li><strong><fmt:message key="link.delete.title" bundle="${template}" /></strong></li>
 					<li><strong><fmt:message key="link.rename.title" bundle="${template}" /></strong></li>
-					<li class="active"><strong><fmt:message key="link.source.title" bundle="${template}" /></strong></li>
-					<li><strong><fmt:message key="link.info.title" bundle="${template}" /></strong></li>
+					<li><strong><fmt:message key="link.source.title" bundle="${template}" /></strong></li>
+					<li class="active"><strong><fmt:message key="link.info.title" bundle="${template}" /></strong></li>
 					</max:noSuchPage>
 				</ul>
 			</div>
@@ -146,11 +146,26 @@
 					<article class="ym-g66 ym-gl content">
 						<div class="ym-gbox-left ym-clearfix">
 							<max:breadcrumbs />
-							<h1>
-								Seitenquelltext von
-								<max:pageName plain="true" />
-							</h1>
-							<pre><max:pageSource /></pre>
+							<h1>Versionshistorie zu <max:pageName plain="true" /></h1>
+						<c:if test="${! empty requestScope.VERSIONS}">
+						<table>
+						<c:forEach items="${requestScope.VERSIONS}" var="version">
+						<tr>
+							<td>${version.version}</td><td>${version.editor}</td>
+							<td>${version.currentVersionCreationDate}</td>
+						</tr>
+						</c:forEach>
+						</table>
+						</c:if>
+						<h1>Rename</h1>
+						<form method="post" action="?action=rename" accept-charset="UTF-8">
+							<label for="newPagePath">New Name:</label><input type="text" name="newPagePath"
+								id="newPagePath" size="50" value="${MAXDOCS_MARKUP_PAGE.pagePath}" />
+							<input type="hidden" name="oldPagePath" value="${MAXDOCS_MARKUP_PAGE.pagePath}" />
+							<input type="hidden" name="version" value="${MAXDOCS_MARKUP_PAGE.version}" />
+							<input type="hidden" name="editor" value=""/>
+							<input type="submit" name="rename" value="Umbenennen" />
+						</form>
 						</div>
 					</article>
 

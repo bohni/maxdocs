@@ -100,6 +100,9 @@
 	<nav id="nav">
 		<div class="ym-wrapper">
 			<div class="ym-hlist">
+				<c:url var="show" value="">
+					<c:param name="action" value="show" />
+				</c:url>
 				<c:url var="edit" value="">
 					<c:param name="action" value="edit" />
 				</c:url>
