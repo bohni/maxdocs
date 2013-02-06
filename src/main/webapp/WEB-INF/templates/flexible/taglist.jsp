@@ -37,7 +37,7 @@
 <fmt:setBundle var="template" basename="template.flexible" />
 <fmt:setBundle var="internal" basename="org.maxdocs.maxdocs" />
 <fmt:setBundle var="maxdocs" basename="maxdocs" />
-<title><fmt:message key="edit.title" bundle="${template}">
+<title><fmt:message key="show.title" bundle="${template}">
 		<fmt:param>
 			<max:pageName plain="true" />
 		</fmt:param>
@@ -56,13 +56,6 @@
 <meta name="description" content="${description}" />
 <meta name="author" content="${author}" />
 <link href="<%=request.getContextPath()%>/internal/templates/flexible/css/maxdocs.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/internal/templates/default/css/smoothness/jquery-ui-1.9.1.custom.min.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<%=request.getContextPath()%>/internal/templates/default/js/jquery-1.8.2.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/internal/templates/default/js/jquery-ui-1.9.1.custom.js"></script>
-<script type="text/javascript">
-var contextPath = "<%=request.getContextPath()%>";
-</script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/internal/templates/default/js/maxdocs.js"></script>
 <!--[if lte IE 7]>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/internal/templates/flexible/yaml/core/iehacks.min.css" type="text/css"/>
 <![endif]-->
@@ -98,7 +91,7 @@ var contextPath = "<%=request.getContextPath()%>";
 				<h1>
 					<img src="<%=request.getContextPath()%>/internal/templates/flexible/images/maxdocs-klein.png"
 						alt="MaxDocs" /><br />
-					<fmt:message key="edit.heading" bundle="${template}" />
+					<fmt:message key="show.heading" bundle="${template}" />
 				</h1>
 			</div>
 		</div>
@@ -127,18 +120,18 @@ var contextPath = "<%=request.getContextPath()%>";
 				</c:url>
 				<ul>
 					<li><a href="${show}"><fmt:message key="link.show.title" bundle="${template}" /></a></li>
-					<li class="active"><strong><fmt:message key="link.edit.title" bundle="${template}" /></strong></li>
+					<li><a href="${edit}"><fmt:message key="link.edit.title" bundle="${template}" /></a></li>
 					<max:pageExists>
 					<li><a href="${delete}"><fmt:message key="link.delete.title" bundle="${template}" /></a></li>
 					<li><a href="${rename}"><fmt:message key="link.rename.title" bundle="${template}" /></a></li>
 					<li><a href="${source}"><fmt:message key="link.source.title" bundle="${template}" /></a></li> 
-					<li><a href="${info}"><fmt:message key="link.info.title" bundle="${template}" /></a></li>
+					<li class="active"><fmt:message key="link.info.title" bundle="${template}" /></li>
 					</max:pageExists>
 					<max:noSuchPage>
 					<li><strong><fmt:message key="link.delete.title" bundle="${template}" /></strong></li>
 					<li><strong><fmt:message key="link.rename.title" bundle="${template}" /></strong></li>
 					<li><strong><fmt:message key="link.source.title" bundle="${template}" /></strong></li>
-					<li><strong><fmt:message key="link.info.title" bundle="${template}" /></strong></li>
+					<li class="active"><strong><fmt:message key="link.info.title" bundle="${template}" /></strong></li>
 					</max:noSuchPage>
 				</ul>
 			</div>
@@ -153,35 +146,19 @@ var contextPath = "<%=request.getContextPath()%>";
 					<article class="ym-g66 ym-gl content">
 						<div class="ym-gbox-left ym-clearfix">
 							<max:breadcrumbs />
-							<h1>
-						Seite <max:pageName plain="true" />
-						<c:set var="pageName"><max:pageName plain="true"/></c:set>
-						<max:noSuchPage page="${pageName}">
-							erstellen
-						</max:noSuchPage>
-						<max:pageExists page="${pageName}">
-							bearbeiten
-						</max:pageExists>
-							</h1>
-						<form method="post" action="?action=save" accept-charset="UTF-8">
-							<p>Markup:
-								<max:noSuchPage page="${pageName}">
-									<max:markupLanguage type="input" size="1" />
-								</max:noSuchPage>
-								<max:pageExists page="${pageName}">
-									<c:set var="markupLanguage"><max:markupLanguage type="output" plain="true"/></c:set>
-									${markupLanguage}
-									<input type="hidden" name="markupLanguage" value="${markupLanguage}" />
-								</max:pageExists>
-							</p>
-							<textarea rows="15" cols="58" name="content"><max:pageSource /></textarea><br/>
-							<label for="tags">Tags:</label><input type="text" name="tags" id="tags" size="50" value="${MAXDOCS_MARKUP_PAGE.tagsAsString}" /><br/>
-							<input type="hidden" name="action" value="save"/>
-							<input type="hidden" name="version" value="${MAXDOCS_MARKUP_PAGE.version}" />
-							<input type="hidden" name="editor" value=""/>
-							<input type="button" name="preview" value="Vorschau" />&nbsp;<input
-								type="submit" name="save" value="Speichern" />&nbsp;<a href="?action=show">Abbrechen</a>
-						</form>
+						<c:if test="${! empty requestScope.MAXDOCS_MESSAGES}">
+						<div id="errors"><max:messages /></div>
+						</c:if>
+						<h1>Search Result</h1>
+						<c:if test="${! empty requestScope.PAGESFORTAG}">
+						<ul>
+						<c:forEach items="${requestScope.PAGESFORTAG}" var="page">
+						<c:url var="pagelink" value="${page}" />
+						
+						<li><a href="${pagelink}">${page}</a></li>
+						</c:forEach>
+						</ul>
+						</c:if>
 						</div>
 					</article>
 
