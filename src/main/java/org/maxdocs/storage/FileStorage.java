@@ -138,7 +138,7 @@ public class FileStorage implements Storage
 		if (exists(pagePath))
 		{
 			String fileName = contentPath + files.get(pagePath);
-
+			
 			// delete current version
 			File f = new File(fileName);
 			if (f.exists())
@@ -149,6 +149,7 @@ public class FileStorage implements Storage
 					log.debug("File '{}' deleted.", fileName);
 					String pageNumber = StringUtils.substringBefore(files.get(pagePath), ".");
 					files.remove(pagePath);
+					updateTagMap(pagePath, "");
 					// delete history
 					String fileVersionPath = versionPath + "/" + pageNumber;
 					f = new File(fileVersionPath);
