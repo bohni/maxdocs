@@ -146,6 +146,9 @@
 					<article class="ym-g66 ym-gl content">
 						<div class="ym-gbox-left ym-clearfix">
 							<max:breadcrumbs />
+							<c:if test="${! empty requestScope.MAXDOCS_MESSAGES}">
+							<div id="errors"><max:messages /></div>
+							</c:if>
 							<h1>
 								<max:pageName plain="true" />
 							</h1>

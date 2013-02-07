@@ -65,6 +65,10 @@
 		border-right: 1px #ddd solid;
 	}
 
+	#main aside .ym-gbox-right {
+		border-left: 1px #ddd solid;
+	}
+
 	/* skip links styling */
 	.ym-skiplinks a.ym-skip:focus,
 	.ym-skiplinks a.ym-skip:active {

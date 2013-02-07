@@ -61,6 +61,7 @@ public class TagCloudEntry
 	public void addPage(String pagePath)
 	{
 		pages.add(pagePath);
+		Collections.sort(pages);
 	}
 
 
