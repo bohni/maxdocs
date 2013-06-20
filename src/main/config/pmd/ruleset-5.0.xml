@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+    Copyright (c) 2011-2013, Team maxdocs.org
+
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, are permitted provided
+    that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice, this list of conditions and the
+       following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
+       the following disclaimer in the documentation and/or other materials provided with the distribution.
+    3. The name of the author may not be used to endorse or promote products derived from this software
+       without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+    NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+    ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<ruleset name="ruleset"
+	xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+	<description>
+		Default ruleset for Maxdocs.
+	</description>
+
+
+	<!-- Ruleset Android (rulesets/java/android.xml) -->
+	<!-- exclude rule ref="rulesets/java/android.xml/CallSuperFirst" / --><!-- 4.2.5 -->
+	<!-- exclude rule ref="rulesets/java/android.xml/CallSuperLast" /--><!-- 4.2.5 -->
+	<!-- exclude rule ref="rulesets/java/android.xml/DoNotHardCodeSDCard" /--><!-- 4.2.6 -->
+
+
+	<!-- Ruleset Basic (rulesets/java/basic.xml) -->
+	<rule ref="rulesets/java/basic.xml/JumbledIncrementer" /><!-- 1.0 -->
+	<rule ref="rulesets/java/basic.xml/ForLoopShouldBeWhileLoop" /><!-- 1.02 -->
+	<rule ref="rulesets/java/basic.xml/OverrideBothEqualsAndHashcode" /><!-- 0.4 -->
+	<rule ref="rulesets/java/basic.xml/DoubleCheckedLocking" /><!-- 1.04 -->
+	<rule ref="rulesets/java/basic.xml/ReturnFromFinallyBlock" /><!-- 1.05 -->
+	<rule ref="rulesets/java/basic.xml/UnconditionalIfStatement" /><!-- 1.5 -->
+	<rule ref="rulesets/java/basic.xml/BooleanInstantiation" /><!-- 1.2 -->
+	<rule ref="rulesets/java/basic.xml/CollapsibleIfStatements" /><!-- 3.1 -->
+	<rule ref="rulesets/java/basic.xml/ClassCastExceptionWithToArray" /><!-- 3.4 -->
+	<rule ref="rulesets/java/basic.xml/AvoidDecimalLiteralsInBigDecimalConstructor" /><!-- 3.4 -->
+	<rule ref="rulesets/java/basic.xml/MisplacedNullCheck" /><!-- 3.5 -->
+	<rule ref="rulesets/java/basic.xml/AvoidThreadGroup" /><!-- 3.6 -->
+	<rule ref="rulesets/java/basic.xml/BrokenNullCheck" /><!-- 3.8 -->
+	<rule ref="rulesets/java/basic.xml/BigIntegerInstantiation" /><!-- 3.9 -->
+	<rule ref="rulesets/java/basic.xml/AvoidUsingOctalValues" /><!-- 3.9 -->
+	<rule ref="rulesets/java/basic.xml/AvoidUsingHardCodedIP" /><!-- 4.1 -->
+	<rule ref="rulesets/java/basic.xml/CheckResultSet" /><!-- 4.1 -->
+	<rule ref="rulesets/java/basic.xml/AvoidMultipleUnaryOperators" /><!-- 4.2 -->
+	<rule ref="rulesets/java/basic.xml/ExtendsObject" /><!-- 5.0 -->
+	<rule ref="rulesets/java/basic.xml/CheckSkipResult" /><!-- 5.0 -->
+	<rule ref="rulesets/java/basic.xml/AvoidBranchingStatementAsLastInLoop" /><!-- 5.0 -->
+	<!-- exclude rule ref="rulesets/java/basic.xml/DontCallThreadRun" /--><!-- 4.3 -->
+	<rule ref="rulesets/java/basic.xml/DontUseFloatTypeForLoopIndices" /><!-- 4.3 -->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptyCatchBlock-->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptyIfStmt-->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptyWhileStmt-->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptyTryBlock-->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptyFinallyBlock-->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptySwitchStatements-->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptySynchronizedBlock-->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptyStatementNotInLoop-->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptyInitializer-->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptyStatementBlock-->
+	<!-- deprecated rule ref=rulesets/java/empty.xml/EmptyStaticInitializer-->
+	<!-- deprecated rule ref=rulesets/java/unnecessary.xml/UnnecessaryConversionTemporary-->
+	<!-- deprecated rule ref=rulesets/java/unnecessary.xml/UnnecessaryReturn-->
+	<!-- deprecated rule ref=rulesets/java/unnecessary.xml/UnnecessaryFinalModifier-->
+	<!-- deprecated rule ref=rulesets/java/unnecessary.xml/UselessOverridingMethod-->
+	<!-- deprecated rule ref=rulesets/java/unnecessary.xml/UselessOperationOnImmutable-->
+	<!-- deprecated rule ref=rulesets/java/unnecessary.xml/UnusedNullCheckInEquals-->
+	<!-- deprecated rule ref=rulesets/java/unnecessary.xml/UselessParentheses-->
+
+
+	<!-- Ruleset Braces (rulesets/java/braces.xml) -->
+	<rule ref="rulesets/java/braces.xml/IfStmtsMustUseBraces" /><!-- 1.0 -->
+	<rule ref="rulesets/java/braces.xml/WhileLoopsMustUseBraces" /><!-- 0.7 -->
+	<rule ref="rulesets/java/braces.xml/IfElseStmtsMustUseBraces" /><!-- 0.2 -->
+	<rule ref="rulesets/java/braces.xml/ForLoopsMustUseBraces" /><!-- 0.7 -->
+
+
+	<!-- Ruleset Clone Implementation (rulesets/java/clone.xml) -->
+	<rule ref="rulesets/java/clone.xml/ProperCloneImplementation" /><!-- 1.4 -->
+	<rule ref="rulesets/java/clone.xml/CloneThrowsCloneNotSupportedException" /><!-- 1.9 -->
+	<rule ref="rulesets/java/clone.xml/CloneMethodMustImplementCloneable" /><!-- 1.9 -->
+
+
+	<!-- Ruleset Code Size (rulesets/java/codesize.xml) -->
+	<rule ref="rulesets/java/codesize.xml/NPathComplexity" /><!-- 3.9 -->
+	<rule ref="rulesets/java/codesize.xml/ExcessiveMethodLength" /><!-- 0.6 -->
+	<rule ref="rulesets/java/codesize.xml/ExcessiveParameterList" /><!-- 0.9 -->
+	<rule ref="rulesets/java/codesize.xml/ExcessiveClassLength" /><!-- 0.6 -->
+	<rule ref="rulesets/java/codesize.xml/CyclomaticComplexity" /><!-- 1.03 -->
+	<rule ref="rulesets/java/codesize.xml/ExcessivePublicCount" /><!-- 1.04 -->
+	<rule ref="rulesets/java/codesize.xml/TooManyFields" /><!-- 3.0 -->
+	<rule ref="rulesets/java/codesize.xml/NcssMethodCount" /><!-- 3.9 -->
+	<rule ref="rulesets/java/codesize.xml/NcssTypeCount" /><!-- 3.9 -->
+	<rule ref="rulesets/java/codesize.xml/NcssConstructorCount" /><!-- 3.9 -->
+	<rule ref="rulesets/java/codesize.xml/TooManyMethods" /><!-- 4.2 -->
+
+
+	<!-- Ruleset Comments (rulesets/java/comments.xml) -->
+	<rule ref="rulesets/java/comments.xml/CommentRequired" /><!-- 5.0 -->
+	<rule ref="rulesets/java/comments.xml/CommentSize"><!-- 5.0 -->
+		<properties>
+			<property name="maxLines" value="25" />
+			<property name="maxLineLength" value="110" />
+		</properties>
+	</rule>
+	<rule ref="rulesets/java/comments.xml/CommentContent" /><!-- 5.0 -->
+
+
+	<!-- Ruleset Controversial (rulesets/java/controversial.xml) -->
+	<rule ref="rulesets/java/controversial.xml/UnnecessaryConstructor" /><!-- 1.0 -->
+	<!-- exclude rule ref="rulesets/java/controversial.xml/NullAssignment" /--><!-- 1.02 -->
+	<rule ref="rulesets/java/controversial.xml/OnlyOneReturn" /><!-- 1.0 -->
+	<rule ref="rulesets/java/controversial.xml/AssignmentInOperand" /><!-- 1.03 -->
+	<!-- exclude rule ref="rulesets/java/controversial.xml/AtLeastOneConstructor" /--><!-- 1.04 -->
+	<rule ref="rulesets/java/controversial.xml/DontImportSun" /><!-- 1.5 -->
+	<rule ref="rulesets/java/controversial.xml/SuspiciousOctalEscape" /><!-- 1.5 -->
+	<!-- exclude rule ref="rulesets/java/controversial.xml/CallSuperInConstructor" /--><!-- 3.0 -->
+	<!-- exclude rule ref="rulesets/java/controversial.xml/UnnecessaryParentheses" /--><!-- 3.1 -->
+	<rule ref="rulesets/java/controversial.xml/DefaultPackage" /><!-- 3.4 -->
+	<!-- exclude rule ref="rulesets/java/controversial.xml/BooleanInversion" /--><!-- 3.5 -->
+	<rule ref="rulesets/java/controversial.xml/DataflowAnomalyAnalysis" /><!-- 3.9 -->
+	<!-- exclude rule ref="rulesets/java/controversial.xml/AvoidFinalLocalVariable" /--><!-- 4.1 -->
+	<!-- exclude rule ref="rulesets/java/controversial.xml/AvoidUsingShortType" /--><!-- 4.1 -->
+	<!-- exclude rule ref="rulesets/java/controversial.xml/AvoidUsingVolatile" /--><!-- 4.1 -->
+	<!-- exclude rule ref="rulesets/java/controversial.xml/AvoidUsingNativeCode" /--><!-- 4.1 -->
+	<!-- exclude rule ref="rulesets/java/controversial.xml/AvoidAccessibilityAlteration" /--><!-- 4.1 -->
+	<rule ref="rulesets/java/controversial.xml/DoNotCallGarbageCollectionExplicitly" /><!-- 4.2 -->
+	<rule ref="rulesets/java/controversial.xml/OneDeclarationPerLine" /><!-- 5.0 -->
+	<rule ref="rulesets/java/controversial.xml/AvoidPrefixingMethodParameters" /><!-- 5.0 -->
+	<rule ref="rulesets/java/controversial.xml/AvoidLiteralsInIfCondition" /><!-- 4.2.6 -->
+	<rule ref="rulesets/java/controversial.xml/UseObjectForClearerAPI" /><!-- 4.2.6 -->
+	<rule ref="rulesets/java/controversial.xml/UseConcurrentHashMap" /><!-- 4.2.6 -->
+
+
+	<!-- Ruleset Coupling (rulesets/java/coupling.xml) -->
+	<!-- exclude rule ref="rulesets/java/coupling.xml/CouplingBetweenObjects" /--><!-- 1.04 -->
+	<!-- exclude rule ref="rulesets/java/coupling.xml/ExcessiveImports" /--><!-- 1.04 -->
+	<rule ref="rulesets/java/coupling.xml/LooseCoupling" /><!-- 0.7 -->
+	<!-- exclude rule ref="rulesets/java/coupling.xml/LoosePackageCoupling" /--><!-- 5.0 -->
+	<!-- exclude rule ref="rulesets/java/coupling.xml/LawOfDemeter" /--><!-- 5.0 -->
+
+
+	<!-- Ruleset Design (rulesets/java/design.xml) -->
+	<rule ref="rulesets/java/design.xml/UseSingleton" /><!-- 0.3 -->
+	<rule ref="rulesets/java/design.xml/SimplifyBooleanReturns" /><!-- 0.9 -->
+	<rule ref="rulesets/java/design.xml/SimplifyBooleanExpressions" /><!-- 1.05 -->
+	<rule ref="rulesets/java/design.xml/SwitchStmtsShouldHaveDefault" /><!-- 1.0 -->
+	<rule ref="rulesets/java/design.xml/AvoidDeeplyNestedIfStmts"><!-- 1.0 -->
+		<properties>
+			<property name="problemDepth" value="5" />
+		</properties>
+	</rule>
+	<rule ref="rulesets/java/design.xml/AvoidReassigningParameters" /><!-- 1.0 -->
+	<rule ref="rulesets/java/design.xml/SwitchDensity" /><!-- 1.02 -->
+	<rule ref="rulesets/java/design.xml/ConstructorCallsOverridableMethod" /><!-- 1.04 -->
+	<rule ref="rulesets/java/design.xml/AccessorClassGeneration" /><!-- 1.04 -->
+	<rule ref="rulesets/java/design.xml/FinalFieldCouldBeStatic" /><!-- 1.1 -->
+	<rule ref="rulesets/java/design.xml/CloseResource" /><!-- 1.2.2 -->
+	<rule ref="rulesets/java/design.xml/NonStaticInitializer" /><!-- 1.5 -->
+	<rule ref="rulesets/java/design.xml/DefaultLabelNotLastInSwitchStmt" /><!-- 1.5 -->
+	<rule ref="rulesets/java/design.xml/NonCaseLabelInSwitchStatement" /><!-- 1.5 -->
+	<rule ref="rulesets/java/design.xml/OptimizableToArrayCall" /><!-- 1.8 -->
+	<rule ref="rulesets/java/design.xml/BadComparison" /><!-- 1.8 -->
+	<rule ref="rulesets/java/design.xml/EqualsNull" /><!-- 1.9 -->
+	<!-- exclude rule ref="rulesets/java/design.xml/ConfusingTernary" /--><!-- 1.9 -->
+	<rule ref="rulesets/java/design.xml/InstantiationToGetClass" /><!-- 2.0 -->
+	<rule ref="rulesets/java/design.xml/IdempotentOperations" /><!-- 2.0 -->
+	<rule ref="rulesets/java/design.xml/SimpleDateFormatNeedsLocale" /><!-- 2.0 -->
+	<rule ref="rulesets/java/design.xml/ImmutableField" /><!-- 2.0 -->
+	<rule ref="rulesets/java/design.xml/UseLocaleWithCaseConversions" /><!-- 2.0 -->
+	<rule ref="rulesets/java/design.xml/AvoidProtectedFieldInFinalClass" /><!-- 2.1 -->
+	<rule ref="rulesets/java/design.xml/AssignmentToNonFinalStatic" /><!-- 2.2 -->
+	<rule ref="rulesets/java/design.xml/MissingStaticMethodInNonInstantiatableClass" /><!-- 3.0 -->
+	<rule ref="rulesets/java/design.xml/AvoidSynchronizedAtMethodLevel" /><!-- 3.0 -->
+	<rule ref="rulesets/java/design.xml/MissingBreakInSwitch" /><!-- 3.0 -->
+	<rule ref="rulesets/java/design.xml/UseNotifyAllInsteadOfNotify" /><!-- 3.0 -->
+	<rule ref="rulesets/java/design.xml/AvoidInstanceofChecksInCatchClause" /><!-- 3.0 -->
+	<rule ref="rulesets/java/design.xml/AbstractClassWithoutAbstractMethod" /><!-- 3.0 -->
+	<rule ref="rulesets/java/design.xml/SimplifyConditional" /><!-- 3.1 -->
+	<rule ref="rulesets/java/design.xml/CompareObjectsWithEquals" /><!-- 3.2 -->
+	<rule ref="rulesets/java/design.xml/PositionLiteralsFirstInComparisons" /><!-- 3.3 -->
+	<rule ref="rulesets/java/design.xml/UnnecessaryLocalBeforeReturn" /><!-- 3.3 -->
+	<rule ref="rulesets/java/design.xml/NonThreadSafeSingleton" /><!-- 3.4 -->
+	<rule ref="rulesets/java/design.xml/UncommentedEmptyMethod" /><!-- 3.4 -->
+	<rule ref="rulesets/java/design.xml/UncommentedEmptyConstructor" /><!-- 3.4 -->
+	<rule ref="rulesets/java/design.xml/AvoidConstantsInterface" /><!-- 3.5 -->
+	<rule ref="rulesets/java/design.xml/UnsynchronizedStaticDateFormatter" /><!-- 3.6 -->
+	<rule ref="rulesets/java/design.xml/PreserveStackTrace" /><!-- 3.7 -->
+	<rule ref="rulesets/java/design.xml/UseCollectionIsEmpty" /><!-- 3.9 -->
+	<rule ref="rulesets/java/design.xml/ClassWithOnlyPrivateConstructorsShouldBeFinal" /><!-- 4.1 -->
+	<rule ref="rulesets/java/design.xml/EmptyMethodInAbstractClassShouldBeAbstract" /><!-- 4.1 -->
+	<!-- exclude rule ref="rulesets/java/design.xml/SingularField" /--><!-- 3.1 -->
+	<rule ref="rulesets/java/design.xml/ReturnEmptyArrayRatherThanNull" /><!-- 4.2 -->
+	<rule ref="rulesets/java/design.xml/AbstractClassWithoutAnyMethod" /><!-- 4.2 -->
+	<rule ref="rulesets/java/design.xml/TooFewBranchesForASwitchStatement" /><!-- 4.2 -->
+	<rule ref="rulesets/java/design.xml/LogicInversion" /><!-- 5.0 -->
+	<rule ref="rulesets/java/design.xml/UseVarargs" /><!-- 5.0 -->
+	<rule ref="rulesets/java/design.xml/FieldDeclarationsShouldBeAtStartOfClass" /><!-- 5.0 -->
+	<rule ref="rulesets/java/design.xml/GodClass" /><!-- 5.0 -->
+
+
+	<!-- Ruleset Empty Code (rulesets/java/empty.xml) -->
+	<rule ref="rulesets/java/empty.xml/EmptyCatchBlock" /><!-- 0.1 -->
+	<rule ref="rulesets/java/empty.xml/EmptyIfStmt" /><!-- 0.1 -->
+	<rule ref="rulesets/java/empty.xml/EmptyWhileStmt" /><!-- 0.2 -->
+	<rule ref="rulesets/java/empty.xml/EmptyTryBlock" /><!-- 0.4 -->
+	<rule ref="rulesets/java/empty.xml/EmptyFinallyBlock" /><!-- 0.4 -->
+	<rule ref="rulesets/java/empty.xml/EmptySwitchStatements" /><!-- 1.0 -->
+	<rule ref="rulesets/java/empty.xml/EmptySynchronizedBlock" /><!-- 1.3 -->
+	<rule ref="rulesets/java/empty.xml/EmptyStatementNotInLoop" /><!-- 1.5 -->
+	<!-- exclude rule ref="rulesets/java/empty.xml/EmptyInitializer" /--><!-- 5.0 -->
+	<rule ref="rulesets/java/empty.xml/EmptyStatementBlock" /><!-- 5.0 -->
+	<rule ref="rulesets/java/empty.xml/EmptyStaticInitializer" /><!-- 1.5 -->
+
+
+	<!-- Ruleset Finalizer (rulesets/java/finalizers.xml) -->
+	<rule ref="rulesets/java/finalizers.xml/EmptyFinalizer" /><!-- 1.5 -->
+	<rule ref="rulesets/java/finalizers.xml/FinalizeOnlyCallsSuperFinalize" /><!-- 1.5 -->
+	<rule ref="rulesets/java/finalizers.xml/FinalizeOverloaded" /><!-- 1.5 -->
+	<rule ref="rulesets/java/finalizers.xml/FinalizeDoesNotCallSuperFinalize" /><!-- 1.5 -->
+	<rule ref="rulesets/java/finalizers.xml/FinalizeShouldBeProtected" /><!-- 1.1 -->
+	<rule ref="rulesets/java/finalizers.xml/AvoidCallingFinalize" /><!-- 3.0 -->
+
+
+	<!-- Ruleset Import Statements (rulesets/java/imports.xml) -->
+	<rule ref="rulesets/java/imports.xml/DuplicateImports" /><!-- 0.5 -->
+	<rule ref="rulesets/java/imports.xml/DontImportJavaLang" /><!-- 0.5 -->
+	<rule ref="rulesets/java/imports.xml/UnusedImports" /><!-- 1.0 -->
+	<rule ref="rulesets/java/imports.xml/ImportFromSamePackage" /><!-- 1.02 -->
+	<!-- exclude rule ref="rulesets/java/imports.xml/TooManyStaticImports" /--><!-- 4.1 -->
+	<rule ref="rulesets/java/imports.xml/UnnecessaryFullyQualifiedName" /><!-- 5.0 -->
+
+
+	<!-- Ruleset J2EE (rulesets/java/j2ee.xml) -->
+	<rule ref="rulesets/java/j2ee.xml/UseProperClassLoader" /><!-- 3.7 -->
+	<!-- exclude rule ref="rulesets/java/j2ee.xml/MDBAndSessionBeanNamingConvention" /--><!-- 4.0 -->
+	<!-- exclude rule ref="rulesets/java/j2ee.xml/RemoteSessionInterfaceNamingConvention" /--><!-- 4.0 -->
+	<!-- exclude rule ref="rulesets/java/j2ee.xml/LocalInterfaceSessionNamingConvention" /--><!-- 4.0 -->
+	<!-- exclude rule ref="rulesets/java/j2ee.xml/LocalHomeNamingConvention" /--><!-- 4.0 -->
+	<!-- exclude rule ref="rulesets/java/j2ee.xml/RemoteInterfaceNamingConvention" /--><!-- 4.0 -->
+	<rule ref="rulesets/java/j2ee.xml/DoNotCallSystemExit" /><!-- 4.1 -->
+	<!-- exclude rule ref="rulesets/java/j2ee.xml/StaticEJBFieldShouldBeFinal" /--><!-- 4.1 -->
+	<rule ref="rulesets/java/j2ee.xml/DoNotUseThreads" /><!-- 4.1 -->
+
+
+	<!-- Ruleset JavaBeans (rulesets/java/javabeans.xml) -->
+	<!-- exclude rule ref="rulesets/java/javabeans.xml/BeanMembersShouldSerialize" /--><!-- 1.1 -->
+	<!-- exclude rule ref="rulesets/java/javabeans.xml/MissingSerialVersionUID" /--><!-- 3.0 -->
+
+
+	<!-- Ruleset JUnit (rulesets/java/junit.xml) -->
+	<rule ref="rulesets/java/junit.xml/JUnitStaticSuite" /><!-- 1.0 -->
+	<rule ref="rulesets/java/junit.xml/JUnitSpelling" /><!-- 1.0 -->
+	<rule ref="rulesets/java/junit.xml/JUnitAssertionsShouldIncludeMessage" /><!-- 1.04 -->
+	<rule ref="rulesets/java/junit.xml/JUnitTestsShouldIncludeAssert" /><!-- 2.0 -->
+	<rule ref="rulesets/java/junit.xml/TestClassWithoutTestCases" /><!-- 3.0 -->
+	<rule ref="rulesets/java/junit.xml/UnnecessaryBooleanAssertion" /><!-- 3.0 -->
+	<rule ref="rulesets/java/junit.xml/UseAssertEqualsInsteadOfAssertTrue" /><!-- 3.1 -->
+	<rule ref="rulesets/java/junit.xml/UseAssertSameInsteadOfAssertTrue" /><!-- 3.1 -->
+	<rule ref="rulesets/java/junit.xml/UseAssertNullInsteadOfAssertTrue" /><!-- 3.5 -->
+	<rule ref="rulesets/java/junit.xml/SimplifyBooleanAssertion" /><!-- 3.6 -->
+	<rule ref="rulesets/java/junit.xml/JUnitTestContainsTooManyAsserts" /><!-- 5.0 -->
+	<rule ref="rulesets/java/junit.xml/UseAssertTrueInsteadOfAssertEquals" /><!-- 5.0 -->
+
+
+	<!-- Ruleset Jakarta Commons Logging (rulesets/java/logging-jakarta-commons.xml) -->
+	<rule ref="rulesets/java/logging-jakarta-commons.xml/UseCorrectExceptionLogging" /><!-- 3.2 -->
+	<rule ref="rulesets/java/logging-jakarta-commons.xml/ProperLogger" /><!-- 3.3 -->
+	<rule ref="rulesets/java/logging-jakarta-commons.xml/GuardDebugLogging" /><!-- 4.3 -->
+
+
+	<!-- Ruleset Java Logging (rulesets/java/logging-java.xml) -->
+	<rule ref="rulesets/java/logging-java.xml/MoreThanOneLogger" /><!-- 2.0 -->
+	<rule ref="rulesets/java/logging-java.xml/LoggerIsNotStaticFinal" /><!-- 2.0 -->
+	<rule ref="rulesets/java/logging-java.xml/SystemPrintln" /><!-- 2.1 -->
+	<rule ref="rulesets/java/logging-java.xml/AvoidPrintStackTrace" /><!-- 3.2 -->
+
+
+	<!-- Ruleset Migration (rulesets/java/migrating.xml) -->
+	<rule ref="rulesets/java/migrating.xml/ReplaceVectorWithList" /><!-- 3.4 -->
+	<rule ref="rulesets/java/migrating.xml/ReplaceHashtableWithMap" /><!-- 3.4 -->
+	<rule ref="rulesets/java/migrating.xml/ReplaceEnumerationWithIterator" /><!-- 3.4 -->
+	<rule ref="rulesets/java/migrating.xml/AvoidEnumAsIdentifier" /><!-- 3.4 -->
+	<rule ref="rulesets/java/migrating.xml/AvoidAssertAsIdentifier" /><!-- 3.4 -->
+	<rule ref="rulesets/java/migrating.xml/IntegerInstantiation" /><!-- 3.5 -->
+	<rule ref="rulesets/java/migrating.xml/ByteInstantiation" /><!-- 4.0 -->
+	<rule ref="rulesets/java/migrating.xml/ShortInstantiation" /><!-- 4.0 -->
+	<rule ref="rulesets/java/migrating.xml/LongInstantiation" /><!-- 4.0 -->
+	<rule ref="rulesets/java/migrating.xml/JUnit4TestShouldUseBeforeAnnotation" /><!-- 4.0 -->
+	<rule ref="rulesets/java/migrating.xml/JUnit4TestShouldUseAfterAnnotation" /><!-- 4.0 -->
+	<rule ref="rulesets/java/migrating.xml/JUnit4TestShouldUseTestAnnotation" /><!-- 4.0 -->
+	<rule ref="rulesets/java/migrating.xml/JUnit4SuitesShouldUseSuiteAnnotation" /><!-- 4.0 -->
+	<rule ref="rulesets/java/migrating.xml/JUnitUseExpected" /><!-- 4.0 -->
+
+
+	<!-- Ruleset Migration13 (rulesets/java/migrating_to_13.xml) -->
+	<!-- Reference rule ref=rulesets/java/migrating.xml/ReplaceVectorWithList-->
+	<!-- Reference rule ref=rulesets/java/migrating.xml/ReplaceHashtableWithMap-->
+	<!-- Reference rule ref=rulesets/java/migrating.xml/ReplaceEnumerationWithIterator-->
+
+
+	<!-- Ruleset Migration14 (rulesets/java/migrating_to_14.xml) -->
+	<!-- Reference rule ref=rulesets/java/migrating.xml/AvoidAssertAsIdentifier-->
+
+
+	<!-- Ruleset Migration15 (rulesets/java/migrating_to_15.xml) -->
+	<!-- Reference rule ref=rulesets/java/migrating.xml/AvoidEnumAsIdentifier-->
+	<!-- Reference rule ref=rulesets/java/migrating.xml/IntegerInstantiation-->
+	<!-- Reference rule ref=rulesets/java/migrating.xml/LongInstantiation-->
+	<!-- Reference rule ref=rulesets/java/migrating.xml/ShortInstantiation-->
+	<!-- Reference rule ref=rulesets/java/migrating.xml/ByteInstantiation-->
+
+
+	<!-- Ruleset Naming (rulesets/java/naming.xml) -->
+	<!-- exclude rule ref="rulesets/java/naming.xml/ShortVariable" /--><!-- 0.3 -->
+	<!-- exclude rule ref="rulesets/java/naming.xml/LongVariable" /--><!-- 0.3 -->
+	<!-- exclude rule ref="rulesets/java/naming.xml/ShortMethodName" /--><!-- 0.3 -->
+	<rule ref="rulesets/java/naming.xml/VariableNamingConventions" /><!-- 1.2 -->
+	<rule ref="rulesets/java/naming.xml/MethodNamingConventions" /><!-- 1.2 -->
+	<rule ref="rulesets/java/naming.xml/ClassNamingConventions" /><!-- 1.2 -->
+	<rule ref="rulesets/java/naming.xml/AbstractNaming" /><!-- 1.4 -->
+	<rule ref="rulesets/java/naming.xml/AvoidDollarSigns" /><!-- 1.5 -->
+	<rule ref="rulesets/java/naming.xml/MethodWithSameNameAsEnclosingClass" /><!-- 1.5 -->
+	<rule ref="rulesets/java/naming.xml/SuspiciousHashcodeMethodName" /><!-- 1.5 -->
+	<rule ref="rulesets/java/naming.xml/SuspiciousConstantFieldName" /><!-- 2.0 -->
+	<rule ref="rulesets/java/naming.xml/SuspiciousEqualsMethodName" /><!-- 2.0 -->
+	<rule ref="rulesets/java/naming.xml/AvoidFieldNameMatchingTypeName" /><!-- 3.0 -->
+	<rule ref="rulesets/java/naming.xml/AvoidFieldNameMatchingMethodName" /><!-- 3.0 -->
+	<rule ref="rulesets/java/naming.xml/NoPackage" /><!-- 3.3 -->
+	<rule ref="rulesets/java/naming.xml/PackageCase" /><!-- 3.3 -->
+	<rule ref="rulesets/java/naming.xml/MisleadingVariableName" /><!-- 3.4 -->
+	<rule ref="rulesets/java/naming.xml/BooleanGetMethodName" /><!-- 4.0 -->
+	<rule ref="rulesets/java/naming.xml/ShortClassName" /><!-- 5.0 -->
+	<rule ref="rulesets/java/naming.xml/GenericsNaming" /><!-- 4.2.6 -->
+
+
+	<!-- Ruleset Optimization (rulesets/java/optimizations.xml) -->
+	<!-- exclude rule ref="rulesets/java/optimizations.xml/LocalVariableCouldBeFinal" /--><!-- 2.2 -->
+	<!-- exclude rule ref="rulesets/java/optimizations.xml/MethodArgumentCouldBeFinal" /--><!-- 2.2 -->
+	<!-- exclude rule ref="rulesets/java/optimizations.xml/AvoidInstantiatingObjectsInLoops" /--><!-- 2.2 -->
+	<!-- exclude rule ref="rulesets/java/optimizations.xml/UseArrayListInsteadOfVector" /--><!-- 3.0 -->
+	<!-- exclude rule ref="rulesets/java/optimizations.xml/SimplifyStartsWith" /--><!-- 3.1 -->
+	<!-- exclude rule ref="rulesets/java/optimizations.xml/UseStringBufferForStringAppends" /--><!-- 3.1 -->
+	<rule ref="rulesets/java/optimizations.xml/UseArraysAsList" /><!-- 3.5 -->
+	<rule ref="rulesets/java/optimizations.xml/AvoidArrayLoops" /><!-- 3.5 -->
+	<!-- exclude rule ref="rulesets/java/optimizations.xml/UnnecessaryWrapperObjectCreation" /--><!-- 3.8 -->
+	<rule ref="rulesets/java/optimizations.xml/AddEmptyString" /><!-- 4.0 -->
+	<rule ref="rulesets/java/optimizations.xml/RedundantFieldInitializer" /><!-- 5.0 -->
+	<!-- exclude rule ref="rulesets/java/optimizations.xml/PrematureDeclaration" /--><!-- 5.0 -->
+
+
+	<!-- Ruleset Strict Exceptions (rulesets/java/strictexception.xml) -->
+	<rule ref="rulesets/java/strictexception.xml/AvoidCatchingThrowable" /><!-- 1.2 -->
+	<rule ref="rulesets/java/strictexception.xml/SignatureDeclareThrowsException" /><!-- 1.2 -->
+	<rule ref="rulesets/java/strictexception.xml/ExceptionAsFlowControl" /><!-- 1.8 -->
+	<rule ref="rulesets/java/strictexception.xml/AvoidCatchingNPE" /><!-- 1.8 -->
+	<rule ref="rulesets/java/strictexception.xml/AvoidThrowingRawExceptionTypes" /><!-- 1.8 -->
+	<rule ref="rulesets/java/strictexception.xml/AvoidThrowingNullPointerException" /><!-- 1.8 -->
+	<rule ref="rulesets/java/strictexception.xml/AvoidRethrowingException" /><!-- 3.8 -->
+	<rule ref="rulesets/java/strictexception.xml/DoNotExtendJavaLangError" /><!-- 4.0 -->
+	<rule ref="rulesets/java/strictexception.xml/DoNotThrowExceptionInFinally" /><!-- 4.2 -->
+	<rule ref="rulesets/java/strictexception.xml/AvoidThrowingNewInstanceOfSameException" /><!-- 4.2.5 -->
+	<rule ref="rulesets/java/strictexception.xml/AvoidCatchingGenericException" /><!-- 4.2.6 -->
+	<rule ref="rulesets/java/strictexception.xml/AvoidLosingExceptionInformation" /><!-- 4.2.6 -->
+
+
+	<!-- Ruleset String and StringBuffer (rulesets/java/strings.xml) -->
+	<rule ref="rulesets/java/strings.xml/AvoidDuplicateLiterals" /><!-- 1.0 -->
+	<rule ref="rulesets/java/strings.xml/StringInstantiation" /><!-- 1.0 -->
+	<rule ref="rulesets/java/strings.xml/StringToString" /><!-- 1.0 -->
+	<rule ref="rulesets/java/strings.xml/InefficientStringBuffering" /><!-- 3.4 -->
+	<rule ref="rulesets/java/strings.xml/UnnecessaryCaseChange" /><!-- 3.3 -->
+	<rule ref="rulesets/java/strings.xml/UseStringBufferLength" /><!-- 3.4 -->
+	<rule ref="rulesets/java/strings.xml/AppendCharacterWithChar" /><!-- 3.5 -->
+	<rule ref="rulesets/java/strings.xml/ConsecutiveLiteralAppends"><!-- 3.5 -->
+		<properties>
+			<property name="threshold" value="3" />
+		</properties>
+	</rule>
+	<rule ref="rulesets/java/strings.xml/UseIndexOfChar" /><!-- 3.5 -->
+	<rule ref="rulesets/java/strings.xml/InefficientEmptyStringCheck" /><!-- 3.6 -->
+	<rule ref="rulesets/java/strings.xml/InsufficientStringBufferDeclaration" /><!-- 3.6 -->
+	<rule ref="rulesets/java/strings.xml/UselessStringValueOf" /><!-- 3.8 -->
+	<rule ref="rulesets/java/strings.xml/StringBufferInstantiationWithChar" /><!-- 3.9 -->
+	<rule ref="rulesets/java/strings.xml/UseEqualsToCompareStrings" /><!-- 4.1 -->
+	<rule ref="rulesets/java/strings.xml/AvoidStringBufferField" /><!-- 4.2 -->
+
+
+	<!-- Ruleset Security Code Guidelines (rulesets/java/sunsecure.xml) -->
+	<rule ref="rulesets/java/sunsecure.xml/MethodReturnsInternalArray" /><!-- 2.2 -->
+	<rule ref="rulesets/java/sunsecure.xml/ArrayIsStoredDirectly" /><!-- 2.2 -->
+
+
+	<!-- Ruleset Type Resolution (rulesets/java/typeresolution.xml) -->
+	<rule ref="rulesets/java/typeresolution.xml/LooseCoupling" /><!-- 3.9 -->
+	<rule ref="rulesets/java/typeresolution.xml/CloneMethodMustImplementCloneable" /><!-- 3.9 -->
+	<rule ref="rulesets/java/typeresolution.xml/UnusedImports" /><!-- 4.0 -->
+	<rule ref="rulesets/java/typeresolution.xml/SignatureDeclareThrowsException" /><!-- 4.0 -->
+
+
+	<!-- Ruleset Unnecessary (rulesets/java/unnecessary.xml) -->
+	<rule ref="rulesets/java/unnecessary.xml/UnnecessaryConversionTemporary" /><!-- 0.1 -->
+	<rule ref="rulesets/java/unnecessary.xml/UnnecessaryReturn" /><!-- 1.3 -->
+	<rule ref="rulesets/java/unnecessary.xml/UnnecessaryFinalModifier" /><!-- 3.0 -->
+	<rule ref="rulesets/java/unnecessary.xml/UselessOverridingMethod" /><!-- 3.3 -->
+	<rule ref="rulesets/java/unnecessary.xml/UselessOperationOnImmutable" /><!-- 3.5 -->
+	<rule ref="rulesets/java/unnecessary.xml/UnusedNullCheckInEquals" /><!-- 3.5 -->
+	<rule ref="rulesets/java/unnecessary.xml/UselessParentheses" /><!-- 5.0 -->
+
+
+	<!-- Ruleset Unused Code (rulesets/java/unusedcode.xml) -->
+	<!-- exclude rule ref="rulesets/java/unusedcode.xml/UnusedPrivateField" /--><!-- 0.1 -->
+	<rule ref="rulesets/java/unusedcode.xml/UnusedLocalVariable" /><!-- 0.1 -->
+	<!-- exclude rule ref="rulesets/java/unusedcode.xml/UnusedPrivateMethod" /--><!-- 0.7 -->
+	<!-- exclude rule ref="rulesets/java/unusedcode.xml/UnusedFormalParameter" /--><!-- 0.8 -->
+	<!-- exclude rule ref="rulesets/java/unusedcode.xml/UnusedModifier" /--><!-- 1.02 -->
+
+</ruleset>
