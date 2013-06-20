@@ -48,7 +48,7 @@
 	<rule ref="rulesets/basic.xml/EmptySwitchStatements" /><!-- 1.0rc1 -->
 	<rule ref="rulesets/basic.xml/JumbledIncrementer" /><!-- 1.0rc3 -->
 	<rule ref="rulesets/basic.xml/ForLoopShouldBeWhileLoop" /><!-- 1.02 -->
-	<rule ref="rulesets/basic.xml/UnnecessaryConversionTemporary" /> 
+	<rule ref="rulesets/basic.xml/UnnecessaryConversionTemporary" />
 	<rule ref="rulesets/basic.xml/OverrideBothEqualsAndHashcode" /><!-- 0.4 -->
 	<rule ref="rulesets/basic.xml/DoubleCheckedLocking" /><!-- 1.04 -->
 	<rule ref="rulesets/basic.xml/ReturnFromFinallyBlock" /><!-- 1.05 -->
@@ -139,10 +139,11 @@
 	<rule ref="rulesets/design.xml/SimplifyBooleanReturns" /><!-- 0.9-->
 	<rule ref="rulesets/design.xml/SimplifyBooleanExpressions" /><!-- 1.05 -->
 	<rule ref="rulesets/design.xml/SwitchStmtsShouldHaveDefault" /><!-- 1.0rc1 -->
-	<rule ref="rulesets/design.xml/AvoidDeeplyNestedIfStmts" /><!-- 1.0rc3 / moved from  braces to design in 1.0 -->
-        <properties>
+	<rule ref="rulesets/design.xml/AvoidDeeplyNestedIfStmts"><!-- 1.0rc3 / moved from  braces to design in 1.0 -->
+		<properties>
 			<property name="problemDepth" value="5" />
-        </properties>
+		</properties>
+	</rule>
 	<rule ref="rulesets/design.xml/AvoidReassigningParameters" /><!-- 1.0 -->
 	<rule ref="rulesets/design.xml/SwitchDensity" /><!-- 1.02 -->
 	<!-- exclude rule ref="rulesets/design.xml/ConstructorCallsOverridableMethod" /--><!-- 1.04 --><!-- Gute Regel, aber workaround schwer -->
@@ -219,7 +220,7 @@
 	<!-- exclude rule ref="rulesets/javabeans.xml/MissingSerialVersionUID" /--><!-- 3.0 -->
 
 
-	<!-- rulesets/junit.xml --> 
+	<!-- rulesets/junit.xml -->
 	<rule ref="rulesets/junit.xml/JUnitStaticSuite" /><!-- 1.0rc2 -->
 	<rule ref="rulesets/junit.xml/JUnitSpelling" /><!-- 1.0rc2 -->
 	<rule ref="rulesets/junit.xml/JUnitAssertionsShouldIncludeMessage" /><!-- 1.04 -->
@@ -312,10 +313,11 @@
 	<rule ref="rulesets/strings.xml/UnnecessaryCaseChange" /><!-- 3.3 -->
 	<rule ref="rulesets/strings.xml/UseStringBufferLength" /><!-- 3.4 -->
 	<rule ref="rulesets/strings.xml/AppendCharacterWithChar" /><!-- 3.5 -->
-	<rule ref="rulesets/strings.xml/ConsecutiveLiteralAppends" /><!-- 3.5 -->
-        <properties>
+	<rule ref="rulesets/strings.xml/ConsecutiveLiteralAppends"><!-- 3.5 -->
+		<properties>
 			<property name="threshold" value="3" />
-        </properties>
+		</properties>
+	</rule>
 	<rule ref="rulesets/strings.xml/UseIndexOfChar" /><!-- 3.5 -->
 	<rule ref="rulesets/strings.xml/InefficientEmptyStringCheck" /><!-- 3.6 -->
 	<rule ref="rulesets/strings.xml/InsufficientStringBufferDeclaration" /><!-- 3.6 -->
@@ -359,11 +361,12 @@
 
 
 	<!-- Logger-Rules -->
-	<rule class="net.sourceforge.pmd.rules.XPathRule" message="Logger should be defined private static and have the correct class" name="KreditwerkProperLogger">
+	<rule class="net.sourceforge.pmd.rules.XPathRule" message="Logger should be defined private static and have the correct class"
+		name="KreditwerkProperLogger">
 		<description>
- 			Logger should normally be defined private static and have the correct class.
-  		</description>
-        <example>
+			Logger should normally be defined private static and have the correct class.
+		</description>
+		<example>
         	<![CDATA[
  public class Foo {
 	// right
@@ -372,11 +375,11 @@
 	protected Log log = LogFactory.getLog(Testclass.class);
 }
  			]]>
- 		</example>
-        <priority>3</priority>
-        <properties>
-            <property name="xpath">
-                <value>
+		</example>
+		<priority>3</priority>
+		<properties>
+			<property name="xpath">
+				<value>
                 	<![CDATA[
  //ClassOrInterfaceBodyDeclaration[(FieldDeclaration//ClassOrInterfaceType[@Image='Logger'])
  and
@@ -389,11 +392,12 @@
  )]
 					]]>
 				</value>
-            </property>
-            <property name="staticLoggerName" value="log" />
-        </properties>
-    </rule>
-    <rule class="net.sourceforge.pmd.rules.XPathRule" message="The Logger variable declaration does not contain the private and static modifier" name="KreditwerkLoggerIsNotPrivateStatic">
+			</property>
+			<property name="staticLoggerName" value="log" />
+		</properties>
+	</rule>
+	<rule class="net.sourceforge.pmd.rules.XPathRule" message="The Logger variable declaration does not contain the private and static modifier"
+		name="KreditwerkLoggerIsNotPrivateStatic">
 		<description>
 			In most cases, the Logger can be declared private static.
 		</description>
@@ -406,10 +410,10 @@ class Foo{
 }
 			]]>
 		</example>
-        <priority>3</priority>
-        <properties>
-            <property name="xpath">
-                <value>
+		<priority>3</priority>
+		<properties>
+			<property name="xpath">
+				<value>
                 	<![CDATA[
 //VariableDeclarator
  [parent::FieldDeclaration]
@@ -418,8 +422,8 @@ class Foo{
  and
  (..[@Private='false'] or ..[@Static = 'false']or ..[@Final = 'true'] ) ]
              		]]>
-             	</value>
-            </property>
-        </properties>
-    </rule>
+				</value>
+			</property>
+		</properties>
+	</rule>
 </ruleset>
