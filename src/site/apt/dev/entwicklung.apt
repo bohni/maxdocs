@@ -56,7 +56,7 @@ Entwicklung
  zum Einsatz.
 
  Zusätzlich werden noch die folgenden Plugins benötigt,  die über den Eclipse Marketplace 
- direkt in der IDE installiert werden können:
+ direkt in der IDE installiert werden können (je nach Eclipse-Version sind sie bereits dabei):
 
 		* EGit - Git Team Provider
 		
@@ -111,16 +111,23 @@ Entwicklung
  Dazu können noch folgende zwei Plugins installiert werden, die nicht über den Marketplace erhältlich
  sind:
 
-		* optional: {{{http://apteditor.sourceforge.net/}APT Editor}}\
-		  (Dieses Plugin muss manuell installiert werden. Einfach das JAR-file in das dropins-Verzeichnis
-		  von Eclipse kopieren)
-
-		* optional: {{{http://http://pmd.sourceforge.net/}PMD}}\
+		* optional: {{{http://maven.apache.org/doxia/doxia-ide/eclipse/}Apache Doxia Eclipse Editor Plugin}}\
 		  (Dieses Plugin  kann über "Help > Install New Software..." installiert werden.
 		  Dazu wird als Update Site dir URL {{http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site}}
-		  verwendet.
+		  verwendet.)
 
-			* PMD Plug-in
+			* Apache Maven Doxia Editors
+			
+				* Doxia Editors Feature
+
+		* optional: {{{http://pmd.sourceforge.net/}PMD}}\
+		  (Dieses Plugin  kann über "Help > Install New Software..." installiert werden.
+		  Dazu wird als Update Site dir URL {{http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site}}
+		  verwendet.)
+
+			* Pmd for Eclipse 4
+			
+				* PMD Plug-in
 
  Damit der Sourcecode ein einheitliches Format hat, müssen in Eclipse folgende Preferences zwingend
  angepasst werden:
