@@ -90,6 +90,19 @@
 		<system>GitHub</system>
 		<url>https://github.com/bohni/maxdocs/issues/</url>
 	</issueManagement>
+	
+	<ciManagement>
+		<system>jenkins</system>
+		<url>http://rivendell.dyndns-free.com:7080/jenkins/job/MaxDocs/</url>
+	</ciManagement>
+	
+	<distributionManagement>
+		<site>
+			<id>maxdocs.org</id>
+			<name>Maxdocs</name>
+			<url>ftp://ftp.maxdocs.org/htdocs/site</url>
+		</site>
+	</distributionManagement>
 
 	<properties>
 		<maven.compiler.source>1.7</maven.compiler.source>
