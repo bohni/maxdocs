@@ -1,6 +1,0 @@
-analyseLocally=false
-eclipse.preferences.version=1
-extraProperties=sonar.java.source\=1.7\r\nsonar.java.target\=1.7
-projectKey=org.maxdocs\:maxdocs
-serverUrl=http\://rivendell.dyndns-free.com\:7080/sonar
-version=2
