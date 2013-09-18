@@ -49,10 +49,27 @@
 			<set>
 				<bean
 					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+					name="markupPages" />
+				<bean
+					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
 					name="htmlPages" />
 			</set>
 		</property>
 	</bean>
+
+	<cache:advice
+		id="markupCacheAdvice"
+		cache-manager="cacheManager">
+		<cache:caching cache="markupPages">
+			<cache:cacheable
+				method="load"
+				key="#pagePath" />
+			<cache:cache-evict
+				method="save"
+				key="#newPage.pagePath"
+				all-entries="false" />
+		</cache:caching>
+	</cache:advice>
 
 	<cache:advice
 		id="htmlCacheAdvice"
@@ -62,14 +79,6 @@
 				method="getHtmlPage"
 				key="#pagePath" />
 			<cache:cache-evict
-				method="delete"
-				key="#pagePath"
-				all-entries="false" />
-			<cache:cache-evict
-				method="rename"
-				key="#pagePath"
-				all-entries="false" />
-			<cache:cache-evict
 				method="save"
 				key="#newPage.pagePath"
 				all-entries="false" />
@@ -78,6 +87,9 @@
 
 	<!-- apply the cacheable behavior to interfaces -->
 	<aop:config>
+		<aop:advisor
+			advice-ref="markupCacheAdvice"
+			pointcut="execution(* org.maxdocs.storage.Storage.*(..))" />
 		<aop:advisor
 			advice-ref="htmlCacheAdvice"
 			pointcut="execution(* org.maxdocs.engine.MaxDocs.*(..))" />

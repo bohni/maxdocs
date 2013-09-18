@@ -42,34 +42,44 @@ import org.maxdocs.exceptions.ConcurrentEditException;
 import org.maxdocs.exceptions.EditWithoutChangesException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * FileStorageTest
  * Test for {@link FileStorage}.
  * 
  * @author Team maxdocs.org
- *
  */
 public class FileStorageTest
 {
 	private static Logger log = LoggerFactory.getLogger(FileStorageTest.class);
-	private FileStorage storage;	
+	private FileStorage storage;
 	private File tempDir;
+
+
 	/**
 	 * setUp:
+	 * Prepare Filestorage with temporary directory for file operations
+	 * 
 	 * @see Before
+	 * @thorws IllegalArgumentException
+	 * @thorws UnsupportedOperationException
 	 * @throws IOException
+	 * @throws SecurityException
 	 */
 	@Before
 	public void setUp() throws IOException
 	{
 		log.trace("setUp()");
 		tempDir = Files.createTempDirectory("maxdocs").toFile();
-		storage = new FileStorage(tempDir.getAbsolutePath());	
+		storage = new FileStorage(tempDir.getAbsolutePath());
 	}
-	
+
+
 	/**
 	 * shutdown:
+	 * 
 	 * @see After
+	 * @throws SecurityException
 	 */
 	@After
 	public void shutdown()
@@ -77,36 +87,38 @@ public class FileStorageTest
 		log.trace("shutdown()");
 		remove(tempDir);
 	}
-	
+
+
 	/**
 	 * remove:
 	 * Removes the given file or directory recursively.
 	 * 
 	 * @param file the file or directory to delete.
+	 * @throws SecurityException
 	 */
 	private void remove(File file)
 	{
 		log.trace("remove()");
-		if(file == null)
+		if (file == null)
 		{
 			return;
 		}
-		if(file.isDirectory())
+		if (file.isDirectory())
 		{
 			for (File child : file.listFiles())
 			{
 				remove(child);
 			}
 		}
-		if(!file.delete())
+		if (!file.delete())
 		{
 			log.warn("File {} could not be deleted.", file.getAbsolutePath());
 		}
 	}
 
+
 	/**
 	 * testSave: Test for saving a page
-	 * 
 	 */
 	@Test
 	public void testSave()
@@ -117,7 +129,7 @@ public class FileStorageTest
 		page.setMarkupLanguage("mediawiki");
 		page.setContent("Content");
 		page.setPagePath("/Main");
-		
+
 		try
 		{
 			boolean success = storage.save(page);
@@ -135,9 +147,9 @@ public class FileStorageTest
 		}
 	}
 
+
 	/**
 	 * testPageToString: Test to transform a page to a String for saving
-	 * 
 	 */
 	@Test
 	public void testPageToString()
@@ -156,12 +168,12 @@ public class FileStorageTest
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
 		String expected = "pagePath=/Main\nauthor=Author\neditor=null\ncreationDateFirst=" + sdf.format(date)
-						+ "\ncreationDateThis=" + sdf.format(date)
-						+ "\ncontentType=mediawiki\nversion=0\ntags=Tag2, Tag1\n\nContent";
+			+ "\ncreationDateThis=" + sdf.format(date)
+			+ "\ncontentType=mediawiki\nversion=0\ntags=Tag2, Tag1\n\nContent";
 		assertEquals("Output not equal!", expected, storage.pageToString(page));
 	}
 
-	
+
 	/**
 	 * testPageLoad:
 	 * Test loading of the current version of a page
@@ -187,7 +199,7 @@ public class FileStorageTest
 		page.setPagePath(pagePath);
 		page.addTag(tag1);
 		page.addTag(tag2);
-		
+
 		try
 		{
 			boolean success = storage.save(page);
@@ -195,11 +207,14 @@ public class FileStorageTest
 			MarkupPage loaded = storage.load(pagePath);
 			assertEquals("author not equal", author, loaded.getAuthor());
 			assertEquals("markupLanguage not equal", markupLanguage, loaded.getMarkupLanguage());
-			assertEquals("content not equal", content + System.getProperty("line.separator"), loaded.getContent());
+			assertEquals("content not equal", content + System.getProperty("line.separator"),
+				loaded.getContent());
 			assertEquals("pagePath not equal", pagePath, loaded.getPagePath());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			assertEquals("lastChangeDate not equal", sdf.format(date), sdf.format(loaded.getCurrentVersionCreationDate()));
-			assertEquals("creationDate not equal", sdf.format(date), sdf.format(loaded.getFirstVersionCreationDate()));
+			assertEquals("lastChangeDate not equal", sdf.format(date),
+				sdf.format(loaded.getCurrentVersionCreationDate()));
+			assertEquals("creationDate not equal", sdf.format(date),
+				sdf.format(loaded.getFirstVersionCreationDate()));
 			assertEquals("Tags.size not euqal", 2, loaded.getTags().size());
 			assertTrue("tag1 not in Tags", loaded.getTags().contains(tag1));
 			assertTrue("tag2 not in Tags", loaded.getTags().contains(tag2));
