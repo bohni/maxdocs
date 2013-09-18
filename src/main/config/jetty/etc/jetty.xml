@@ -64,7 +64,7 @@
     <Call name="addLifeCycle">
       <Arg>
         <New class="org.mortbay.jetty.deployer.ContextDeployer">
-          <Set name="contexts"><Ref id="Contexts"/></Set>
+          <Set name="contexts"><Ref refid="Contexts"/></Set>
           <Set name="configurationDir"><SystemProperty name="jetty.home" default="."/>/contexts</Set>
           <Set name="scanInterval">1</Set>
         </New>
@@ -73,7 +73,7 @@
     <Call name="addLifeCycle">
       <Arg>
         <New class="org.mortbay.jetty.deployer.WebAppDeployer">
-          <Set name="contexts"><Ref id="Contexts"/></Set>
+          <Set name="contexts"><Ref refid="Contexts"/></Set>
           <Set name="webAppDir"><SystemProperty name="jetty.home" default="."/>/webapps</Set>
       	  <Set name="parentLoaderPriority">false</Set>
       	  <Set name="extract">true</Set>
