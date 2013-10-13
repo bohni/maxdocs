@@ -313,6 +313,7 @@ public class FileStorage implements Storage
 		if (success)
 		{
 			files.remove(oldPagePath);
+			updateTagMap(oldPagePath, "");
 		}
 		else
 		{
