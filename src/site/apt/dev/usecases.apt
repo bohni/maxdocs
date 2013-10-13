@@ -27,7 +27,7 @@
  ------
  Team maxdocs.org
  ------
- 2012-04-26
+ 2013-10-13
 
 
 MaxDocs UseCases
@@ -58,9 +58,23 @@ MaxDocs UseCases
 	
 	* Seite anzeigen
 	
-	* Seite anlegen
+	  Der Anwender öffnet die URL im Browser
 	
-	* Seite bearbeiten starten
+	* neue Seite anlegen
+	
+	  * neue Seite bearbeiten starten
+	  
+	    Der Anwender klickt auf den Link zum erstellen der Seite
+	  
+	  * Text eingeben
+	  
+	  * Seite speichern
+		
+	* bestehende Seite bearbeiten starten
+	
+	  Der Anwender klickt auf den Edit-Link einer bestehenden Seite.
+	  
+	* Text eingeben
 	
 	* Seite bearbeiten abbrechen
 	

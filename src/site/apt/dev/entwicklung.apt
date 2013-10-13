@@ -27,7 +27,7 @@
  ------
  Team maxdocs.org
  ------
-2013-02-02
+ 2013-10-13
 
 ~~ Auf dieser Seite wird der Entwicklungsprozess erklärt: Umgebung installieren, Projekt einrichten, Vorgaben
 
@@ -56,7 +56,9 @@ Entwicklung
  zum Einsatz.
 
  Zusätzlich werden noch die folgenden Plugins benötigt,  die über den Eclipse Marketplace 
- direkt in der IDE installiert werden können (je nach Eclipse-Version sind sie bereits dabei):
+ direkt in der IDE installiert werden können (je nach Eclipse-Version sind sie bereits dabei).
+ 
+ Für die Versionsverwaltung wird {{{http://git-scm.org}Git}} verwendet.
 
 		* EGit - Git Team Provider
 		
@@ -64,9 +66,7 @@ Entwicklung
 
 			* Eclipse JGit
 
-		* GitHub Mylyn Connector
-
-			* Eclipse EGit Mylyn GitHub Feature
+ Das Build-Verfahren beruht auf {{{http://maven.apache.org}Apache Maven}}.
 
 		* Maven Integration for Eclipse WTP
 		
@@ -76,6 +76,16 @@ Entwicklung
 
 			* m2e-wtp - Maven Integration for WTP (Incubation)
 
+ Der Issuetracker von {{{http://github.com}Github}} kann sich in Mylyn integrieren.
+
+		* GitHub Mylyn Connector
+
+			* Eclipse EGit Mylyn GitHub Feature
+
+ Die folgenden Plugins aus dem Marketplace sind optional:
+
+ Die Code Qualität wird mit Sonar geprüft. Auch Sonar kann sich in Eclipse integrieren.
+
 		* Sonar
 
 			* Sonar Java Analyser
@@ -84,19 +94,25 @@ Entwicklung
 
 			* Sonar Mylyn Connector
 
- Die folgenden Plugins aus dem Marketplace sind optional:
+ Mit Start Explorer kann eine Shell oder ein Explorer mit Rechtsklick auf den Tree geöffnet werden.
+
+		* optional: StartExplorer
+
+			* StartExplorer Feature
+
+ Code Coverage der Unit Tests kann mit EclEmma geprüft werden
 
 		* optional: EclEmma Java Code Coverage
 
 			* EclEmma Java Code Coverage
 
-		* optional: EasyShell
-
-			* Easy Shell Feature
+ FindBugs zur statischen Code Analyse, da es auch in Sonar verwendet wird.
 
 		* optional: FindBugs Eclipse Plugin
 
 			* FindBugs Feature
+
+ Die Spring Tool Suite integriert Spring in Eclipse
 
 		* optional: Spring Tool Suite (STS) for Eclipse ...
 		
@@ -110,24 +126,28 @@ Entwicklung
 
  Dazu können noch folgende zwei Plugins installiert werden, die nicht über den Marketplace erhältlich
  sind:
-
-		* optional: {{{http://maven.apache.org/doxia/doxia-ide/eclipse/}Apache Doxia Eclipse Editor Plugin}}\
-		  (Dieses Plugin  kann über "Help > Install New Software..." installiert werden.
-		  Dazu wird als Update Site dir URL {{http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site}}
-		  verwendet.)
-
-			* Apache Maven Doxia Editors
-			
-				* Doxia Editors Feature
+ 
+ PMD zur statischen Code Analyse, da es auch in Sonar verwendet wird.
 
 		* optional: {{{http://pmd.sourceforge.net/}PMD}}\
-		  (Dieses Plugin  kann über "Help > Install New Software..." installiert werden.
-		  Dazu wird als Update Site dir URL {{http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site}}
-		  verwendet.)
+		  <Dieses Plugin  kann über "Help \> Install New Software..." installiert werden.\
+		  Dazu wird als Update Site die URL {{http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site}}
+		  verwendet.>
 
 			* Pmd for Eclipse 4
 			
 				* PMD Plug-in
+
+ Zur besseren Erstellung der APT-Dokumente für die Maven Site
+
+		* optional: {{{http://maven.apache.org/doxia/doxia-ide/eclipse/}Apache Doxia Eclipse Editor Plugin}}\
+		  <Dieses Plugin  kann über "Help \> Install New Software..." installiert werden.\
+		  Dazu wird als Update Site die URL {{http://maven.apache.org/doxia/doxia-ide/eclipse/eclipse}}
+		  verwendet.>
+
+			* Apache Maven Doxia Editors
+			
+				* Doxia Editors Feature
 
  Damit der Sourcecode ein einheitliches Format hat, müssen in Eclipse folgende Preferences zwingend
  angepasst werden:
