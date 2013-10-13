@@ -423,24 +423,10 @@ public class AuthorTagTest extends AbstractTagTest
 	private boolean testTag(Boolean plain, String styleClass, String type, String expectedOutput)
 		throws JspException, UnsupportedEncodingException
 	{
-		if (StringUtils.isBlank(PAGE_PATH))
-		{
-			EasyMock.expect(mockEngine.getHtmlPage("")).andReturn(null);
-		}
-		else
-		{
-			EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(htmlPage);
-		}
+		EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(htmlPage);
 		replayAllMocks();
 
-		if (plain != null)
-		{
-			authorTag.setPlain(plain.booleanValue());
-		}
-		if (StringUtils.isNotBlank(styleClass))
-		{
-			authorTag.setStyleClass(styleClass);
-		}
+		super.setCommonAttributes(plain, styleClass, authorTag);
 		if (StringUtils.isNotBlank(type))
 		{
 			authorTag.setType(type);

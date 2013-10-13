@@ -30,7 +30,6 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
@@ -209,14 +208,7 @@ public class PageVersionTagTest extends AbstractTagTest
 		EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(htmlPage);
 		replayAllMocks();
 
-		if (plain != null)
-		{
-			pageVersionTag.setPlain(plain.booleanValue());
-		}
-		if (StringUtils.isNotBlank(styleClass))
-		{
-			pageVersionTag.setStyleClass(styleClass);
-		}
+		super.setCommonAttributes(plain, styleClass, pageVersionTag);
 
 		int tagReturnValue = pageVersionTag.doStartTag();
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);

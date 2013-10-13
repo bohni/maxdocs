@@ -166,10 +166,7 @@ public class InsertPageTagTest extends AbstractTagTest
 
 		replayAllMocks();
 
-		if (StringUtils.isNotBlank(styleClass))
-		{
-			insertPageTag.setStyleClass(styleClass);
-		}
+		super.setCommonAttributes(null, styleClass, insertPageTag);
 
 		if (StringUtils.isNotBlank(name))
 		{

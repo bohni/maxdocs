@@ -159,14 +159,7 @@ public class DateTagTest extends AbstractTagTest
 		EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(htmlPage);
 		replayAllMocks();
 
-		if (plain != null)
-		{
-			dateTag.setPlain(plain.booleanValue());
-		}
-		if (StringUtils.isNotBlank(styleClass))
-		{
-			dateTag.setStyleClass(styleClass);
-		}
+		super.setCommonAttributes(plain, styleClass, dateTag);
 		if (StringUtils.isNotBlank(type))
 		{
 			dateTag.setType(type);

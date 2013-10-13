@@ -23,6 +23,7 @@
  */
 package org.maxdocs.taglib;
 
+import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.maxdocs.MaxDocsConstants;
 import org.maxdocs.engine.MaxDocs;
@@ -94,4 +95,16 @@ public abstract class AbstractTagTest
 		EasyMock.verify(mockWebApplicationContext, mockEngine);
 	}
 
+	
+	protected void setCommonAttributes(Boolean plain, String styleClass, AbstractMaxDocsTagSupport tag)
+	{
+		if (plain != null)
+		{
+			tag.setPlain(plain.booleanValue());
+		}
+		if (StringUtils.isNotBlank(styleClass))
+		{
+			tag.setStyleClass(styleClass);
+		}
+	}
 }

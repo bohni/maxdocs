@@ -40,9 +40,9 @@ import org.junit.runners.Suite;
 	DateTagTest.class,
 	InsertPageTagTest.class,
 	MarkupLanguageTagTest.class,
+	MessagesTagTest.class,
 	PageNameTagTest.class,
 	PageVersionTagTest.class,
-	MessagesTagTest.class,
 })
 public class TaglibSuite
 {

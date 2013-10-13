@@ -32,7 +32,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.maxdocs.MaxDocsConstants;
@@ -128,10 +127,7 @@ public class BreadcrumbsTagTest extends AbstractTagTest
 	{
 		replayAllMocks();
 
-		if (StringUtils.isNotBlank(styleClass))
-		{
-			breadcrumbsTag.setStyleClass(styleClass);
-		}
+		super.setCommonAttributes(null, styleClass, breadcrumbsTag);
 
 		int tagReturnValue = breadcrumbsTag.doStartTag();
 		assertEquals("Tag should return 'TagSupport.SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);

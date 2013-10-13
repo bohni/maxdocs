@@ -370,14 +370,7 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
-		if (plain != null)
-		{
-			markupLanguageTag.setPlain(plain.booleanValue());
-		}
-		if (StringUtils.isNotBlank(styleClass))
-		{
-			markupLanguageTag.setStyleClass(styleClass);
-		}
+		super.setCommonAttributes(plain, styleClass, markupLanguageTag);
 		if (StringUtils.isNotBlank(type))
 		{
 			markupLanguageTag.setType(type);
