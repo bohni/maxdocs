@@ -27,7 +27,7 @@
  ------
  Team maxdocs.org
  ------
-2013-02-02
+ 2013-10-13
 
 ~~ Auf dieser Seite wird der Entwicklungsprozess erklärt: Umgebung installieren, Projekt einrichten, Vorgaben
 
@@ -56,7 +56,9 @@ Entwicklung
  zum Einsatz.
 
  Zusätzlich werden noch die folgenden Plugins benötigt,  die über den Eclipse Marketplace 
- direkt in der IDE installiert werden können (je nach Eclipse-Version sind sie bereits dabei):
+ direkt in der IDE installiert werden können (je nach Eclipse-Version sind sie bereits dabei).
+ 
+ Für die Versionsverwaltung wird {{{http://git-scm.org}Git}} verwendet.
 
 		* EGit - Git Team Provider
 		
@@ -64,9 +66,7 @@ Entwicklung
 
 			* Eclipse JGit
 
-		* GitHub Mylyn Connector
-
-			* Eclipse EGit Mylyn GitHub Feature
+ Das Build-Verfahren beruht auf {{{http://maven.apache.org}Apache Maven}}.
 
 		* Maven Integration for Eclipse WTP
 		
@@ -76,7 +76,18 @@ Entwicklung
 
 			* m2e-wtp - Maven Integration for WTP (Incubation)
 
-		* Sonar
+ Der Issuetracker von {{{https://github.com/bohni/maxdocs/issues}Github}} kann sich in Mylyn integrieren.
+
+		* GitHub Mylyn Connector
+
+			* Eclipse EGit Mylyn GitHub Feature
+
+ Die folgenden Plugins aus dem Marketplace sind optional:
+
+ Die Code Qualität wird mit {{{http://www.sonarqube.org/}SonarQube}} geprüft. Auch SonarQube
+ kann sich in Eclipse integrieren.
+
+		* optional: Sonar
 
 			* Sonar Java Analyser
 
@@ -84,19 +95,25 @@ Entwicklung
 
 			* Sonar Mylyn Connector
 
- Die folgenden Plugins aus dem Marketplace sind optional:
+ Mit {{{http://basti1302.github.io/startexplorer/}StartExplorer}} kann eine Shell oder ein Explorer mit Rechtsklick auf den Tree geöffnet werden.
+
+		* optional: StartExplorer
+
+			* StartExplorer Feature
+
+ Code Coverage der Unit Tests kann mit {{{http://www.eclemma.org/}EclEmma}} geprüft werden
 
 		* optional: EclEmma Java Code Coverage
 
 			* EclEmma Java Code Coverage
 
-		* optional: EasyShell
-
-			* Easy Shell Feature
+ {{{http://findbugs.sourceforge.net/}FindBugs}} zur statischen Code Analyse, da es auch in SonarQube verwendet wird.
 
 		* optional: FindBugs Eclipse Plugin
 
 			* FindBugs Feature
+
+ Die {{{http://spring.io/tools/sts}Spring Tool Suite}} integriert Spring in Eclipse
 
 		* optional: Spring Tool Suite (STS) for Eclipse ...
 		
@@ -110,24 +127,29 @@ Entwicklung
 
  Dazu können noch folgende zwei Plugins installiert werden, die nicht über den Marketplace erhältlich
  sind:
+ 
+ {{{http://pmd.sourceforge.net/}PMD}} zur statischen Code Analyse, da es auch in SonarQube verwendet wird.
 
-		* optional: {{{http://maven.apache.org/doxia/doxia-ide/eclipse/}Apache Doxia Eclipse Editor Plugin}}\
-		  (Dieses Plugin  kann über "Help > Install New Software..." installiert werden.
-		  Dazu wird als Update Site dir URL {{http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site}}
-		  verwendet.)
-
-			* Apache Maven Doxia Editors
-			
-				* Doxia Editors Feature
-
-		* optional: {{{http://pmd.sourceforge.net/}PMD}}\
-		  (Dieses Plugin  kann über "Help > Install New Software..." installiert werden.
-		  Dazu wird als Update Site dir URL {{http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site}}
-		  verwendet.)
+		* optional: PMD\
+		  <Dieses Plugin  kann über "Help \> Install New Software..." installiert werden.\
+		  Dazu wird als Update Site die URL {{http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site}}
+		  verwendet.>
 
 			* Pmd for Eclipse 4
 			
 				* PMD Plug-in
+
+ Zur besseren Erstellung der {{{http://maven.apache.org/doxia/references/apt-format.html}APT-Dokumente}}
+ für die Maven Site
+
+		* optional: {{{http://maven.apache.org/doxia/doxia-ide/eclipse/}Apache Doxia Eclipse Editor Plugin}}\
+		  <Dieses Plugin  kann über "Help \> Install New Software..." installiert werden.\
+		  Dazu wird als Update Site die URL {{http://maven.apache.org/doxia/doxia-ide/eclipse/eclipse}}
+		  verwendet.>
+
+			* Apache Maven Doxia Editors
+			
+				* Doxia Editors Feature
 
  Damit der Sourcecode ein einheitliches Format hat, müssen in Eclipse folgende Preferences zwingend
  angepasst werden:
@@ -281,17 +303,23 @@ Entwicklung
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Tipps und Tricks
 
-	* Auf Updates der Abhängigkeiten und Plugins prüfen: {{{http://mojo.codehaus.org/versions-maven-plugin/}Versions Maven Plugin}}
+	* Versionen prüfen: {{{http://mojo.codehaus.org/versions-maven-plugin/}Versions Maven Plugin}}
 
-		* Plguins: mvn versions:display-plugin-updates
+		* Plugins: <<<mvn versions:display-plugin-updates>>>
 
-		* Abhängigkeiten: mvn versions:display-dependency-updates
+		* Abhängigkeiten: <<<mvn versions:display-dependency-updates>>>
+		
+	* Dependencies prüfen: {{{http://maven.apache.org/plugins/maven-dependency-plugin/}Maven Dependency Plugin}}
+	
+		* Deklarierte/verwendete/unbenutze Dependencies: <<<mvn dependency:analyze>>>
+
+		* DependencyManagement prüfen: <<<mvn dependency:analyze-dep-mgt>>>
 
 	* License header in Dateien
 
-		* prüfen: mvn validate license:check
+		* prüfen: <<<mvn validate license:check>>>
 
-		* generieren: mvn validate license:format
+		* generieren: <<<mvn validate license:format>>>
 
 	* {{{https://github.com/github/maven-plugins}Github Plugins}}
 
@@ -317,6 +345,8 @@ Entwicklung
 	* {{{http://www.sonarsource.org/effective-code-review-with-sonar/}Code Reviews mit Sonar}}
 
 	* Modern CSS Layouts:
-	  {{{http://coding.smashingmagazine.com/2009/10/26/modern-css-layouts-the-essential-characteristics/}Part 1 - The Essential Characteristics}},
-	  {{{http://coding.smashingmagazine.com/2010/05/06/modern-css-layouts-part-2-the-essential-techniques/}Part 2 - The Essential Techniques}}
+	
+	  * {{{http://coding.smashingmagazine.com/2009/10/26/modern-css-layouts-the-essential-characteristics/}Part 1 - The Essential Characteristics}}
+	  
+	  * {{{http://coding.smashingmagazine.com/2010/05/06/modern-css-layouts-part-2-the-essential-techniques/}Part 2 - The Essential Techniques}}
 
