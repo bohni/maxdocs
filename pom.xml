@@ -83,7 +83,7 @@
 	</developers>
 
 	<scm>
-		<url>https://github.com/bohni/maxdocs/tree/develop</url>
+		<url>https://github.com/bohni/maxdocs/</url>
 		<connection>scm:git:https://github.com/bohni/maxdocs.git</connection>
 	</scm>
 
@@ -91,12 +91,12 @@
 		<system>GitHub</system>
 		<url>https://github.com/bohni/maxdocs/issues/</url>
 	</issueManagement>
-	
+
 	<ciManagement>
 		<system>jenkins</system>
 		<url>http://rivendell.dyndns-free.com:7080/jenkins/job/MaxDocs/</url>
 	</ciManagement>
-	
+
 	<distributionManagement>
 		<site>
 			<id>maxdocs.org</id>
@@ -128,24 +128,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.7.5</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.0.13</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-collections</groupId>
@@ -158,24 +143,19 @@
 			<version>3.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.mylyn.wikitext</groupId>
-			<artifactId>creole-core</artifactId>
-			<version>1.6.0.i20111227</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.mylyn.wikitext</groupId>
-			<artifactId>mediawiki-core</artifactId>
-			<version>1.6.0.i20111227</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.mylyn.wikitext</groupId>
-			<artifactId>wikitext-core</artifactId>
-			<version>1.6.0.i20111227</version>
-		</dependency>
-		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.2.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>3.2.0.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -184,13 +164,67 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.mylyn.wikitext</groupId>
+			<artifactId>wikitext-core</artifactId>
+			<version>1.6.0.i20111227</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.mylyn.wikitext</groupId>
+			<artifactId>creole-core</artifactId>
+			<version>1.6.0.i20111227</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.mylyn.wikitext</groupId>
+			<artifactId>mediawiki-core</artifactId>
+			<version>1.6.0.i20111227</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.7.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.13</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-web</artifactId>
 			<version>1.2.2</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring</artifactId>
 			<version>1.2.2</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>3.2.3.RELEASE</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.7.3</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -209,16 +243,6 @@
 			<artifactId>spring-test</artifactId>
 			<version>3.2.3.RELEASE</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>3.2.3.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.7.3</version>
 		</dependency>
 	</dependencies>
 
@@ -273,42 +297,90 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.13</version>
-					<configuration>
-						<!-- JDK 1.7 and cobertura plugin -->
-						<argLine>-XX:-UseSplitVerifier</argLine>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-pmd-plugin</artifactId>
-					<version>3.0.1</version>
-					<configuration>
-						<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-						<targetJdk>${maven.compiler.target}</targetJdk>
-						<includeTests>true</includeTests>
-						<excludes>
-							<exclude>**/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
-							<exclude>**/org/maxdocs/apache/catalina/filters/SetCharacterEncodingFilter.java</exclude>
-						</excludes>
-						<rulesets>
-							<ruleset>file:///${basedir}/src/main/config/pmd/ruleset-5.0.2.xml</ruleset>
-						</rulesets>
-					</configuration>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<encoding>ISO-8859-1</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.13</version>
+				<configuration>
+					<!-- JDK 1.7 and cobertura plugin -->
+					<argLine>-XX:-UseSplitVerifier</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<archiveClasses>false</archiveClasses>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id></id>
+						<phase>package</phase>
+						<goals>
+							<goal>pmd</goal>
+						</goals>
+						<inherited>false</inherited>
+					</execution>
+				</executions>
+				<configuration>
+					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+					<targetJdk>${maven.compiler.target}</targetJdk>
+					<includeTests>true</includeTests>
+					<excludes>
+						<exclude>**/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
+						<exclude>**/org/maxdocs/apache/catalina/filters/SetCharacterEncodingFilter.java</exclude>
+					</excludes>
+					<rulesets>
+						<ruleset>file:///${basedir}/src/main/config/pmd/ruleset-5.0.2.xml</ruleset>
+					</rulesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.2</version>
 				<configuration>
-					<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
-					<inputEncoding>${project.build.sourceEncoding}</inputEncoding>
 					<locales>de,en</locales>
 				</configuration>
 				<dependencies>
@@ -323,23 +395,6 @@
 						<version>1.0</version>
 					</dependency>
 				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<showDeprecation>true</showDeprecation>
-					<showWarnings>true</showWarnings>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<encoding>ISO-8859-1</encoding>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -386,8 +441,7 @@
 					<quiet>false</quiet>
 					<strictCheck>true</strictCheck>
 					<excludes>
-						<!-- Bei folgenden Dateien nicht pruefen/eintragen (Lizenzvorlage, 
-							third party, ...) -->
+						<!-- Bei folgenden Dateien nicht pruefen/eintragen (Lizenzvorlage, third party, ...) -->
 						<exclude>src/main/config/license/LICENSE.txt</exclude>
 						<exclude>src/main/java/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
 						<exclude>src/main/java/org/maxdocs/apache/catalina/filters/SetCharacterEncodingFilter.java</exclude>
@@ -422,21 +476,13 @@
 				<version>1.10.b1</version>
 				<executions>
 					<execution>
-						<id>package</id>
-						<phase>package</phase>
+						<id>verify</id>
+						<phase>verify</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<archiveClasses>false</archiveClasses>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -513,7 +559,7 @@
 				<version>2.9</version>
 				<configuration>
 					<links>
-						<link>http://download.oracle.com/javase/6/docs/api/</link>
+						<link>http://download.oracle.com/javase/7/docs/api/</link>
 					</links>
 				</configuration>
 			</plugin>

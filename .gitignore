@@ -1,6 +1,7 @@
-/.classpath
-/.pmd
-/.project
-/.settings
+.externalToolBuilders
+.settings
+.classpath
+.pmd
+.project
 distribution.xml
-/target
+target
