@@ -355,7 +355,7 @@
 				<version>3.0.1</version>
 				<executions>
 					<execution>
-						<id></id>
+						<id>pmd</id>
 						<phase>package</phase>
 						<goals>
 							<goal>pmd</goal>
