@@ -24,6 +24,7 @@
 package org.maxdocs.taglib;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.UnsupportedEncodingException;
 
@@ -98,7 +99,7 @@ public class PageNameTagTest extends AbstractTagTest
 		String styleClass = null;
 		String expectedOutput = "<h1 class=\"maxdocsPageName\">" + PAGE_NAME + "</h1>";
 
-		testTag(plain, styleClass, expectedOutput);
+		assertTrue("testTag must return true", testTag(new Object[] { plain, styleClass }, expectedOutput));
 	}
 
 
@@ -121,7 +122,7 @@ public class PageNameTagTest extends AbstractTagTest
 		String styleClass = "style";
 		String expectedOutput = "<h1 class=\"" + styleClass + "\">" + htmlPage.getPageName() + "</h1>";
 
-		testTag(plain, styleClass, expectedOutput);
+		assertTrue("testTag must return true", testTag(new Object[] { plain, styleClass }, expectedOutput));
 	}
 
 
@@ -144,7 +145,7 @@ public class PageNameTagTest extends AbstractTagTest
 		String styleClass = null;
 		String expectedOutput = htmlPage.getPageName();
 
-		testTag(plain, styleClass, expectedOutput);
+		assertTrue("testTag must return true", testTag(new Object[] { plain, styleClass }, expectedOutput));
 	}
 
 
@@ -168,7 +169,7 @@ public class PageNameTagTest extends AbstractTagTest
 		String styleClass = "style";
 		String expectedOutput = htmlPage.getPageName();
 
-		testTag(plain, styleClass, expectedOutput);
+		assertTrue("testTag must return true", testTag(new Object[] { plain, styleClass }, expectedOutput));
 	}
 
 
@@ -210,13 +211,13 @@ public class PageNameTagTest extends AbstractTagTest
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
-	private void testTag(Boolean plain, String styleClass, String expectedOutput) throws JspException,
+	protected boolean testTag(Object[] params, String expectedOutput) throws JspException,
 		UnsupportedEncodingException
 	{
 		EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(htmlPage);
 		replayAllMocks();
 
-		super.setCommonAttributes(plain, styleClass, pageNameTag);
+		super.setCommonAttributes((Boolean) params[0], (String) params[1], pageNameTag);
 
 		int tagReturnValue = pageNameTag.doStartTag();
 		assertEquals("Tag should return 'SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
@@ -225,5 +226,7 @@ public class PageNameTagTest extends AbstractTagTest
 		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
+
+		return true;
 	}
 }

@@ -106,7 +106,7 @@ public class InsertPageTagTest extends AbstractTagTest
 		String name = PAGE_PATH;
 		String expectedOutput = "<div class=\"maxdocsInsertedPage\">" + CONTENT + "</div>";
 
-		assertTrue("testTag must return true", testTag(styleClass, name, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] { styleClass, name }, expectedOutput));
 	}
 
 
@@ -130,7 +130,7 @@ public class InsertPageTagTest extends AbstractTagTest
 		String name = PAGE_PATH;
 		String expectedOutput = "<div class=\"myStyle\">" + CONTENT + "</div>";
 
-		assertTrue("testTag must return true", testTag(styleClass, name, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] { styleClass, name }, expectedOutput));
 	}
 
 
@@ -148,16 +148,16 @@ public class InsertPageTagTest extends AbstractTagTest
 
 		String expectedOutput = "";
 
-		assertTrue("testTag must return true", testTag(null, null, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[2], expectedOutput));
 	}
 
 
-	private boolean testTag(String styleClass, String name, String expectedOutput) throws JspException,
+	protected boolean testTag(Object[] params, String expectedOutput) throws JspException,
 		UnsupportedEncodingException
 	{
-		if (name != null)
+		if (params[1] != null)
 		{
-			EasyMock.expect(mockEngine.getHtmlPage(name)).andReturn(htmlPage);
+			EasyMock.expect(mockEngine.getHtmlPage((String) params[1])).andReturn(htmlPage);
 		}
 		else
 		{
@@ -166,11 +166,11 @@ public class InsertPageTagTest extends AbstractTagTest
 
 		replayAllMocks();
 
-		super.setCommonAttributes(null, styleClass, insertPageTag);
+		super.setCommonAttributes(null, (String) params[0], insertPageTag);
 
-		if (StringUtils.isNotBlank(name))
+		if (StringUtils.isNotBlank((String) params[1]))
 		{
-			insertPageTag.setName(name);
+			insertPageTag.setName((String) params[1]);
 		}
 
 		int tagReturnValue = insertPageTag.doStartTag();

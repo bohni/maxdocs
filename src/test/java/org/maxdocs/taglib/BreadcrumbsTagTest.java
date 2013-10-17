@@ -95,7 +95,7 @@ public class BreadcrumbsTagTest extends AbstractTagTest
 		String expectedOutput = "<ul class=\"maxdocsBreadcrumbs\"><li><a href=\"/" + PAGE_NAME
 			+ "\" title=\"/" + PAGE_NAME + "\">" + PAGE_NAME + "</a></li></ul>";
 
-		assertTrue("testTag must return true", testTag(styleClass, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[]{styleClass}, expectedOutput));
 	}
 
 
@@ -118,16 +118,16 @@ public class BreadcrumbsTagTest extends AbstractTagTest
 		String expectedOutput = "<ul class=\"" + styleClass + "\"><li><a href=\"/" + PAGE_NAME
 			+ "\" title=\"/" + PAGE_NAME + "\">" + PAGE_NAME + "</a></li></ul>";
 
-		assertTrue("testTag must return true", testTag(styleClass, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[]{styleClass}, expectedOutput));
 	}
 
 
-	private boolean testTag(String styleClass, String expectedOutput) throws JspException,
+	protected boolean testTag(Object[] params, String expectedOutput) throws JspException,
 		UnsupportedEncodingException
 	{
 		replayAllMocks();
 
-		super.setCommonAttributes(null, styleClass, breadcrumbsTag);
+		super.setCommonAttributes(null, (String)params[0], breadcrumbsTag);
 
 		int tagReturnValue = breadcrumbsTag.doStartTag();
 		assertEquals("Tag should return 'TagSupport.SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);

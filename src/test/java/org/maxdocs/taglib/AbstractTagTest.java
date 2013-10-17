@@ -23,6 +23,10 @@
  */
 package org.maxdocs.taglib;
 
+import java.io.UnsupportedEncodingException;
+
+import javax.servlet.jsp.JspException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.maxdocs.MaxDocsConstants;
@@ -38,7 +42,6 @@ import org.springframework.web.context.WebApplicationContext;
  * TODO, 16.01.2013: Documentation
  * 
  * @author Team maxdocs.org
- *
  */
 public abstract class AbstractTagTest
 {
@@ -49,10 +52,10 @@ public abstract class AbstractTagTest
 	protected MockPageContext mockPageContext;
 	private WebApplicationContext mockWebApplicationContext;
 
+
 	/**
 	 * setUp:
 	 * Setup the fixture:
-	 * 
 	 * Create the needed mock objects for the tests
 	 * 
 	 * @see junit.framework.TestCase#setUp()
@@ -63,21 +66,20 @@ public abstract class AbstractTagTest
 
 		// Create the mock servlet context
 		mockServletContext = new MockServletContext();
-	
+
 		// Create the mock Spring Context so that we can mock out the calls to getBean in the custom tag
 		// Then add the Spring Context to the Servlet Context
 		mockWebApplicationContext = EasyMock.createMock(WebApplicationContext.class);
 		mockServletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,
 			mockWebApplicationContext);
-	
+
 		// Create the MockPageContext passing in the mock servlet context created above
 		mockPageContext = new MockPageContext(mockServletContext);
-	
-	
+
 		// Create the mocked MaxDocs engine
 		mockEngine = EasyMock.createMock(MaxDocs.class);
 		mockServletContext.setAttribute(MaxDocsConstants.MAXDOCS_ENGINE, mockEngine);
-	
+
 		// Whenever you make a call to the doStartTag() method on the custom tag it calls getServletContext()
 		// on the WebApplicationContext. So to avoid having to put this expect statement in every test
 		// I've included it in the setUp()
@@ -85,17 +87,27 @@ public abstract class AbstractTagTest
 			.anyTimes();
 	}
 
+
 	protected void replayAllMocks()
 	{
 		EasyMock.replay(mockWebApplicationContext, mockEngine);
 	}
+
 
 	protected void verifyAllMocks()
 	{
 		EasyMock.verify(mockWebApplicationContext, mockEngine);
 	}
 
-	
+
+	/**
+	 * setCommonAttributes:
+	 * Set common attributes of tags
+	 * 
+	 * @param plain
+	 * @param styleClass
+	 * @param tag
+	 */
 	protected void setCommonAttributes(Boolean plain, String styleClass, AbstractMaxDocsTagSupport tag)
 	{
 		if (plain != null)
@@ -107,4 +119,8 @@ public abstract class AbstractTagTest
 			tag.setStyleClass(styleClass);
 		}
 	}
+
+
+	abstract protected boolean testTag(Object[] params, String expectedOutput) throws JspException,
+		UnsupportedEncodingException;
 }

@@ -24,6 +24,7 @@
 package org.maxdocs.taglib;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -108,7 +109,8 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 		String styleClass = null;
 		String expectedOutput = "<span class=\"maxdocsMarkupLanguage\">" + markupMediaWiki[0] + "</span>";
 
-		testTag(plain, styleClass, "output", expectedOutput);
+		assertTrue("testTag must return true",
+			testTag(new Object[] { plain, styleClass, "output" }, expectedOutput));
 	}
 
 
@@ -134,7 +136,8 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
 			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
 
-		testTag(plain, styleClass, "input", expectedOutput);
+		assertTrue("testTag must return true",
+			testTag(new Object[] { plain, styleClass, "input" }, expectedOutput));
 	}
 
 
@@ -157,7 +160,8 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 		String styleClass = null;
 		String expectedOutput = markupMediaWiki[0];
 
-		testTag(plain, styleClass, "output", expectedOutput);
+		assertTrue("testTag must return true",
+			testTag(new Object[] { plain, styleClass, "output" }, expectedOutput));
 	}
 
 
@@ -184,7 +188,8 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
 			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
 
-		testTag(plain, styleClass, "input", expectedOutput);
+		assertTrue("testTag must return true",
+			testTag(new Object[] { plain, styleClass, "input" }, expectedOutput));
 	}
 
 
@@ -207,7 +212,8 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 		String styleClass = "style";
 		String expectedOutput = "<span class=\"" + styleClass + "\">" + markupMediaWiki[0] + "</span>";
 
-		testTag(plain, styleClass, "output", expectedOutput);
+		assertTrue("testTag must return true",
+			testTag(new Object[] { plain, styleClass, "output" }, expectedOutput));
 	}
 
 
@@ -234,7 +240,8 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
 			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
 
-		testTag(plain, styleClass, "input", expectedOutput);
+		assertTrue("testTag must return true",
+			testTag(new Object[] { plain, styleClass, "input" }, expectedOutput));
 	}
 
 
@@ -258,7 +265,8 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 		String styleClass = "style";
 		String expectedOutput = markupMediaWiki[0];
 
-		testTag(plain, styleClass, "output", expectedOutput);
+		assertTrue("testTag must return true",
+			testTag(new Object[] { plain, styleClass, "output" }, expectedOutput));
 	}
 
 
@@ -286,7 +294,8 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
 			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
 
-		testTag(plain, styleClass, "input", expectedOutput);
+		assertTrue("testTag must return true",
+			testTag(new Object[] { plain, styleClass, "input" }, expectedOutput));
 	}
 
 
@@ -324,7 +333,7 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 	 * <li><code>type = "input"</code></li>
 	 * <li><code>size = "2"</code></li>
 	 * </ul>
-		 * 
+	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
@@ -333,11 +342,11 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 	{
 		log.trace("testInputPageNotExists");
 
-		String expectedOutput = "<select class=\"maxdocsMarkupLanguage\" name=\"markupLanguage\" size=\"2\">" +
-				"<option value=\"Creole\" >Creole</option>" +
-				"<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>" +
-				"<option value=\"JspWiki\" >JspWiki</option>" +
-				"</select>";
+		String expectedOutput = "<select class=\"maxdocsMarkupLanguage\" name=\"markupLanguage\" size=\"2\">"
+			+ "<option value=\"Creole\" >Creole</option>"
+			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
+			+ "<option value=\"JspWiki\" >JspWiki</option>"
+			+ "</select>";
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
 		replayAllMocks();
@@ -364,16 +373,16 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
-	private void testTag(Boolean plain, String styleClass, String type, String expectedOutput)
+	protected boolean testTag(Object[] params, String expectedOutput)
 		throws JspException, UnsupportedEncodingException
 	{
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(htmlPage);
 		replayAllMocks();
 
-		super.setCommonAttributes(plain, styleClass, markupLanguageTag);
-		if (StringUtils.isNotBlank(type))
+		super.setCommonAttributes((Boolean) params[0], (String) params[1], markupLanguageTag);
+		if (StringUtils.isNotBlank((String) params[2]))
 		{
-			markupLanguageTag.setType(type);
+			markupLanguageTag.setType((String) params[2]);
 		}
 
 		int tagReturnValue = markupLanguageTag.doStartTag();
@@ -383,5 +392,7 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
+
+		return true;
 	}
 }
