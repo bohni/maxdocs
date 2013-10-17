@@ -108,7 +108,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + AUTHOR_NAME
 			+ "</a></span>";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -134,7 +134,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + AUTHOR_NAME
 			+ "</a></span>";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -159,7 +159,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String type = "author";
 		String expectedOutput = AUTHOR_NAME;
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -184,7 +184,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String type = "author";
 		String expectedOutput = AUTHOR_NAME;
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 
 	}
 
@@ -210,7 +210,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">" + EDITOR_NAME
 			+ "</a></span>";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -236,7 +236,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">" + EDITOR_NAME
 			+ "</a></span>";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -261,7 +261,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String type = "editor";
 		String expectedOutput = EDITOR_NAME;
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -287,7 +287,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String type = "editor";
 		String expectedOutput = EDITOR_NAME;
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -312,7 +312,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String expectedOutput = "<span class=\"maxdocsAuthor\"><a href=\"#\">unsupported type '" + type
 			+ "'</a></span>";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -338,7 +338,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String expectedOutput = "<span class=\"" + styleClass + "\"><a href=\"#\">unsupported type '" + type
 			+ "'</a></span>";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -363,7 +363,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String type = "test";
 		String expectedOutput = "unsupported type '" + type + "'";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -389,7 +389,7 @@ public class AuthorTagTest extends AbstractTagTest
 		String type = "test";
 		String expectedOutput = "unsupported type '" + type + "'";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] {plain, styleClass, type}, expectedOutput));
 	}
 
 
@@ -420,30 +420,19 @@ public class AuthorTagTest extends AbstractTagTest
 	}
 
 
-	private boolean testTag(Boolean plain, String styleClass, String type, String expectedOutput)
+	/* (non-Javadoc)
+	 * @see org.maxdocs.taglib.AbstractTagTest#testTag(java.lang.Object[], java.lang.String)
+	 */
+	protected boolean testTag(Object[] params, String expectedOutput)
 		throws JspException, UnsupportedEncodingException
 	{
-		if (StringUtils.isBlank(PAGE_PATH))
-		{
-			EasyMock.expect(mockEngine.getHtmlPage("")).andReturn(null);
-		}
-		else
-		{
-			EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(htmlPage);
-		}
+		EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(htmlPage);
 		replayAllMocks();
 
-		if (plain != null)
+		super.setCommonAttributes((Boolean)params[0], (String)params[1], authorTag);
+		if (StringUtils.isNotBlank((String)params[2]))
 		{
-			authorTag.setPlain(plain.booleanValue());
-		}
-		if (StringUtils.isNotBlank(styleClass))
-		{
-			authorTag.setStyleClass(styleClass);
-		}
-		if (StringUtils.isNotBlank(type))
-		{
-			authorTag.setType(type);
+			authorTag.setType((String)params[2]);
 		}
 
 		int tagReturnValue = authorTag.doStartTag();

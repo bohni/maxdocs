@@ -191,7 +191,6 @@ public class FileStorage implements Storage
 				// No longer available on HDD. Remove from mapping.
 				files.remove(pagePath);
 				updateTagMap(pagePath, "");
-
 			}
 		}
 		return exists;
@@ -224,7 +223,6 @@ public class FileStorage implements Storage
 	@Override
 	public List<PageLight> getVersions(String pagePath)
 	{
-		// TODO Auto-generated method stub
 		log.trace("getVersions()");
 		List<PageLight> list = new ArrayList<>();
 		if(exists(pagePath))
@@ -374,24 +372,35 @@ public class FileStorage implements Storage
 			filenameNew = contentPath + max + ".txt";
 		}
 
-		if (success)
+		if (success) // saving old page
 		{
 			newPage.setVersion(newPage.getVersion() + 1);
 			success = writePage(newPage, filenameNew);
-			if (success)
+			if (success) // saving new page
 			{
 				files.put(newPage.getPagePath(), StringUtils.substringAfterLast(filenameNew, contentPath));
+			}
+			else
+			{
+				// TODO: what must be done when the new page has not been saved
 			}
 		}
 		else
 		{
-			// TODO: Was tun?
+			// TODO: what must be done when the old page has not been saved
 		}
 
 		return success;
 	}
 
 
+	/**
+	 * pageToString:
+	 * Converts a MarkupPage object into a string
+	 * 
+	 * @param page the page to convert
+	 * @return the page data as string
+	 */
 	protected String pageToString(MarkupPage page)
 	{
 		log.trace("pageToString({})", page.getPagePath());
@@ -404,7 +413,7 @@ public class FileStorage implements Storage
 		content.append("creationDateFirst=" + sdf.format(page.getFirstVersionCreationDate()) + lineSeperator);
 		content
 			.append("creationDateThis=" + sdf.format(page.getCurrentVersionCreationDate()) + lineSeperator);
-		content.append("contentType=" + page.getMarkupLanguage() + lineSeperator);
+		content.append("markupLanguage=" + page.getMarkupLanguage() + lineSeperator);
 		content.append("version=" + page.getVersion() + lineSeperator);
 		content.append("tags=" + page.getTagsAsString() + lineSeperator);
 		updateTagMap(page.getPagePath(), page.getTagsAsString());
@@ -510,59 +519,80 @@ public class FileStorage implements Storage
 	 * 
 	 * @param rebuild if set to <code>true</code>, the indexes are build from scratch.
 	 */
-	private void buildIndexes(boolean rebuild)
+	public void buildIndexes(boolean rebuild)
 	{
 		// TODO:
 		// Indexes must be cached on disk. How?
 		// Read from disk or build them
 		// Possibility to force rebuild of indexes (after crash, bug ...).
-
-		File storage = new File(contentPath);
-		files = new HashMap<String, String>();
-		links2me = new HashMap<String, List<String>>();
-		tagMap = new HashMap<String, TagCloudEntry>();
-		for (File child : storage.listFiles())
+		
+		if(!rebuild)
 		{
-			if (child.isDirectory())
+			// TODO: Load indexes from disk
+		   if(false) // indexes exists
+		   {
+			   //load indexes
+				files = new HashMap<String, String>();
+				links2me = new HashMap<String, List<String>>();
+				tagMap = new HashMap<String, TagCloudEntry>();
+		   }
+		   else
+		   {
+			   rebuild = true;
+		   }
+		}
+
+		if(rebuild)
+		{
+			File storage = new File(contentPath);
+			files = new HashMap<String, String>();
+			links2me = new HashMap<String, List<String>>();
+			tagMap = new HashMap<String, TagCloudEntry>();
+			for (File child : storage.listFiles())
 			{
-				continue; // Ignore all directories
-			}
-			Scanner scanner = null;
-			try
-			{
-				scanner = new Scanner(new FileInputStream(child), "UTF-8");
-				String line = null;
-				String pagePath = null;
-				String tagsString = null;
-				while (scanner.hasNextLine())
+				if (child.isDirectory())
 				{
-					line = scanner.nextLine();
-					if (StringUtils.startsWith(line, "pagePath"))
+					continue; // Ignore all directories
+				}
+				Scanner scanner = null;
+				try
+				{
+					scanner = new Scanner(new FileInputStream(child), "UTF-8");
+					String line = null;
+					String pagePath = null;
+					String tagsString = null;
+					while (scanner.hasNextLine())
 					{
-						pagePath = StringUtils.substringAfterLast(line, "=");
-						files.put(pagePath, child.getName());
+						line = scanner.nextLine();
+						if (StringUtils.startsWith(line, "pagePath"))
+						{
+							pagePath = StringUtils.substringAfterLast(line, "=");
+							files.put(pagePath, child.getName());
+						}
+						if (StringUtils.startsWith(line, "tags"))
+						{
+							tagsString = StringUtils.substringAfterLast(line, "=");
+						}
 					}
-					if (StringUtils.startsWith(line, "tags"))
+					if (tagsString != null)
 					{
-						tagsString = StringUtils.substringAfterLast(line, "=");
+						updateTagMap(pagePath, tagsString);
 					}
 				}
-				if (tagsString != null)
+				catch (FileNotFoundException e)
 				{
-					updateTagMap(pagePath, tagsString);
+					log.error("Error while reading files into internal map.", e);
+				}
+				finally
+				{
+					if (scanner != null)
+					{
+						scanner.close();
+					}
 				}
 			}
-			catch (FileNotFoundException e)
-			{
-				log.error("Error while reading files into internal map.", e);
-			}
-			finally
-			{
-				if (scanner != null)
-				{
-					scanner.close();
-				}
-			}
+			
+			// TODO: save indexes to disk
 		}
 	}
 
@@ -689,7 +719,7 @@ public class FileStorage implements Storage
 				{
 					markupPage.setAuthor(StringUtils.substringAfterLast(line, "="));
 				}
-				else if (StringUtils.startsWith(line, "contentType"))
+				else if (StringUtils.startsWith(line, "markupLanguage"))
 				{
 					markupPage.setMarkupLanguage(StringUtils.substringAfterLast(line, "="));
 				}
@@ -797,5 +827,26 @@ public class FileStorage implements Storage
 		}
 		log.debug("writePage: page {} saved as {}", page.getPagePath(), filename);
 		return success;
+	}
+	
+	/**
+	 * addReferer:
+	 * Callback for adding referers to a page
+	 * 
+	 * @param pagePath path of the page
+	 * @param refererPagePath path of the referer
+	 */
+	public void addReferer(String pagePath, String refererPagePath)
+	{
+		List<String> referers = links2me.get(pagePath);
+		if(referers == null)
+		{
+			referers = new ArrayList<>();
+		}
+		if(!referers.contains(refererPagePath))
+		{
+			referers.add(refererPagePath);
+		}
+		links2me.put(pagePath, referers);
 	}
 }

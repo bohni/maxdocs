@@ -23,27 +23,38 @@
  */
 package org.maxdocs.parser;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.maxdocs.data.HtmlPage;
 import org.maxdocs.data.MarkupPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * MarkupParserTest
- *
+ * 
  * @author Team maxdocs.org
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/spring-context-parser.xml" })
 public class MarkupParserTest
 {
-	 private static Logger log = LoggerFactory.getLogger(MarkupParserTest.class);
+	private static Logger log = LoggerFactory.getLogger(MarkupParserTest.class);
+	
+	@Autowired
+	private MarkupParser markupParser;
 
 	/**
 	 * setUp()
-	 *
+	 * 
 	 * @throws java.lang.Exception
 	 */
 	@Before
@@ -51,7 +62,6 @@ public class MarkupParserTest
 	{
 		// nothing to do yet
 	}
-
 
 
 	/**
@@ -66,15 +76,12 @@ public class MarkupParserTest
 		markupPage.setMarkupLanguage("MediaWiki");
 		markupPage.setVersion(1);
 		markupPage.setAuthor("Karl Klämmerle");
-		markupPage.setFirstVersionCreationDate(new Date(42, 1, 4, 8, 15));
+		markupPage.setFirstVersionCreationDate(new Date());
 		markupPage.setEditor("Rudi Rüssel");
-		markupPage.setCurrentVersionCreationDate(new Date(66, 5, 6, 6, 6));
-		
-		MarkupParser markupParser = new MarkupParserImpl();
+		markupPage.setCurrentVersionCreationDate(new Date());
+
 		HtmlPage htmlPage = markupParser.parseToHtml(markupPage);
-		
-		log.debug(htmlPage.getContent());
-		
-		// fail("Not yet implemented");
+
+		assertEquals("", "<h3 id=\"Heading\">Heading</h3><p>Hier normaler Text mit <i>italic</i> und <b>bold</b>.</p>", htmlPage.getContent());
 	}
 }

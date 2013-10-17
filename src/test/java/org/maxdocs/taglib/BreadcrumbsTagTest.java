@@ -32,7 +32,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.maxdocs.MaxDocsConstants;
@@ -96,7 +95,7 @@ public class BreadcrumbsTagTest extends AbstractTagTest
 		String expectedOutput = "<ul class=\"maxdocsBreadcrumbs\"><li><a href=\"/" + PAGE_NAME
 			+ "\" title=\"/" + PAGE_NAME + "\">" + PAGE_NAME + "</a></li></ul>";
 
-		assertTrue("testTag must return true", testTag(styleClass, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[]{styleClass}, expectedOutput));
 	}
 
 
@@ -119,19 +118,16 @@ public class BreadcrumbsTagTest extends AbstractTagTest
 		String expectedOutput = "<ul class=\"" + styleClass + "\"><li><a href=\"/" + PAGE_NAME
 			+ "\" title=\"/" + PAGE_NAME + "\">" + PAGE_NAME + "</a></li></ul>";
 
-		assertTrue("testTag must return true", testTag(styleClass, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[]{styleClass}, expectedOutput));
 	}
 
 
-	private boolean testTag(String styleClass, String expectedOutput) throws JspException,
+	protected boolean testTag(Object[] params, String expectedOutput) throws JspException,
 		UnsupportedEncodingException
 	{
 		replayAllMocks();
 
-		if (StringUtils.isNotBlank(styleClass))
-		{
-			breadcrumbsTag.setStyleClass(styleClass);
-		}
+		super.setCommonAttributes(null, (String)params[0], breadcrumbsTag);
 
 		int tagReturnValue = breadcrumbsTag.doStartTag();
 		assertEquals("Tag should return 'TagSupport.SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);

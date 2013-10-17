@@ -33,7 +33,6 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.maxdocs.MaxDocsConstants;
@@ -55,6 +54,7 @@ public class MessagesTagTest extends AbstractTagTest
 
 	private MessagesTag messagesTag;
 
+
 	/**
 	 * setUp:
 	 * Prepare test data
@@ -71,6 +71,7 @@ public class MessagesTagTest extends AbstractTagTest
 		messagesTag = new MessagesTag();
 		messagesTag.setPageContext(mockPageContext);
 	}
+
 
 	/**
 	 * testDoStartTagMessagesEmpty:
@@ -93,7 +94,7 @@ public class MessagesTagTest extends AbstractTagTest
 		String styleClass = null;
 		String expectedOutput = "";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[]{ plain, styleClass}, expectedOutput));
 	}
 
 
@@ -112,28 +113,33 @@ public class MessagesTagTest extends AbstractTagTest
 		// Test data
 		List<Message> messages = new ArrayList<>();
 		messages.add(new Message("Message", Severity.ERROR));
+		messages.add(new Message("Message", Severity.WARNING));
+		messages.add(new Message("Message", Severity.INFO));
+		messages.add(new Message("Message"));
 
 		mockPageContext.getRequest().setAttribute(MaxDocsConstants.MAXDOCS_MESSAGES, messages);
 
 		Boolean plain = null;
 		String styleClass = null;
-		String expectedOutput = "<ul class=\"maxdocsMessages\"><li>Message</li></ul>";
+		String expectedOutput = "<ul class=\"maxdocsMessages\"><li class=\"error\">Message</li>"
+			+ "<li class=\"warning\">Message</li><li class=\"info\">Message</li>"
+			+ "<li class=\"info\">Message</li></ul>";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[]{ plain, styleClass}, expectedOutput));
 	}
 
 
 	/**
-	 * testDoStartTagMessagesWrongClass:
-	 * Check default output for wrong class.
+	 * testDoStartTagEmptyMessages:
+	 * Check default output for empty message list.
 	 * 
 	 * @throws JspException
 	 * @throws UnsupportedEncodingException
 	 */
 	@Test
-	public void testDoStartTagMessagesWrongClass() throws JspException, UnsupportedEncodingException
+	public void testDoStartTagEmptyMessages() throws JspException, UnsupportedEncodingException
 	{
-		log.trace("testDoStartTagMessagesDefault");
+		log.trace("testDoStartTagEmptyMessages");
 
 		// Test data
 		List<Message> messages = null;
@@ -144,23 +150,16 @@ public class MessagesTagTest extends AbstractTagTest
 		String styleClass = null;
 		String expectedOutput = "";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[] { plain, styleClass }, expectedOutput));
 	}
 
 
-	private boolean testTag(Boolean plain, String styleClass, String expectedOutput)
+	protected boolean testTag(Object[] params, String expectedOutput)
 		throws JspException, UnsupportedEncodingException
 	{
 		replayAllMocks();
 
-		if (plain != null)
-		{
-			messagesTag.setPlain(plain.booleanValue());
-		}
-		if (StringUtils.isNotBlank(styleClass))
-		{
-			messagesTag.setStyleClass(styleClass);
-		}
+		super.setCommonAttributes((Boolean) params[0], (String) params[1], messagesTag);
 
 		int tagReturnValue = messagesTag.doStartTag();
 		assertEquals("Tag should return 'TagSupport.SKIP_BODY'", TagSupport.SKIP_BODY, tagReturnValue);
@@ -169,7 +168,7 @@ public class MessagesTagTest extends AbstractTagTest
 		assertEquals("Output should be '" + expectedOutput + "'", expectedOutput, output);
 
 		verifyAllMocks();
-		
+
 		return true;
 	}
 }

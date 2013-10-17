@@ -121,7 +121,23 @@ public class DateTagTest extends AbstractTagTest
 
 		String expectedOutput = "<span class=\"maxdocsDate\">" + DATE_STRING + "</span>";
 
-		assertTrue("testTag must return true", testTag(plain, styleClass, type, format, expectedOutput));
+		assertTrue("testTag must return true", testTag(new Object[]{plain, styleClass, type, format}, expectedOutput));
+	}
+
+
+	@Test
+	public void testCreationPlain() throws JspException, UnsupportedEncodingException
+	{
+		log.trace("testCreationDefault");
+
+		Boolean plain = Boolean.TRUE;
+		String styleClass = null;
+		String type = "creation";
+		String format = null;
+
+		String expectedOutput = DATE_STRING;
+
+		assertTrue("testTag must return true", testTag(new Object[]{plain, styleClass, type, format}, expectedOutput));
 	}
 
 
@@ -153,28 +169,21 @@ public class DateTagTest extends AbstractTagTest
 	}
 
 
-	private boolean testTag(Boolean plain, String styleClass, String type, String format,
-							String expectedOutput) throws JspException, UnsupportedEncodingException
+	protected boolean testTag(Object[] params, String expectedOutput) throws JspException,
+		UnsupportedEncodingException
 	{
 		EasyMock.expect(mockEngine.getHtmlPage(PAGE_PATH)).andReturn(htmlPage);
 		replayAllMocks();
 
-		if (plain != null)
+		super.setCommonAttributes((Boolean)params[0], (String)params[1], dateTag);
+		if (StringUtils.isNotBlank((String)params[2]))
 		{
-			dateTag.setPlain(plain.booleanValue());
-		}
-		if (StringUtils.isNotBlank(styleClass))
-		{
-			dateTag.setStyleClass(styleClass);
-		}
-		if (StringUtils.isNotBlank(type))
-		{
-			dateTag.setType(type);
+			dateTag.setType((String)params[2]);
 		}
 
-		if (StringUtils.isNotBlank(format))
+		if (StringUtils.isNotBlank((String)params[3]))
 		{
-			dateTag.setFormat(format);
+			dateTag.setFormat((String)params[3]);
 		}
 
 		int tagReturnValue = dateTag.doStartTag();

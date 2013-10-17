@@ -46,9 +46,9 @@ public class MessagesTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(MessagesTag.class);
 
-	private String error = "";
-	private String warning = "";
-	private String info = "";
+	private String error = "error";
+	private String warning = "warning";
+	private String info = "info";
 
 	/**
 	 * Default constructor.
@@ -109,15 +109,15 @@ public class MessagesTag extends AbstractMaxDocsTagSupport
 		StringBuilder cssClass =  new StringBuilder(" class=\"");
 		if(Severity.ERROR.equals(severity))
 		{
-			cssClass.append(this.error);
+			cssClass.append(getError());
 		}
-		else if(Severity.WARNING.equals(severity))
+		if(Severity.WARNING.equals(severity))
 		{
-			cssClass.append(this.warning);
+			cssClass.append(getWarning());
 		}
-		else if(Severity.INFO.equals(severity))
+		if(Severity.INFO.equals(severity))
 		{
-			cssClass.append(this.info);
+			cssClass.append(getInfo());
 		}
 		cssClass.append("\"");
 		if(StringUtils.equals(" class=\"\"", cssClass.toString()))

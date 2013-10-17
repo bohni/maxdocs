@@ -29,7 +29,6 @@ package org.maxdocs.taglib;
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxdocs.MaxDocsConstants;
@@ -44,13 +43,21 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Team maxdocs.org
  */
-public class InsertPageTag extends TagSupport
+public class InsertPageTag extends AbstractMaxDocsTagSupport
 {
 	private static Logger log = LoggerFactory.getLogger(InsertPageTag.class);
 
-	private String styleClass = "maxdocsInsertedPage";
-
 	private String name = "";
+
+
+	/**
+	 * Default constructor.
+	 * Creates an {@link InsertPageTag} object.
+	 */
+	public InsertPageTag()
+	{
+		super("maxdocsInsertedPage");
+	}
 
 
 	/* (non-Javadoc)
@@ -78,29 +85,6 @@ public class InsertPageTag extends TagSupport
 			log.error(e.getMessage(), e);
 		}
 		return SKIP_BODY;
-	}
-
-
-	/**
-	 * getStyleClass: Returns the styleClass.
-	 * 
-	 * @return the styleClass
-	 */
-	public String getStyleClass()
-	{
-		return styleClass;
-	}
-
-
-	/**
-	 * setStyleClass: Sets the styleClass.
-	 * 
-	 * @param styleClass
-	 *        the styleClass to set
-	 */
-	public void setStyleClass(final String styleClass)
-	{
-		this.styleClass = styleClass;
 	}
 
 

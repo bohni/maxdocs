@@ -37,7 +37,7 @@
 
 	<logger
 		name="org.maxdocs"
-		level="trace" />
+		level="warn" />
 
 	<logger
 		name="org.mortbay.log"
