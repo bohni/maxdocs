@@ -29,9 +29,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<prerequisites>
-		<maven>3.0.0</maven>
-	</prerequisites>
+
 	<groupId>org.maxdocs</groupId>
 	<artifactId>maxdocs</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
@@ -81,6 +79,10 @@
 			<timezone>Europe/Berlin</timezone>
 		</developer>
 	</developers>
+
+	<prerequisites>
+		<maven>3.0.0</maven>
+	</prerequisites>
 
 	<scm>
 		<url>https://github.com/bohni/maxdocs/</url>
@@ -477,7 +479,7 @@
 				<executions>
 					<execution>
 						<id>verify</id>
-						<phase>verify</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
