@@ -1,7 +1,6 @@
 .externalToolBuilders
 .settings
+target
 .classpath
 .pmd
 .project
-distribution.xml
-target
