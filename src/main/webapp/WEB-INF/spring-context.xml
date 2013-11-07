@@ -133,6 +133,17 @@
 			ref="markupLanguageFactory" />
 	</bean>
 
+	<!-- Plugins -->
+	
+	<bean
+		id="pluginFactory"
+		class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+		<property
+			name="serviceLocatorInterface"
+			value="org.maxdocs.plugin.MaxDocsPluginFactory" />
+	</bean>
+	
+
 	<!-- Maxdocs engine -->
 	<bean
 		id="maxDocs"
