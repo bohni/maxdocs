@@ -254,11 +254,6 @@
 			<name>wikitext-maxdocs</name>
 			<url>http://maxdocs.org/maven-repository/</url>
 		</repository>
-		<repository>
-			<id>springsource-repo</id>
-			<name>SpringSource Repository</name>
-			<url>http://repo.springsource.org/release</url>
-		</repository>
 	</repositories>
 
 	<build>
