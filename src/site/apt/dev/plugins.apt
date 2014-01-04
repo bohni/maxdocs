@@ -31,4 +31,17 @@
 
 MaxDocs Plugins
 	
-	* Plugins verarbeiten bereits geparsten Content und ersetzen dort ihre Auszeichnung
+	* Plugins werden registriert und der Parser kann dann per Callback beim Parsen eines Plugin-Markup das 
+	  entsprechende Plugin aufrufen. Siehe auch {{./parser.html}}
+
+* Benötigte Plugins
+
+	* Index: Listet alle Seiten des Wikis auf
+	
+	* TableOfContent: Baut ein Inhaltsverzeichnis der Überschriften
+	
+	* RecentChanges: Zeigt die geänderten Seiten innerhalb des angegebenen Zeitraums an
+
+	* Image: Zeigt ein Bild an (von URL oder Anhang)
+	
+	* Gallery: Erzeugt eine Gallerie aus den Bildern des angegebenen Verzeichnises

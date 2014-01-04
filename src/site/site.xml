@@ -109,6 +109,9 @@
 					name="Parser"
 					href="dev/parser.html" />
 				<item
+					name="Plugins"
+					href="dev/plugins.html" />
+				<item
 					name="Storage"
 					href="dev/storage.html"/>
 				<item

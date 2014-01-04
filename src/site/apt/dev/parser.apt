@@ -57,7 +57,7 @@ MaxDocs Parser
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Sonstiges
 
-	* Nur für Syntax, lässt Plugin Auszeichnung unverändert
+	* Plugin Auszeichnungen werden per Callback-Methoden verarbeitet
 	
 	* {{http://greensopinion.blogspot.com/2008/08/textile-j-is-moving-to-mylyn-wikitext.html}}.\
 	  WikiText (Teil von Eclipse Mylyn) ist der Nachfolger von textile-j, siehe auch 
@@ -87,4 +87,53 @@ MaxDocs Parser
 	  {{http://dev.eclipse.org/git/org.eclipse.mylyn/org.eclipse.mylyn.git}} Mylyn\
 	  {{http://git.eclipse.org/gitroot/mylyn/org.eclipse.mylyn.incubator.git}} Mylyn Incubator
 	  
-	  
+* Technische Ansätze
+
+ Markup SimplePlugin (ohne Body):
+
++---
+	[{Pluginname key1=value1 key2=value2 /}]
++---
+
+ Markup KomplexPlugin:
+
++---
+	[{Pluginname key1=value1 key2=value2}]
+	Bodytext
+	[{/Pluginname}]
++---
+
+
+ Klassen
+
++---
+public interface PluginCallback
+{
+	/**
+	 * @returns String, mit dem erzeugten HTML-Markup
+	 */
+	 public String onPlugin(String pluginName, Map params);
+	 
+	/**
+	 * @returns String, mit dem erzeugten HTML-Markup
+	 */
+	 public String onPlugin(String pluginName, Map params, String body);
+}
++---
+
++---
+public class PluginManager implements PluginCallback
+{
+	public void registerPlugin(String name, Plugin plugin)
+	{...}
+}
++---
+
++---
+public class Parser
+{
+	public void registerPluginCallback(PluginCallback callback)
+	{...}
+}
++---
+

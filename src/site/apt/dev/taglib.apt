@@ -69,6 +69,3 @@ MaxDocs Taglib
  weitere geplante Tags
 
 	* variable: Liefert den Wert einer Variable, die in der Konfigurationsdatei definiert wird.
-
-	* gallery: Gallery nimmt als Attribut einen Pfad und bereitet daraus ein Album auf. Ggf. mit Ordnern zum navigieren,
-	  Lightbox für die Bildanzeige
