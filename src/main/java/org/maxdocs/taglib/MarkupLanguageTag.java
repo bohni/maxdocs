@@ -5,6 +5,8 @@ package org.maxdocs.taglib;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.servlet.jsp.JspException;
 
@@ -54,7 +56,8 @@ public class MarkupLanguageTag extends AbstractMaxDocsTagSupport
 			String pageName = (String) pageContext.getRequest().getAttribute(
 				MaxDocsConstants.MAXDOCS_PAGE_PATH);
 			HtmlPage htmlPage = engine.getHtmlPage(pageName);
-			Map<String, String> markupLanguages = engine.getMarkupLangages();
+			SortedMap<String, String> markupLanguages = new TreeMap<String, String>();
+			markupLanguages.putAll(engine.getMarkupLangages());
 
 			String markupLanguage = engine.getDefaultMarkupLangage();
 			if (htmlPage != null)

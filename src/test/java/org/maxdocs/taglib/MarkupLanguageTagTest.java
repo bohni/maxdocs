@@ -110,8 +110,9 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 		String styleClass = null;
 		String expectedOutput = "<select class=\"maxdocsMarkupLanguage\" name=\"markupLanguage\" size=\"1\">"
 			+ "<option value=\"Creole\" >Creole</option>"
+			+ "<option value=\"JspWiki\" >JspWiki</option>"
 			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
-			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
+			+ "</select>";
 
 		assertTrue("testTag must return true",
 			testTag(new Object[] { plain, styleClass, "input" }, expectedOutput));
@@ -162,8 +163,9 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 		String styleClass = null;
 		String expectedOutput = "<select class=\"maxdocsMarkupLanguage\" name=\"markupLanguage\" size=\"1\">"
 			+ "<option value=\"Creole\" >Creole</option>"
+			+ "<option value=\"JspWiki\" >JspWiki</option>"
 			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
-			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
+			+ "</select>";
 
 		assertTrue("testTag must return true",
 			testTag(new Object[] { plain, styleClass, "input" }, expectedOutput));
@@ -214,8 +216,9 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 		String styleClass = "style";
 		String expectedOutput = "<select class=\"" + styleClass + "\" name=\"markupLanguage\" size=\"1\">"
 			+ "<option value=\"Creole\" >Creole</option>"
+			+ "<option value=\"JspWiki\" >JspWiki</option>"
 			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
-			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
+			+ "</select>";
 
 		assertTrue("testTag must return true",
 			testTag(new Object[] { plain, styleClass, "input" }, expectedOutput));
@@ -268,8 +271,9 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 		String styleClass = "style";
 		String expectedOutput = "<select class=\"" + styleClass + "\" name=\"markupLanguage\" size=\"1\">"
 			+ "<option value=\"Creole\" >Creole</option>"
+			+ "<option value=\"JspWiki\" >JspWiki</option>"
 			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
-			+ "<option value=\"JspWiki\" >JspWiki</option>" + "</select>";
+			+ "</select>";
 
 		assertTrue("testTag must return true",
 			testTag(new Object[] { plain, styleClass, "input" }, expectedOutput));
@@ -321,8 +325,8 @@ public class MarkupLanguageTagTest extends AbstractTagTest
 
 		String expectedOutput = "<select class=\"maxdocsMarkupLanguage\" name=\"markupLanguage\" size=\"2\">"
 			+ "<option value=\"Creole\" >Creole</option>"
-			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
 			+ "<option value=\"JspWiki\" >JspWiki</option>"
+			+ "<option value=\"MediaWiki\" selected=\"selected\">MediaWiki</option>"
 			+ "</select>";
 
 		EasyMock.expect(mockEngine.getHtmlPage(pagePath)).andReturn(null);
