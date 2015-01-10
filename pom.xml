@@ -376,7 +376,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.4</version>
 				<configuration>
 					<locales>de,en</locales>
 				</configuration>
@@ -437,26 +437,7 @@
 					<failIfMissing>true</failIfMissing>
 					<quiet>false</quiet>
 					<strictCheck>true</strictCheck>
-					<excludes>
-						<!-- Bei folgenden Dateien nicht pruefen/eintragen (Lizenzvorlage, third party, ...) -->
-						<exclude>src/main/config/license/LICENSE.txt</exclude>
-						<exclude>src/main/java/com/kennardconsulting/core/net/UrlEncodedQueryString.java</exclude>
-						<exclude>src/main/java/org/maxdocs/apache/catalina/filters/SetCharacterEncodingFilter.java</exclude>
-						<exclude>src/main/webapp/internal/templates/default/yaml/**</exclude>
-						<exclude>src/main/webapp/internal/templates/default/css/**</exclude>
-						<exclude>src/main/webapp/internal/templates/default/js/jquery*</exclude>
-						<exclude>src/main/webapp/internal/templates/flexible/yaml/**</exclude>
-						<exclude>src/main/webapp/internal/templates/flexible/css/**</exclude>
-						<exclude>src/main/webapp/internal/templates/flexible/js/jquery*</exclude>
-						<exclude>src/test/resources/filestorage/**</exclude>
-						<exclude>src/site/resources/maxdocs.epf</exclude>
-						<exclude>src/site/resources/*.pdf</exclude>
-						<exclude>target/**</exclude>
-						<exclude>**/delete.me</exclude>
-					</excludes>
 					<includes>
-						<include>src/**</include>
-						<include>src/main/webapp/template/template.xhtml</include>
 						<include>LICENSE.txt</include>
 					</includes>
 					<useDefaultExcludes>true</useDefaultExcludes>
