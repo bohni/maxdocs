@@ -4,3 +4,4 @@ target
 .classpath
 .pmd
 .project
+/target
