@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -189,34 +190,48 @@ public class FileStorageTest
 
 	/**
 	 * testPageLoadCurrent:
-	 * Tests loading the current version of a page
-	 * 
-	 * @throws EditWithoutChangesException
-	 * @throws ConcurrentEditException
+	 * Test loading of the current version of a page
 	 */
 	@Test
-	public void testPageLoadCurrent() throws ConcurrentEditException, EditWithoutChangesException
+	public void testPageLoad()
 	{
+		String author = "Author";
+		String content = "Content";
+		String date = "2015-06-16 12:39:44";
+		String markupLanguage = "mediawiki";
 		String pagePath = "/Main";
-		MarkupPage page = createMarkupPage(pagePath);
+		String tag1 = "Tag1";
+		String tag2 = "Tag2";
 
-		assertTrue("save failed", storage.save(page));
-		MarkupPage loaded = storage.load(pagePath);
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("pagePath=/Main\n");
+		sb.append("author=Author\n");
+		sb.append("editor=null\n");
+		sb.append("creationDateFirst=");
+		sb.append(date + "\n");
+		sb.append("creationDateThis=");
+		sb.append(date + "\n");
+		sb.append("creationDateThis=");
+		sb.append(date + "\n");
+		sb.append("markupLanguage=mediawiki\n");
+		sb.append("version=1\n");
+		sb.append("tags=Tag2, Tag1\n");
+		sb.append("\n");
+		sb.append("Content\n");
+		StringReader str = new StringReader(sb.toString());
+		
+		MarkupPage loaded = storage.load(str);
 		assertEquals("author not equal", author, loaded.getAuthor());
 		assertEquals("markupLanguage not equal", markupLanguage, loaded.getMarkupLanguage());
-		assertEquals("content not equal", content + System.getProperty("line.separator"),
-			loaded.getContent());
+		assertEquals("content not equal", content + System.getProperty("line.separator"), loaded.getContent());
 		assertEquals("pagePath not equal", pagePath, loaded.getPagePath());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		assertEquals("lastChangeDate not equal", sdf.format(date),
-			sdf.format(loaded.getCurrentVersionCreationDate()));
-		assertEquals("creationDate not equal", sdf.format(date),
-			sdf.format(loaded.getFirstVersionCreationDate()));
-		assertEquals("Tags.size not euqal", tags.length, loaded.getTags().size());
-		for (int i = 0; i < tags.length; i++)
-		{
-			assertTrue(tags[i] + " not in Tags", loaded.getTags().contains(tags[i]));
-		}
+		assertEquals("lastChangeDate not equal", date, sdf.format(loaded.getCurrentVersionCreationDate()));
+		assertEquals("creationDate not equal", date, sdf.format(loaded.getFirstVersionCreationDate()));
+		assertEquals("Tags.size not euqal", 2, loaded.getTags().size());
+		assertTrue("tag1 not in Tags", loaded.getTags().contains(tag1));
+		assertTrue("tag2 not in Tags", loaded.getTags().contains(tag2));
 	}
 
 

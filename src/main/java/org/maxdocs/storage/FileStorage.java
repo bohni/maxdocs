@@ -5,7 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -231,10 +234,18 @@ public class FileStorage implements Storage
 		String pathname = contentPath + files.get(pagePath);
 		log.debug("pathname is {}", pathname);
 		MarkupPage markupPage = null;
-		File file = new File(pathname);
-		if (file.exists())
+		try
 		{
-			markupPage = load(file);
+			InputStreamReader reader = new InputStreamReader(new FileInputStream(pathname), "UTF-8");
+			markupPage = load(reader);
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			log.error(e.getMessage(), e);
+		}
+		catch (FileNotFoundException e)
+		{
+			log.error(e.getMessage(), e);
 		}
 		return markupPage;
 	}
@@ -255,11 +266,7 @@ public class FileStorage implements Storage
 		pathname.insert(pathname.length() - 4, FILE_SEPARATOR + version);
 		log.debug("pathname is {}", pathname);
 		MarkupPage markupPage = null;
-		File file = new File(pathname.toString());
-		if (file.exists())
-		{
-			markupPage = load(file);
-		}
+		markupPage = load(pathname.toString());
 		return markupPage;
 	}
 
@@ -678,13 +685,13 @@ public class FileStorage implements Storage
 	}
 
 
-	private MarkupPage load(File file)
+	MarkupPage load(Reader reader)
 	{
 		MarkupPage markupPage = new MarkupPage();
 		Scanner scanner = null;
 		try
 		{
-			scanner = new Scanner(new FileInputStream(file), "UTF-8");
+			scanner = new Scanner(reader);
 			String line;
 			StringBuilder content = new StringBuilder();
 			int count = 0;
@@ -742,10 +749,6 @@ public class FileStorage implements Storage
 			}
 			markupPage.setContent(content.toString());
 			log.debug("page {}, Version {} loaded", markupPage.getPagePath(), Integer.toString(markupPage.getVersion()));
-		}
-		catch (FileNotFoundException e)
-		{
-			log.error(e.getMessage(), e);
 		}
 		catch (ParseException e)
 		{
