@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bohni/maxdocs.svg?branch=master)](https://travis-ci.org/bohni/maxdocs)
+
 MaxDocs is a new wiki approach focusing on the following features
 
 	* Cool URIs dont change (http://www.w3.org/Provider/Style/URI)
